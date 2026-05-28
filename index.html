@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SitePulseAi | Conversation-first construction management</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Primary navigation">
+        <div class="brand">
+          <span class="brand-mark">SS</span>
+          <div>
+            <strong>SitePulseAi</strong>
+            <span data-i18n="brandSubtitle">Construction OS</span>
+          </div>
+        </div>
+
+        <nav class="nav-list">
+          <button class="nav-item active" data-view="dashboard" type="button">
+            <span class="nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 13h7V4H4v9Zm9 7h7V4h-7v16ZM4 20h7v-5H4v5Z" /></svg>
+            </span>
+            <b data-i18n="navDashboard">Dashboard</b>
+          </button>
+          <button class="nav-item" data-view="tasks" type="button">
+            <span class="nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 11 5.8 7.8 4.4 9.2 9 13.8l10-10-1.4-1.4L9 11Zm-4 7h14v2H5v-2Z" /></svg>
+            </span>
+            <b data-i18n="navTasks">Tasks</b>
+          </button>
+          <button class="nav-item" data-view="documents" type="button">
+            <span class="nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v15H6V2Zm8 1.5V8h4.5L14 3.5ZM8 12h10v2H8v-2Zm0 4h10v2H8v-2Z" /></svg>
+            </span>
+            <b data-i18n="navDocuments">Documents</b>
+          </button>
+          <button class="nav-item" data-view="boq" type="button">
+            <span class="nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 3h16v18H4V3Zm3 4h10V5H7v2Zm0 4h3V9H7v2Zm5 0h5V9h-5v2Zm-5 4h3v-2H7v2Zm5 0h5v-2h-5v2Zm-5 4h3v-2H7v2Zm5 0h5v-2h-5v2Z" /></svg>
+            </span>
+            <b data-i18n="navBoq">BoQ</b>
+          </button>
+          <button class="nav-item" data-view="schedule" type="button">
+            <span class="nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M7 2h2v3h6V2h2v3h3v17H4V5h3V2Zm-1 8v10h12V10H6Zm2 2h8v2H8v-2Zm0 4h5v2H8v-2Z" /></svg>
+            </span>
+            <b data-i18n="navSchedule">Schedule</b>
+          </button>
+          <button class="nav-item" data-view="reports" type="button">
+            <span class="nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M5 3h14v18H5V3Zm3 14h2V9H8v8Zm3 0h2V6h-2v11Zm3 0h2v-5h-2v5Z" /></svg>
+            </span>
+            <b data-i18n="navReports">Reports</b>
+          </button>
+          <button class="nav-item" data-view="hierarchy" type="button">
+            <span class="nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M11 3h2v4h6v6h2v8h-8v-8h2V9H9v4h2v8H3v-8h2V7h6V3ZM5 15v4h4v-4H5Zm10 0v4h4v-4h-4Z" /></svg>
+            </span>
+            <b data-i18n="navHierarchy">Hierarchy</b>
+          </button>
+          <button class="nav-item" data-view="team" type="button">
+            <span class="nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M8 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm8.5 1a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7ZM2 21v-2c0-3.3 2.7-6 6-6s6 2.7 6 6v2H2Zm12.2 0c.5-.8.8-1.8.8-2.9 0-1.7-.7-3.3-1.8-4.4 1-.5 2.1-.7 3.3-.7 3 0 5.5 2.2 5.5 5v3h-7.8Z" /></svg>
+            </span>
+            <b data-i18n="navTeam">Team & Roles</b>
+          </button>
+          <button class="nav-item" data-view="settings" type="button">
+            <span class="nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M10.8 2h2.4l.5 3a7.2 7.2 0 0 1 1.7.7l2.5-1.8 1.7 1.7-1.8 2.5c.3.5.5 1.1.7 1.7l3 .5v2.4l-3 .5a7.2 7.2 0 0 1-.7 1.7l1.8 2.5-1.7 1.7-2.5-1.8c-.5.3-1.1.5-1.7.7l-.5 3h-2.4l-.5-3a7.2 7.2 0 0 1-1.7-.7l-2.5 1.8-1.7-1.7 1.8-2.5a7.2 7.2 0 0 1-.7-1.7l-3-.5v-2.4l3-.5c.2-.6.4-1.2.7-1.7L4.4 5.6l1.7-1.7 2.5 1.8c.5-.3 1.1-.5 1.7-.7l.5-3ZM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z" /></svg>
+            </span>
+            <b data-i18n="navSettings">Settings</b>
+          </button>
+        </nav>
+
+        <div class="ai-card">
+          <span class="status-dot"></span>
+          <strong data-i18n="aiCardTitle">AI triage online</strong>
+          <p data-i18n="aiCardText">Classifies field media, extracts actions and updates owners in real time.</p>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow" data-i18n="eyebrow">Milano Porta Nuova - Mixed-use redevelopment</p>
+            <h1 data-i18n="pageTitle">Live site intelligence</h1>
+          </div>
+          <div class="topbar-actions">
+            <div class="scope-switcher" aria-label="Workspace scope selector">
+              <button class="scope-option active" data-scope="organization" type="button" data-i18n="scopeOrganization">Organization</button>
+              <button class="scope-option" data-scope="site" type="button" data-i18n="scopeSite">Site</button>
+            </div>
+            <select id="siteSelector" class="site-selector" aria-label="Site selector">
+              <option value="porta-nuova">Milano Porta Nuova</option>
+              <option value="torino-lingotto">Torino Lingotto</option>
+              <option value="roma-ostiense">Roma Ostiense</option>
+            </select>
+            <button class="primary-button" type="button" data-i18n="exportReport">Export board report</button>
+          </div>
+        </header>
+
+        <section class="scope-banner">
+          <div>
+            <span id="scopeLabel">Organization view</span>
+            <strong id="scopeTitle">UrbanBuild Group</strong>
+            <p id="scopeDescription">Aggregated portfolio intelligence across all active construction sites.</p>
+          </div>
+          <div class="scope-stats">
+            <span id="scopeSitesStat"><b id="scopeSites">3</b><em data-i18n="scopeSitesLabel">sites</em></span>
+            <span><b id="scopeUsers">128</b><em data-i18n="scopeUsersLabel">users</em></span>
+            <span><b id="scopeModules">8</b><em data-i18n="scopeModulesLabel">modules</em></span>
+            <span><b id="scopeBudget">EUR 18.4M</b><em data-i18n="scopeBudgetLabel">budget</em></span>
+          </div>
+        </section>
+
+        <section class="content-grid">
+          <section class="dashboard-panel" data-panel="dashboard">
+            <div class="insight-grid">
+              <article class="insight-card time">
+                <span data-i18n="timeInsightLabel">Time performance</span>
+                <strong id="timeInsightValue">+4 days</strong>
+                <div class="visual-meter time-meter">
+                  <i id="timeInsightBar"></i>
+                </div>
+                <p id="timeInsightText">Core A inspections are delaying the concrete sequence.</p>
+              </article>
+              <article class="insight-card budget">
+                <span data-i18n="budgetInsightLabel">Budget performance</span>
+                <strong id="budgetInsightValue">+3.8%</strong>
+                <div class="visual-meter budget-meter">
+                  <i id="budgetInsightBar"></i>
+                </div>
+                <p id="budgetInsightText">Waterproofing and logistics are driving forecast variance.</p>
+              </article>
+              <article class="insight-card forecast">
+                <span data-i18n="forecastInsightLabel">AI forecast</span>
+                <strong id="forecastInsightValue">Medium risk</strong>
+                <div class="risk-gauge" aria-label="Risk gauge">
+                  <i id="forecastNeedle"></i>
+                </div>
+                <p id="forecastInsightText">Recoverable if QA approvals and procurement blockers close this week.</p>
+              </article>
+            </div>
+
+            <div class="metric-grid">
+              <article class="metric metric-green">
+                <span class="metric-icon">TK</span>
+                <span data-i18n="metricTasks">Open field tasks</span>
+                <strong id="taskCount">24</strong>
+                <em data-i18n="metricTasksSub">+3 from site chat</em>
+              </article>
+              <article class="metric metric-red">
+                <span class="metric-icon">RI</span>
+                <span data-i18n="metricIssues">High priority issues</span>
+                <strong id="riskCount">7</strong>
+                <em data-i18n="metricIssuesSub">2 blocked trades</em>
+              </article>
+              <article class="metric metric-blue">
+                <span class="metric-icon">DC</span>
+                <span data-i18n="metricDocs">Documents processed</span>
+                <strong id="docCount">148</strong>
+                <em data-i18n="metricDocsSub">18 this week</em>
+              </article>
+              <article class="metric metric-yellow">
+                <span class="metric-icon">SC</span>
+                <span data-i18n="metricConfidence">Schedule confidence</span>
+                <strong id="confidence">82%</strong>
+                <em data-i18n="metricConfidenceSub">Stable trend</em>
+              </article>
+            </div>
+
+            <div class="section-header">
+              <div>
+                <h2 data-i18n="pulseTitle">Operational pulse</h2>
+                <p data-i18n="pulseText">AI summary from photos, notes, videos, checklists and site documents.</p>
+              </div>
+              <span class="live-pill" data-i18n="live">Live</span>
+            </div>
+
+            <div class="pulse-layout">
+              <article class="timeline">
+                <h3 data-i18n="activityTitle">AI activity stream</h3>
+                <div id="activityFeed" class="activity-feed"></div>
+              </article>
+
+              <article class="risk-map">
+                <h3 data-i18n="zonesTitle">Site zones</h3>
+                <div class="site-plan" aria-label="Site risk map">
+                  <button class="zone zone-a high" type="button">Core A</button>
+                  <button class="zone zone-b medium" type="button">Tower B</button>
+                  <button class="zone zone-c low" type="button">Podium</button>
+                  <button class="zone zone-d medium" type="button">Garage</button>
+                </div>
+                <div class="legend">
+                  <span><i class="risk-high"></i><b data-i18n="legendUrgent">urgent</b></span>
+                  <span><i class="risk-medium"></i><b data-i18n="legendWatch">watch</b></span>
+                  <span><i class="risk-low"></i><b data-i18n="legendClear">clear</b></span>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="dashboard-panel hidden" data-panel="tasks">
+            <div class="section-header">
+              <div>
+                <p data-i18n="tasksText">Actions generated from field conversations and assigned to owners.</p>
+              </div>
+              <button class="secondary-button" type="button" data-i18n="kanban">Kanban view</button>
+            </div>
+            <div id="taskBoard" class="task-board"></div>
+          </section>
+
+          <section class="dashboard-panel hidden" data-panel="documents">
+            <div class="section-header">
+              <div>
+                <p data-i18n="documentsText">Permits, RFIs, drawings and delivery notes linked to site context.</p>
+              </div>
+              <button class="secondary-button" type="button" data-i18n="reviewQueue">Review queue</button>
+            </div>
+            <div id="documentList" class="document-list"></div>
+          </section>
+
+          <section class="dashboard-panel hidden" data-panel="boq">
+            <div class="section-header">
+              <div>
+                <p data-i18n="boqText">Import a PDF or XLS bill of quantities and let AI structure quantities, costs, trades and phases.</p>
+              </div>
+              <button id="importBoqButton" class="primary-button" type="button" data-i18n="importBoq">Import BoQ PDF/XLS</button>
+            </div>
+            <div class="boq-layout">
+              <article class="upload-panel">
+                <span class="upload-icon">AI</span>
+                <strong data-i18n="uploadTitle">AI estimation intake</strong>
+                <p data-i18n="uploadText">Reads line items, units, quantities, unit prices, categories and missing data from PDF, XLS or XLSX files.</p>
+                <div class="file-types">
+                  <span>PDF</span>
+                  <span>XLS</span>
+                  <span>XLSX</span>
+                </div>
+                <div id="boqStatus" class="boq-status" data-i18n="boqReady">Ready to import</div>
+              </article>
+              <div id="boqTable" class="boq-table"></div>
+            </div>
+          </section>
+
+          <section class="dashboard-panel hidden" data-panel="schedule">
+            <div class="section-header">
+              <div>
+                <p data-i18n="scheduleText">AI converts the BoQ into phases, durations, dependencies, monthly cash flow and budget risk.</p>
+              </div>
+              <button id="generateScheduleButton" class="secondary-button" type="button" data-i18n="generateSchedule">Generate from BoQ</button>
+            </div>
+            <div class="schedule-summary">
+              <article>
+                <span data-i18n="totalBudget">Total budget</span>
+                <strong id="totalBudget">EUR 4.82M</strong>
+              </article>
+              <article>
+                <span data-i18n="duration">Duration</span>
+                <strong id="duration">34 weeks</strong>
+              </article>
+              <article>
+                <span data-i18n="contingency">Contingency</span>
+                <strong id="contingency">7.5%</strong>
+              </article>
+            </div>
+            <article class="wbs-card">
+              <div class="wbs-header">
+                <div>
+                  <h3 data-i18n="wbsTitle">WBS planning</h3>
+                  <p data-i18n="wbsText">Edit WBS items and drag rows to reorder the cronoprogramma structure.</p>
+                </div>
+                <button id="addWbsButton" class="secondary-button" type="button" data-i18n="addWbs">Add WBS item</button>
+              </div>
+              <div id="wbsBoard" class="wbs-board" aria-label="Editable WBS list"></div>
+            </article>
+            <div class="schedule-grid">
+              <article class="timeline-card">
+                <h3 data-i18n="timelineTitle">AI cronoprogramma</h3>
+                <div id="scheduleTimeline" class="schedule-timeline"></div>
+              </article>
+              <article class="budget-card">
+                <h3 data-i18n="budgetTitle">Budget by trade</h3>
+                <div id="budgetBreakdown" class="budget-breakdown"></div>
+              </article>
+            </div>
+          </section>
+
+          <section class="dashboard-panel hidden" data-panel="reports">
+            <div class="section-header">
+              <div>
+                <p data-i18n="reportsText">Automatically structured site updates for executives and asset owners.</p>
+              </div>
+              <button class="secondary-button" type="button" data-i18n="schedulePdf">Schedule PDF</button>
+            </div>
+            <div id="reportGrid" class="report-grid"></div>
+          </section>
+
+          <section class="dashboard-panel hidden" data-panel="hierarchy">
+            <div class="section-header">
+              <div>
+                <p data-i18n="hierarchyText">Govern the platform from global administration down to site-level role permissions.</p>
+              </div>
+            </div>
+            <div class="hierarchy-flow">
+              <article class="hierarchy-card super">
+                <span>01</span>
+                <strong data-i18n="registrationTitle">Registration creates organization</strong>
+                <p data-i18n="registrationText">The first user creates the organization during signup and chooses who will be administrator.</p>
+              </article>
+              <article class="hierarchy-card super">
+                <span>02</span>
+                <strong data-i18n="superAdminTitle">Super Administrator</strong>
+                <p data-i18n="superAdminText">Controls platform settings, modules, billing, global templates and security policies.</p>
+              </article>
+              <article class="hierarchy-card org">
+                <span>03</span>
+                <strong data-i18n="organizationTitle">Organization</strong>
+                <p data-i18n="organizationText">Represents a developer, contractor or asset owner with custom branding and workflows.</p>
+              </article>
+              <article class="hierarchy-card sites">
+                <span>04</span>
+                <strong data-i18n="sitesTitle">One or more construction sites</strong>
+                <p data-i18n="sitesText">Each site has zones, teams, documents, reports, dashboards and AI processing rules.</p>
+              </article>
+              <article class="hierarchy-card roles">
+                <span>05</span>
+                <strong data-i18n="rolesTitle">Users by role</strong>
+                <p data-i18n="rolesText">Field worker, site manager, project manager, document controller, developer and viewer permissions.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="dashboard-panel hidden" data-panel="team">
+            <div class="section-header">
+              <div>
+                <p data-i18n="teamText">Administrators create construction sites, invite team members and assign permissions by role.</p>
+              </div>
+            </div>
+            <div class="team-admin-grid">
+              <article class="admin-form-card">
+                <h3 data-i18n="newSiteTitle">Create construction site</h3>
+                <label><span data-i18n="siteNameLabel">Site name</span><input id="newSiteName" type="text" value="Napoli Waterfront" /></label>
+                <label><span data-i18n="siteBudgetLabel">Budget</span><input id="newSiteBudget" type="text" value="EUR 5.40M" /></label>
+                <label><span data-i18n="siteAdminLabel">Site administrator</span><input id="newSiteAdmin" type="text" value="Anna Greco" /></label>
+                <button id="createSiteButton" class="primary-button" type="button" data-i18n="createSite">Create site</button>
+              </article>
+              <article class="admin-form-card">
+                <h3 data-i18n="newMemberTitle">Create team member</h3>
+                <label><span data-i18n="memberNameLabel">Name</span><input id="newMemberName" type="text" value="Paolo Neri" /></label>
+                <label><span data-i18n="memberRoleLabel">Role</span><select id="newMemberRole"><option>Administrator</option><option>Site manager</option><option>Project manager</option><option>Document controller</option><option>Field worker</option><option>Supplier</option><option>Consultant</option><option>Designer</option><option>Works director</option><option>Developer</option><option>Viewer</option></select></label>
+                <label><span data-i18n="memberSiteLabel">Site</span><select id="newMemberSite"><option>Milano Porta Nuova</option><option>Torino Lingotto</option><option>Roma Ostiense</option></select></label>
+                <button id="createMemberButton" class="primary-button" type="button" data-i18n="createMember">Create member</button>
+              </article>
+            </div>
+            <div class="roles-grid">
+              <article>
+                <strong data-i18n="adminRole">Administrator</strong>
+                <p data-i18n="adminRoleText">Creates sites, manages organization settings, users, roles and permissions.</p>
+              </article>
+              <article>
+                <strong data-i18n="siteManagerRole">Site manager</strong>
+                <p data-i18n="siteManagerRoleText">Manages site tasks, field team, WBS, schedule and operational reports.</p>
+              </article>
+              <article>
+                <strong data-i18n="docControllerRole">Document controller</strong>
+                <p data-i18n="docControllerRoleText">Controls document versions, audit trail, approvals and validation workflows.</p>
+              </article>
+              <article>
+                <strong data-i18n="fieldRole">Field worker</strong>
+                <p data-i18n="fieldRoleText">Uses mobile chat to upload photos, voice notes, videos and documents.</p>
+              </article>
+              <article>
+                <strong data-i18n="supplierRole">Supplier</strong>
+                <p data-i18n="supplierRoleText">Uploads delivery notes, certificates, product sheets and supply updates.</p>
+              </article>
+              <article>
+                <strong data-i18n="consultantRole">Consultant</strong>
+                <p data-i18n="consultantRoleText">Reviews specialist issues, contributes technical notes and validates recommendations.</p>
+              </article>
+              <article>
+                <strong data-i18n="designerRole">Designer</strong>
+                <p data-i18n="designerRoleText">Manages drawings, RFIs, design changes and technical clarifications.</p>
+              </article>
+              <article>
+                <strong data-i18n="worksDirectorRole">Works director</strong>
+                <p data-i18n="worksDirectorRoleText">Authorizes works, validates progress and controls compliance with contract documents.</p>
+              </article>
+              <article>
+                <strong data-i18n="developerRole">Developer</strong>
+                <p data-i18n="developerRoleText">Views executive dashboards, budget, schedule risk and portfolio reports.</p>
+              </article>
+              <article>
+                <strong data-i18n="viewerRole">Viewer</strong>
+                <p data-i18n="viewerRoleText">Read-only access to selected modules, reports and documents.</p>
+              </article>
+            </div>
+            <div id="teamList" class="team-list"></div>
+          </section>
+
+          <section class="dashboard-panel hidden" data-panel="settings">
+            <div class="section-header">
+              <div>
+                <p data-i18n="settingsText">Configure workspace preferences for managers and field crews.</p>
+              </div>
+            </div>
+            <div class="settings-grid">
+              <article class="settings-card">
+                <div>
+                  <span class="settings-kicker" data-i18n="languageKicker">Language</span>
+                  <strong data-i18n="languageTitle">Interface language</strong>
+                  <p data-i18n="languageText">Choose the language used across dashboard, mobile app and AI-generated updates.</p>
+                </div>
+                <div class="language-switcher" aria-label="Language selector">
+                  <button class="language-option active" data-lang="en" type="button">English</button>
+                  <button class="language-option" data-lang="it" type="button">Italiano</button>
+                </div>
+              </article>
+              <article class="settings-card">
+                <div>
+                  <span class="settings-kicker" data-i18n="customKicker">Customization</span>
+                  <strong data-i18n="customTitle">Everything is configurable</strong>
+                  <p data-i18n="customText">Organizations can customize branding, modules, fields, roles, workflows, reports, AI classification rules and notification policies.</p>
+                </div>
+                <div class="custom-chip-grid">
+                  <span data-i18n="customBrand">Brand</span>
+                  <span data-i18n="customRoles">Roles</span>
+                  <span data-i18n="customWorkflows">Workflows</span>
+                  <span data-i18n="customAI">AI rules</span>
+                </div>
+              </article>
+              <article class="settings-card muted-card">
+                <div>
+                  <span class="settings-kicker" data-i18n="workspaceKicker">Workspace</span>
+                  <strong data-i18n="workspaceTitle">Milano Porta Nuova</strong>
+                  <p data-i18n="workspaceText">Project timezone, members and notification rules are ready for backend integration.</p>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <aside class="mobile-stage" aria-label="Mobile field app preview">
+            <div class="phone">
+              <div class="phone-top">
+                <span></span>
+              </div>
+              <header class="chat-header">
+                <button class="back-button" type="button" title="Back" data-i18n-title="backTitle">&lt;</button>
+                <div class="crew-avatar">C3</div>
+                <div>
+                  <strong data-i18n="crewTitle">Core A Field Crew</strong>
+                  <span data-i18n="crewStatus">12 members - AI assistant active</span>
+                </div>
+              </header>
+
+              <div id="chatMessages" class="chat-messages" aria-live="polite"></div>
+
+              <div class="capture-rail" aria-label="Media capture shortcuts">
+                <button class="capture-button" data-kind="photo" type="button">PH<span data-i18n="photo">Photo</span></button>
+                <button class="capture-button" data-kind="voice" type="button">VO<span data-i18n="voice">Voice</span></button>
+                <button class="capture-button" data-kind="video" type="button">VI<span data-i18n="video">Video</span></button>
+                <button class="capture-button" data-kind="document" type="button">DC<span data-i18n="doc">Doc</span></button>
+              </div>
+
+              <form id="chatForm" class="chat-composer">
+                <button class="icon-button" type="button" title="Attach file" data-i18n-title="attachTitle">+</button>
+                <input id="messageInput" type="text" autocomplete="off" placeholder="Message the project..." data-i18n-placeholder="messagePlaceholder" />
+                <button class="send-button" type="submit" title="Send" data-i18n-title="sendTitle">Go</button>
+              </form>
+            </div>
+          </aside>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

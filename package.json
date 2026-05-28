@@ -1,0 +1,6 @@
+{
+  "name": "sitepulseai",
+  "scripts": {
+    "start": "node server.mjs"
+  }
+}
