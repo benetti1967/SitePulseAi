@@ -1636,6 +1636,234 @@
       opacity: 1;
     }
 
+    .field-chat {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: min(390px, calc(100vw - 36px));
+      z-index: 30;
+      display: grid;
+      gap: 10px;
+      pointer-events: none;
+    }
+
+    .field-chat * {
+      pointer-events: auto;
+    }
+
+    .chat-alert {
+      display: none;
+      margin-left: auto;
+      max-width: 330px;
+      border: 1px solid #f0d6a8;
+      border-radius: 8px;
+      background: #fff8e8;
+      box-shadow: var(--shadow);
+      padding: 10px 12px;
+      color: #513b15;
+      cursor: pointer;
+    }
+
+    .chat-alert.show {
+      display: block;
+    }
+
+    .chat-alert strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
+
+    .chat-alert span {
+      display: block;
+      font-size: 12px;
+      color: #735b2b;
+      line-height: 1.35;
+    }
+
+    .chat-window {
+      display: none;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      box-shadow: 0 22px 70px rgba(18, 32, 37, .22);
+    }
+
+    .field-chat.open .chat-window {
+      display: block;
+    }
+
+    .chat-window-head {
+      min-height: 54px;
+      padding: 10px 12px;
+      background: var(--dark);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .chat-window-head strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .chat-window-head span {
+      display: block;
+      color: #aebdc2;
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    .chat-window-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .chat-window-actions button,
+    .chat-tray-button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    .chat-window-actions button {
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
+      background: rgba(255,255,255,.12);
+      color: white;
+      display: grid;
+      place-items: center;
+    }
+
+    .chat-channel-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+      padding: 10px;
+      background: #f6f8f8;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .chat-channel-list button {
+      min-height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      color: #43515f;
+      font-size: 12px;
+      cursor: pointer;
+      padding: 0 8px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .chat-channel-list button.active {
+      border-color: #8eb9b4;
+      background: #eef8f6;
+      color: var(--brand);
+      font-weight: 800;
+    }
+
+    .chat-feed {
+      height: 260px;
+      overflow: auto;
+      padding: 12px;
+      display: grid;
+      align-content: start;
+      gap: 9px;
+      background: #eef2f0;
+    }
+
+    .chat-bubble {
+      max-width: 82%;
+      border-radius: 8px;
+      background: white;
+      padding: 9px 10px;
+      box-shadow: 0 1px 2px rgba(0,0,0,.06);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .chat-bubble.out {
+      justify-self: end;
+      background: #dff2e8;
+    }
+
+    .chat-bubble strong {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 12px;
+    }
+
+    .chat-compose {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr) 42px;
+      gap: 8px;
+      padding: 10px;
+      border-top: 1px solid var(--line);
+      background: white;
+    }
+
+    .chat-compose button,
+    .chat-compose input {
+      height: 36px;
+      border-radius: 8px;
+    }
+
+    .chat-compose button {
+      border: 1px solid var(--line);
+      background: white;
+      cursor: pointer;
+    }
+
+    .chat-compose .send {
+      border: 0;
+      background: var(--brand);
+      color: white;
+      font-weight: 800;
+    }
+
+    .chat-compose input {
+      min-width: 0;
+      border: 1px solid var(--line);
+      padding: 0 10px;
+      outline: 0;
+    }
+
+    .chat-tray-button {
+      justify-self: end;
+      height: 48px;
+      min-width: 230px;
+      border-radius: 999px;
+      background: var(--dark);
+      color: white;
+      box-shadow: 0 16px 40px rgba(18, 32, 37, .28);
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 0 14px;
+      font-weight: 800;
+    }
+
+    .field-chat.open .chat-tray-button {
+      display: none;
+    }
+
+    .chat-count {
+      min-width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: #d85d4f;
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+    }
+
     @media (max-width: 1180px) {
       .app { grid-template-columns: 76px minmax(0, 1fr); }
       .brand div, .nav span.label, .nav .badge, .sidebar-card { display: none; }
@@ -1678,6 +1906,18 @@
       .activity { grid-template-columns: 62px minmax(0, 1fr); }
       .owner { grid-column: 2; justify-items: start; min-width: 0; }
       .kanban { grid-template-columns: 1fr; }
+      .field-chat {
+        right: 12px;
+        bottom: 86px;
+        width: calc(100vw - 24px);
+      }
+      .chat-tray-button {
+        min-width: 0;
+        width: 100%;
+      }
+      .chat-feed {
+        height: 240px;
+      }
     }
   </style>
 </head>
@@ -1735,6 +1975,35 @@
       <section class="view" id="issues"></section>
       <section class="view" id="permissions"></section>
     </main>
+  </div>
+
+  <div class="field-chat minimized" id="fieldChat">
+    <div class="chat-alert" id="chatAlert">
+      <strong id="chatAlertTitle">Nuovo messaggio dal campo</strong>
+      <span id="chatAlertText">Foto e vocale caricati da Residenza Porta Nuova.</span>
+    </div>
+    <section class="chat-window" aria-label="Chat cantieri visibili">
+      <header class="chat-window-head">
+        <div>
+          <strong>Chat cantieri</strong>
+          <span id="chatActiveContext">Tutti i cantieri visibili</span>
+        </div>
+        <div class="chat-window-actions">
+          <button type="button" id="chatMinimize" title="Minimizza">_</button>
+        </div>
+      </header>
+      <div class="chat-channel-list" id="chatChannelList"></div>
+      <div class="chat-feed" id="floatingChatFeed"></div>
+      <form class="chat-compose" id="floatingChatForm">
+        <button type="button" title="Allega">+</button>
+        <input id="floatingChatInput" placeholder="Messaggio, foto, vocale o PDF..." autocomplete="off">
+        <button class="send" type="submit">Go</button>
+      </form>
+    </section>
+    <button class="chat-tray-button" id="chatOpenButton" type="button">
+      <span>Chat cantieri</span>
+      <span class="chat-count" id="chatUnread">3</span>
+    </button>
   </div>
 
   <div class="toast" id="toast"></div>
@@ -1867,6 +2136,33 @@
 
     let dashboardMode = 'portfolio';
     let selectedSite = sites[0];
+    let activeChatSite = 'all';
+    let chatUnreadCount = 3;
+
+    const chatMessagesBySite = {
+      all: [
+        ['Luca F.', 'Foto e vocale caricati su Residenza Porta Nuova. AI ha creato una issue isolamento.'],
+        ['AI', 'Ho collegato 2 attivita al cronoprogramma e aggiornato il forecast.'],
+        ['Anna S.', 'Ricevuto, apro la revisione della variante impianti.']
+      ],
+      'Residenza Porta Nuova': [
+        ['Luca F.', 'Manca isolamento nel Blocco B, piano 2. Allego foto e vocale.'],
+        ['AI', 'Issue alta creata, assegnata ad Anna S., scadenza domani.'],
+        ['Marco R.', 'Verifico con TermoCasa entro pranzo.']
+      ],
+      'Green Offices Lambrate': [
+        ['Sara M.', 'Caricate foto avanzamento facciata est.'],
+        ['AI', 'Progress aggiornato al 54%, nessuna issue critica nuova.']
+      ],
+      'Hotel Aurora Renovation': [
+        ['Direzione lavori', 'Serve conferma sulle finiture lobby.'],
+        ['AI', 'Bozza verbale pronta con 3 decisioni e 2 task.']
+      ],
+      'Logistica Nord Hub': [
+        ['PM', 'Computo importato, 12 voci da verificare.'],
+        ['AI', 'Ho generato le prime WBS e il budget preliminare.']
+      ]
+    };
 
     function tag(text, cls = '') {
       return `<span class="tag ${cls}">${text}</span>`;
@@ -2312,6 +2608,25 @@
       `;
     }
 
+    function currentContextText(page) {
+      if (dashboardMode === 'project') {
+        return `${selectedSite.name} - ${page[2]}`;
+      }
+      return `${sites.length} cantieri visibili - ${page[2]}`;
+    }
+
+    function updateContextLabels() {
+      const scopeText = dashboardMode === 'project'
+        ? `Cantiere attivo: ${selectedSite.name}`
+        : `${sites.length} cantieri abilitati`;
+      document.getElementById('scopePill').querySelector('span').textContent = scopeText;
+      document.getElementById('breadcrumb').classList.toggle('show', dashboardMode === 'project');
+      document.getElementById('breadcrumbProject').textContent = selectedSite.name;
+      document.getElementById('chatActiveContext').textContent = dashboardMode === 'project'
+        ? `Cantiere attivo: ${selectedSite.name}`
+        : 'Tutti i cantieri visibili';
+    }
+
     function setPage(id) {
       document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === id));
       document.querySelectorAll('.nav button').forEach(b => b.classList.toggle('active', b.dataset.page === id));
@@ -2323,14 +2638,18 @@
       document.getElementById('breadcrumb').classList.toggle('show', id === 'dashboard' && dashboardMode === 'project');
       document.getElementById('breadcrumbProject').textContent = selectedSite.name;
       document.getElementById('scopePill').querySelector('span').textContent = dashboardMode === 'project' ? 'Vista cantiere' : `${sites.length} cantieri abilitati`;
+      document.getElementById('pageSubtitle').textContent = currentContextText(page);
+      updateContextLabels();
       history.replaceState(null, '', '#' + id);
     }
 
     function openSite(siteName) {
       selectedSite = sites.find(site => site.name === siteName) || sites[0];
       dashboardMode = 'project';
+      activeChatSite = selectedSite.name;
       document.getElementById('globalSearch').placeholder = 'Cerca issue, documenti, fornitori';
       renderDashboard();
+      renderFloatingChat();
       if (document.getElementById('dashboard').classList.contains('active')) {
         setPage('dashboard');
       }
@@ -2339,8 +2658,10 @@
 
     function openPortfolio() {
       dashboardMode = 'portfolio';
+      activeChatSite = 'all';
       document.getElementById('globalSearch').placeholder = 'Cerca cantieri, issue, fornitori';
       renderDashboard();
+      renderFloatingChat();
       setPage('dashboard');
       showToast('Vista aggregata');
     }
@@ -2472,10 +2793,80 @@
       document.getElementById('modalBackdrop').classList.remove('show');
     }
 
+    function renderFloatingChat() {
+      const channels = ['all', ...sites.map(site => site.name)];
+      document.getElementById('chatChannelList').innerHTML = channels.map(channel => `
+        <button type="button" class="${channel === activeChatSite ? 'active' : ''}" data-chat-site="${channel}">
+          ${channel === 'all' ? 'Tutti' : channel}
+        </button>
+      `).join('');
+
+      const messages = chatMessagesBySite[activeChatSite] || chatMessagesBySite.all;
+      document.getElementById('floatingChatFeed').innerHTML = messages.map(([author, text], index) => `
+        <div class="chat-bubble ${author === 'AI' || index === messages.length - 1 ? 'out' : ''}">
+          <strong>${author}</strong>
+          ${text}
+        </div>
+      `).join('');
+
+      document.getElementById('chatActiveContext').textContent = activeChatSite === 'all'
+        ? 'Tutti i cantieri visibili'
+        : `Cantiere attivo: ${activeChatSite}`;
+      document.getElementById('chatUnread').textContent = chatUnreadCount;
+    }
+
+    function openFloatingChat() {
+      document.getElementById('fieldChat').classList.add('open');
+      document.getElementById('fieldChat').classList.remove('minimized');
+      document.getElementById('chatAlert').classList.remove('show');
+      chatUnreadCount = 0;
+      renderFloatingChat();
+    }
+
+    function minimizeFloatingChat() {
+      document.getElementById('fieldChat').classList.remove('open');
+      document.getElementById('fieldChat').classList.add('minimized');
+    }
+
+    function showChatAlert(title, text) {
+      document.getElementById('chatAlertTitle').textContent = title;
+      document.getElementById('chatAlertText').textContent = text;
+      document.getElementById('chatAlert').classList.add('show');
+      chatUnreadCount += 1;
+      renderFloatingChat();
+    }
+
     function wireEvents() {
       document.getElementById('nav').addEventListener('click', event => {
         const button = event.target.closest('button[data-page]');
         if (button) setPage(button.dataset.page);
+      });
+
+      document.getElementById('chatOpenButton').addEventListener('click', openFloatingChat);
+      document.getElementById('chatAlert').addEventListener('click', openFloatingChat);
+      document.getElementById('chatMinimize').addEventListener('click', minimizeFloatingChat);
+      document.getElementById('chatChannelList').addEventListener('click', event => {
+        const button = event.target.closest('[data-chat-site]');
+        if (!button) return;
+        activeChatSite = button.dataset.chatSite;
+        if (activeChatSite !== 'all') {
+          selectedSite = sites.find(site => site.name === activeChatSite) || selectedSite;
+          dashboardMode = 'project';
+          setPage(location.hash ? location.hash.slice(1) : 'dashboard');
+        }
+        renderFloatingChat();
+      });
+      document.getElementById('floatingChatForm').addEventListener('submit', event => {
+        event.preventDefault();
+        const input = document.getElementById('floatingChatInput');
+        const text = input.value.trim();
+        if (!text) return;
+        const target = activeChatSite === 'all' ? 'all' : activeChatSite;
+        chatMessagesBySite[target] = chatMessagesBySite[target] || [];
+        chatMessagesBySite[target].push(['Tu', text]);
+        input.value = '';
+        renderFloatingChat();
+        showToast('Messaggio inviato alla chat cantiere');
       });
 
       document.body.addEventListener('click', event => {
@@ -2617,10 +3008,14 @@
     loadScheduleFromApi();
     renderIssues();
     renderPermissions();
+    renderFloatingChat();
     wireEvents();
     const initialPage = location.hash ? location.hash.slice(1) : 'dashboard';
     openPortfolio();
     setPage(initialPage);
+    setTimeout(() => {
+      showChatAlert('Nuovo messaggio dal campo', 'Residenza Porta Nuova: foto e vocale richiedono revisione QA.');
+    }, 1800);
   </script>
 </body>
 </html>
