@@ -408,47 +408,54 @@
 
     .forecast-visual {
       position: relative;
-      width: 140px;
-      min-height: 42px;
+      display: grid;
+      gap: 6px;
+      width: min(260px, 100%);
+      min-height: 0;
       margin-bottom: 6px;
     }
 
-    .forecast-gauge {
-      width: 140px;
-      height: 42px;
+    .forecast-scale {
       position: relative;
-      overflow: hidden;
-      border-radius: 180px 180px 0 0;
-      background:
-        conic-gradient(from 270deg at 50% 100%,
-          #f8bd45 0deg 72deg,
-          #e58e37 72deg 118deg,
-          #d85d4f 118deg 180deg,
-          transparent 180deg 360deg);
+      height: 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #f8bd45 0 45%, #e58e37 45% 68%, #d85d4f 68% 100%);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.08);
     }
 
-    .forecast-gauge:after {
-      content: "";
+    .forecast-marker {
       position: absolute;
-      left: 36%;
-      right: -16px;
-      bottom: -1px;
-      height: 18px;
-      border-radius: 34px 0 0 0;
-      background: var(--panel);
-    }
-
-    .forecast-needle {
-      position: absolute;
-      left: 116px;
-      top: 5px;
-      width: 3px;
-      height: 24px;
+      left: 72%;
+      top: 50%;
+      width: 16px;
+      height: 16px;
       border-radius: 999px;
       background: #172b24;
-      transform: rotate(-8deg);
-      transform-origin: 50% 92%;
-      box-shadow: 0 1px 0 rgba(0,0,0,.08);
+      border: 3px solid white;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 2px 6px rgba(0,0,0,.18);
+    }
+
+    .forecast-scale-labels {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1;
+    }
+
+    .forecast-score {
+      display: inline-flex;
+      width: max-content;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      background: #fff8e8;
+      color: #805306;
+      border: 1px solid #f0d6a8;
+      padding: 4px 8px;
+      font-size: 12px;
+      font-weight: 900;
     }
 
     .ai-forecast-card p {
@@ -505,10 +512,24 @@
     }
 
     .site-risk-badge i {
-      width: 22px;
-      height: 12px;
-      border-radius: 22px 22px 0 0;
-      background: conic-gradient(from 270deg at 50% 100%, #f8bd45 0deg 78deg, #e58e37 78deg 122deg, #d85d4f 122deg 180deg, transparent 180deg 360deg);
+      position: relative;
+      width: 28px;
+      height: 7px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #f8bd45 0 45%, #e58e37 45% 68%, #d85d4f 68% 100%);
+    }
+
+    .site-risk-badge i:after {
+      content: "";
+      position: absolute;
+      left: 72%;
+      top: 50%;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #172b24;
+      border: 2px solid #fff8e8;
+      transform: translate(-50%, -50%);
     }
 
     .risk-driver-list {
@@ -2359,8 +2380,11 @@
           ${isPortfolio ? `<span class="forecast-scope">${context}</span>` : ''}
           <strong>Medium-high risk</strong>
           <div class="forecast-visual" aria-hidden="true">
-            <div class="forecast-gauge"></div>
-            <i class="forecast-needle"></i>
+            <div class="forecast-score">72/100</div>
+            <div class="forecast-scale">
+              <i class="forecast-marker"></i>
+            </div>
+            <div class="forecast-scale-labels"><span>Low</span><span>Medium</span><span>High</span></div>
           </div>
           <p>${isPortfolio ? 'Rischio aggregato sui cantieri visibili.' : 'Rischio operativo del cantiere selezionato.'}</p>
         </section>
