@@ -1782,10 +1782,10 @@
     ];
 
     const scheduleRows = [
-      ['Posa isolamento Blocco B', 'Fornitore TermoCasa', '26 mag - 4 giu', 40, '€15.960', '+€1.200', 'risk'],
-      ['Impianto elettrico piano 2', 'Variante in revisione', '28 mag - 12 giu', 22, '€42.400', '+€6.800', 'warn'],
-      ['Chiusura cartongessi', 'Dipende da isolamento', '5 giu - 14 giu', 0, '€31.200', '€31.200', ''],
-      ['Facciata nord', 'Avanzamento da foto mobile', '20 mag - 18 giu', 72, '€86.000', '€86.000', 'ok']
+      ['Residenza Porta Nuova', 'Posa isolamento Blocco B', 'Fornitore TermoCasa', '26 mag - 4 giu', 40, 'EUR 15.960', '+EUR 1.200', 'risk'],
+      ['Residenza Porta Nuova', 'Impianto elettrico piano 2', 'Variante in revisione', '28 mag - 12 giu', 22, 'EUR 42.400', '+EUR 6.800', 'warn'],
+      ['Green Offices Lambrate', 'Chiusura cartongessi', 'Dipende da isolamento', '5 giu - 14 giu', 0, 'EUR 31.200', 'EUR 31.200', ''],
+      ['Hotel Aurora Renovation', 'Facciata nord', 'Avanzamento da foto mobile', '20 mag - 18 giu', 72, 'EUR 86.000', 'EUR 86.000', 'ok']
     ];
 
     const documentRows = [
@@ -2198,15 +2198,15 @@
     function renderSchedule() {
       document.getElementById('schedule').innerHTML = `
         <section class="metrics">
-          <div class="metric" data-schedule-filter="all" data-open-label="Tutte le attività"><label>Attivita</label><strong>186</strong><span><i class="dot blue"></i>Import da PDF v3</span></div>
+          <div class="metric"><label>Attivita</label><strong>186</strong><span><i class="dot blue"></i>Tutte visibili nella tabella</span></div>
           <div class="metric" data-schedule-filter="modified" data-open-label="Attività modificate"><label>Modificate utente</label><strong>42</strong><span><i class="dot"></i>Audit attivo</span></div>
           <div class="metric"><label>Extra costo previsto</label><strong>€78K</strong><span><i class="dot risk"></i>Forecast aggiornato</span></div>
           <div class="metric" data-schedule-filter="risk" data-open-label="Milestone a rischio"><label>Milestone a rischio</label><strong>3</strong><span><i class="dot warn"></i>Dipendenze bloccate</span></div>
         </section>
         <table class="table">
-          <thead><tr><th>Attivita</th><th>Periodo</th><th>Avanzamento</th><th>Costo previsto</th><th>Forecast</th><th></th></tr></thead>
+          <thead><tr><th>Cantiere</th><th>Attivita</th><th>Periodo</th><th>Avanzamento</th><th>Costo previsto</th><th>Forecast</th><th></th></tr></thead>
           <tbody>
-            ${scheduleRows.map(r => `<tr data-open-schedule="${r[0]}"><td><strong>${r[0]}</strong><small>${r[1]}</small></td><td>${r[2]}</td><td><div class="bar"><span style="width:${r[3]}%"></span></div><small>${r[3]}%</small></td><td>${r[4]}</td><td style="color:var(--${r[6] || 'ink'})">${r[5]}</td><td><button class="secondary" data-action="Voce cronoprogramma modificabile">Modifica</button></td></tr>`).join('')}
+            ${scheduleRows.map(r => `<tr data-open-schedule="${r[1]}"><td><strong>${r[0]}</strong></td><td><strong>${r[1]}</strong><small>${r[2]}</small></td><td>${r[3]}</td><td><div class="bar"><span style="width:${r[4]}%"></span></div><small>${r[4]}%</small></td><td>${r[5]}</td><td style="color:var(--${r[7] || 'ink'})">${r[6]}</td><td><button class="secondary" data-action="Voce cronoprogramma modificabile">Modifica</button></td></tr>`).join('')}
           </tbody>
         </table>
       `;
