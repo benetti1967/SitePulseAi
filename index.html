@@ -1,480 +1,2565 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SitePulseAi | Conversation-first construction management</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div class="app-shell">
-      <aside class="sidebar" aria-label="Primary navigation">
-        <div class="brand">
-          <span class="brand-mark">SS</span>
-          <div>
-            <strong>SitePulseAi</strong>
-            <span data-i18n="brandSubtitle">Construction OS</span>
-          </div>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ConstructOS</title>
+  <style>
+    :root {
+      --ink: #172129;
+      --muted: #687782;
+      --line: #d9e0e7;
+      --soft: #f4f7f7;
+      --panel: #ffffff;
+      --dark: #122025;
+      --brand: #195c59;
+      --brand-2: #287aa0;
+      --risk: #b14231;
+      --warn: #a96b14;
+      --ok: #2f7b54;
+      --violet: #6d5aa7;
+      --shadow: 0 18px 48px rgba(32, 43, 54, .10);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #eef2f3;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    button, input, select { font: inherit; }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 248px minmax(0, 1fr);
+    }
+
+    .sidebar {
+      background: var(--dark);
+      color: #c2cfd3;
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+
+    .mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: #2b8f84;
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+    }
+
+    .brand strong { display: block; color: #fff; font-size: 15px; }
+    .brand span { display: block; color: #99adb2; font-size: 12px; margin-top: 2px; }
+
+    .nav {
+      display: grid;
+      gap: 4px;
+    }
+
+    .nav button {
+      height: 40px;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: #bdcacf;
+      display: grid;
+      grid-template-columns: 22px 1fr auto;
+      gap: 9px;
+      align-items: center;
+      padding: 0 10px;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .nav button.active {
+      background: rgba(255,255,255,.10);
+      color: white;
+    }
+
+    .nav svg, .icon {
+      width: 18px;
+      height: 18px;
+      display: block;
+      flex: 0 0 auto;
+    }
+
+    .badge {
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.12);
+      color: white;
+      display: inline-grid;
+      place-items: center;
+      font-size: 11px;
+    }
+
+    .sidebar-card {
+      margin-top: auto;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      border-radius: 8px;
+      padding: 14px;
+    }
+
+    .sidebar-card small { color: #9eb0b5; }
+    .sidebar-card strong { display: block; color: white; font-size: 14px; margin: 8px 0 10px; }
+
+    .sync {
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.10);
+      overflow: hidden;
+    }
+
+    .sync span {
+      width: 82%;
+      height: 100%;
+      display: block;
+      background: #55b88d;
+    }
+
+    .main {
+      min-width: 0;
+      padding: 18px;
+    }
+
+    .topbar {
+      min-height: 58px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 23px;
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .scope-pill {
+      height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      color: #43515f;
+      padding: 0 12px;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .breadcrumb {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+
+    .breadcrumb.show {
+      display: flex;
+    }
+
+    .breadcrumb button {
+      border: 0;
+      background: transparent;
+      color: var(--brand);
+      font-weight: 750;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    .search {
+      width: 330px;
+      height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 12px;
+      color: var(--muted);
+    }
+
+    .search input {
+      border: 0;
+      outline: 0;
+      min-width: 0;
+      width: 100%;
+      color: var(--ink);
+      background: transparent;
+      font-size: 13px;
+    }
+
+    .icon-btn, .primary, .secondary {
+      height: 38px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .icon-btn {
+      width: 38px;
+      border: 1px solid var(--line);
+      background: white;
+      color: #43515f;
+    }
+
+    .primary {
+      border: 0;
+      background: var(--brand);
+      color: white;
+      padding: 0 13px;
+      font-weight: 750;
+    }
+
+    .secondary {
+      border: 1px solid var(--line);
+      background: white;
+      color: #43515f;
+      padding: 0 12px;
+    }
+
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .metric, .panel, .tile, .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .metric {
+      min-height: 96px;
+      padding: 14px;
+    }
+
+    .metric[data-open-page],
+    .metric[data-open-dashboard],
+    .metric[data-schedule-filter],
+    .metric[data-doc-filter],
+    .site-kpi[data-open-page],
+    .site-kpi[data-open-page-after-site] {
+      cursor: pointer;
+      transition: transform .16s ease, border-color .16s ease, background .16s ease;
+    }
+
+    .metric[data-open-page]:hover,
+    .metric[data-open-dashboard]:hover,
+    .metric[data-schedule-filter]:hover,
+    .metric[data-doc-filter]:hover,
+    .site-kpi[data-open-page]:hover,
+    .site-kpi[data-open-page-after-site]:hover {
+      transform: translateY(-1px);
+      border-color: #b8c8ce;
+      background: #fbfcfc;
+    }
+
+    .metric.active-summary {
+      border-color: #8eb9b4;
+      background: #f3faf8;
+    }
+
+    .metric label {
+      color: var(--muted);
+      display: block;
+      font-size: 12px;
+      margin-bottom: 9px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 25px;
+      line-height: 1;
+    }
+
+    .metric span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--ok);
+      flex: 0 0 auto;
+    }
+
+    .dot.risk { background: var(--risk); }
+    .dot.warn { background: var(--warn); }
+    .dot.blue { background: var(--brand-2); }
+
+    .ai-forecast-card {
+      padding: 18px 18px 16px;
+      overflow: hidden;
+    }
+
+    .dashboard-forecast {
+      margin-bottom: 16px;
+    }
+
+    .ai-forecast-card label {
+      display: block;
+      margin-bottom: 16px;
+      color: #4f6369;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+    }
+
+    .ai-forecast-card strong {
+      display: block;
+      color: #805306;
+      font-size: clamp(30px, 4.2vw, 42px);
+      line-height: .95;
+      letter-spacing: 0;
+      margin-bottom: 14px;
+    }
+
+    .forecast-visual {
+      position: relative;
+      min-height: 78px;
+      margin-bottom: 18px;
+    }
+
+    .forecast-gauge {
+      width: min(320px, 78%);
+      height: 96px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 180px 180px 0 0;
+      background:
+        conic-gradient(from 270deg at 50% 100%,
+          #f8bd45 0deg 72deg,
+          #e58e37 72deg 118deg,
+          #d85d4f 118deg 180deg,
+          transparent 180deg 360deg);
+    }
+
+    .forecast-gauge:after {
+      content: "";
+      position: absolute;
+      left: 36%;
+      right: -16px;
+      bottom: -1px;
+      height: 34px;
+      border-radius: 34px 0 0 0;
+      background: var(--panel);
+    }
+
+    .forecast-needle {
+      position: absolute;
+      right: 18%;
+      top: 7px;
+      width: 5px;
+      height: 53px;
+      border-radius: 999px;
+      background: #172b24;
+      transform: rotate(-8deg);
+      transform-origin: 50% 92%;
+      box-shadow: 0 1px 0 rgba(0,0,0,.08);
+    }
+
+    .ai-forecast-card p {
+      margin: 0;
+      color: #4d636d;
+      font-size: 19px;
+      line-height: 1.45;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(340px, .9fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .grid.equal {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .panel-head {
+      min-height: 56px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .panel-head h2 {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .panel-head p {
+      color: var(--muted);
+      font-size: 12px;
+      margin: 3px 0 0;
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(380px, .8fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .site-card {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      gap: 12px;
+      cursor: pointer;
+      transition: background .16s ease, transform .16s ease;
+    }
+
+    .site-card:last-child { border-bottom: 0; }
+
+    .site-card:hover {
+      background: #fbfcfc;
+    }
+
+    .site-summary {
+      display: grid;
+      grid-template-columns: 74px minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+    }
+
+    .site-cover {
+      height: 74px;
+      border-radius: 8px;
+      border: 1px solid #c7d0d7;
+      background:
+        linear-gradient(145deg, rgba(25,92,89,.65), transparent 52%),
+        linear-gradient(24deg, #c6b48a 0 32%, #9aa3a9 33% 50%, #5f6f78 51% 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .site-cover:after {
+      content: "";
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 14px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.72);
+    }
+
+    .site-cover.alt {
+      background:
+        linear-gradient(135deg, rgba(36,111,158,.62), transparent 48%),
+        linear-gradient(28deg, #d8c27a 0 26%, #8ea2a8 27% 50%, #4f6872 51% 100%);
+    }
+
+    .site-cover.pano {
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,.86) 0 10%, transparent 11%),
+        conic-gradient(from 80deg, #195c59, #287aa0, #c6b48a, #5f6f78, #195c59);
+    }
+
+    .site-top {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .open-arrow {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #fff;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+    }
+
+    .site-top h3 {
+      margin: 0 0 4px;
+      font-size: 15px;
+      line-height: 1.25;
+    }
+
+    .site-top p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .phase-pill {
+      height: 28px;
+      border-radius: 999px;
+      padding: 0 10px;
+      display: inline-flex;
+      align-items: center;
+      background: #e8f2f1;
+      color: var(--brand);
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .phase-pill.warn {
+      background: #f8f0df;
+      color: var(--warn);
+    }
+
+    .phase-pill.risk {
+      background: #f8e9e6;
+      color: var(--risk);
+    }
+
+    .site-kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .site-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .mini-action {
+      height: 28px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: white;
+      color: #43515f;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 9px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .site-kpi {
+      min-height: 58px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f8fafb;
+      padding: 9px;
+    }
+
+    .site-kpi small {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      margin-bottom: 5px;
+    }
+
+    .site-kpi strong {
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    .insight-list {
+      display: grid;
+      gap: 7px;
+    }
+
+    .insight {
+      display: grid;
+      grid-template-columns: 8px minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .priority {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--ok);
+    }
+
+    .priority.warn { background: var(--warn); }
+    .priority.risk { background: var(--risk); }
+    .priority.blue { background: var(--brand-2); }
+
+
+    .segmented {
+      display: flex;
+      padding: 3px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--soft);
+    }
+
+    .segmented button {
+      height: 28px;
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--muted);
+      padding: 0 10px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .segmented button.active {
+      background: white;
+      color: var(--ink);
+      box-shadow: 0 1px 3px rgba(0,0,0,.08);
+    }
+
+    .list {
+      display: grid;
+    }
+
+    .activity {
+      display: grid;
+      grid-template-columns: 76px minmax(0, 1fr) auto;
+      gap: 14px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      align-items: center;
+    }
+
+    .activity:last-child, .row:last-child { border-bottom: 0; }
+
+    .thumb {
+      height: 58px;
+      border-radius: 8px;
+      border: 1px solid #c7d0d7;
+      background:
+        linear-gradient(145deg, rgba(25,92,89,.65), transparent 52%),
+        linear-gradient(24deg, #c6b48a 0 32%, #9aa3a9 33% 50%, #5f6f78 51% 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .thumb.doc { background: #f1efe8; }
+
+    .thumb.doc:before {
+      content: "";
+      position: absolute;
+      inset: 11px 15px;
+      border-top: 8px solid #6d5aa7;
+      border-bottom: 8px solid #246f9e;
+      box-shadow: 0 17px 0 #d6a73d;
+    }
+
+    .thumb.pano {
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,.86) 0 10%, transparent 11%),
+        conic-gradient(from 80deg, #195c59, #287aa0, #c6b48a, #5f6f78, #195c59);
+    }
+
+    .thumb.pano:after {
+      content: "360";
+      position: absolute;
+      inset: 16px;
+      border: 2px solid rgba(255,255,255,.82);
+      border-radius: 50%;
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 9px;
+      font-weight: 900;
+    }
+
+    .activity h3 {
+      margin: 0 0 5px;
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .activity p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 9px;
+    }
+
+    .tag {
+      border-radius: 999px;
+      background: #edf3f3;
+      color: #245955;
+      padding: 4px 8px;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .tag.risk { background: #f8e9e6; color: var(--risk); }
+    .tag.warn { background: #f8f0df; color: #8b570f; }
+    .tag.blue { background: #e8f1f7; color: var(--brand-2); }
+    .tag.violet { background: #efedf7; color: var(--violet); }
+    .tag.ok { background: #e8f2ec; color: var(--ok); }
+
+    .owner {
+      min-width: 132px;
+      display: grid;
+      justify-items: end;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .avatar-line {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .avatar {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: #dfe8e9;
+      color: #315458;
+      display: grid;
+      place-items: center;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .right-col {
+      display: grid;
+      gap: 16px;
+    }
+
+    .map-wrap {
+      padding: 16px;
+    }
+
+    .site-map {
+      height: 216px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.04) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(0,0,0,.04) 1px, transparent 1px),
+        #f5f2ea;
+      background-size: 28px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .block {
+      position: absolute;
+      border-radius: 6px;
+      border: 2px solid rgba(24,33,43,.30);
+      background: rgba(255,255,255,.72);
+      display: grid;
+      place-items: center;
+      font-size: 11px;
+      font-weight: 800;
+      color: #3e4b54;
+    }
+
+    .a { left: 20px; top: 22px; width: 88px; height: 62px; }
+    .b { left: 132px; top: 28px; width: 120px; height: 72px; border-color: rgba(177,66,49,.55); }
+    .c { left: 48px; top: 116px; width: 104px; height: 58px; }
+    .d { right: 24px; bottom: 28px; width: 116px; height: 78px; border-color: rgba(169,107,20,.55); }
+
+    .pin {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--risk);
+      box-shadow: 0 0 0 5px rgba(177,66,49,.16);
+      border: 3px solid white;
+    }
+
+    .pin.one { left: 220px; top: 58px; }
+    .pin.two { right: 74px; bottom: 86px; background: var(--warn); box-shadow: 0 0 0 5px rgba(169,107,20,.16); }
+    .pin.three { left: 150px; top: 126px; background: var(--brand-2); box-shadow: 0 0 0 5px rgba(36,111,158,.18); }
+
+    .gallery {
+      margin-top: 14px;
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+    }
+
+    .gallery-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+
+    .gallery-head strong { font-size: 13px; }
+    .gallery-head span { color: var(--muted); font-size: 11px; }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .gallery-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: white;
+      min-width: 0;
+    }
+
+    .gallery-card .thumb {
+      height: 58px;
+      border: 0;
+      border-radius: 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .gallery-card strong, .gallery-card span {
+      display: block;
+      padding: 0 8px;
+    }
+
+    .gallery-card strong { margin-top: 7px; font-size: 12px; }
+    .gallery-card span {
+      margin: 3px 0 8px;
+      color: var(--muted);
+      font-size: 11px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .shape-gallery {
+      margin-top: 12px;
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .shape-row {
+      display: grid;
+      grid-template-columns: 34px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px;
+      background: #fff;
+    }
+
+    .shape-thumb {
+      width: 34px;
+      height: 34px;
+      border-radius: 7px;
+      border: 1px solid #c7d0d7;
+      background:
+        linear-gradient(145deg, rgba(25,92,89,.65), transparent 52%),
+        linear-gradient(24deg, #c6b48a 0 32%, #9aa3a9 33% 50%, #5f6f78 51% 100%);
+    }
+
+    .shape-row strong {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 2px;
+    }
+
+    .shape-row span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .ai-list, .budget, .inspections-mini {
+      display: grid;
+      gap: 10px;
+      padding: 14px 16px 16px;
+    }
+
+    .ai-item, .inspection-mini {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      display: grid;
+      gap: 7px;
+    }
+
+    .ai-item strong, .inspection-mini strong { font-size: 13px; }
+    .ai-item p, .inspection-mini span { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.4; }
+
+    .bar {
+      height: 7px;
+      border-radius: 999px;
+      background: #e5eaee;
+      overflow: hidden;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      border-radius: 999px;
+      background: var(--brand-2);
+    }
+
+    .money-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .money-row strong { color: var(--ink); }
+
+    .chat-layout {
+      display: grid;
+      grid-template-columns: 270px minmax(0, 1fr) 310px;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr) auto;
+      gap: 10px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      align-items: center;
+    }
+
+    .row strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
+
+    .row span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .messages {
+      min-height: 500px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .message-list {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .bubble {
+      max-width: 76%;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 11px 12px;
+      background: white;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .bubble.out {
+      align-self: flex-end;
+      background: #dff1ec;
+      border-color: #c3dfd7;
+    }
+
+    .composer {
+      border-top: 1px solid var(--line);
+      padding: 12px;
+      display: grid;
+      grid-template-columns: 40px 1fr 40px;
+      gap: 8px;
+    }
+
+    .input {
+      height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: white;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      font-size: 13px;
+    }
+
+    .doc-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .documents-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .doc-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .doc-summary-card {
+      min-height: 82px;
+      padding: 11px;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: transform .16s ease, border-color .16s ease, background .16s ease;
+    }
+
+    .doc-summary-card:hover,
+    .doc-summary-card.active-summary {
+      transform: translateY(-1px);
+      border-color: #b8c8ce;
+      background: #fbfcfc;
+    }
+
+    .doc-summary-card label {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      margin-bottom: 6px;
+    }
+
+    .doc-summary-card strong {
+      display: block;
+      font-size: 18px;
+      line-height: 1;
+      margin-bottom: 7px;
+    }
+
+    .doc-summary-card span {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.3;
+    }
+
+    .doc-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .doc-tabs {
+      display: flex;
+      gap: 6px;
+      padding: 3px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--soft);
+    }
+
+    .doc-tabs button {
+      height: 30px;
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--muted);
+      padding: 0 10px;
+      font-size: 12px;
+    }
+
+    .doc-tabs button.active {
+      background: #fff;
+      color: var(--ink);
+      box-shadow: 0 1px 3px rgba(0,0,0,.08);
+    }
+
+    .doc-card, .tile {
+      padding: 14px;
+      min-height: 150px;
+      display: grid;
+      align-content: space-between;
+      gap: 12px;
+    }
+
+    .doc-card {
+      min-height: 126px;
+      cursor: pointer;
+      transition: transform .16s ease, border-color .16s ease, background .16s ease;
+    }
+
+    .doc-card:hover {
+      transform: translateY(-1px);
+      border-color: #b8c8ce;
+      background: #fbfcfc;
+    }
+
+    .doc-card-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .doc-icon, .tile-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: #e8f1f7;
+      color: var(--brand-2);
+      font-weight: 850;
+      font-size: 12px;
+    }
+
+    .doc-card h3, .tile h3 {
+      margin: 0 0 6px;
+      font-size: 14px;
+    }
+
+    .doc-card p, .tile p {
+      color: var(--muted);
+      font-size: 12px;
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    .doc-meta {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .doc-list {
+      display: grid;
+    }
+
+    .doc-row {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 130px 110px auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .doc-row:last-child { border-bottom: 0; }
+
+    .doc-row[data-open-document] {
+      cursor: pointer;
+    }
+
+    .doc-row[data-open-document]:hover {
+      background: #fbfcfc;
+    }
+
+    .doc-row.active-summary {
+      background: #f3faf8;
+    }
+
+    .doc-row strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
+
+    .doc-row span,
+    .audit-row span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .doc-row .doc-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+    }
+
+    .audit-list {
+      display: grid;
+    }
+
+    .audit-row {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 10px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .audit-row:last-child { border-bottom: 0; }
+
+    .audit-row strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
+
+    .document-detail { padding: 12px 14px 14px; }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 76px minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+    }
+
+    .detail-preview {
+      height: 94px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #f1efe8;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .detail-preview.large {
+      height: 220px;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.04) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(0,0,0,.04) 1px, transparent 1px),
+        #f5f2ea;
+      background-size: 28px 28px;
+    }
+
+    .detail-preview:before {
+      content: "";
+      position: absolute;
+      inset: 16px 18px;
+      border-top: 10px solid #6d5aa7;
+      border-bottom: 10px solid #246f9e;
+      box-shadow: 0 22px 0 #d6a73d;
+    }
+
+    .detail-preview.large:before {
+      inset: 34px 38px;
+      border: 2px solid rgba(24,33,43,.26);
+      border-radius: 8px;
+      box-shadow: 120px 36px 0 -2px rgba(255,255,255,.72), 120px 36px 0 0 rgba(177,66,49,.34), 36px 116px 0 -2px rgba(255,255,255,.72), 36px 116px 0 0 rgba(36,111,158,.30);
+      background: rgba(255,255,255,.72);
+    }
+
+    .doc-pin {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 3px solid white;
+      background: var(--risk);
+      box-shadow: 0 0 0 5px rgba(177,66,49,.16);
+      display: grid;
+      place-items: center;
+      color: white;
+      font-size: 10px;
+      font-weight: 900;
+      z-index: 2;
+    }
+
+    .doc-pin.one { left: 62%; top: 34%; }
+    .doc-pin.two { left: 36%; top: 66%; background: var(--brand-2); box-shadow: 0 0 0 5px rgba(36,111,158,.16); }
+
+    .pin-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .pin-item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+      display: grid;
+      grid-template-columns: 26px minmax(0, 1fr) auto;
+      gap: 9px;
+      align-items: center;
+      background: #fff;
+    }
+
+    .pin-marker {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--risk);
+      color: white;
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .pin-item strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 2px;
+    }
+
+    .pin-item span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .detail-content h3 {
+      margin: 0 0 5px;
+      font-size: 15px;
+    }
+
+    .detail-content p {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .detail-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .documents-layout .right-col {
+      gap: 12px;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(18,32,37,.34);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 40;
+    }
+
+    .modal-backdrop.show {
+      display: flex;
+    }
+
+    .modal {
+      width: min(760px, 100%);
+      max-height: min(720px, calc(100vh - 48px));
+      overflow: auto;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      box-shadow: 0 28px 90px rgba(18,32,37,.28);
+    }
+
+    .modal-head {
+      min-height: 58px;
+      border-bottom: 1px solid var(--line);
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .modal-head h2 {
+      margin: 0;
+      font-size: 15px;
+    }
+
+    .form-grid {
+      padding: 16px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .field.wide {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      min-height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      color: var(--ink);
+      padding: 8px 10px;
+      outline: 0;
+    }
+
+    .field textarea {
+      min-height: 76px;
+      resize: vertical;
+    }
+
+    .modal-actions {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      padding-top: 4px;
+    }
+
+    .document-detail .detail-actions .secondary {
+      height: 34px;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .table th, .table td {
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      font-size: 13px;
+      vertical-align: middle;
+    }
+
+    .table th {
+      color: var(--muted);
+      font-size: 12px;
+      background: #f8fafb;
+      font-weight: 700;
+    }
+
+    .table tr:last-child td { border-bottom: 0; }
+
+    .table small {
+      display: block;
+      color: var(--muted);
+      margin-top: 3px;
+      font-size: 11px;
+    }
+
+    .table tr[data-open-schedule] {
+      cursor: pointer;
+    }
+
+    .table tr[data-open-schedule]:hover td {
+      background: #fbfcfc;
+    }
+
+    .kanban {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .lane {
+      border: 1px solid var(--line);
+      background: #f8fafb;
+      border-radius: 8px;
+      padding: 12px;
+      display: grid;
+      align-content: start;
+      gap: 10px;
+      min-height: 460px;
+    }
+
+    .lane h2 {
+      margin: 0 0 2px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .task-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .task-card h3 {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.3;
+    }
+
+    .task-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .permission-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .role-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+    }
+
+    .role-card h3 {
+      margin: 0 0 10px;
+      font-size: 14px;
+    }
+
+    .checks {
+      display: grid;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .checks span:before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--ok);
+      display: inline-block;
+      margin-right: 7px;
+    }
+
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      background: #122025;
+      color: white;
+      border-radius: 10px;
+      padding: 12px 14px;
+      box-shadow: 0 18px 48px rgba(0,0,0,.22);
+      transform: translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+      transition: .2s ease;
+      font-size: 13px;
+      z-index: 20;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 1180px) {
+      .app { grid-template-columns: 76px minmax(0, 1fr); }
+      .brand div, .nav span.label, .nav .badge, .sidebar-card { display: none; }
+      .sidebar { align-items: center; padding: 18px 10px; }
+      .brand { padding-bottom: 14px; }
+      .nav button { grid-template-columns: 1fr; justify-items: center; width: 46px; padding: 0; }
+      .grid, .grid.equal, .chat-layout { grid-template-columns: 1fr; }
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .doc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 760px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: auto;
+        height: 76px;
+        z-index: 10;
+        padding: 8px 10px;
+        display: block;
+      }
+      .brand, .sidebar-card { display: none; }
+      .nav { grid-template-columns: repeat(7, minmax(44px, 1fr)); overflow-x: auto; }
+      .nav button { width: auto; height: 58px; }
+      .main { padding: 12px 12px 88px; }
+      .topbar { grid-template-columns: 1fr; }
+      .actions {
+        overflow-x: auto;
+        max-width: calc(100vw - 24px);
+        padding-bottom: 2px;
+      }
+      .scope-pill { min-width: max-content; }
+      .search { min-width: 240px; width: 240px; }
+      .metrics, .doc-grid, .permission-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .site-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .activity { grid-template-columns: 62px minmax(0, 1fr); }
+      .owner { grid-column: 2; justify-items: start; min-width: 0; }
+      .kanban { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="mark">C</div>
+        <div><strong>ConstructOS</strong><span>Operations cockpit</span></div>
+      </div>
+      <nav class="nav" id="nav"></nav>
+      <div class="sidebar-card">
+        <small>Sincronizzazione mobile</small>
+        <strong>246 elementi acquisiti oggi</strong>
+        <div class="sync"><span></span></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1 id="pageTitle">Dashboard</h1>
+          <div class="subtitle" id="pageSubtitle">Residenza Porta Nuova · Milano · 4 edifici · settimana 31</div>
         </div>
-
-        <nav class="nav-list">
-          <button class="nav-item active" data-view="dashboard" type="button">
-            <span class="nav-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M4 13h7V4H4v9Zm9 7h7V4h-7v16ZM4 20h7v-5H4v5Z" /></svg>
-            </span>
-            <b data-i18n="navDashboard">Dashboard</b>
+        <div class="actions">
+          <div class="scope-pill" id="scopePill">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-7h6v7"/></svg>
+            <span>4 cantieri abilitati</span>
+          </div>
+          <div class="search">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="globalSearch" placeholder="Cerca issue, documenti, fornitori">
+          </div>
+          <button class="icon-btn" title="Notifiche" data-action="Notifiche">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>
           </button>
-          <button class="nav-item" data-view="tasks" type="button">
-            <span class="nav-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M9 11 5.8 7.8 4.4 9.2 9 13.8l10-10-1.4-1.4L9 11Zm-4 7h14v2H5v-2Z" /></svg>
-            </span>
-            <b data-i18n="navTasks">Tasks</b>
+          <button class="primary" data-action="Report generato">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            Nuovo report
           </button>
-          <button class="nav-item" data-view="documents" type="button">
-            <span class="nav-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v15H6V2Zm8 1.5V8h4.5L14 3.5ZM8 12h10v2H8v-2Zm0 4h10v2H8v-2Z" /></svg>
-            </span>
-            <b data-i18n="navDocuments">Documents</b>
-          </button>
-          <button class="nav-item" data-view="boq" type="button">
-            <span class="nav-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M4 3h16v18H4V3Zm3 4h10V5H7v2Zm0 4h3V9H7v2Zm5 0h5V9h-5v2Zm-5 4h3v-2H7v2Zm5 0h5v-2h-5v2Zm-5 4h3v-2H7v2Zm5 0h5v-2h-5v2Z" /></svg>
-            </span>
-            <b data-i18n="navBoq">BoQ</b>
-          </button>
-          <button class="nav-item" data-view="schedule" type="button">
-            <span class="nav-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M7 2h2v3h6V2h2v3h3v17H4V5h3V2Zm-1 8v10h12V10H6Zm2 2h8v2H8v-2Zm0 4h5v2H8v-2Z" /></svg>
-            </span>
-            <b data-i18n="navSchedule">Schedule</b>
-          </button>
-          <button class="nav-item" data-view="reports" type="button">
-            <span class="nav-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M5 3h14v18H5V3Zm3 14h2V9H8v8Zm3 0h2V6h-2v11Zm3 0h2v-5h-2v5Z" /></svg>
-            </span>
-            <b data-i18n="navReports">Reports</b>
-          </button>
-          <button class="nav-item" data-view="hierarchy" type="button">
-            <span class="nav-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M11 3h2v4h6v6h2v8h-8v-8h2V9H9v4h2v8H3v-8h2V7h6V3ZM5 15v4h4v-4H5Zm10 0v4h4v-4h-4Z" /></svg>
-            </span>
-            <b data-i18n="navHierarchy">Hierarchy</b>
-          </button>
-          <button class="nav-item" data-view="team" type="button">
-            <span class="nav-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M8 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm8.5 1a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7ZM2 21v-2c0-3.3 2.7-6 6-6s6 2.7 6 6v2H2Zm12.2 0c.5-.8.8-1.8.8-2.9 0-1.7-.7-3.3-1.8-4.4 1-.5 2.1-.7 3.3-.7 3 0 5.5 2.2 5.5 5v3h-7.8Z" /></svg>
-            </span>
-            <b data-i18n="navTeam">Team & Roles</b>
-          </button>
-          <button class="nav-item" data-view="settings" type="button">
-            <span class="nav-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M10.8 2h2.4l.5 3a7.2 7.2 0 0 1 1.7.7l2.5-1.8 1.7 1.7-1.8 2.5c.3.5.5 1.1.7 1.7l3 .5v2.4l-3 .5a7.2 7.2 0 0 1-.7 1.7l1.8 2.5-1.7 1.7-2.5-1.8c-.5.3-1.1.5-1.7.7l-.5 3h-2.4l-.5-3a7.2 7.2 0 0 1-1.7-.7l-2.5 1.8-1.7-1.7 1.8-2.5a7.2 7.2 0 0 1-.7-1.7l-3-.5v-2.4l3-.5c.2-.6.4-1.2.7-1.7L4.4 5.6l1.7-1.7 2.5 1.8c.5-.3 1.1-.5 1.7-.7l.5-3ZM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z" /></svg>
-            </span>
-            <b data-i18n="navSettings">Settings</b>
-          </button>
-        </nav>
-
-        <div class="ai-card">
-          <span class="status-dot"></span>
-          <strong data-i18n="aiCardTitle">AI triage online</strong>
-          <p data-i18n="aiCardText">Classifies field media, extracts actions and updates owners in real time.</p>
         </div>
-      </aside>
+      </header>
 
-      <main class="workspace">
-        <header class="topbar">
-          <div>
-            <p class="eyebrow" data-i18n="eyebrow">Milano Porta Nuova - Mixed-use redevelopment</p>
-            <h1 data-i18n="pageTitle">Live site intelligence</h1>
-          </div>
-          <div class="topbar-actions">
-            <div class="scope-switcher" aria-label="Workspace scope selector">
-              <button class="scope-option active" data-scope="organization" type="button" data-i18n="scopeOrganization">Organization</button>
-              <button class="scope-option" data-scope="site" type="button" data-i18n="scopeSite">Site</button>
-            </div>
-            <select id="siteSelector" class="site-selector" aria-label="Site selector">
-              <option value="porta-nuova">Milano Porta Nuova</option>
-              <option value="torino-lingotto">Torino Lingotto</option>
-              <option value="roma-ostiense">Roma Ostiense</option>
-            </select>
-            <button class="primary-button" type="button" data-i18n="exportReport">Export board report</button>
-          </div>
-        </header>
+      <div class="breadcrumb" id="breadcrumb">
+        <button id="backToPortfolio">Tutti i cantieri</button>
+        <span>/</span>
+        <strong id="breadcrumbProject">Residenza Porta Nuova</strong>
+      </div>
 
-        <section class="scope-banner">
-          <div>
-            <span id="scopeLabel">Organization view</span>
-            <strong id="scopeTitle">UrbanBuild Group</strong>
-            <p id="scopeDescription">Aggregated portfolio intelligence across all active construction sites.</p>
-          </div>
-          <div class="scope-stats">
-            <span id="scopeSitesStat"><b id="scopeSites">3</b><em data-i18n="scopeSitesLabel">sites</em></span>
-            <span><b id="scopeUsers">128</b><em data-i18n="scopeUsersLabel">users</em></span>
-            <span><b id="scopeModules">8</b><em data-i18n="scopeModulesLabel">modules</em></span>
-            <span><b id="scopeBudget">EUR 18.4M</b><em data-i18n="scopeBudgetLabel">budget</em></span>
-          </div>
-        </section>
+      <section class="view active" id="dashboard"></section>
+      <section class="view" id="chat"></section>
+      <section class="view" id="documents"></section>
+      <section class="view" id="inspections"></section>
+      <section class="view" id="schedule"></section>
+      <section class="view" id="issues"></section>
+      <section class="view" id="permissions"></section>
+    </main>
+  </div>
 
-        <section class="content-grid">
-          <section class="dashboard-panel" data-panel="dashboard">
-            <div class="insight-grid">
-              <article class="insight-card time">
-                <span data-i18n="timeInsightLabel">Time performance</span>
-                <strong id="timeInsightValue">+4 days</strong>
-                <div class="visual-meter time-meter">
-                  <i id="timeInsightBar"></i>
-                </div>
-                <p id="timeInsightText">Core A inspections are delaying the concrete sequence.</p>
-              </article>
-              <article class="insight-card budget">
-                <span data-i18n="budgetInsightLabel">Budget performance</span>
-                <strong id="budgetInsightValue">+3.8%</strong>
-                <div class="visual-meter budget-meter">
-                  <i id="budgetInsightBar"></i>
-                </div>
-                <p id="budgetInsightText">Waterproofing and logistics are driving forecast variance.</p>
-              </article>
-              <article class="insight-card forecast">
-                <span data-i18n="forecastInsightLabel">AI forecast</span>
-                <strong id="forecastInsightValue">Medium risk</strong>
-                <div class="risk-gauge" aria-label="Risk gauge">
-                  <i id="forecastNeedle"></i>
-                </div>
-                <p id="forecastInsightText">Recoverable if QA approvals and procurement blockers close this week.</p>
-              </article>
-            </div>
-
-            <div class="metric-grid">
-              <article class="metric metric-green">
-                <span class="metric-icon">TK</span>
-                <span data-i18n="metricTasks">Open field tasks</span>
-                <strong id="taskCount">24</strong>
-                <em data-i18n="metricTasksSub">+3 from site chat</em>
-              </article>
-              <article class="metric metric-red">
-                <span class="metric-icon">RI</span>
-                <span data-i18n="metricIssues">High priority issues</span>
-                <strong id="riskCount">7</strong>
-                <em data-i18n="metricIssuesSub">2 blocked trades</em>
-              </article>
-              <article class="metric metric-blue">
-                <span class="metric-icon">DC</span>
-                <span data-i18n="metricDocs">Documents processed</span>
-                <strong id="docCount">148</strong>
-                <em data-i18n="metricDocsSub">18 this week</em>
-              </article>
-              <article class="metric metric-yellow">
-                <span class="metric-icon">SC</span>
-                <span data-i18n="metricConfidence">Schedule confidence</span>
-                <strong id="confidence">82%</strong>
-                <em data-i18n="metricConfidenceSub">Stable trend</em>
-              </article>
-            </div>
-
-            <div class="section-header">
-              <div>
-                <h2 data-i18n="pulseTitle">Operational pulse</h2>
-                <p data-i18n="pulseText">AI summary from photos, notes, videos, checklists and site documents.</p>
-              </div>
-              <span class="live-pill" data-i18n="live">Live</span>
-            </div>
-
-            <div class="pulse-layout">
-              <article class="timeline">
-                <h3 data-i18n="activityTitle">AI activity stream</h3>
-                <div id="activityFeed" class="activity-feed"></div>
-              </article>
-
-              <article class="risk-map">
-                <h3 data-i18n="zonesTitle">Site zones</h3>
-                <div class="site-plan" aria-label="Site risk map">
-                  <button class="zone zone-a high" type="button">Core A</button>
-                  <button class="zone zone-b medium" type="button">Tower B</button>
-                  <button class="zone zone-c low" type="button">Podium</button>
-                  <button class="zone zone-d medium" type="button">Garage</button>
-                </div>
-                <div class="legend">
-                  <span><i class="risk-high"></i><b data-i18n="legendUrgent">urgent</b></span>
-                  <span><i class="risk-medium"></i><b data-i18n="legendWatch">watch</b></span>
-                  <span><i class="risk-low"></i><b data-i18n="legendClear">clear</b></span>
-                </div>
-              </article>
-            </div>
-          </section>
-
-          <section class="dashboard-panel hidden" data-panel="tasks">
-            <div class="section-header">
-              <div>
-                <p data-i18n="tasksText">Actions generated from field conversations and assigned to owners.</p>
-              </div>
-              <button class="secondary-button" type="button" data-i18n="kanban">Kanban view</button>
-            </div>
-            <div id="taskBoard" class="task-board"></div>
-          </section>
-
-          <section class="dashboard-panel hidden" data-panel="documents">
-            <div class="section-header">
-              <div>
-                <p data-i18n="documentsText">Permits, RFIs, drawings and delivery notes linked to site context.</p>
-              </div>
-              <button class="secondary-button" type="button" data-i18n="reviewQueue">Review queue</button>
-            </div>
-            <div id="documentList" class="document-list"></div>
-          </section>
-
-          <section class="dashboard-panel hidden" data-panel="boq">
-            <div class="section-header">
-              <div>
-                <p data-i18n="boqText">Import a PDF or XLS bill of quantities and let AI structure quantities, costs, trades and phases.</p>
-              </div>
-              <button id="importBoqButton" class="primary-button" type="button" data-i18n="importBoq">Import BoQ PDF/XLS</button>
-            </div>
-            <div class="boq-layout">
-              <article class="upload-panel">
-                <span class="upload-icon">AI</span>
-                <strong data-i18n="uploadTitle">AI estimation intake</strong>
-                <p data-i18n="uploadText">Reads line items, units, quantities, unit prices, categories and missing data from PDF, XLS or XLSX files.</p>
-                <div class="file-types">
-                  <span>PDF</span>
-                  <span>XLS</span>
-                  <span>XLSX</span>
-                </div>
-                <div id="boqStatus" class="boq-status" data-i18n="boqReady">Ready to import</div>
-              </article>
-              <div id="boqTable" class="boq-table"></div>
-            </div>
-          </section>
-
-          <section class="dashboard-panel hidden" data-panel="schedule">
-            <div class="section-header">
-              <div>
-                <p data-i18n="scheduleText">AI converts the BoQ into phases, durations, dependencies, monthly cash flow and budget risk.</p>
-              </div>
-              <button id="generateScheduleButton" class="secondary-button" type="button" data-i18n="generateSchedule">Generate from BoQ</button>
-            </div>
-            <div class="schedule-summary">
-              <article>
-                <span data-i18n="totalBudget">Total budget</span>
-                <strong id="totalBudget">EUR 4.82M</strong>
-              </article>
-              <article>
-                <span data-i18n="duration">Duration</span>
-                <strong id="duration">34 weeks</strong>
-              </article>
-              <article>
-                <span data-i18n="contingency">Contingency</span>
-                <strong id="contingency">7.5%</strong>
-              </article>
-            </div>
-            <article class="wbs-card">
-              <div class="wbs-header">
-                <div>
-                  <h3 data-i18n="wbsTitle">WBS planning</h3>
-                  <p data-i18n="wbsText">Edit WBS items and drag rows to reorder the cronoprogramma structure.</p>
-                </div>
-                <button id="addWbsButton" class="secondary-button" type="button" data-i18n="addWbs">Add WBS item</button>
-              </div>
-              <div id="wbsBoard" class="wbs-board" aria-label="Editable WBS list"></div>
-            </article>
-            <div class="schedule-grid">
-              <article class="timeline-card">
-                <h3 data-i18n="timelineTitle">AI cronoprogramma</h3>
-                <div id="scheduleTimeline" class="schedule-timeline"></div>
-              </article>
-              <article class="budget-card">
-                <h3 data-i18n="budgetTitle">Budget by trade</h3>
-                <div id="budgetBreakdown" class="budget-breakdown"></div>
-              </article>
-            </div>
-          </section>
-
-          <section class="dashboard-panel hidden" data-panel="reports">
-            <div class="section-header">
-              <div>
-                <p data-i18n="reportsText">Automatically structured site updates for executives and asset owners.</p>
-              </div>
-              <button class="secondary-button" type="button" data-i18n="schedulePdf">Schedule PDF</button>
-            </div>
-            <div id="reportGrid" class="report-grid"></div>
-          </section>
-
-          <section class="dashboard-panel hidden" data-panel="hierarchy">
-            <div class="section-header">
-              <div>
-                <p data-i18n="hierarchyText">Govern the platform from global administration down to site-level role permissions.</p>
-              </div>
-            </div>
-            <div class="hierarchy-flow">
-              <article class="hierarchy-card super">
-                <span>01</span>
-                <strong data-i18n="registrationTitle">Registration creates organization</strong>
-                <p data-i18n="registrationText">The first user creates the organization during signup and chooses who will be administrator.</p>
-              </article>
-              <article class="hierarchy-card super">
-                <span>02</span>
-                <strong data-i18n="superAdminTitle">Super Administrator</strong>
-                <p data-i18n="superAdminText">Controls platform settings, modules, billing, global templates and security policies.</p>
-              </article>
-              <article class="hierarchy-card org">
-                <span>03</span>
-                <strong data-i18n="organizationTitle">Organization</strong>
-                <p data-i18n="organizationText">Represents a developer, contractor or asset owner with custom branding and workflows.</p>
-              </article>
-              <article class="hierarchy-card sites">
-                <span>04</span>
-                <strong data-i18n="sitesTitle">One or more construction sites</strong>
-                <p data-i18n="sitesText">Each site has zones, teams, documents, reports, dashboards and AI processing rules.</p>
-              </article>
-              <article class="hierarchy-card roles">
-                <span>05</span>
-                <strong data-i18n="rolesTitle">Users by role</strong>
-                <p data-i18n="rolesText">Field worker, site manager, project manager, document controller, developer and viewer permissions.</p>
-              </article>
-            </div>
-          </section>
-
-          <section class="dashboard-panel hidden" data-panel="team">
-            <div class="section-header">
-              <div>
-                <p data-i18n="teamText">Administrators create construction sites, invite team members and assign permissions by role.</p>
-              </div>
-            </div>
-            <div class="team-admin-grid">
-              <article class="admin-form-card">
-                <h3 data-i18n="newSiteTitle">Create construction site</h3>
-                <label><span data-i18n="siteNameLabel">Site name</span><input id="newSiteName" type="text" value="Napoli Waterfront" /></label>
-                <label><span data-i18n="siteBudgetLabel">Budget</span><input id="newSiteBudget" type="text" value="EUR 5.40M" /></label>
-                <label><span data-i18n="siteAdminLabel">Site administrator</span><input id="newSiteAdmin" type="text" value="Anna Greco" /></label>
-                <button id="createSiteButton" class="primary-button" type="button" data-i18n="createSite">Create site</button>
-              </article>
-              <article class="admin-form-card">
-                <h3 data-i18n="newMemberTitle">Create team member</h3>
-                <label><span data-i18n="memberNameLabel">Name</span><input id="newMemberName" type="text" value="Paolo Neri" /></label>
-                <label><span data-i18n="memberRoleLabel">Role</span><select id="newMemberRole"><option>Administrator</option><option>Site manager</option><option>Project manager</option><option>Document controller</option><option>Field worker</option><option>Supplier</option><option>Consultant</option><option>Designer</option><option>Works director</option><option>Developer</option><option>Viewer</option></select></label>
-                <label><span data-i18n="memberSiteLabel">Site</span><select id="newMemberSite"><option>Milano Porta Nuova</option><option>Torino Lingotto</option><option>Roma Ostiense</option></select></label>
-                <button id="createMemberButton" class="primary-button" type="button" data-i18n="createMember">Create member</button>
-              </article>
-            </div>
-            <div class="roles-grid">
-              <article>
-                <strong data-i18n="adminRole">Administrator</strong>
-                <p data-i18n="adminRoleText">Creates sites, manages organization settings, users, roles and permissions.</p>
-              </article>
-              <article>
-                <strong data-i18n="siteManagerRole">Site manager</strong>
-                <p data-i18n="siteManagerRoleText">Manages site tasks, field team, WBS, schedule and operational reports.</p>
-              </article>
-              <article>
-                <strong data-i18n="docControllerRole">Document controller</strong>
-                <p data-i18n="docControllerRoleText">Controls document versions, audit trail, approvals and validation workflows.</p>
-              </article>
-              <article>
-                <strong data-i18n="fieldRole">Field worker</strong>
-                <p data-i18n="fieldRoleText">Uses mobile chat to upload photos, voice notes, videos and documents.</p>
-              </article>
-              <article>
-                <strong data-i18n="supplierRole">Supplier</strong>
-                <p data-i18n="supplierRoleText">Uploads delivery notes, certificates, product sheets and supply updates.</p>
-              </article>
-              <article>
-                <strong data-i18n="consultantRole">Consultant</strong>
-                <p data-i18n="consultantRoleText">Reviews specialist issues, contributes technical notes and validates recommendations.</p>
-              </article>
-              <article>
-                <strong data-i18n="designerRole">Designer</strong>
-                <p data-i18n="designerRoleText">Manages drawings, RFIs, design changes and technical clarifications.</p>
-              </article>
-              <article>
-                <strong data-i18n="worksDirectorRole">Works director</strong>
-                <p data-i18n="worksDirectorRoleText">Authorizes works, validates progress and controls compliance with contract documents.</p>
-              </article>
-              <article>
-                <strong data-i18n="developerRole">Developer</strong>
-                <p data-i18n="developerRoleText">Views executive dashboards, budget, schedule risk and portfolio reports.</p>
-              </article>
-              <article>
-                <strong data-i18n="viewerRole">Viewer</strong>
-                <p data-i18n="viewerRoleText">Read-only access to selected modules, reports and documents.</p>
-              </article>
-            </div>
-            <div id="teamList" class="team-list"></div>
-          </section>
-
-          <section class="dashboard-panel hidden" data-panel="settings">
-            <div class="section-header">
-              <div>
-                <p data-i18n="settingsText">Configure workspace preferences for managers and field crews.</p>
-              </div>
-            </div>
-            <div class="settings-grid">
-              <article class="settings-card">
-                <div>
-                  <span class="settings-kicker" data-i18n="languageKicker">Language</span>
-                  <strong data-i18n="languageTitle">Interface language</strong>
-                  <p data-i18n="languageText">Choose the language used across dashboard, mobile app and AI-generated updates.</p>
-                </div>
-                <div class="language-switcher" aria-label="Language selector">
-                  <button class="language-option active" data-lang="en" type="button">English</button>
-                  <button class="language-option" data-lang="it" type="button">Italiano</button>
-                </div>
-              </article>
-              <article class="settings-card">
-                <div>
-                  <span class="settings-kicker" data-i18n="customKicker">Customization</span>
-                  <strong data-i18n="customTitle">Everything is configurable</strong>
-                  <p data-i18n="customText">Organizations can customize branding, modules, fields, roles, workflows, reports, AI classification rules and notification policies.</p>
-                </div>
-                <div class="custom-chip-grid">
-                  <span data-i18n="customBrand">Brand</span>
-                  <span data-i18n="customRoles">Roles</span>
-                  <span data-i18n="customWorkflows">Workflows</span>
-                  <span data-i18n="customAI">AI rules</span>
-                </div>
-              </article>
-              <article class="settings-card muted-card">
-                <div>
-                  <span class="settings-kicker" data-i18n="workspaceKicker">Workspace</span>
-                  <strong data-i18n="workspaceTitle">Milano Porta Nuova</strong>
-                  <p data-i18n="workspaceText">Project timezone, members and notification rules are ready for backend integration.</p>
-                </div>
-              </article>
-            </div>
-          </section>
-
-          <aside class="mobile-stage" aria-label="Mobile field app preview">
-            <div class="phone">
-              <div class="phone-top">
-                <span></span>
-              </div>
-              <header class="chat-header">
-                <button class="back-button" type="button" title="Back" data-i18n-title="backTitle">&lt;</button>
-                <div class="crew-avatar">C3</div>
-                <div>
-                  <strong data-i18n="crewTitle">Core A Field Crew</strong>
-                  <span data-i18n="crewStatus">12 members - AI assistant active</span>
-                </div>
-              </header>
-
-              <div id="chatMessages" class="chat-messages" aria-live="polite"></div>
-
-              <div class="capture-rail" aria-label="Media capture shortcuts">
-                <button class="capture-button" data-kind="photo" type="button">PH<span data-i18n="photo">Photo</span></button>
-                <button class="capture-button" data-kind="voice" type="button">VO<span data-i18n="voice">Voice</span></button>
-                <button class="capture-button" data-kind="video" type="button">VI<span data-i18n="video">Video</span></button>
-                <button class="capture-button" data-kind="document" type="button">DC<span data-i18n="doc">Doc</span></button>
-              </div>
-
-              <form id="chatForm" class="chat-composer">
-                <button class="icon-button" type="button" title="Attach file" data-i18n-title="attachTitle">+</button>
-                <input id="messageInput" type="text" autocomplete="off" placeholder="Message the project..." data-i18n-placeholder="messagePlaceholder" />
-                <button class="send-button" type="submit" title="Send" data-i18n-title="sendTitle">Go</button>
-              </form>
-            </div>
-          </aside>
-        </section>
-      </main>
+  <div class="toast" id="toast"></div>
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal">
+      <div class="modal-head">
+        <div>
+          <h2 id="modalTitle">Dettaglio</h2>
+          <div class="subtitle" id="modalSubtitle"></div>
+        </div>
+        <button class="icon-btn" id="modalClose" title="Chiudi">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div id="modalBody"></div>
     </div>
+  </div>
 
-    <script src="app.js"></script>
-  </body>
+  <script>
+    const icons = {
+      dashboard: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 13h7V4H4v9Zm9 7h7V4h-7v16ZM4 20h7v-5H4v5Z"/></svg>',
+      chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-8 8H7l-4 3 1.5-5A8 8 0 1 1 21 12Z"/></svg>',
+      documents: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h7l5 5v13H7V3Z"/><path d="M14 3v6h5M9 15h6"/></svg>',
+      inspections: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>',
+      schedule: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5M4 19h16M8 16V9M12 16V6M16 16v-4"/></svg>',
+      issues: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.3 3h3.4L22 20H2L10.3 3Z"/><path d="M12 9v4M12 17h.01"/></svg>',
+      permissions: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 4 7v6c0 5 3.5 7.5 8 8 4.5-.5 8-3 8-8V7l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg>'
+    };
+
+    const pages = [
+      ['dashboard', 'Dashboard', 'Portfolio cantieri · aggregato operativo e finanziario', ''],
+      ['chat', 'Conversazioni', 'Chat operativa strutturata da mobile', '18'],
+      ['documents', 'Documenti', 'Archivio segregato per cantiere, profilo e policy', '16'],
+      ['inspections', 'Sopralluoghi', 'Report automatici, foto 360 e firme partecipanti', '5'],
+      ['schedule', 'Cronoprogramma + Budget', 'Import PDF, voci modificabili e forecast costi', '3'],
+      ['issues', 'Issue e Task', 'Kanban operativo collegato a fornitori, crono e budget', '42'],
+      ['permissions', 'Utenti e Permessi', 'Login unico, ruoli, audit trail e segregazione documentale', '']
+    ];
+
+    const activities = [
+      {kind:'photo', title:'Mancante isolamento termico nel Blocco B, piano 2', text:'Foto + vocale da Luca Ferri. Issue creata, fornitore assegnato e deadline suggerita automaticamente.', tags:['Issue · materiale mancante','Blocco B','Priorita alta'], tagClass:['risk','','warn'], owner:'Marco R.', avatar:'MR', meta:'Scade domani'},
+      {kind:'doc', title:'Nuova variante impianto elettrico caricata dal subappaltatore', text:'PDF classificato come variante contrattuale. Richiede approvazione tecnica e impatto budget.', tags:['Documento','Impianti','Approvazione'], tagClass:['violet','blue','warn'], owner:'Anna S.', avatar:'AS', meta:'In revisione'},
+      {kind:'photo', title:'Progress update: facciata nord completata al 72%', text:'12 foto raggruppate automaticamente. Aggiornato milestone e timeline di progetto.', tags:['Progress update','Facciata nord','Timeline'], tagClass:['','', 'blue'], owner:'Luca F.', avatar:'LF', meta:'Oggi, 10:42'},
+      {kind:'pano', title:'Sopralluogo 360 completato nel Blocco B, piano 2', text:'Panorama collegato a planimetria, issue isolamento e report di chiusura con link sicuro.', tags:['Foto 360','Sopralluogo','Report'], tagClass:['blue','','violet'], owner:'Anna S.', avatar:'AS', meta:'Firmato da 4/5'}
+    ];
+
+    const scheduleRows = [
+      ['Residenza Porta Nuova', 'Posa isolamento Blocco B', 'Fornitore TermoCasa', '26 mag - 4 giu', 40, 'EUR 15.960', '+EUR 1.200', 'risk'],
+      ['Residenza Porta Nuova', 'Impianto elettrico piano 2', 'Variante in revisione', '28 mag - 12 giu', 22, 'EUR 42.400', '+EUR 6.800', 'warn'],
+      ['Green Offices Lambrate', 'Chiusura cartongessi', 'Dipende da isolamento', '5 giu - 14 giu', 0, 'EUR 31.200', 'EUR 31.200', ''],
+      ['Hotel Aurora Renovation', 'Facciata nord', 'Avanzamento da foto mobile', '20 mag - 18 giu', 72, 'EUR 86.000', 'EUR 86.000', 'ok']
+    ];
+
+    const documentRows = [
+      { type: 'PDF', title: 'Variante impianti', meta: 'Documento · Blocco B · v3', status: 'In approvazione', owner: 'Anna S.', tagClass: 'warn', group: 'review' },
+      { type: 'DWG', title: 'Tavole architettoniche', meta: 'Tavola · Piano 2 · v12', status: 'Approvato', owner: 'Marco R.', tagClass: 'blue', group: 'approved' },
+      { type: 'CTR', title: 'Contratto fornitore', meta: 'Contratto · TermoCasa · riservato', status: 'Riservato', owner: 'Admin', tagClass: 'violet', group: 'sensitive' },
+      { type: 'SAL', title: 'Stato avanzamento lavori', meta: 'SAL · Maggio · collegato al budget', status: 'In revisione', owner: 'PM', tagClass: '', group: 'review' },
+      { type: '360', title: 'Sopralluogo piano 2', meta: 'Foto 360 · report isolamento', status: 'Firmato 4/5', owner: 'Luca F.', tagClass: 'ok', group: 'approved' }
+    ];
+
+    const sites = [
+      {
+        name: 'Residenza Porta Nuova',
+        location: 'Milano · 4 edifici · 126 unita',
+        phase: 'Esecuzione impianti',
+        phaseClass: 'risk',
+        cover: '',
+        progress: '68%',
+        budget: '91%',
+        issues: '42',
+        docs: '16',
+        insights: [
+          ['risk', 'Issue isolamento blocca cartongessi Blocco B', 'oggi'],
+          ['warn', 'Variante impianti: impatto stimato +€6.8K', 'ieri'],
+          ['blue', 'Sopralluogo 360 firmato da 4/5 partecipanti', '2g']
+        ]
+      },
+      {
+        name: 'Green Offices Lambrate',
+        location: 'Milano · direzionale · 18.400 mq',
+        phase: 'Strutture e facciate',
+        phaseClass: 'warn',
+        cover: 'alt',
+        progress: '54%',
+        budget: '76%',
+        issues: '18',
+        docs: '9',
+        insights: [
+          ['warn', 'Ritardo facciata sud previsto: 3 giorni', 'oggi'],
+          ['blue', 'Nuovo cronoprogramma importato da PDF', 'oggi'],
+          ['ok', 'SAL maggio coerente con avanzamento foto', '3g']
+        ]
+      },
+      {
+        name: 'Hotel Aurora Renovation',
+        location: 'Bergamo · ristrutturazione · 84 camere',
+        phase: 'Finiture interne',
+        phaseClass: '',
+        cover: 'pano',
+        progress: '82%',
+        budget: '88%',
+        issues: '11',
+        docs: '22',
+        insights: [
+          ['risk', 'Permesso antincendio ancora in revisione', 'oggi'],
+          ['warn', 'Fornitore arredi: consegna a rischio', 'ieri']
+        ]
+      },
+      {
+        name: 'Logistica Nord Hub',
+        location: 'Monza · industriale · 31.000 mq',
+        phase: 'Avvio cantiere',
+        phaseClass: '',
+        cover: 'alt',
+        progress: '14%',
+        budget: '22%',
+        issues: '6',
+        docs: '31',
+        insights: [
+          ['blue', 'Caricate 146 foto e video iniziali', 'oggi'],
+          ['warn', 'Computo importato: 12 voci da verificare', 'oggi']
+        ]
+      }
+    ];
+
+    let dashboardMode = 'portfolio';
+    let selectedSite = sites[0];
+
+    function tag(text, cls = '') {
+      return `<span class="tag ${cls}">${text}</span>`;
+    }
+
+    function showToast(text) {
+      const toast = document.getElementById('toast');
+      toast.textContent = text;
+      toast.classList.add('show');
+      clearTimeout(window.toastTimer);
+      window.toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    function renderNav() {
+      document.getElementById('nav').innerHTML = pages.map(([id, label,, badge], index) => `
+        <button class="${index === 0 ? 'active' : ''}" data-page="${id}" title="${label}">
+          ${icons[id]}
+          <span class="label">${label}</span>
+          ${badge ? `<span class="badge">${badge}</span>` : ''}
+        </button>
+      `).join('');
+    }
+
+    function renderDashboard() {
+      if (dashboardMode === 'project') {
+        renderProjectDetailDashboard();
+        return;
+      }
+      document.getElementById('dashboard').innerHTML = `
+        <section class="metrics">
+          <div class="metric" data-open-dashboard="portfolio" data-open-label="Cantieri aperti"><label>Cantieri aperti</label><strong>4</strong><span><i class="dot"></i>2 in esecuzione, 1 avvio, 1 finiture</span></div>
+          <div class="metric" data-open-page="schedule" data-open-label="Avanzamento portfolio"><label>Avanzamento medio</label><strong>55%</strong><span><i class="dot blue"></i>+3% negli ultimi 7 giorni</span></div>
+          <div class="metric" data-open-page="issues" data-open-label="Rischi critici"><label>Rischi critici aggregati</label><strong>9</strong><span><i class="dot risk"></i>3 impattano cronoprogramma</span></div>
+          <div class="metric" data-open-page="schedule" data-open-label="Budget portfolio"><label>Budget portfolio</label><strong>€18.7M</strong><span><i class="dot warn"></i>€286K forecast extra costo</span></div>
+        </section>
+        <section class="panel ai-forecast-card dashboard-forecast">
+          <label>AI FORECAST</label>
+          <strong>Medium-high risk</strong>
+          <div class="forecast-visual" aria-hidden="true">
+            <div class="forecast-gauge"></div>
+            <i class="forecast-needle"></i>
+          </div>
+          <p>AI recommends rebalancing procurement priorities and closing QA blockers within 7 days.</p>
+        </section>
+        <div class="portfolio-grid">
+          <section class="panel">
+            <div class="panel-head">
+              <div><h2>Cantieri aperti e fasi</h2><p>Vista aggregata con insight per data e importanza</p></div>
+              <div class="segmented"><button class="active" data-site-filter="all">Tutti</button><button data-site-filter="risk">Critici</button><button data-site-filter="recent">Recenti</button></div>
+            </div>
+            <div class="list" id="siteList"></div>
+          </section>
+          <aside class="right-col">
+            <section class="panel">
+              <div class="panel-head"><div><h2>Portfolio per fase</h2><p>Distribuzione operativa dei cantieri</p></div></div>
+              <div class="budget">
+                <div class="money-row"><span>Avvio cantiere</span><strong>1</strong></div>
+                <div class="money-row"><span>Strutture/facciate</span><strong>1</strong></div>
+                <div class="money-row"><span>Impianti</span><strong>1</strong></div>
+                <div class="money-row"><span>Finiture/collaudi</span><strong>1</strong></div>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-head"><div><h2>Priorita aggregate</h2><p>Urgenze operative ordinate per impatto e scadenza</p></div></div>
+              <div class="ai-list">
+                <div class="ai-item"><strong>3 milestone a rischio nei prossimi 10 giorni</strong><p>Due dipendono da fornitori, una da permesso ancora non approvato.</p><div class="bar"><span style="width:86%"></span></div></div>
+                <div class="ai-item"><strong>€286K forecast extra costo nel portfolio</strong><p>La maggior parte e collegata a varianti impianti e ritardi fornitori.</p><div class="bar"><span style="width:74%"></span></div></div>
+                <div class="ai-item"><strong>37 contenuti nuovi da mobile da classificare</strong><p>Foto, video e PDF caricati nelle ultime 24 ore su 4 cantieri.</p><div class="bar"><span style="width:62%"></span></div></div>
+              </div>
+            </section>
+          </aside>
+        </div>
+      `;
+      renderSites(sites);
+    }
+
+    function renderSites(items) {
+      document.getElementById('siteList').innerHTML = items.map(site => `
+        <article class="site-card" data-open-site="${site.name}">
+          <div class="site-summary">
+            <div class="site-cover ${site.cover || ''}"></div>
+            <div>
+              <div class="site-top">
+                <div>
+                  <h3>${site.name}</h3>
+                  <p>${site.location}</p>
+                </div>
+                <span class="phase-pill ${site.phaseClass}">${site.phase}</span>
+                <span class="open-arrow">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+                </span>
+              </div>
+              <div class="site-actions">
+                <button class="mini-action" data-gallery-target="site" data-gallery-name="${site.name}">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v14H4V5Z"/><path d="m4 15 4-4 4 4 3-3 5 5"/><circle cx="15" cy="9" r="1"/></svg>
+                  Usa immagine dalla galleria
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="site-kpis">
+            <div class="site-kpi" data-open-site="${site.name}" data-open-page-after-site="schedule" data-open-label="Avanzamento"><small>Avanz.</small><strong>${site.progress}</strong></div>
+            <div class="site-kpi" data-open-site="${site.name}" data-open-page-after-site="schedule" data-open-label="Budget"><small>Budget</small><strong>${site.budget}</strong></div>
+            <div class="site-kpi" data-open-site="${site.name}" data-open-page-after-site="issues" data-open-label="Issue"><small>Issue</small><strong>${site.issues}</strong></div>
+            <div class="site-kpi" data-open-site="${site.name}" data-open-page-after-site="documents" data-open-label="Documenti"><small>Doc</small><strong>${site.docs}</strong></div>
+          </div>
+          <div class="insight-list">
+            ${site.insights.map(insight => `
+              <div class="insight">
+                <i class="priority ${insight[0]}"></i>
+                <span>${insight[1]}</span>
+                <small>${insight[2]}</small>
+              </div>
+            `).join('')}
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function renderProjectDetailDashboard() {
+      document.getElementById('dashboard').innerHTML = `
+        <section class="metrics">
+          <div class="metric" data-open-page="schedule" data-open-label="Cronoprogramma"><label>Avanzamento</label><strong>68%</strong><span><i class="dot"></i>+4% rispetto a venerdi</span></div>
+          <div class="metric" data-open-page="issues" data-open-label="Issue e Task"><label>Issue aperte</label><strong>42</strong><span><i class="dot risk"></i>7 critiche da sbloccare</span></div>
+          <div class="metric" data-open-page="schedule" data-open-label="Budget"><label>Budget consumato</label><strong>€4.8M</strong><span><i class="dot warn"></i>91% del forecast mensile</span></div>
+          <div class="metric" data-open-page="documents" data-open-label="Documenti"><label>Documenti in revisione</label><strong>16</strong><span><i class="dot blue"></i>5 contratti, 3 varianti</span></div>
+        </section>
+        <section class="panel ai-forecast-card dashboard-forecast">
+          <label>AI FORECAST</label>
+          <strong>Medium-high risk</strong>
+          <div class="forecast-visual" aria-hidden="true">
+            <div class="forecast-gauge"></div>
+            <i class="forecast-needle"></i>
+          </div>
+          <p>AI recommends rebalancing procurement priorities and closing QA blockers within 7 days.</p>
+        </section>
+        <div class="grid">
+          <section class="panel">
+            <div class="panel-head">
+              <div><h2>Feed operativo strutturato</h2><p>Contenuti arrivati da chat, foto, vocali e PDF mobile</p></div>
+              <div class="segmented"><button class="active" data-filter="all">Tutto</button><button data-filter="issue">Issue</button><button data-filter="recent">Recenti</button></div>
+            </div>
+            <div class="list" id="activityList"></div>
+          </section>
+          <aside class="right-col">
+            <section class="panel">
+              <div class="panel-head"><div><h2>Mappa rischi cantiere</h2><p>Issue, ritardi, foto 360 e contenuti recenti</p></div></div>
+              <div class="map-wrap">
+                <div class="site-map">
+                  <div class="block a">A</div><div class="block b">B</div><div class="block c">C</div><div class="block d">D</div>
+                  <div class="pin one"></div><div class="pin two"></div><div class="pin three"></div>
+                </div>
+                <div class="gallery">
+                  <div class="gallery-head"><strong>Ultimi dal cantiere</strong><span>Foto, PDF, sopralluoghi</span></div>
+                  <div class="gallery-grid">
+                    <div class="gallery-card"><div class="thumb"></div><strong>Foto</strong><span>Isolamento Blocco B</span></div>
+                    <div class="gallery-card"><div class="thumb doc"></div><strong>PDF</strong><span>Variante impianti</span></div>
+                    <div class="gallery-card"><div class="thumb pano"></div><strong>360</strong><span>Sopralluogo piano 2</span></div>
+                  </div>
+                </div>
+                <div class="shape-gallery">
+                  <div class="gallery-head"><strong>Immagini associate alle forme</strong><span>Cover da galleria</span></div>
+                  <div class="shape-row">
+                    <div class="shape-thumb"></div>
+                    <div><strong>Blocco B</strong><span>Foto isolamento termico</span></div>
+                    <button class="mini-action" data-gallery-target="shape" data-gallery-name="Blocco B">Cambia</button>
+                  </div>
+                  <div class="shape-row">
+                    <div class="shape-thumb"></div>
+                    <div><strong>Piano 2</strong><span>Foto 360 sopralluogo</span></div>
+                    <button class="mini-action" data-gallery-target="shape" data-gallery-name="Piano 2">Cambia</button>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-head"><div><h2>Sopralluoghi</h2><p>Report, partecipanti e firme automatiche</p></div></div>
+              <div class="inspections-mini">
+                <div class="inspection-mini"><strong>Isolamento Blocco B</strong><span>3 foto 360 · 14 foto · 2 issue · 4/5 firme</span></div>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-head"><div><h2>Priorita operative</h2><p>Azioni suggerite da segnali ricorrenti</p></div></div>
+              <div class="ai-list">
+                <div class="ai-item"><strong>Rischio ritardo impianti nel Blocco B</strong><p>Tre segnalazioni simili in 9 giorni, stesso fornitore e stessa zona.</p><div class="bar"><span style="width:86%"></span></div></div>
+                <div class="ai-item"><strong>Genera verbale riunione settimanale</strong><p>Pronte 14 decisioni, 8 task e 3 punti aperti dalle conversazioni.</p><div class="bar"><span style="width:74%"></span></div></div>
+              </div>
+            </section>
+          </aside>
+        </div>
+      `;
+      renderActivities(activities);
+    }
+
+    function renderActivities(items) {
+      const activityList = document.getElementById('activityList');
+      if (!activityList) return;
+      activityList.innerHTML = items.map(item => `
+        <article class="activity">
+          <div class="thumb ${item.kind === 'doc' ? 'doc' : item.kind === 'pano' ? 'pano' : ''}"></div>
+          <div>
+            <h3>${item.title}</h3>
+            <p>${item.text}</p>
+            <div class="tags">${item.tags.map((t, i) => tag(t, item.tagClass[i] || '')).join('')}</div>
+          </div>
+          <div class="owner"><div class="avatar-line"><span class="avatar">${item.avatar}</span>${item.owner}</div><span>${item.meta}</span></div>
+        </article>
+      `).join('');
+    }
+
+    function renderChat() {
+      document.getElementById('chat').innerHTML = `
+        <div class="chat-layout">
+          <section class="panel">
+            <div class="panel-head"><div><h2>Canali</h2><p>Conversazioni per cantiere, team e fornitore</p></div></div>
+            <div class="list">
+              <div class="row"><div class="avatar">B</div><div><strong>Blocco B</strong><span>Foto + vocale · 10:42</span></div>${tag('18','blue')}</div>
+              <div class="row"><div class="avatar">S</div><div><strong>Sicurezza</strong><span>Checklist ponteggi</span></div>${tag('3','warn')}</div>
+              <div class="row"><div class="avatar">F</div><div><strong>Fornitori</strong><span>Consegna materiali</span></div>${tag('7')}</div>
+              <div class="row"><div class="avatar">D</div><div><strong>Direzione lavori</strong><span>Verbale in bozza</span></div>${tag('Bozza','violet')}</div>
+            </div>
+          </section>
+          <section class="panel messages">
+            <div class="panel-head"><div><h2>Blocco B · squadra impianti</h2><p>12 partecipanti · sincronizzato con mobile</p></div></div>
+            <div class="message-list">
+              <div class="bubble"><strong>Luca Ferri</strong><br>Foto e vocale: manca isolamento termico nel piano 2. Ho lasciato i dettagli.</div>
+              <div class="bubble out">Creo issue e assegno a Marco R. con scadenza domani.</div>
+              <div class="bubble"><strong>Marco R.</strong><br>Ricevuto. Verifico con fornitore entro pranzo.</div>
+            </div>
+            <div class="composer"><button class="icon-btn" data-action="Allegato pronto">+</button><div class="input">Messaggio, foto, PDF o comando vocale...</div><button class="icon-btn" data-action="Vocale registrato">Mic</button></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head"><div><h2>Contesto operativo</h2><p>Classificazione e impatti collegati</p></div></div>
+            <div class="list">
+              <div class="row"><div class="avatar">IS</div><div><strong>Issue · materiale mancante</strong><span>Priorita alta</span></div>${tag('Alta','risk')}</div>
+              <div class="row"><div class="avatar">MR</div><div><strong>Assegnato a Marco R.</strong><span>Scadenza domani</span></div>${tag('Task')}</div>
+              <div class="row"><div class="avatar">€</div><div><strong>Impatto forecast</strong><span>Possibile extra costo €1.200</span></div>${tag('Budget','warn')}</div>
+            </div>
+          </section>
+        </div>
+      `;
+    }
+
+    function renderDocuments() {
+      document.getElementById('documents').innerHTML = `
+        <section class="doc-summary-grid">
+          <div class="doc-summary-card" data-doc-filter="review"><label>In revisione</label><strong>16</strong><span>5 contratti, 3 varianti</span></div>
+          <div class="doc-summary-card" data-doc-filter="approved"><label>Approvati</label><strong>84</strong><span>12 aggiornati questa settimana</span></div>
+          <div class="doc-summary-card" data-doc-filter="sensitive"><label>Riservati</label><strong>9</strong><span>Accesso PM/Admin</span></div>
+        </section>
+
+        <div class="doc-toolbar">
+          <div class="doc-tabs">
+            <button class="active">Tutti</button>
+            <button>PDF</button>
+            <button>Tavole</button>
+            <button>Contratti</button>
+            <button>SAL</button>
+          </div>
+          <button class="secondary" data-action="Upload documento">Carica documento</button>
+        </div>
+
+        <div class="documents-layout">
+          <section class="panel">
+            <div class="panel-head">
+              <div><h2>Documenti recenti</h2><p>Segregati per cantiere, area, fornitore e profilo</p></div>
+              <button class="secondary" data-open-audit="true">Audit documentale</button>
+            </div>
+            <div class="doc-list">
+              <div id="documentList"></div>
+            </div>
+          </section>
+        </div>
+      `;
+      renderDocumentList('all');
+    }
+
+    function renderDocumentList(filter = 'all') {
+      const list = document.getElementById('documentList');
+      if (!list) return;
+      const items = filter === 'all' ? documentRows : documentRows.filter(doc => doc.group === filter);
+      list.innerHTML = items.map(doc => `
+        <div class="doc-row" data-open-document="${doc.title}" data-document-meta="${doc.meta}" data-document-status="${doc.status}" data-document-owner="${doc.owner}" data-document-class="${doc.tagClass}">
+          <div class="doc-icon">${doc.type}</div>
+          <div><strong>${doc.title}</strong><span>${doc.meta}</span></div>
+          <div>${tag(doc.status, doc.tagClass)}</div>
+          <span>${doc.owner}</span>
+          <button class="icon-btn" title="Apri documento" data-open-document="${doc.title}" data-document-meta="${doc.meta}" data-document-status="${doc.status}" data-document-owner="${doc.owner}" data-document-class="${doc.tagClass}">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+        </div>
+      `).join('');
+      const first = list.querySelector('[data-open-document]');
+      if (first) first.classList.add('active-summary');
+    }
+
+    function renderInspections() {
+      document.getElementById('inspections').innerHTML = `
+        <div class="doc-toolbar">
+          <div class="doc-tabs">
+            <button class="active">Aperti</button>
+            <button>Da firmare</button>
+            <button>Chiusi</button>
+          </div>
+          <button class="primary" data-open-inspection-create="true">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            Nuovo sopralluogo
+          </button>
+        </div>
+        <div class="grid equal">
+          <section class="panel">
+            <div class="panel-head"><div><h2>Sopralluogo: Isolamento Blocco B</h2><p>Report automatico pronto per chiusura</p></div>${tag('4/5 firme','ok')}</div>
+            <div class="list">
+              <div class="activity"><div class="thumb pano"></div><div><h3>3 foto 360 collegate a planimetria</h3><p>Piano 2 · punti ispezione A, B e C con link sicuro nel report.</p><div class="tags">${tag('Foto 360','blue')}${tag('Planimetria')}</div></div><div class="owner"><span>Oggi</span></div></div>
+              <div class="activity"><div class="thumb"></div><div><h3>14 foto e 2 vocali inclusi nel verbale</h3><p>Sintesi pronta, issue generate e responsabili assegnati.</p><div class="tags">${tag('Media')}${tag('Sintesi','violet')}</div></div><div class="owner"><span>10:58</span></div></div>
+              <div class="activity"><div class="thumb doc"></div><div><h3>Documento allegato con pin issue</h3><p>Tavola del sopralluogo con 2 pin collegati a issue e rilievi di chiusura.</p><div class="tags">${tag('Allegato','violet')}${tag('Pin issue','risk')}</div></div><div class="owner"><button class="secondary" data-open-inspection-attachment="true">Apri</button></div></div>
+              <div class="activity"><div class="thumb doc"></div><div><h3>Report di chiusura</h3><p>PDF con firme partecipanti, QR per viste 360 e audit trail.</p><div class="tags">${tag('Report','violet')}${tag('Firme','ok')}</div></div><div class="owner"><span>Bozza</span></div></div>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-head"><div><h2>Partecipanti</h2><p>Firma automatica e presenza</p></div></div>
+            <div class="list">
+              <div class="row"><div class="avatar">AS</div><div><strong>Anna S.</strong><span>Direzione lavori</span></div>${tag('Firmato','ok')}</div>
+              <div class="row"><div class="avatar">MR</div><div><strong>Marco R.</strong><span>Capocantiere</span></div>${tag('Firmato','ok')}</div>
+              <div class="row"><div class="avatar">LF</div><div><strong>Luca F.</strong><span>Site manager</span></div>${tag('Firmato','ok')}</div>
+              <div class="row"><div class="avatar">TC</div><div><strong>TermoCasa</strong><span>Fornitore isolamento</span></div>${tag('Da firmare','warn')}</div>
+            </div>
+          </section>
+        </div>
+      `;
+    }
+
+    function renderSchedule() {
+      document.getElementById('schedule').innerHTML = `
+        <section class="metrics">
+          <div class="metric"><label>Attivita</label><strong>186</strong><span><i class="dot blue"></i>Tutte visibili nella tabella</span></div>
+          <div class="metric" data-schedule-filter="modified" data-open-label="Attività modificate"><label>Modificate utente</label><strong>42</strong><span><i class="dot"></i>Audit attivo</span></div>
+          <div class="metric"><label>Extra costo previsto</label><strong>€78K</strong><span><i class="dot risk"></i>Forecast aggiornato</span></div>
+          <div class="metric" data-schedule-filter="risk" data-open-label="Milestone a rischio"><label>Milestone a rischio</label><strong>3</strong><span><i class="dot warn"></i>Dipendenze bloccate</span></div>
+        </section>
+        <table class="table">
+          <thead><tr><th>Cantiere</th><th>Attivita</th><th>Periodo</th><th>Avanzamento</th><th>Costo previsto</th><th>Forecast</th><th></th></tr></thead>
+          <tbody>
+            ${scheduleRows.map(r => `<tr data-open-schedule="${r[1]}"><td><strong>${r[0]}</strong></td><td><strong>${r[1]}</strong><small>${r[2]}</small></td><td>${r[3]}</td><td><div class="bar"><span style="width:${r[4]}%"></span></div><small>${r[4]}%</small></td><td>${r[5]}</td><td style="color:var(--${r[7] || 'ink'})">${r[6]}</td><td><button class="secondary" data-action="Voce cronoprogramma modificabile">Modifica</button></td></tr>`).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function renderIssues() {
+      document.getElementById('issues').innerHTML = `
+        <div class="kanban">
+          <section class="lane"><h2>Da fare</h2>
+            <article class="task-card"><h3>Verifica isolamento mancante</h3><p>Marco R. · scade domani · collegata a posa isolamento.</p><div>${tag('Alta','risk')} ${tag('Crono')}</div></article>
+            <article class="task-card"><h3>Firmare report sopralluogo</h3><p>1 firma mancante da fornitore TermoCasa.</p><div>${tag('Firma','warn')}</div></article>
+          </section>
+          <section class="lane"><h2>In corso</h2>
+            <article class="task-card"><h3>Valutare variante impianti</h3><p>Anna S. · impatto stimato +€6.800.</p><div>${tag('Budget','warn')} ${tag('PDF','blue')}</div></article>
+            <article class="task-card"><h3>Allineare milestone facciata nord</h3><p>Progress update da 12 foto mobile.</p><div>${tag('Progress')}</div></article>
+          </section>
+          <section class="lane"><h2>Bloccato</h2>
+            <article class="task-card"><h3>Chiusura cartongessi</h3><p>Dipende da isolamento Blocco B e consegna materiale.</p><div>${tag('Ritardo','risk')}</div></article>
+          </section>
+        </div>
+      `;
+    }
+
+    function renderPermissions() {
+      document.getElementById('permissions').innerHTML = `
+        <section class="permission-grid">
+          ${[
+            ['Capocantiere', ['Chat e task cantiere','Sopralluoghi e report','Documenti operativi']],
+            ['Project Manager', ['Cronoprogramma editabile','Budget e SAL','Approvazioni documenti']],
+            ['Subappaltatore', ['Solo progetti assegnati','Upload foto e PDF','Nessun budget']],
+            ['Investitore', ['Dashboard portfolio','Report approvati','No chat grezze']]
+          ].map(r => `<article class="role-card"><h3>${r[0]}</h3><div class="checks">${r[1].map(x => `<span>${x}</span>`).join('')}</div></article>`).join('')}
+        </section>
+        <br>
+        <section class="panel">
+          <div class="panel-head"><div><h2>Policy e audit trail</h2><p>Il backend decide sempre cosa e visibile, modificabile o scaricabile</p></div></div>
+          <div class="list">
+            <div class="row"><div class="avatar">RB</div><div><strong>Contratti e fatture</strong><span>Visibili solo a PM, Admin, Finance</span></div>${tag('Riservato','violet')}</div>
+            <div class="row"><div class="avatar">AU</div><div><strong>Audit completo</strong><span>View, download, firma, modifica, export</span></div>${tag('Log')}</div>
+            <div class="row"><div class="avatar">SSO</div><div><strong>Login unico</strong><span>Mobile e web condividono identita e permessi</span></div>${tag('Identity','blue')}</div>
+          </div>
+        </section>
+      `;
+    }
+
+    function setPage(id) {
+      document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === id));
+      document.querySelectorAll('.nav button').forEach(b => b.classList.toggle('active', b.dataset.page === id));
+      const page = pages.find(p => p[0] === id);
+      document.getElementById('pageTitle').textContent = page[1];
+      document.getElementById('pageSubtitle').textContent = id === 'dashboard'
+        ? (dashboardMode === 'project' ? `${selectedSite.name} · ${selectedSite.phase}` : page[2])
+        : page[2];
+      document.getElementById('breadcrumb').classList.toggle('show', id === 'dashboard' && dashboardMode === 'project');
+      document.getElementById('breadcrumbProject').textContent = selectedSite.name;
+      document.getElementById('scopePill').querySelector('span').textContent = dashboardMode === 'project' ? 'Vista cantiere' : `${sites.length} cantieri abilitati`;
+      history.replaceState(null, '', '#' + id);
+    }
+
+    function openSite(siteName) {
+      selectedSite = sites.find(site => site.name === siteName) || sites[0];
+      dashboardMode = 'project';
+      document.getElementById('globalSearch').placeholder = 'Cerca issue, documenti, fornitori';
+      renderDashboard();
+      if (document.getElementById('dashboard').classList.contains('active')) {
+        setPage('dashboard');
+      }
+      showToast(`Aperto ${selectedSite.name}`);
+    }
+
+    function openPortfolio() {
+      dashboardMode = 'portfolio';
+      document.getElementById('globalSearch').placeholder = 'Cerca cantieri, issue, fornitori';
+      renderDashboard();
+      setPage('dashboard');
+      showToast('Vista aggregata');
+    }
+
+    function openDocumentDetail(trigger, notify = true) {
+      document.querySelectorAll('[data-open-document]').forEach(row => row.classList.remove('active-summary'));
+      const row = trigger.closest('.doc-row') || trigger;
+      row.classList.add('active-summary');
+      const title = trigger.dataset.openDocument;
+      const meta = `${trigger.dataset.documentMeta} · Owner ${trigger.dataset.documentOwner}`;
+      const tags = `${tag(trigger.dataset.documentStatus, trigger.dataset.documentClass || '')}${tag('Accesso verificato','ok')}`;
+      openModal('Dettaglio documento', meta, `
+        <div class="document-detail">
+          <div class="detail-grid">
+            <div class="detail-preview"></div>
+            <div class="detail-content">
+              <h3>${title}</h3>
+              <p>${meta}</p>
+              <div class="tags">${tags}</div>
+              <div class="detail-actions">
+                <button class="secondary" data-action="Anteprima documento">Anteprima</button>
+                <button class="secondary" data-action="Versioni documento">Versioni</button>
+                <button class="secondary" data-action="Condivisione documento">Condividi</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `);
+      if (notify) showToast(`Aperto ${trigger.dataset.openDocument}`);
+    }
+
+    function openAuditModal() {
+      openModal('Audit documentale', 'Accessi, modifiche e blocchi recenti', `
+        <div class="audit-list">
+          <div class="audit-row"><div class="avatar">AS</div><div><strong>Approvata variante impianti</strong><span>Anna S. · oggi 11:12</span></div></div>
+          <div class="audit-row"><div class="avatar">LF</div><div><strong>Caricate 14 foto</strong><span>Luca F. · sopralluogo piano 2</span></div></div>
+          <div class="audit-row"><div class="avatar">PM</div><div><strong>Download contratto bloccato</strong><span>Profilo non autorizzato</span></div></div>
+        </div>
+      `);
+    }
+
+    function openInspectionCreateModal() {
+      openModal('Nuovo sopralluogo', 'Crea una sessione di raccolta prove e report', `
+        <div class="form-grid">
+          <div class="field">
+            <label>Cantiere</label>
+            <select>
+              <option>Residenza Porta Nuova</option>
+              <option>Green Offices Lambrate</option>
+              <option>Hotel Aurora Renovation</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Area</label>
+            <select>
+              <option>Blocco B · Piano 2</option>
+              <option>Blocco A · Piano terra</option>
+              <option>Facciata nord</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Tipo sopralluogo</label>
+            <select>
+              <option>Ispezione tecnica</option>
+              <option>Avanzamento lavori</option>
+              <option>Sicurezza</option>
+              <option>Chiusura lavorazione</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Data</label>
+            <input type="date" value="2026-05-29">
+          </div>
+          <div class="field wide">
+            <label>Partecipanti</label>
+            <input value="Anna S., Marco R., Luca F., TermoCasa">
+          </div>
+          <div class="field wide">
+            <label>Note iniziali</label>
+            <textarea>Verificare isolamento, cartongessi e documentazione fotografica del piano 2.</textarea>
+          </div>
+          <div class="field wide">
+            <label>Allegati previsti</label>
+            <div class="tags">${tag('Foto')}${tag('Video')}${tag('Foto 360','blue')}${tag('Vocali')}${tag('PDF')}</div>
+          </div>
+          <div class="modal-actions">
+            <button class="secondary" data-action="Bozza sopralluogo salvata">Salva bozza</button>
+            <button class="primary" data-action="Sopralluogo creato">Crea sopralluogo</button>
+          </div>
+        </div>
+      `);
+    }
+
+    function openInspectionAttachmentModal() {
+      openModal('Allegato sopralluogo con pin', 'Tavola allegata al sopralluogo · Blocco B · Piano 2', `
+        <div class="document-detail">
+          <div class="detail-preview large">
+            <div class="doc-pin one">1</div>
+            <div class="doc-pin two">2</div>
+          </div>
+          <div class="pin-list">
+            <div class="pin-item">
+              <div class="pin-marker">1</div>
+              <div><strong>Issue: isolamento mancante</strong><span>Collegata a Blocco B · priorita alta · Marco R.</span></div>
+              <button class="secondary" data-action="Issue aperta">Apri issue</button>
+            </div>
+            <div class="pin-item">
+              <div class="pin-marker" style="background: var(--brand-2)">2</div>
+              <div><strong>Rilievo: verifica cartongesso</strong><span>Da convertire in task o nota report</span></div>
+              <button class="secondary" data-action="Task creato da pin">Crea task</button>
+            </div>
+          </div>
+          <div class="detail-actions">
+            <button class="primary" data-action="Nuovo pin issue">Aggiungi pin issue</button>
+            <button class="secondary" data-action="Allegato inserito nel report">Inserisci nel report</button>
+          </div>
+        </div>
+      `);
+    }
+
+    function openModal(title, subtitle, body) {
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalSubtitle').textContent = subtitle;
+      document.getElementById('modalBody').innerHTML = body;
+      document.getElementById('modalBackdrop').classList.add('show');
+    }
+
+    function closeModal() {
+      document.getElementById('modalBackdrop').classList.remove('show');
+    }
+
+    function wireEvents() {
+      document.getElementById('nav').addEventListener('click', event => {
+        const button = event.target.closest('button[data-page]');
+        if (button) setPage(button.dataset.page);
+      });
+
+      document.body.addEventListener('click', event => {
+        const action = event.target.closest('[data-action]');
+        if (action) showToast(action.dataset.action);
+
+        const galleryAction = event.target.closest('[data-gallery-target]');
+        if (galleryAction) {
+          event.stopPropagation();
+          showToast(`Galleria aperta per ${galleryAction.dataset.galleryName}`);
+          return;
+        }
+
+        const siteMetric = event.target.closest('[data-open-page-after-site]');
+        if (siteMetric) {
+          openSite(siteMetric.dataset.openSite);
+          setPage(siteMetric.dataset.openPageAfterSite);
+          showToast(`Aperto ${siteMetric.dataset.openLabel}`);
+          return;
+        }
+
+        const filter = event.target.closest('[data-filter]');
+        if (filter) {
+          document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
+          filter.classList.add('active');
+          if (filter.dataset.filter === 'issue') {
+            renderActivities(activities.filter(a => a.tags.join(' ').toLowerCase().includes('issue')));
+          } else if (filter.dataset.filter === 'recent') {
+            showToast('Filtro recenti applicato');
+            renderActivities(activities);
+          } else {
+            renderActivities(activities);
+          }
+        }
+
+        const siteFilter = event.target.closest('[data-site-filter]');
+        if (siteFilter) {
+          document.querySelectorAll('[data-site-filter]').forEach(b => b.classList.remove('active'));
+          siteFilter.classList.add('active');
+          if (siteFilter.dataset.siteFilter === 'risk') {
+            renderSites(sites.filter(site => site.insights.some(insight => insight[0] === 'risk')));
+          } else if (siteFilter.dataset.siteFilter === 'recent') {
+            renderSites(sites.filter(site => site.insights.some(insight => insight[2] === 'oggi')));
+          } else {
+            renderSites(sites);
+          }
+        }
+
+        const siteCard = event.target.closest('[data-open-site]');
+        if (siteCard) {
+          openSite(siteCard.dataset.openSite);
+        }
+
+        const metricCard = event.target.closest('[data-open-page]');
+        if (metricCard) {
+          setPage(metricCard.dataset.openPage);
+          showToast(`Aperto ${metricCard.dataset.openLabel}`);
+        }
+
+        const dashboardCard = event.target.closest('[data-open-dashboard]');
+        if (dashboardCard) {
+          openPortfolio();
+          showToast(`Aperto ${dashboardCard.dataset.openLabel}`);
+        }
+
+        const scheduleFilter = event.target.closest('[data-schedule-filter]');
+        if (scheduleFilter) {
+          document.querySelectorAll('[data-schedule-filter]').forEach(card => card.classList.remove('active-summary'));
+          scheduleFilter.classList.add('active-summary');
+          showToast(`Filtro: ${scheduleFilter.dataset.openLabel}`);
+        }
+
+        const scheduleRow = event.target.closest('[data-open-schedule]');
+        if (scheduleRow && !event.target.closest('button')) {
+          showToast(`Aperta voce: ${scheduleRow.dataset.openSchedule}`);
+        }
+
+        const documentTrigger = event.target.closest('[data-open-document]');
+        if (documentTrigger) {
+          openDocumentDetail(documentTrigger);
+          return;
+        }
+
+        const auditTrigger = event.target.closest('[data-open-audit]');
+        if (auditTrigger) {
+          openAuditModal();
+          return;
+        }
+
+        const inspectionCreate = event.target.closest('[data-open-inspection-create]');
+        if (inspectionCreate) {
+          openInspectionCreateModal();
+          return;
+        }
+
+        const inspectionAttachment = event.target.closest('[data-open-inspection-attachment]');
+        if (inspectionAttachment) {
+          openInspectionAttachmentModal();
+          return;
+        }
+
+        const docFilter = event.target.closest('[data-doc-filter]');
+        if (docFilter) {
+          document.querySelectorAll('[data-doc-filter]').forEach(card => card.classList.remove('active-summary'));
+          docFilter.classList.add('active-summary');
+          renderDocumentList(docFilter.dataset.docFilter);
+          showToast('Documenti filtrati');
+        }
+      });
+
+      document.getElementById('globalSearch').addEventListener('input', event => {
+        const value = event.target.value.trim().toLowerCase();
+        if (document.getElementById('dashboard').classList.contains('active')) {
+          if (document.getElementById('siteList')) {
+            const filtered = value ? sites.filter(site => (
+              site.name + site.location + site.phase + site.insights.map(i => i[1]).join(' ')
+            ).toLowerCase().includes(value)) : sites;
+            renderSites(filtered);
+          } else {
+            const filtered = value ? activities.filter(a => (a.title + a.text + a.tags.join(' ')).toLowerCase().includes(value)) : activities;
+            renderActivities(filtered);
+          }
+        }
+      });
+
+      document.getElementById('backToPortfolio').addEventListener('click', openPortfolio);
+      document.getElementById('modalClose').addEventListener('click', closeModal);
+      document.getElementById('modalBackdrop').addEventListener('click', event => {
+        if (event.target.id === 'modalBackdrop') closeModal();
+      });
+    }
+
+    renderNav();
+    renderDashboard();
+    renderChat();
+    renderDocuments();
+    renderInspections();
+    renderSchedule();
+    renderIssues();
+    renderPermissions();
+    wireEvents();
+    const initialPage = location.hash ? location.hash.slice(1) : 'dashboard';
+    openPortfolio();
+    setPage(initialPage);
+  </script>
+</body>
 </html>
