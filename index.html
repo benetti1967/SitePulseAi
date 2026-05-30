@@ -1417,6 +1417,172 @@
       border-radius: 8px;
     }
 
+    .media-intake {
+      display: grid;
+      grid-template-columns: minmax(280px, .8fr) minmax(0, 1.2fr);
+      gap: 16px;
+      align-items: start;
+      margin-bottom: 16px;
+    }
+
+    .upload-drop {
+      min-height: 220px;
+      border: 1px dashed #aebdc2;
+      border-radius: 8px;
+      background: #fbfcfc;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 18px;
+      color: var(--muted);
+    }
+
+    .upload-drop strong {
+      display: block;
+      color: var(--ink);
+      font-size: 18px;
+      margin: 10px 0 6px;
+    }
+
+    .upload-drop .icon {
+      width: 30px;
+      height: 30px;
+      color: var(--brand);
+      margin: 0 auto;
+    }
+
+    .media-search {
+      display: grid;
+      gap: 10px;
+    }
+
+    .media-search-box {
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 12px;
+    }
+
+    .media-search-box input {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      background: transparent;
+    }
+
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-row button {
+      height: 30px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: white;
+      color: #43515f;
+      padding: 0 10px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .filter-row button.active {
+      background: #eef8f6;
+      border-color: #8eb9b4;
+      color: var(--brand);
+      font-weight: 800;
+    }
+
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .media-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .media-thumb {
+      height: 118px;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(145deg, rgba(25,92,89,.65), transparent 52%),
+        linear-gradient(24deg, #c6b48a 0 32%, #9aa3a9 33% 50%, #5f6f78 51% 100%);
+      position: relative;
+    }
+
+    .media-thumb.video:after,
+    .media-thumb.doc:after,
+    .media-thumb.audio:after {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 900;
+      background: rgba(18,32,37,.22);
+    }
+
+    .media-thumb.video:after { content: "VIDEO"; }
+    .media-thumb.doc:after { content: "PDF"; background: rgba(109,90,167,.28); }
+    .media-thumb.audio:after { content: "VOICE"; background: rgba(40,122,160,.30); }
+
+    .media-card-body {
+      padding: 12px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .media-card-body h3 {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .media-card-body p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .ai-suggestion {
+      border: 1px solid #d8e6e4;
+      border-radius: 8px;
+      background: #f2faf8;
+      padding: 9px;
+      color: #245955;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .media-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .media-card-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .media-card-actions button {
+      flex: 1;
+    }
+
     .audit-list {
       display: grid;
     }
@@ -2035,6 +2201,8 @@
       .grid, .grid.equal, .chat-layout { grid-template-columns: 1fr; }
       .portfolio-grid { grid-template-columns: 1fr; }
       .doc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .media-intake { grid-template-columns: 1fr; }
+      .media-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media (max-width: 760px) {
@@ -2051,7 +2219,7 @@
         display: block;
       }
       .brand, .sidebar-card { display: none; }
-      .nav { grid-template-columns: repeat(7, minmax(44px, 1fr)); overflow-x: auto; }
+      .nav { grid-template-columns: repeat(8, minmax(44px, 1fr)); overflow-x: auto; }
       .nav button { width: auto; height: 58px; }
       .main { padding: 12px 12px 88px; }
       .topbar { grid-template-columns: 1fr; }
@@ -2064,6 +2232,7 @@
       .search { min-width: 240px; width: 240px; }
       .metrics, .doc-grid, .permission-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .portfolio-grid { grid-template-columns: 1fr; }
+      .media-grid { grid-template-columns: 1fr; }
       .site-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .activity { grid-template-columns: 62px minmax(0, 1fr); }
       .owner { grid-column: 2; justify-items: start; min-width: 0; }
@@ -2131,6 +2300,7 @@
 
       <section class="view active" id="dashboard"></section>
       <section class="view" id="chat"></section>
+      <section class="view" id="media"></section>
       <section class="view" id="documents"></section>
       <section class="view" id="inspections"></section>
       <section class="view" id="schedule"></section>
@@ -2188,6 +2358,7 @@
     const icons = {
       dashboard: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 13h7V4H4v9Zm9 7h7V4h-7v16ZM4 20h7v-5H4v5Z"/></svg>',
       chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-8 8H7l-4 3 1.5-5A8 8 0 1 1 21 12Z"/></svg>',
+      media: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8" cy="10" r="2"/><path d="m21 16-5-5L5 19"/><path d="M15 8h4"/></svg>',
       documents: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h7l5 5v13H7V3Z"/><path d="M14 3v6h5M9 15h6"/></svg>',
       inspections: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>',
       schedule: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5M4 19h16M8 16V9M12 16V6M16 16v-4"/></svg>',
@@ -2200,6 +2371,7 @@
     const pages = [
       ['dashboard', 'Dashboard', 'Portfolio cantieri · aggregato operativo e finanziario', ''],
       ['chat', 'Conversazioni', 'Chat operativa strutturata da mobile', '18'],
+      ['media', 'Archivio media', 'Foto, video, vocali e documenti caricabili senza sopralluogo', '12'],
       ['documents', 'Documenti', 'Archivio segregato per cantiere, profilo e policy', '16'],
       ['inspections', 'Sopralluoghi', 'Report automatici, foto 360 e firme partecipanti', '5'],
       ['schedule', 'Cronoprogramma + Budget', 'Import PDF, voci modificabili e forecast costi', '3'],
@@ -2229,6 +2401,15 @@
       { type: 'CTR', title: 'Contratto fornitore', meta: 'Contratto · TermoCasa · riservato', status: 'Riservato', owner: 'Admin', tagClass: 'violet', group: 'sensitive' },
       { type: 'SAL', title: 'Stato avanzamento lavori', meta: 'SAL · Maggio · collegato al budget', status: 'In revisione', owner: 'PM', tagClass: '', group: 'review' },
       { type: '360', title: 'Sopralluogo piano 2', meta: 'Foto 360 · report isolamento', status: 'Firmato 4/5', owner: 'Luca F.', tagClass: 'ok', group: 'approved' }
+    ];
+
+    const mediaItems = [
+      { kind: 'photo', title: 'Foto isolamento Blocco B', site: 'Residenza Porta Nuova', uploadedBy: 'Luca F.', date: 'Oggi 10:42', confidence: '94%', suggestion: 'Sopralluogo: Isolamento Blocco B', target: 'Issue materiale mancante', status: 'Da confermare', tagClass: 'warn', tags: ['Foto', 'Blocco B', 'AI collegata'] },
+      { kind: 'video', title: 'Video facciata nord', site: 'Hotel Aurora Renovation', uploadedBy: 'Direzione lavori', date: 'Ieri 16:10', confidence: '88%', suggestion: 'Task: verifica finiture facciata', target: 'Cronoprogramma facciata nord', status: 'Collegato', tagClass: 'ok', tags: ['Video', 'Facciata', 'Task'] },
+      { kind: 'audio', title: 'Nota vocale consegna materiali', site: 'Green Offices Lambrate', uploadedBy: 'Sara M.', date: 'Oggi 08:31', confidence: '81%', suggestion: 'Issue: ritardo fornitore facciata sud', target: 'Fornitore AluSystem', status: 'Da revisionare', tagClass: 'risk', tags: ['Vocale', 'Fornitore', 'Issue'] },
+      { kind: 'doc', title: 'DDT pannelli isolanti', site: 'Residenza Porta Nuova', uploadedBy: 'TermoCasa', date: '26 mag', confidence: '76%', suggestion: 'Documento: fornitura isolamento', target: 'Computo voce WBS-2.4', status: 'Senza sopralluogo', tagClass: 'violet', tags: ['PDF', 'DDT', 'Computo'] },
+      { kind: 'photo', title: 'Foto area logistica ingresso nord', site: 'Logistica Nord Hub', uploadedBy: 'PM', date: 'Oggi 12:04', confidence: '69%', suggestion: 'Nuovo sopralluogo da creare', target: 'Avvio cantiere', status: 'Non classificato', tagClass: '', tags: ['Foto', 'Upload libero', 'Da assegnare'] },
+      { kind: 'doc', title: 'Verbale riunione fornitori', site: 'Hotel Aurora Renovation', uploadedBy: 'Anna S.', date: '24 mag', confidence: '91%', suggestion: 'Report: riunione settimanale', target: '3 decisioni, 2 task', status: 'Collegato', tagClass: 'ok', tags: ['Documento', 'Report', 'Task'] }
     ];
 
     const sites = [
@@ -2576,6 +2757,116 @@
       `).join('');
     }
 
+    function visibleMediaItems() {
+      return dashboardMode === 'project'
+        ? mediaItems.filter(item => item.site === selectedSite.name)
+        : mediaItems;
+    }
+
+    function renderMediaArchive(filter = 'all', search = '') {
+      const media = document.getElementById('media');
+      if (!media) return;
+      const items = visibleMediaItems();
+      const unclassified = items.filter(item => item.status === 'Non classificato' || item.status === 'Senza sopralluogo').length;
+      const linked = items.filter(item => item.status === 'Collegato').length;
+      media.innerHTML = `
+        <section class="metrics">
+          <div class="metric"><label>Media visibili</label><strong>${items.length}</strong><span><i class="dot blue"></i>${dashboardMode === 'project' ? selectedSite.name : 'Tutti i cantieri abilitati'}</span></div>
+          <div class="metric"><label>Da classificare</label><strong>${unclassified}</strong><span><i class="dot warn"></i>AI propone collegamenti</span></div>
+          <div class="metric"><label>Collegati</label><strong>${linked}</strong><span><i class="dot"></i>Sopralluoghi, task, documenti</span></div>
+          <div class="metric"><label>Upload libero</label><strong>ON</strong><span><i class="dot"></i>Per utenti abilitati</span></div>
+        </section>
+
+        <section class="media-intake">
+          <div class="upload-drop">
+            <div>
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/><path d="M4 19h16"/></svg>
+              <strong>Carica senza sopralluogo</strong>
+              <p>Foto, video, vocali, PDF, XLS e tavole possono entrare in archivio. L'AI suggerisce cantiere, zona, sopralluogo, task o documento.</p>
+              <div class="tags">${tag('Foto')}${tag('Video','blue')}${tag('Voice')}${tag('PDF','violet')}${tag('XLS','warn')}</div>
+              <input id="mediaUploadInput" type="file" multiple accept="image/*,video/*,audio/*,.pdf,.xls,.xlsx,.doc,.docx" hidden>
+              <div class="media-actions">
+                <button class="primary" data-media-upload="true">Upload rapido</button>
+                <button class="secondary" data-media-simulate="true">Simula classificazione AI</button>
+              </div>
+            </div>
+          </div>
+          <div class="media-search">
+            <div class="media-search-box">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+              <input id="mediaSearchInput" value="${search}" placeholder="Cerca: foto isolamento, video facciata, DDT, vocale fornitore">
+            </div>
+            <div class="filter-row">
+              ${['all', 'photo', 'video', 'audio', 'doc'].map(type => `
+                <button class="${filter === type ? 'active' : ''}" data-media-filter="${type}">${type === 'all' ? 'Tutti' : type.toUpperCase()}</button>
+              `).join('')}
+            </div>
+            <div class="ai-suggestion">
+              <strong>Ricerca intelligente.</strong> Se non ricordi il sopralluogo, cerca una zona, una persona, un fornitore o una frase detta nel vocale: l'archivio mostra i contenuti probabili e il collegamento suggerito.
+            </div>
+          </div>
+        </section>
+
+        <section class="media-grid" id="mediaGrid"></section>
+      `;
+      renderMediaItems(filter, search);
+    }
+
+    function renderMediaItems(filter = 'all', search = '') {
+      const grid = document.getElementById('mediaGrid');
+      if (!grid) return;
+      const term = search.trim().toLowerCase();
+      const items = visibleMediaItems().filter(item => {
+        const matchesFilter = filter === 'all' || item.kind === filter;
+        const text = `${item.title} ${item.site} ${item.uploadedBy} ${item.suggestion} ${item.target} ${item.tags.join(' ')}`.toLowerCase();
+        return matchesFilter && (!term || text.includes(term));
+      });
+      grid.innerHTML = items.map(item => `
+        <article class="media-card" data-open-media="${item.title}">
+          <div class="media-thumb ${item.kind === 'photo' ? '' : item.kind}"></div>
+          <div class="media-card-body">
+            <div class="media-card-actions">
+              ${tag(item.kind.toUpperCase(), item.kind === 'doc' ? 'violet' : item.kind === 'audio' ? 'blue' : '')}
+              ${tag(item.status, item.tagClass)}
+            </div>
+            <h3>${item.title}</h3>
+            <p>${item.site} - caricato da ${item.uploadedBy} - ${item.date}</p>
+            <div class="ai-suggestion"><strong>AI ${item.confidence}</strong><br>${item.suggestion}<br><span>${item.target}</span></div>
+            <div class="tags">${item.tags.map(x => tag(x)).join('')}</div>
+            <div class="media-card-actions">
+              <button class="secondary" data-open-media="${item.title}">Apri</button>
+              <button class="primary" data-action="Collegamento confermato">Conferma</button>
+            </div>
+          </div>
+        </article>
+      `).join('') || '<section class="panel"><div class="panel-head"><div><h2>Nessun media trovato</h2><p>Modifica ricerca o filtro.</p></div></div></section>';
+    }
+
+    function openMediaDetail(title) {
+      const item = mediaItems.find(media => media.title === title);
+      if (!item) return;
+      openModal('Dettaglio media', `${item.site} - ${item.uploadedBy} - ${item.date}`, `
+        <div class="document-detail">
+          <div class="detail-grid">
+            <div class="detail-preview ${item.kind === 'doc' ? 'doc' : ''}"></div>
+            <div class="detail-content">
+              <h3>${item.title}</h3>
+              <p>Contenuto caricato da utente abilitato. Non serve conoscere subito il sopralluogo: il file resta in archivio e viene ricondotto dal motore AI al contesto piu probabile.</p>
+              <div class="tags">${tag(item.kind.toUpperCase())}${tag(item.status, item.tagClass)}${tag(`Confidenza ${item.confidence}`, 'blue')}</div>
+              <div class="pin-list">
+                <div class="pin-item"><div class="pin-marker">1</div><div><strong>${item.suggestion}</strong><span>Collegamento suggerito dall'AI</span></div><button class="secondary" data-action="Sopralluogo aperto">Apri</button></div>
+                <div class="pin-item"><div class="pin-marker" style="background: var(--brand-2)">2</div><div><strong>${item.target}</strong><span>Task, issue, computo o documento collegabile</span></div><button class="secondary" data-action="Collegamento modificato">Modifica</button></div>
+              </div>
+              <div class="detail-actions">
+                <button class="primary" data-action="Collegamento AI confermato">Conferma collegamento</button>
+                <button class="secondary" data-action="Nuovo sopralluogo creato dal media">Crea sopralluogo</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `);
+    }
+
     function renderChat() {
       document.getElementById('chat').innerHTML = `
         <div class="chat-layout">
@@ -2795,6 +3086,8 @@
       document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === id));
       document.querySelectorAll('.nav button').forEach(b => b.classList.toggle('active', b.dataset.page === id));
       const page = pages.find(p => p[0] === id);
+      if (!page) return setPage('dashboard');
+      if (id === 'media') renderMediaArchive();
       document.getElementById('pageTitle').textContent = page[1];
       document.getElementById('pageSubtitle').textContent = id === 'dashboard'
         ? (dashboardMode === 'project' ? `${selectedSite.name} · ${selectedSite.phase}` : page[2])
@@ -3128,6 +3421,35 @@
           return;
         }
 
+        const mediaUpload = event.target.closest('[data-media-upload]');
+        if (mediaUpload) {
+          const input = document.getElementById('mediaUploadInput');
+          if (input) input.click();
+          return;
+        }
+
+        const mediaSimulate = event.target.closest('[data-media-simulate]');
+        if (mediaSimulate) {
+          renderMediaItems('all', 'isolamento');
+          showToast('AI: contenuti correlati a isolamento e sopralluoghi');
+          return;
+        }
+
+        const mediaFilter = event.target.closest('[data-media-filter]');
+        if (mediaFilter) {
+          document.querySelectorAll('[data-media-filter]').forEach(button => button.classList.remove('active'));
+          mediaFilter.classList.add('active');
+          const search = document.getElementById('mediaSearchInput')?.value || '';
+          renderMediaItems(mediaFilter.dataset.mediaFilter, search);
+          return;
+        }
+
+        const mediaTrigger = event.target.closest('[data-open-media]');
+        if (mediaTrigger && !event.target.closest('[data-action]')) {
+          openMediaDetail(mediaTrigger.dataset.openMedia);
+          return;
+        }
+
         const scheduleFilter = event.target.closest('[data-schedule-filter]');
         if (scheduleFilter) {
           document.querySelectorAll('[data-schedule-filter]').forEach(card => card.classList.remove('active-summary'));
@@ -3173,6 +3495,21 @@
         }
       });
 
+      document.body.addEventListener('change', event => {
+        if (event.target.id === 'mediaUploadInput') {
+          const count = event.target.files.length;
+          if (count) showToast(`${count} file caricati in archivio media`);
+          event.target.value = '';
+        }
+      });
+
+      document.body.addEventListener('input', event => {
+        if (event.target.id === 'mediaSearchInput') {
+          const filter = document.querySelector('[data-media-filter].active')?.dataset.mediaFilter || 'all';
+          renderMediaItems(filter, event.target.value);
+        }
+      });
+
       document.getElementById('globalSearch').addEventListener('input', event => {
         const value = event.target.value.trim().toLowerCase();
         if (document.getElementById('dashboard').classList.contains('active')) {
@@ -3198,6 +3535,7 @@
     renderNav();
     renderDashboard();
     renderChat();
+    renderMediaArchive();
     renderDocuments();
     renderInspections();
     renderSchedule();
