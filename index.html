@@ -281,6 +281,15 @@
       margin-bottom: 16px;
     }
 
+    .portfolio-summary-panel {
+      padding: 14px;
+      margin-bottom: 16px;
+    }
+
+    .portfolio-summary-panel .metrics {
+      margin-bottom: 12px;
+    }
+
     .metric, .panel, .tile, .card {
       background: var(--panel);
       border: 1px solid var(--line);
@@ -354,25 +363,25 @@
     .dot.blue { background: var(--brand-2); }
 
     .ai-forecast-card {
-      padding: 14px 16px;
+      padding: 12px 14px;
       overflow: hidden;
       cursor: pointer;
       transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease;
     }
 
     .ai-forecast-card:hover {
-      transform: translateY(-1px);
+      transform: none;
       border-color: #c6a86b;
-      box-shadow: 0 22px 58px rgba(32, 43, 54, .14);
+      box-shadow: none;
     }
 
     .dashboard-forecast {
-      margin-bottom: 16px;
+      margin-bottom: 0;
     }
 
     .ai-forecast-card label {
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 4px;
       color: #4f6369;
       font-size: 12px;
       font-weight: 900;
@@ -386,12 +395,12 @@
       font-size: clamp(24px, 2.4vw, 34px);
       line-height: 1;
       letter-spacing: 0;
-      margin-bottom: 10px;
+      margin-bottom: 6px;
     }
 
     .forecast-scope {
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       color: var(--muted);
       font-size: 13px;
       line-height: 1.3;
@@ -399,15 +408,14 @@
 
     .forecast-visual {
       position: relative;
-      width: min(270px, 100%);
-      min-height: 72px;
-      margin-bottom: 10px;
+      width: 140px;
+      min-height: 42px;
+      margin-bottom: 6px;
     }
 
     .forecast-gauge {
-      width: 270px;
-      max-width: 100%;
-      height: 74px;
+      width: 140px;
+      height: 42px;
       position: relative;
       overflow: hidden;
       border-radius: 180px 180px 0 0;
@@ -425,17 +433,17 @@
       left: 36%;
       right: -16px;
       bottom: -1px;
-      height: 28px;
+      height: 18px;
       border-radius: 34px 0 0 0;
       background: var(--panel);
     }
 
     .forecast-needle {
       position: absolute;
-      left: min(228px, 84%);
-      top: 9px;
-      width: 4px;
-      height: 42px;
+      left: 116px;
+      top: 5px;
+      width: 3px;
+      height: 24px;
       border-radius: 999px;
       background: #172b24;
       transform: rotate(-8deg);
@@ -450,59 +458,57 @@
       line-height: 1.45;
     }
 
-    .site-risk-mini {
-      margin-top: 10px;
+    .portfolio-summary-risk {
+      display: grid;
+      grid-template-columns: minmax(180px, 300px) minmax(0, 1fr);
+      gap: 14px;
+      align-items: center;
       border-top: 1px solid var(--line);
       padding-top: 10px;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 96px;
+    }
+
+    .portfolio-summary-risk .ai-forecast-card {
+      border: 0;
+      box-shadow: none;
+      padding: 0;
+      background: transparent;
+    }
+
+    .portfolio-risk-note {
+      display: flex;
       gap: 10px;
-      align-items: end;
+      flex-wrap: wrap;
     }
 
-    .site-risk-mini label {
-      display: block;
+    .portfolio-risk-note span {
       color: var(--muted);
-      font-size: 11px;
-      margin-bottom: 4px;
+      font-size: 12px;
     }
 
-    .site-risk-mini strong {
-      color: #805306;
-      font-size: 16px;
-      line-height: 1;
+    .portfolio-risk-note b {
+      color: var(--ink);
     }
 
-    .mini-risk-gauge {
-      position: relative;
-      width: 96px;
-      height: 34px;
-      overflow: hidden;
-      border-radius: 90px 90px 0 0;
-      background: conic-gradient(from 270deg at 50% 100%, #f8bd45 0deg 78deg, #e58e37 78deg 122deg, #d85d4f 122deg 180deg, transparent 180deg 360deg);
-    }
-
-    .mini-risk-gauge:after {
-      content: "";
-      position: absolute;
-      left: 39%;
-      right: -8px;
-      bottom: -1px;
-      height: 12px;
-      border-radius: 12px 0 0 0;
-      background: white;
-    }
-
-    .mini-risk-gauge i {
-      position: absolute;
-      left: 76px;
-      top: 6px;
-      width: 3px;
-      height: 20px;
+    .site-risk-badge {
+      min-height: 28px;
+      border: 1px solid #f0d6a8;
       border-radius: 999px;
-      background: #172b24;
-      transform: rotate(-8deg);
-      transform-origin: 50% 92%;
+      background: #fff8e8;
+      color: #805306;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 9px;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .site-risk-badge i {
+      width: 22px;
+      height: 12px;
+      border-radius: 22px 22px 0 0;
+      background: conic-gradient(from 270deg at 50% 100%, #f8bd45 0deg 78deg, #e58e37 78deg 122deg, #d85d4f 122deg 180deg, transparent 180deg 360deg);
     }
 
     .risk-driver-list {
@@ -2367,13 +2373,21 @@
         return;
       }
       document.getElementById('dashboard').innerHTML = `
-        <section class="metrics">
+        <section class="panel portfolio-summary-panel">
+          <div class="metrics">
           <div class="metric" data-open-dashboard="portfolio" data-open-label="Cantieri aperti"><label>Cantieri aperti</label><strong>4</strong><span><i class="dot"></i>2 in esecuzione, 1 avvio, 1 finiture</span></div>
           <div class="metric" data-open-page="schedule" data-open-label="Avanzamento portfolio"><label>Avanzamento medio</label><strong>55%</strong><span><i class="dot blue"></i>+3% negli ultimi 7 giorni</span></div>
           <div class="metric" data-open-page="issues" data-open-label="Rischi critici"><label>Rischi critici aggregati</label><strong>9</strong><span><i class="dot risk"></i>3 impattano cronoprogramma</span></div>
           <div class="metric" data-open-page="schedule" data-open-label="Budget portfolio"><label>Budget portfolio</label><strong>€18.7M</strong><span><i class="dot warn"></i>€286K forecast extra costo</span></div>
+          </div>
+          <div class="portfolio-summary-risk">
+            ${renderRiskForecastCard('portfolio', '4 cantieri abilitati - vista aggregata')}
+            <div class="portfolio-risk-note">
+              <span><b>Indicatore portfolio.</b> Sintesi del rischio sui cantieri visibili all'utente.</span>
+              <span>Driver principali: tempi, budget, approvazioni.</span>
+            </div>
+          </div>
         </section>
-        ${renderRiskForecastCard('portfolio', '4 cantieri abilitati - vista aggregata')}
         <div class="portfolio-grid">
           <section class="panel">
             <div class="panel-head">
@@ -2414,7 +2428,7 @@
             <div>
               <div class="site-top">
                 <div>
-                  <h3>${site.name}</h3>
+                  <h3>${site.name} <button class="site-risk-badge" data-risk-forecast="site" type="button"><i></i>Medium-high</button></h3>
                   <p>${site.location}</p>
                 </div>
                 <span class="phase-pill ${site.phaseClass}">${site.phase}</span>
@@ -2444,13 +2458,6 @@
                 <small>${insight[2]}</small>
               </div>
             `).join('')}
-          </div>
-          <div class="site-risk-mini" data-risk-forecast="site">
-            <div>
-              <label>Risk forecast</label>
-              <strong>Medium-high</strong>
-            </div>
-            <div class="mini-risk-gauge" aria-hidden="true"><i></i></div>
           </div>
         </article>
       `).join('');
