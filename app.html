@@ -353,6 +353,85 @@
     .dot.warn { background: var(--warn); }
     .dot.blue { background: var(--brand-2); }
 
+    .ai-forecast-card {
+      padding: 18px 18px 16px;
+      overflow: hidden;
+    }
+
+    .dashboard-forecast {
+      margin-bottom: 16px;
+    }
+
+    .ai-forecast-card label {
+      display: block;
+      margin-bottom: 16px;
+      color: #4f6369;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+    }
+
+    .ai-forecast-card strong {
+      display: block;
+      color: #805306;
+      font-size: clamp(30px, 4.2vw, 42px);
+      line-height: .95;
+      letter-spacing: 0;
+      margin-bottom: 14px;
+    }
+
+    .forecast-visual {
+      position: relative;
+      min-height: 78px;
+      margin-bottom: 18px;
+    }
+
+    .forecast-gauge {
+      width: min(320px, 78%);
+      height: 96px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 180px 180px 0 0;
+      background:
+        conic-gradient(from 270deg at 50% 100%,
+          #f8bd45 0deg 72deg,
+          #e58e37 72deg 118deg,
+          #d85d4f 118deg 180deg,
+          transparent 180deg 360deg);
+    }
+
+    .forecast-gauge:after {
+      content: "";
+      position: absolute;
+      left: 36%;
+      right: -16px;
+      bottom: -1px;
+      height: 34px;
+      border-radius: 34px 0 0 0;
+      background: var(--panel);
+    }
+
+    .forecast-needle {
+      position: absolute;
+      right: 18%;
+      top: 7px;
+      width: 5px;
+      height: 53px;
+      border-radius: 999px;
+      background: #172b24;
+      transform: rotate(-8deg);
+      transform-origin: 50% 92%;
+      box-shadow: 0 1px 0 rgba(0,0,0,.08);
+    }
+
+    .ai-forecast-card p {
+      margin: 0;
+      color: #4d636d;
+      font-size: 19px;
+      line-height: 1.45;
+    }
+
     .grid {
       display: grid;
       grid-template-columns: minmax(0, 1.45fr) minmax(340px, .9fr);
@@ -1819,6 +1898,15 @@
           <div class="metric" data-open-page="issues" data-open-label="Rischi critici"><label>Rischi critici aggregati</label><strong>9</strong><span><i class="dot risk"></i>3 impattano cronoprogramma</span></div>
           <div class="metric" data-open-page="schedule" data-open-label="Budget portfolio"><label>Budget portfolio</label><strong>€18.7M</strong><span><i class="dot warn"></i>€286K forecast extra costo</span></div>
         </section>
+        <section class="panel ai-forecast-card dashboard-forecast">
+          <label>AI FORECAST</label>
+          <strong>Medium-high risk</strong>
+          <div class="forecast-visual" aria-hidden="true">
+            <div class="forecast-gauge"></div>
+            <i class="forecast-needle"></i>
+          </div>
+          <p>AI recommends rebalancing procurement priorities and closing QA blockers within 7 days.</p>
+        </section>
         <div class="portfolio-grid">
           <section class="panel">
             <div class="panel-head">
@@ -1901,6 +1989,15 @@
           <div class="metric" data-open-page="issues" data-open-label="Issue e Task"><label>Issue aperte</label><strong>42</strong><span><i class="dot risk"></i>7 critiche da sbloccare</span></div>
           <div class="metric" data-open-page="schedule" data-open-label="Budget"><label>Budget consumato</label><strong>€4.8M</strong><span><i class="dot warn"></i>91% del forecast mensile</span></div>
           <div class="metric" data-open-page="documents" data-open-label="Documenti"><label>Documenti in revisione</label><strong>16</strong><span><i class="dot blue"></i>5 contratti, 3 varianti</span></div>
+        </section>
+        <section class="panel ai-forecast-card dashboard-forecast">
+          <label>AI FORECAST</label>
+          <strong>Medium-high risk</strong>
+          <div class="forecast-visual" aria-hidden="true">
+            <div class="forecast-gauge"></div>
+            <i class="forecast-needle"></i>
+          </div>
+          <p>AI recommends rebalancing procurement priorities and closing QA blockers within 7 days.</p>
         </section>
         <div class="grid">
           <section class="panel">
