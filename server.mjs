@@ -18,7 +18,7 @@ createServer((request, response) => {
   const cleanPath = normalize(decodeURIComponent(requestUrl.pathname))
     .replace(/^[/\\]+/, "")
     .replace(/^(\.\.[/\\])+/, "");
-  const filePath = resolve(join(root, cleanPath === "" ? "index.html" : cleanPath));
+  const filePath = resolve(join(root, cleanPath === "" ? "app.html" : cleanPath));
 
   if (!filePath.startsWith(root) || !existsSync(filePath) || !statSync(filePath).isFile()) {
     response.writeHead(404, { "content-type": "text/plain; charset=utf-8" });
