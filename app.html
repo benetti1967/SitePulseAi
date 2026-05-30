@@ -1764,6 +1764,8 @@
       permissions: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 4 7v6c0 5 3.5 7.5 8 8 4.5-.5 8-3 8-8V7l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg>'
     };
 
+    const API_BASE = 'https://sitepulseai-api.benetti1967.workers.dev';
+
     const pages = [
       ['dashboard', 'Dashboard', 'Portfolio cantieri · aggregato operativo e finanziario', ''],
       ['chat', 'Conversazioni', 'Chat operativa strutturata da mobile', '18'],
@@ -1781,12 +1783,14 @@
       {kind:'pano', title:'Sopralluogo 360 completato nel Blocco B, piano 2', text:'Panorama collegato a planimetria, issue isolamento e report di chiusura con link sicuro.', tags:['Foto 360','Sopralluogo','Report'], tagClass:['blue','','violet'], owner:'Anna S.', avatar:'AS', meta:'Firmato da 4/5'}
     ];
 
-    const scheduleRows = [
+    const fallbackScheduleRows = [
       ['Residenza Porta Nuova', 'Posa isolamento Blocco B', 'Fornitore TermoCasa', '26 mag - 4 giu', 40, 'EUR 15.960', '+EUR 1.200', 'risk'],
       ['Residenza Porta Nuova', 'Impianto elettrico piano 2', 'Variante in revisione', '28 mag - 12 giu', 22, 'EUR 42.400', '+EUR 6.800', 'warn'],
       ['Green Offices Lambrate', 'Chiusura cartongessi', 'Dipende da isolamento', '5 giu - 14 giu', 0, 'EUR 31.200', 'EUR 31.200', ''],
       ['Hotel Aurora Renovation', 'Facciata nord', 'Avanzamento da foto mobile', '20 mag - 18 giu', 72, 'EUR 86.000', 'EUR 86.000', 'ok']
     ];
+    let scheduleRows = [...fallbackScheduleRows];
+    let scheduleSource = 'fallback';
 
     const documentRows = [
       { type: 'PDF', title: 'Variante impianti', meta: 'Documento · Blocco B · v3', status: 'In approvazione', owner: 'Anna S.', tagClass: 'warn', group: 'review' },
@@ -1874,6 +1878,45 @@
       toast.classList.add('show');
       clearTimeout(window.toastTimer);
       window.toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    function formatCurrency(value) {
+      const amount = Number(value || 0);
+      return new Intl.NumberFormat('it-IT', {
+        style: 'currency',
+        currency: 'EUR',
+        maximumFractionDigits: 0
+      }).format(amount);
+    }
+
+    function formatPeriod(start, end) {
+      if (!start || !end) return 'Da pianificare';
+      const format = value => new Intl.DateTimeFormat('it-IT', {
+        day: '2-digit',
+        month: 'short'
+      }).format(new Date(`${value}T00:00:00`));
+      return `${format(start)} - ${format(end)}`;
+    }
+
+    function forecastClass(budget, forecast) {
+      const budgetAmount = Number(budget || 0);
+      const forecastAmount = Number(forecast || 0);
+      if (forecastAmount > budgetAmount * 1.08) return 'risk';
+      if (forecastAmount > budgetAmount) return 'warn';
+      return 'ok';
+    }
+
+    function mapApiScheduleRows(items) {
+      return items.map(item => [
+        item.site_name || 'Cantiere non assegnato',
+        item.title || 'Attivita senza titolo',
+        item.description || item.wbs_code || 'Cronoprogramma',
+        formatPeriod(item.planned_start, item.planned_end),
+        Number(item.progress_percent || 0),
+        formatCurrency(item.budget_amount),
+        formatCurrency(item.forecast_amount),
+        forecastClass(item.budget_amount, item.forecast_amount)
+      ]);
     }
 
     function renderNav() {
@@ -2201,7 +2244,7 @@
           <div class="metric"><label>Attivita</label><strong>186</strong><span><i class="dot blue"></i>Tutte visibili nella tabella</span></div>
           <div class="metric" data-schedule-filter="modified" data-open-label="Attività modificate"><label>Modificate utente</label><strong>42</strong><span><i class="dot"></i>Audit attivo</span></div>
           <div class="metric"><label>Extra costo previsto</label><strong>€78K</strong><span><i class="dot risk"></i>Forecast aggiornato</span></div>
-          <div class="metric" data-schedule-filter="risk" data-open-label="Milestone a rischio"><label>Milestone a rischio</label><strong>3</strong><span><i class="dot warn"></i>Dipendenze bloccate</span></div>
+          <div class="metric" data-schedule-filter="risk" data-open-label="Milestone a rischio"><label>Dati</label><strong>${scheduleSource === 'api' ? 'API' : 'Locali'}</strong><span><i class="dot warn"></i>${scheduleRows.length} righe caricate</span></div>
         </section>
         <table class="table">
           <thead><tr><th>Cantiere</th><th>Attivita</th><th>Periodo</th><th>Avanzamento</th><th>Costo previsto</th><th>Forecast</th><th></th></tr></thead>
@@ -2210,6 +2253,23 @@
           </tbody>
         </table>
       `;
+    }
+
+    async function loadScheduleFromApi() {
+      try {
+        const response = await fetch(`${API_BASE}/api/schedule`, {
+          headers: { accept: 'application/json' }
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const payload = await response.json();
+        scheduleRows = mapApiScheduleRows(payload.data || []);
+        scheduleSource = 'api';
+      } catch (error) {
+        scheduleRows = [...fallbackScheduleRows];
+        scheduleSource = 'fallback';
+        console.warn('Schedule API unavailable, using fallback data', error);
+      }
+      renderSchedule();
     }
 
     function renderIssues() {
@@ -2554,6 +2614,7 @@
     renderDocuments();
     renderInspections();
     renderSchedule();
+    loadScheduleFromApi();
     renderIssues();
     renderPermissions();
     wireEvents();
