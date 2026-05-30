@@ -354,7 +354,7 @@
     .dot.blue { background: var(--brand-2); }
 
     .ai-forecast-card {
-      padding: 18px 18px 16px;
+      padding: 14px 16px;
       overflow: hidden;
       cursor: pointer;
       transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease;
@@ -372,7 +372,7 @@
 
     .ai-forecast-card label {
       display: block;
-      margin-bottom: 7px;
+      margin-bottom: 8px;
       color: #4f6369;
       font-size: 12px;
       font-weight: 900;
@@ -383,15 +383,15 @@
     .ai-forecast-card strong {
       display: block;
       color: #805306;
-      font-size: clamp(30px, 4.2vw, 42px);
-      line-height: .95;
+      font-size: clamp(24px, 2.4vw, 34px);
+      line-height: 1;
       letter-spacing: 0;
-      margin-bottom: 14px;
+      margin-bottom: 10px;
     }
 
     .forecast-scope {
       display: block;
-      margin-bottom: 14px;
+      margin-bottom: 8px;
       color: var(--muted);
       font-size: 13px;
       line-height: 1.3;
@@ -399,13 +399,15 @@
 
     .forecast-visual {
       position: relative;
-      min-height: 94px;
-      margin-bottom: 18px;
+      width: min(270px, 100%);
+      min-height: 72px;
+      margin-bottom: 10px;
     }
 
     .forecast-gauge {
-      width: min(400px, 100%);
-      height: 120px;
+      width: 270px;
+      max-width: 100%;
+      height: 74px;
       position: relative;
       overflow: hidden;
       border-radius: 180px 180px 0 0;
@@ -423,17 +425,17 @@
       left: 36%;
       right: -16px;
       bottom: -1px;
-      height: 34px;
+      height: 28px;
       border-radius: 34px 0 0 0;
       background: var(--panel);
     }
 
     .forecast-needle {
       position: absolute;
-      right: 18%;
-      top: 7px;
-      width: 5px;
-      height: 53px;
+      left: min(228px, 84%);
+      top: 9px;
+      width: 4px;
+      height: 42px;
       border-radius: 999px;
       background: #172b24;
       transform: rotate(-8deg);
@@ -444,8 +446,63 @@
     .ai-forecast-card p {
       margin: 0;
       color: #4d636d;
-      font-size: 16px;
+      font-size: 13px;
       line-height: 1.45;
+    }
+
+    .site-risk-mini {
+      margin-top: 10px;
+      border-top: 1px solid var(--line);
+      padding-top: 10px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 96px;
+      gap: 10px;
+      align-items: end;
+    }
+
+    .site-risk-mini label {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      margin-bottom: 4px;
+    }
+
+    .site-risk-mini strong {
+      color: #805306;
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    .mini-risk-gauge {
+      position: relative;
+      width: 96px;
+      height: 34px;
+      overflow: hidden;
+      border-radius: 90px 90px 0 0;
+      background: conic-gradient(from 270deg at 50% 100%, #f8bd45 0deg 78deg, #e58e37 78deg 122deg, #d85d4f 122deg 180deg, transparent 180deg 360deg);
+    }
+
+    .mini-risk-gauge:after {
+      content: "";
+      position: absolute;
+      left: 39%;
+      right: -8px;
+      bottom: -1px;
+      height: 12px;
+      border-radius: 12px 0 0 0;
+      background: white;
+    }
+
+    .mini-risk-gauge i {
+      position: absolute;
+      left: 76px;
+      top: 6px;
+      width: 3px;
+      height: 20px;
+      border-radius: 999px;
+      background: #172b24;
+      transform: rotate(-8deg);
+      transform-origin: 50% 92%;
     }
 
     .risk-driver-list {
@@ -2293,7 +2350,7 @@
       return `
         <section class="panel ai-forecast-card dashboard-forecast" data-risk-forecast="${scope}">
           <label>${isPortfolio ? 'PORTFOLIO RISK FORECAST' : 'SITE RISK FORECAST'}</label>
-          <span class="forecast-scope">${context}</span>
+          ${isPortfolio ? `<span class="forecast-scope">${context}</span>` : ''}
           <strong>Medium-high risk</strong>
           <div class="forecast-visual" aria-hidden="true">
             <div class="forecast-gauge"></div>
@@ -2387,6 +2444,13 @@
                 <small>${insight[2]}</small>
               </div>
             `).join('')}
+          </div>
+          <div class="site-risk-mini" data-risk-forecast="site">
+            <div>
+              <label>Risk forecast</label>
+              <strong>Medium-high</strong>
+            </div>
+            <div class="mini-risk-gauge" aria-hidden="true"><i></i></div>
           </div>
         </article>
       `).join('');
