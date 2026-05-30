@@ -2437,15 +2437,6 @@
           </section>
           <aside class="right-col">
             <section class="panel">
-              <div class="panel-head"><div><h2>Portfolio per fase</h2><p>Distribuzione operativa dei cantieri</p></div></div>
-              <div class="budget">
-                <div class="money-row"><span>Avvio cantiere</span><strong>1</strong></div>
-                <div class="money-row"><span>Strutture/facciate</span><strong>1</strong></div>
-                <div class="money-row"><span>Impianti</span><strong>1</strong></div>
-                <div class="money-row"><span>Finiture/collaudi</span><strong>1</strong></div>
-              </div>
-            </section>
-            <section class="panel">
               <div class="panel-head"><div><h2>Priorita aggregate</h2><p>Urgenze operative ordinate per impatto e scadenza</p></div></div>
               <div class="ai-list">
                 <div class="ai-item"><strong>3 milestone a rischio nei prossimi 10 giorni</strong><p>Due dipendono da fornitori, una da permesso ancora non approvato.</p><div class="bar"><span style="width:86%"></span></div></div>
@@ -2470,7 +2461,7 @@
                   <h3>${site.name} <button class="site-risk-badge" data-risk-forecast="site" type="button"><i></i>Medium-high</button></h3>
                   <p>${site.location}</p>
                 </div>
-                <span class="phase-pill ${site.phaseClass}">${site.phase}</span>
+                <span class="phase-pill ${site.phaseClass}">Fase: ${site.phase}</span>
                 <span class="open-arrow">
                   <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
                 </span>
