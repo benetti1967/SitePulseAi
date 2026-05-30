@@ -356,6 +356,14 @@
     .ai-forecast-card {
       padding: 18px 18px 16px;
       overflow: hidden;
+      cursor: pointer;
+      transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease;
+    }
+
+    .ai-forecast-card:hover {
+      transform: translateY(-1px);
+      border-color: #c6a86b;
+      box-shadow: 0 22px 58px rgba(32, 43, 54, .14);
     }
 
     .dashboard-forecast {
@@ -364,7 +372,7 @@
 
     .ai-forecast-card label {
       display: block;
-      margin-bottom: 16px;
+      margin-bottom: 7px;
       color: #4f6369;
       font-size: 12px;
       font-weight: 900;
@@ -381,15 +389,23 @@
       margin-bottom: 14px;
     }
 
+    .forecast-scope {
+      display: block;
+      margin-bottom: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.3;
+    }
+
     .forecast-visual {
       position: relative;
-      min-height: 78px;
+      min-height: 94px;
       margin-bottom: 18px;
     }
 
     .forecast-gauge {
-      width: min(320px, 78%);
-      height: 96px;
+      width: min(400px, 100%);
+      height: 120px;
       position: relative;
       overflow: hidden;
       border-radius: 180px 180px 0 0;
@@ -428,8 +444,55 @@
     .ai-forecast-card p {
       margin: 0;
       color: #4d636d;
-      font-size: 19px;
+      font-size: 16px;
       line-height: 1.45;
+    }
+
+    .risk-driver-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .risk-driver {
+      display: grid;
+      grid-template-columns: 10px minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fbfcfc;
+    }
+
+    .risk-driver i {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--warn);
+    }
+
+    .risk-driver i.risk {
+      background: var(--risk);
+    }
+
+    .risk-driver i.blue {
+      background: var(--brand-2);
+    }
+
+    .risk-driver strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
+
+    .risk-driver span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .risk-driver b {
+      color: var(--ink);
+      font-size: 14px;
     }
 
     .grid {
@@ -2225,6 +2288,22 @@
       `).join('');
     }
 
+    function renderRiskForecastCard(scope, context) {
+      const isPortfolio = scope === 'portfolio';
+      return `
+        <section class="panel ai-forecast-card dashboard-forecast" data-risk-forecast="${scope}">
+          <label>${isPortfolio ? 'PORTFOLIO RISK FORECAST' : 'SITE RISK FORECAST'}</label>
+          <span class="forecast-scope">${context}</span>
+          <strong>Medium-high risk</strong>
+          <div class="forecast-visual" aria-hidden="true">
+            <div class="forecast-gauge"></div>
+            <i class="forecast-needle"></i>
+          </div>
+          <p>${isPortfolio ? 'Rischio aggregato sui cantieri visibili.' : 'Rischio operativo del cantiere selezionato.'}</p>
+        </section>
+      `;
+    }
+
     function renderDashboard() {
       if (dashboardMode === 'project') {
         renderProjectDetailDashboard();
@@ -2237,15 +2316,7 @@
           <div class="metric" data-open-page="issues" data-open-label="Rischi critici"><label>Rischi critici aggregati</label><strong>9</strong><span><i class="dot risk"></i>3 impattano cronoprogramma</span></div>
           <div class="metric" data-open-page="schedule" data-open-label="Budget portfolio"><label>Budget portfolio</label><strong>€18.7M</strong><span><i class="dot warn"></i>€286K forecast extra costo</span></div>
         </section>
-        <section class="panel ai-forecast-card dashboard-forecast">
-          <label>AI FORECAST</label>
-          <strong>Medium-high risk</strong>
-          <div class="forecast-visual" aria-hidden="true">
-            <div class="forecast-gauge"></div>
-            <i class="forecast-needle"></i>
-          </div>
-          <p>AI recommends rebalancing procurement priorities and closing QA blockers within 7 days.</p>
-        </section>
+        ${renderRiskForecastCard('portfolio', '4 cantieri abilitati - vista aggregata')}
         <div class="portfolio-grid">
           <section class="panel">
             <div class="panel-head">
@@ -2329,15 +2400,7 @@
           <div class="metric" data-open-page="schedule" data-open-label="Budget"><label>Budget consumato</label><strong>€4.8M</strong><span><i class="dot warn"></i>91% del forecast mensile</span></div>
           <div class="metric" data-open-page="documents" data-open-label="Documenti"><label>Documenti in revisione</label><strong>16</strong><span><i class="dot blue"></i>5 contratti, 3 varianti</span></div>
         </section>
-        <section class="panel ai-forecast-card dashboard-forecast">
-          <label>AI FORECAST</label>
-          <strong>Medium-high risk</strong>
-          <div class="forecast-visual" aria-hidden="true">
-            <div class="forecast-gauge"></div>
-            <i class="forecast-needle"></i>
-          </div>
-          <p>AI recommends rebalancing procurement priorities and closing QA blockers within 7 days.</p>
-        </section>
+        ${renderRiskForecastCard('site', selectedSite.name)}
         <div class="grid">
           <section class="panel">
             <div class="panel-head">
@@ -2782,6 +2845,37 @@
       `);
     }
 
+    function openRiskForecastModal(scope) {
+      const isPortfolio = scope === 'portfolio';
+      const title = isPortfolio ? 'Rischio portfolio' : `Rischio cantiere - ${selectedSite.name}`;
+      const subtitle = isPortfolio
+        ? 'Tre driver principali calcolati sui cantieri visibili'
+        : 'Tre driver principali del cantiere selezionato';
+      const drivers = isPortfolio
+        ? [
+            ['risk', 'Tempi', '3 milestone a rischio nei prossimi 10 giorni', '42%'],
+            ['warn', 'Budget', 'EUR 286K extra costo previsto sul portfolio', '34%'],
+            ['blue', 'Approvazioni', '16 documenti/RFI ancora in revisione', '24%']
+          ]
+        : [
+            ['risk', 'Fornitori', 'Isolamento Blocco B e consegne collegate', '45%'],
+            ['warn', 'Cronoprogramma', 'Dipendenze bloccate su impianti e cartongessi', '33%'],
+            ['blue', 'Qualita documentale', '5 contratti/varianti in revisione', '22%']
+          ];
+
+      openModal(title, subtitle, `
+        <div class="risk-driver-list">
+          ${drivers.map(driver => `
+            <div class="risk-driver">
+              <i class="${driver[0]}"></i>
+              <div><strong>${driver[1]}</strong><span>${driver[2]}</span></div>
+              <b>${driver[3]}</b>
+            </div>
+          `).join('')}
+        </div>
+      `);
+    }
+
     function openModal(title, subtitle, body) {
       document.getElementById('modalTitle').textContent = title;
       document.getElementById('modalSubtitle').textContent = subtitle;
@@ -2925,6 +3019,12 @@
         if (dashboardCard) {
           openPortfolio();
           showToast(`Aperto ${dashboardCard.dataset.openLabel}`);
+        }
+
+        const riskForecast = event.target.closest('[data-risk-forecast]');
+        if (riskForecast) {
+          openRiskForecastModal(riskForecast.dataset.riskForecast);
+          return;
         }
 
         const scheduleFilter = event.target.closest('[data-schedule-filter]');
