@@ -469,7 +469,7 @@
       display: grid;
       grid-template-columns: 260px minmax(0, 1fr);
       gap: 12px;
-      align-items: start;
+      align-items: stretch;
       border-top: 0;
       padding-top: 0;
       overflow-x: auto;
@@ -510,41 +510,46 @@
       display: grid;
       grid-template-columns: repeat(4, minmax(150px, 1fr));
       gap: 10px;
-      align-items: start;
+      align-items: stretch;
       min-width: 720px;
+      height: 100%;
     }
 
     .portfolio-kpi-row .metric {
-      min-height: 82px;
-      padding: 12px;
+      min-height: 0;
+      height: 100%;
+      padding: 10px 12px;
       display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
-      grid-template-rows: auto auto;
-      column-gap: 12px;
-      row-gap: 3px;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto auto auto;
+      row-gap: 6px;
       align-content: center;
+      justify-items: center;
+      text-align: center;
     }
 
     .portfolio-kpi-row .metric strong {
       grid-column: 1;
-      grid-row: 1 / 3;
+      grid-row: 1;
       font-size: 28px;
       align-self: center;
+      justify-self: center;
       white-space: nowrap;
     }
 
     .portfolio-kpi-row .metric label {
-      grid-column: 2;
-      grid-row: 1;
-      align-self: end;
+      grid-column: 1;
+      grid-row: 2;
+      align-self: center;
       margin: 0;
       min-width: 0;
     }
 
     .portfolio-kpi-row .metric span {
-      grid-column: 2;
-      grid-row: 2;
-      align-self: start;
+      grid-column: 1;
+      grid-row: 3;
+      align-self: center;
+      justify-content: center;
       margin: 0;
       min-width: 0;
     }
