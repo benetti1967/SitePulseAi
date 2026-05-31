@@ -4,11 +4,11 @@ VALUES ('org_urbanbuild', 'UrbanBuild Group', 'urbanbuild');
 INSERT OR IGNORE INTO roles (id, organization_id, name, permissions_json)
 VALUES
   ('role_admin', 'org_urbanbuild', 'Administrator', '{"all":true}'),
-  ('role_pm', 'org_urbanbuild', 'Project Manager', '{"schedule":"write","budget":"read","documents":"approve"}'),
-  ('role_site_manager', 'org_urbanbuild', 'Site Manager', '{"tasks":"write","issues":"write","schedule":"write"}'),
-  ('role_supplier', 'org_urbanbuild', 'Supplier', '{"documents":"upload","tasks":"read"}'),
-  ('role_consultant', 'org_urbanbuild', 'Consultant', '{"documents":"read","inspections":"write","issues":"comment"}'),
-  ('role_developer', 'org_urbanbuild', 'Developer', '{"dashboard":"portfolio","reports":"read","budget":"read"}');
+  ('role_pm', 'org_urbanbuild', 'Project Manager', '{"dashboard":"read","schedule":"write","budget":"read","documents":"approve","media":"read","inspections":"write","offline_sync":"read","tasks":"write","issues":"write"}'),
+  ('role_site_manager', 'org_urbanbuild', 'Site Manager', '{"dashboard":"read","tasks":"write","issues":"write","schedule":"write","documents":"read","media":"read","inspections":"write","offline_sync":"write"}'),
+  ('role_supplier', 'org_urbanbuild', 'Supplier', '{"documents":"upload","media":"upload","tasks":"read","inspections":"comment","offline_sync":"write"}'),
+  ('role_consultant', 'org_urbanbuild', 'Consultant', '{"dashboard":"read","documents":"read","media":"read","inspections":"write","issues":"comment","offline_sync":"write"}'),
+  ('role_developer', 'org_urbanbuild', 'Developer', '{"dashboard":"read","reports":"read","budget":"read","documents":"read","media":"read","inspections":"read"}');
 
 INSERT OR IGNORE INTO users (id, organization_id, email, full_name)
 VALUES

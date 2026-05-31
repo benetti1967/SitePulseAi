@@ -164,6 +164,26 @@ CREATE TABLE IF NOT EXISTS document_audit_events (
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
+CREATE TABLE IF NOT EXISTS security_audit_events (
+  id TEXT PRIMARY KEY,
+  organization_id TEXT,
+  site_id TEXT,
+  actor_user_id TEXT,
+  actor_email TEXT,
+  action TEXT NOT NULL,
+  resource_type TEXT NOT NULL,
+  resource_id TEXT,
+  outcome TEXT NOT NULL DEFAULT 'success',
+  ip_hash TEXT,
+  user_agent TEXT,
+  request_id TEXT,
+  metadata_json TEXT NOT NULL DEFAULT '{}',
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (organization_id) REFERENCES organizations(id),
+  FOREIGN KEY (site_id) REFERENCES sites(id),
+  FOREIGN KEY (actor_user_id) REFERENCES users(id)
+);
+
 CREATE TABLE IF NOT EXISTS schedule_items (
   id TEXT PRIMARY KEY,
   organization_id TEXT NOT NULL,
@@ -241,6 +261,11 @@ CREATE TABLE IF NOT EXISTS media_assets (
   organization_id TEXT NOT NULL,
   site_id TEXT,
   message_id TEXT,
+  inspection_id TEXT,
+  sync_status TEXT NOT NULL DEFAULT 'synced',
+  device_id TEXT,
+  captured_at TEXT,
+  captured_by_user_id TEXT,
   storage_key TEXT NOT NULL,
   file_name TEXT NOT NULL,
   mime_type TEXT,
@@ -249,7 +274,28 @@ CREATE TABLE IF NOT EXISTS media_assets (
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (organization_id) REFERENCES organizations(id),
   FOREIGN KEY (site_id) REFERENCES sites(id),
-  FOREIGN KEY (message_id) REFERENCES messages(id)
+  FOREIGN KEY (message_id) REFERENCES messages(id),
+  FOREIGN KEY (inspection_id) REFERENCES inspections(id),
+  FOREIGN KEY (captured_by_user_id) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS offline_sync_events (
+  id TEXT PRIMARY KEY,
+  organization_id TEXT NOT NULL,
+  site_id TEXT,
+  user_id TEXT,
+  device_id TEXT NOT NULL,
+  client_event_id TEXT NOT NULL,
+  event_type TEXT NOT NULL,
+  payload_json TEXT NOT NULL DEFAULT '{}',
+  sync_status TEXT NOT NULL DEFAULT 'received',
+  conflict_status TEXT NOT NULL DEFAULT 'none',
+  captured_at TEXT,
+  received_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE (device_id, client_event_id),
+  FOREIGN KEY (organization_id) REFERENCES organizations(id),
+  FOREIGN KEY (site_id) REFERENCES sites(id),
+  FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE IF NOT EXISTS ai_events (
@@ -273,8 +319,11 @@ CREATE INDEX IF NOT EXISTS idx_inspections_site_status ON inspections(site_id, s
 CREATE INDEX IF NOT EXISTS idx_documents_site_status ON documents(site_id, status);
 CREATE INDEX IF NOT EXISTS idx_document_versions_document ON document_versions(document_id);
 CREATE INDEX IF NOT EXISTS idx_document_audit_document ON document_audit_events(document_id);
+CREATE INDEX IF NOT EXISTS idx_security_audit_org_actor ON security_audit_events(organization_id, actor_user_id, created_at);
 CREATE INDEX IF NOT EXISTS idx_schedule_site_parent ON schedule_items(site_id, parent_id);
 CREATE INDEX IF NOT EXISTS idx_budget_site ON budget_items(site_id);
 CREATE INDEX IF NOT EXISTS idx_messages_conversation ON messages(conversation_id);
 CREATE INDEX IF NOT EXISTS idx_media_assets_site ON media_assets(site_id);
+CREATE INDEX IF NOT EXISTS idx_media_assets_inspection ON media_assets(inspection_id);
+CREATE INDEX IF NOT EXISTS idx_offline_sync_device ON offline_sync_events(device_id, received_at);
 CREATE INDEX IF NOT EXISTS idx_ai_events_source ON ai_events(source_type, source_id);
