@@ -102,6 +102,24 @@ CREATE TABLE IF NOT EXISTS issues (
   FOREIGN KEY (assigned_to_user_id) REFERENCES users(id)
 );
 
+CREATE TABLE IF NOT EXISTS inspections (
+  id TEXT PRIMARY KEY,
+  organization_id TEXT NOT NULL,
+  site_id TEXT NOT NULL,
+  title TEXT NOT NULL,
+  phase TEXT,
+  status TEXT NOT NULL DEFAULT 'open',
+  scheduled_at TEXT,
+  completed_at TEXT,
+  created_by_user_id TEXT,
+  ai_summary TEXT,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (organization_id) REFERENCES organizations(id),
+  FOREIGN KEY (site_id) REFERENCES sites(id),
+  FOREIGN KEY (created_by_user_id) REFERENCES users(id)
+);
+
 CREATE TABLE IF NOT EXISTS documents (
   id TEXT PRIMARY KEY,
   organization_id TEXT NOT NULL,
@@ -251,6 +269,7 @@ CREATE TABLE IF NOT EXISTS ai_events (
 CREATE INDEX IF NOT EXISTS idx_sites_org ON sites(organization_id);
 CREATE INDEX IF NOT EXISTS idx_tasks_site_status ON tasks(site_id, status);
 CREATE INDEX IF NOT EXISTS idx_issues_site_status ON issues(site_id, status);
+CREATE INDEX IF NOT EXISTS idx_inspections_site_status ON inspections(site_id, status);
 CREATE INDEX IF NOT EXISTS idx_documents_site_status ON documents(site_id, status);
 CREATE INDEX IF NOT EXISTS idx_document_versions_document ON document_versions(document_id);
 CREATE INDEX IF NOT EXISTS idx_document_audit_document ON document_audit_events(document_id);

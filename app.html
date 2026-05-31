@@ -282,8 +282,8 @@
     }
 
     .portfolio-summary-panel {
-      padding: 14px;
-      margin-bottom: 16px;
+      padding: 12px;
+      margin-bottom: 12px;
     }
 
     .portfolio-summary-panel .metrics {
@@ -467,13 +467,12 @@
 
     .portfolio-summary-risk {
       display: grid;
-      grid-template-columns: 300px minmax(0, 1fr);
+      grid-template-columns: 260px minmax(0, 1fr);
       gap: 12px;
-      align-items: stretch;
+      align-items: start;
       border-top: 0;
       padding-top: 0;
       overflow-x: auto;
-      padding-bottom: 4px;
     }
 
     .portfolio-summary-risk .ai-forecast-card {
@@ -483,15 +482,23 @@
       background: #fff;
     }
 
+    .portfolio-summary-risk .ai-forecast-card strong {
+      font-size: 22px;
+      margin-bottom: 5px;
+    }
+
+    .portfolio-summary-risk .forecast-visual {
+      width: min(180px, 100%);
+      gap: 4px;
+      margin-bottom: 0;
+    }
+
+    .portfolio-summary-risk .ai-forecast-card p {
+      display: none;
+    }
+
     .portfolio-risk-note {
-      min-height: 120px;
-      border-top: 1px solid var(--line);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      text-align: center;
-      padding: 12px;
+      display: none;
     }
 
     .portfolio-risk-note span {
@@ -503,8 +510,47 @@
       display: grid;
       grid-template-columns: repeat(4, minmax(150px, 1fr));
       gap: 10px;
-      align-items: stretch;
+      align-items: start;
       min-width: 720px;
+    }
+
+    .portfolio-kpi-row .metric {
+      min-height: 82px;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-rows: auto auto;
+      column-gap: 12px;
+      row-gap: 3px;
+      align-content: center;
+    }
+
+    .portfolio-kpi-row .metric strong {
+      grid-column: 1;
+      grid-row: 1 / 3;
+      font-size: 28px;
+      align-self: center;
+      white-space: nowrap;
+    }
+
+    .portfolio-kpi-row .metric label {
+      grid-column: 2;
+      grid-row: 1;
+      align-self: end;
+      margin: 0;
+      min-width: 0;
+    }
+
+    .portfolio-kpi-row .metric span {
+      grid-column: 2;
+      grid-row: 2;
+      align-self: start;
+      margin: 0;
+      min-width: 0;
+    }
+
+    .ai-item[data-open-priority] {
+      cursor: pointer;
     }
 
     .portfolio-risk-note b {
@@ -2573,7 +2619,7 @@
       return `
         <section class="panel ai-forecast-card dashboard-forecast" data-risk-forecast="${scope}">
           <label>${isPortfolio ? 'PORTFOLIO RISK FORECAST' : 'SITE RISK FORECAST'}</label>
-          ${isPortfolio ? `<span class="forecast-scope">${context}</span>` : ''}
+          ${isPortfolio ? '' : `<span class="forecast-scope">${context}</span>`}
           <strong>Medium-high risk</strong>
           <div class="forecast-visual" aria-hidden="true">
             <div class="forecast-score">72/100</div>
@@ -2597,10 +2643,10 @@
           <div class="portfolio-summary-risk">
             ${renderRiskForecastCard('portfolio', '4 cantieri abilitati - vista aggregata')}
             <div class="portfolio-kpi-row">
-          <div class="metric" data-open-dashboard="portfolio" data-open-label="Cantieri aperti"><label>Cantieri aperti</label><strong>4</strong><span><i class="dot"></i>2 in esecuzione, 1 avvio, 1 finiture</span></div>
-          <div class="metric" data-open-page="schedule" data-open-label="Avanzamento portfolio"><label>Avanzamento medio</label><strong>55%</strong><span><i class="dot blue"></i>+3% negli ultimi 7 giorni</span></div>
-          <div class="metric" data-open-page="issues" data-open-label="Rischi critici"><label>Rischi critici aggregati</label><strong>9</strong><span><i class="dot risk"></i>3 impattano cronoprogramma</span></div>
-          <div class="metric" data-open-page="schedule" data-open-label="Budget portfolio"><label>Budget portfolio</label><strong>€18.7M</strong><span><i class="dot warn"></i>€286K forecast extra costo</span></div>
+              <div class="metric" data-open-dashboard="portfolio" data-open-label="Cantieri aperti"><strong>4</strong><label>Cantieri aperti</label><span><i class="dot"></i>2 esecuzione, 1 avvio, 1 finiture</span></div>
+              <div class="metric" data-open-page="schedule" data-open-label="Avanzamento portfolio"><strong>55%</strong><label>Avanzamento medio</label><span><i class="dot blue"></i>+3% ultimi 7 giorni</span></div>
+              <div class="metric" data-open-page="issues" data-open-label="Rischi critici"><strong>9</strong><label>Rischi critici</label><span><i class="dot risk"></i>3 impattano tempi</span></div>
+              <div class="metric" data-open-page="schedule" data-open-label="Budget portfolio"><strong>€18.7M</strong><label>Budget portfolio</label><span><i class="dot warn"></i>€286K extra costo</span></div>
             </div>
           </div>
           <div class="portfolio-risk-note">
@@ -2620,9 +2666,9 @@
             <section class="panel">
               <div class="panel-head"><div><h2>Priorita aggregate</h2><p>Urgenze operative ordinate per impatto e scadenza</p></div></div>
               <div class="ai-list">
-                <div class="ai-item"><strong>3 milestone a rischio nei prossimi 10 giorni</strong><p>Due dipendono da fornitori, una da permesso ancora non approvato.</p><div class="bar"><span style="width:86%"></span></div></div>
-                <div class="ai-item"><strong>€286K forecast extra costo nel portfolio</strong><p>La maggior parte e collegata a varianti impianti e ritardi fornitori.</p><div class="bar"><span style="width:74%"></span></div></div>
-                <div class="ai-item"><strong>37 contenuti nuovi da mobile da classificare</strong><p>Foto, video e PDF caricati nelle ultime 24 ore su 4 cantieri.</p><div class="bar"><span style="width:62%"></span></div></div>
+                <div class="ai-item" data-open-priority="milestone"><strong>3 milestone a rischio nei prossimi 10 giorni</strong><p>Due dipendono da fornitori, una da permesso ancora non approvato.</p><div class="bar"><span style="width:86%"></span></div></div>
+                <div class="ai-item" data-open-priority="budget"><strong>€286K forecast extra costo nel portfolio</strong><p>La maggior parte e collegata a varianti impianti e ritardi fornitori.</p><div class="bar"><span style="width:74%"></span></div></div>
+                <div class="ai-item" data-open-priority="media"><strong>37 contenuti nuovi da mobile da classificare</strong><p>Foto, video e PDF caricati nelle ultime 24 ore su 4 cantieri.</p><div class="bar"><span style="width:62%"></span></div></div>
               </div>
             </section>
           </aside>
@@ -3270,6 +3316,50 @@
       `);
     }
 
+    function openPriorityModal(type) {
+      const details = {
+        milestone: {
+          title: 'Milestone a rischio',
+          subtitle: 'Dettaglio operativo sui prossimi 10 giorni',
+          rows: [
+            ['Residenza Porta Nuova', 'Posa isolamento Blocco B', 'Fornitore TermoCasa in ritardo', 'Scade 04 giu'],
+            ['Green Offices Lambrate', 'Chiusura cartongessi', 'Dipende da facciata sud', 'Scade 14 giu'],
+            ['Hotel Aurora Renovation', 'Permesso antincendio', 'Approvazione non ancora ricevuta', 'Scade 07 giu']
+          ]
+        },
+        budget: {
+          title: 'Forecast extra costo',
+          subtitle: 'Driver economici aggregati nel portfolio',
+          rows: [
+            ['Residenza Porta Nuova', 'Variante impianti', '+EUR 92K', 'In approvazione'],
+            ['Green Offices Lambrate', 'Ritardo facciata', '+EUR 118K', 'Fornitore critico'],
+            ['Hotel Aurora Renovation', 'Finiture lobby', '+EUR 76K', 'Preventivo da validare']
+          ]
+        },
+        media: {
+          title: 'Media da classificare',
+          subtitle: 'Contenuti mobile non ancora collegati al contesto finale',
+          rows: [
+            ['Logistica Nord Hub', '10 foto avvio cantiere', 'AI propone nuovo sopralluogo', '69% confidenza'],
+            ['Residenza Porta Nuova', '6 foto isolamento', 'Collegabili a issue Blocco B', '94% confidenza'],
+            ['Green Offices Lambrate', '2 vocali fornitore', 'Possibile issue consegne', '81% confidenza']
+          ]
+        }
+      };
+      const data = details[type] || details.milestone;
+      openModal(data.title, data.subtitle, `
+        <div class="list">
+          ${data.rows.map(row => `
+            <div class="row">
+              <div class="avatar">${row[0].slice(0, 2).toUpperCase()}</div>
+              <div><strong>${row[0]} - ${row[1]}</strong><span>${row[2]}</span></div>
+              ${tag(row[3], type === 'budget' ? 'warn' : type === 'media' ? 'blue' : 'risk')}
+            </div>
+          `).join('')}
+        </div>
+      `);
+    }
+
     function openModal(title, subtitle, body) {
       document.getElementById('modalTitle').textContent = title;
       document.getElementById('modalSubtitle').textContent = subtitle;
@@ -3418,6 +3508,12 @@
         const riskForecast = event.target.closest('[data-risk-forecast]');
         if (riskForecast) {
           openRiskForecastModal(riskForecast.dataset.riskForecast);
+          return;
+        }
+
+        const priorityTrigger = event.target.closest('[data-open-priority]');
+        if (priorityTrigger) {
+          openPriorityModal(priorityTrigger.dataset.openPriority);
           return;
         }
 
