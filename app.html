@@ -1396,6 +1396,16 @@
       align-items: start;
     }
 
+    .chat-channel-row {
+      cursor: pointer;
+      transition: background .16s ease, border-color .16s ease;
+    }
+
+    .chat-channel-row:hover,
+    .chat-channel-row.active-summary {
+      background: #f3faf8;
+    }
+
     .row {
       display: grid;
       grid-template-columns: 36px minmax(0, 1fr) auto;
@@ -1762,6 +1772,19 @@
         linear-gradient(145deg, rgba(25,92,89,.65), transparent 52%),
         linear-gradient(24deg, #c6b48a 0 32%, #9aa3a9 33% 50%, #5f6f78 51% 100%);
       position: relative;
+      display: grid;
+      align-content: end;
+      padding: 10px;
+      color: white;
+      isolation: isolate;
+    }
+
+    .media-thumb:before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10,20,24,.06), rgba(10,20,24,.58));
+      z-index: -1;
     }
 
     .media-thumb.video:after,
@@ -1776,9 +1799,55 @@
       background: rgba(18,32,37,.22);
     }
 
+    .media-thumb.video {
+      background:
+        radial-gradient(circle at 50% 44%, rgba(255,255,255,.92) 0 18px, transparent 19px),
+        conic-gradient(from 90deg at 52% 44%, transparent 0 25%, rgba(18,32,37,.92) 0 42%, transparent 0),
+        linear-gradient(145deg, #1d625e, #263d46 62%, #111b20);
+    }
+
+    .media-thumb.doc {
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.95) 0 66%, transparent 67%),
+        linear-gradient(180deg, #ece9f8, #d7d0ee);
+    }
+
+    .media-thumb.audio {
+      background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,.72) 0 5px, transparent 5px 15px),
+        linear-gradient(145deg, #287aa0, #143a4b);
+    }
+
     .media-thumb.video:after { content: "VIDEO"; }
-    .media-thumb.doc:after { content: "PDF"; background: rgba(109,90,167,.28); }
+    .media-thumb.doc:after { content: "PDF"; color: #2d2644; background: rgba(255,255,255,.24); }
     .media-thumb.audio:after { content: "VOICE"; background: rgba(40,122,160,.30); }
+
+    .media-preview-meta {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      gap: 3px;
+      text-shadow: 0 1px 10px rgba(0,0,0,.28);
+    }
+
+    .media-preview-meta strong {
+      font-size: 13px;
+      line-height: 1.15;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .media-preview-meta span {
+      font-size: 11px;
+      opacity: .92;
+    }
+
+    .media-thumb.doc .media-preview-meta {
+      color: #2d2644;
+      text-shadow: none;
+    }
 
     .media-card-body {
       padding: 12px;
@@ -2304,6 +2373,325 @@
 
     .table tr[data-open-schedule]:hover td {
       background: #fbfcfc;
+    }
+
+    .schedule-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .schedule-toolbar .left-actions,
+    .schedule-toolbar .right-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .schedule-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .schedule-tabs button {
+      height: 32px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: white;
+      color: #43515f;
+      padding: 0 10px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .schedule-tabs button.active {
+      background: #eef8f6;
+      border-color: #8eb9b4;
+      color: var(--brand);
+    }
+
+    .schedule-board {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .timeline-panel {
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .timeline-window {
+      padding: 14px;
+      overflow-x: auto;
+    }
+
+    .timeline-grid {
+      min-width: 920px;
+      display: grid;
+      grid-template-columns: 220px repeat(8, 1fr);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .timeline-grid.weekly {
+      grid-template-columns: 260px repeat(8, minmax(104px, 1fr));
+    }
+
+    .timeline-cell {
+      min-height: 44px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 8px;
+      font-size: 12px;
+      color: var(--muted);
+      position: relative;
+    }
+
+    .timeline-cell:nth-child(9n) {
+      border-right: 0;
+    }
+
+    .timeline-head {
+      min-height: 34px;
+      background: #f6faf9;
+      font-weight: 850;
+      color: #41535a;
+      display: flex;
+      align-items: center;
+    }
+
+    .timeline-task-label {
+      background: #fbfcfc;
+      color: var(--ink);
+      display: grid;
+      gap: 3px;
+    }
+
+    .timeline-task-label.subtask {
+      padding-left: 30px;
+      background: #fff;
+    }
+
+    .timeline-collapse {
+      width: 22px;
+      height: 22px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: white;
+      cursor: pointer;
+      color: var(--brand);
+      font-weight: 900;
+      margin-right: 6px;
+    }
+
+    .timeline-label-line {
+      display: flex;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .timeline-task-label strong {
+      font-size: 12px;
+      line-height: 1.2;
+    }
+
+    .timeline-task-label span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .timeline-bar {
+      position: absolute;
+      top: 11px;
+      left: 8px;
+      right: 8px;
+      height: 22px;
+      border-radius: 999px;
+      background: #dff1ec;
+      border: 1px solid #b9d9d0;
+      color: var(--brand);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 850;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .timeline-bar.subtask {
+      height: 18px;
+      top: 13px;
+      background: #eef7fb;
+      border-color: #c4dfeb;
+      color: var(--brand-2);
+    }
+
+    .timeline-cell.drop-ready {
+      background: #f6fbfa;
+    }
+
+    .timeline-bar.warn {
+      background: #fff8e8;
+      border-color: #f0d6a8;
+      color: #805306;
+    }
+
+    .timeline-bar.risk {
+      background: #fff0ee;
+      border-color: #e6bbb5;
+      color: #a33a2f;
+    }
+
+    .timeline-bar.ok {
+      background: #eef8f6;
+      border-color: #bddbd6;
+      color: var(--ok);
+    }
+
+    .wbs-list {
+      display: grid;
+      gap: 10px;
+      padding: 14px;
+    }
+
+    .wbs-item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .wbs-item.active-summary {
+      border-color: #8eb9b4;
+      background: #f3faf8;
+    }
+
+    .wbs-item.dragging {
+      opacity: .55;
+    }
+
+    .wbs-head {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      padding: 10px 12px;
+      cursor: grab;
+    }
+
+    .drag-handle {
+      color: var(--muted);
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .wbs-head strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 2px;
+    }
+
+    .wbs-head span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .wbs-subactions {
+      border-top: 1px solid var(--line);
+      background: #fbfcfc;
+      display: grid;
+      gap: 6px;
+      padding: 8px;
+    }
+
+    .wbs-subaction {
+      min-height: 36px;
+      border: 1px solid #dce5e8;
+      border-radius: 8px;
+      background: white;
+      padding: 8px 9px;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: center;
+      cursor: grab;
+      font-size: 12px;
+    }
+
+    .wbs-subaction.dragging {
+      opacity: .55;
+    }
+
+    .schedule-panels {
+      display: grid;
+      gap: 12px;
+    }
+
+    .budget-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      padding: 14px;
+    }
+
+    .budget-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfc;
+      padding: 12px;
+      display: grid;
+      gap: 6px;
+      min-height: 78px;
+    }
+
+    .budget-card label {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .budget-card strong {
+      font-size: 22px;
+    }
+
+    .boq-drop {
+      border: 1px dashed #aebdc2;
+      border-radius: 8px;
+      background: #fbfcfc;
+      padding: 14px;
+      display: grid;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .boq-drop strong {
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .editable-cell {
+      border: 1px solid transparent;
+      border-radius: 6px;
+      padding: 3px 5px;
+      min-width: 56px;
+      display: inline-block;
+    }
+
+    .editable-cell:focus {
+      outline: 0;
+      border-color: #8eb9b4;
+      background: #f3faf8;
     }
 
     .kanban {
@@ -2854,6 +3242,88 @@
     ];
     let scheduleRows = [...fallbackScheduleRows];
     let scheduleSource = 'fallback';
+    let activeScheduleView = 'wbs';
+    let selectedScheduleSite = 'all';
+    let expandedWbsIds = new Set(['wbs-1', 'wbs-2', 'wbs-3', 'wbs-4']);
+    let wbsItems = [
+      {
+        id: 'wbs-1',
+        code: '1.2',
+        title: 'Isolamento Blocco B',
+        site: 'Residenza Porta Nuova',
+        phase: 'Esecuzione impianti',
+        budget: 15960,
+        forecast: 17160,
+        progress: 40,
+        start: '26 mag',
+        end: '04 giu',
+        owner: 'TermoCasa',
+        status: 'A rischio',
+        statusClass: 'risk',
+        subactions: [
+          { id: 'wbs-1-a', title: 'Verifica materiale consegnato', owner: 'Marco R.', due: '01 giu', done: 70 },
+          { id: 'wbs-1-b', title: 'Posa isolamento piano 2', owner: 'TermoCasa', due: '03 giu', done: 35 },
+          { id: 'wbs-1-c', title: 'Foto QA e chiusura rilievo', owner: 'Luca F.', due: '04 giu', done: 20 }
+        ]
+      },
+      {
+        id: 'wbs-2',
+        code: '1.3',
+        title: 'Impianto elettrico piano 2',
+        site: 'Residenza Porta Nuova',
+        phase: 'Esecuzione impianti',
+        budget: 42400,
+        forecast: 49200,
+        progress: 22,
+        start: '28 mag',
+        end: '12 giu',
+        owner: 'Anna S.',
+        status: 'Variante',
+        statusClass: 'warn',
+        subactions: [
+          { id: 'wbs-2-a', title: 'Revisione variante quadro elettrico', owner: 'Anna S.', due: '02 giu', done: 40 },
+          { id: 'wbs-2-b', title: 'Validazione computo extra', owner: 'PM', due: '05 giu', done: 10 }
+        ]
+      },
+      {
+        id: 'wbs-3',
+        code: '2.1',
+        title: 'Chiusura cartongessi',
+        site: 'Green Offices Lambrate',
+        phase: 'Strutture e facciate',
+        budget: 31200,
+        forecast: 31200,
+        progress: 0,
+        start: '05 giu',
+        end: '14 giu',
+        owner: 'Site manager',
+        status: 'Dipendenza',
+        statusClass: 'warn',
+        subactions: [
+          { id: 'wbs-3-a', title: 'Conferma prerequisiti isolamento', owner: 'Sara M.', due: '05 giu', done: 0 },
+          { id: 'wbs-3-b', title: 'Avvio posa cartongessi', owner: 'Impresa opere secco', due: '07 giu', done: 0 }
+        ]
+      },
+      {
+        id: 'wbs-4',
+        code: '3.4',
+        title: 'Facciata nord',
+        site: 'Hotel Aurora Renovation',
+        phase: 'Finiture e collaudi',
+        budget: 86000,
+        forecast: 86000,
+        progress: 72,
+        start: '20 mag',
+        end: '18 giu',
+        owner: 'Direzione lavori',
+        status: 'In linea',
+        statusClass: 'ok',
+        subactions: [
+          { id: 'wbs-4-a', title: 'Completamento pannelli nord', owner: 'AluSystem', due: '10 giu', done: 75 },
+          { id: 'wbs-4-b', title: 'Collaudo fotografico da mobile', owner: 'DL', due: '18 giu', done: 55 }
+        ]
+      }
+    ];
 
     let documentRows = [
       { type: 'PDF', title: 'Variante impianti', meta: 'Documento · Blocco B · v3', status: 'In approvazione', owner: 'Anna S.', tagClass: 'warn', group: 'review' },
@@ -2955,6 +3425,7 @@
 
     let dashboardMode = 'portfolio';
     let selectedSite = sites[0];
+    let activeConversation = 'blocco-b';
     let activeChatSite = 'all';
     let chatUnreadCount = 3;
 
@@ -2982,6 +3453,89 @@
         ['AI', 'Ho generato le prime WBS e il budget preliminare.']
       ]
     };
+
+    const conversationChannels = [
+      {
+        id: 'blocco-b',
+        avatar: 'B',
+        title: 'Blocco B',
+        subtitle: 'Foto + vocale · 10:42',
+        badge: '18',
+        badgeClass: 'blue',
+        detailTitle: 'Canale: Blocco B',
+        detailSubtitle: 'Squadra impianti · 12 partecipanti · conversazione selezionata',
+        messages: [
+          ['Luca Ferri', 'Foto e vocale: manca isolamento termico nel piano 2. Ho lasciato i dettagli.', 'in'],
+          ['SitePulseAi AI', 'Creo issue e assegno a Marco R. con scadenza domani.', 'out'],
+          ['Marco R.', 'Ricevuto. Verifico con fornitore entro pranzo.', 'in']
+        ],
+        context: [
+          ['IS', 'Issue · materiale mancante', 'Priorita alta', 'Alta', 'risk'],
+          ['MR', 'Assegnato a Marco R.', 'Scadenza domani', 'Task', ''],
+          ['EUR', 'Impatto forecast', 'Possibile extra costo EUR 1.200', 'Budget', 'warn']
+        ]
+      },
+      {
+        id: 'sicurezza',
+        avatar: 'S',
+        title: 'Sicurezza',
+        subtitle: 'Checklist ponteggi',
+        badge: '3',
+        badgeClass: 'warn',
+        detailTitle: 'Canale: Sicurezza',
+        detailSubtitle: 'HSE · capocantiere · fornitori in area',
+        messages: [
+          ['Anna S.', 'Checklist ponteggi aggiornata, manca foto parapetto lato nord.', 'in'],
+          ['SitePulseAi AI', 'Ho preparato task verifica parapetto con priorita media.', 'out'],
+          ['Marco R.', 'La squadra invia foto entro fine turno.', 'in']
+        ],
+        context: [
+          ['HSE', 'Checklist ponteggi', '1 punto aperto', 'Safety', 'warn'],
+          ['MR', 'Responsabile verifica', 'Marco R. · oggi', 'Task', ''],
+          ['DOC', 'Verbale sicurezza', 'Bozza aggiornabile', 'Doc', 'blue']
+        ]
+      },
+      {
+        id: 'fornitori',
+        avatar: 'F',
+        title: 'Fornitori',
+        subtitle: 'Consegna materiali',
+        badge: '7',
+        badgeClass: '',
+        detailTitle: 'Canale: Fornitori',
+        detailSubtitle: 'Consegne · DDT · disponibilita materiali',
+        messages: [
+          ['TermoCasa', 'Il DDT pannelli isolanti e stato caricato. Consegna parziale domani.', 'in'],
+          ['SitePulseAi AI', 'Documento collegato alla WBS isolamento e al computo.', 'out'],
+          ['Luca Ferri', 'Serve conferma quantita residue.', 'in']
+        ],
+        context: [
+          ['DDT', 'DDT pannelli isolanti', 'Collegato a computo', 'PDF', 'violet'],
+          ['WBS', 'WBS isolamento', 'Materiale parziale', 'Budget', 'warn'],
+          ['TC', 'TermoCasa', 'Fornitore assegnato', 'Owner', '']
+        ]
+      },
+      {
+        id: 'direzione',
+        avatar: 'D',
+        title: 'Direzione lavori',
+        subtitle: 'Verbale in bozza',
+        badge: 'Bozza',
+        badgeClass: 'violet',
+        detailTitle: 'Canale: Direzione lavori',
+        detailSubtitle: 'PM · DL · committente · verbali e approvazioni',
+        messages: [
+          ['Anna S.', 'Ho rivisto la bozza del verbale. Mancano due annotazioni.', 'in'],
+          ['SitePulseAi AI', 'La finestra firme resta aperta fino alle 18:00.', 'out'],
+          ['PM', 'Se TermoCasa non firma, valuto proroga o chiusura forzata.', 'in']
+        ],
+        context: [
+          ['PM', 'Review PM', 'In attesa presa visione', 'Review', 'warn'],
+          ['DL', 'Annotazioni', '2 note aperte', 'Note', 'blue'],
+          ['SIG', 'Firma verbale', '3/4 partecipanti', 'Firma', 'violet']
+        ]
+      }
+    ];
 
     function tag(text, cls = '') {
       return `<span class="tag ${cls}">${text}</span>`;
@@ -3115,6 +3669,15 @@
       return 'photo';
     }
 
+    function mediaKindLabel(kind) {
+      return {
+        photo: 'Anteprima foto',
+        video: 'Anteprima video',
+        audio: 'Traccia vocale',
+        doc: 'Documento'
+      }[kind] || 'Media';
+    }
+
     function mapApiMedia(rows) {
       return rows.map(row => {
         const kind = mediaKind(row.mime_type);
@@ -3217,6 +3780,7 @@
       renderDocuments();
       renderInspections();
       renderSchedule();
+      wireScheduleDrag();
       renderIssues();
       renderFloatingChat();
       setPage(location.hash ? location.hash.slice(1) : 'dashboard');
@@ -3497,27 +4061,13 @@
           <div class="metric"><label>Media visibili</label><strong>${items.length}</strong><span><b class="kpi-status blue">${dashboardMode === 'project' ? selectedSite.name : 'Tutti i cantieri'}</b></span></div>
           <div class="metric"><label>Da classificare</label><strong>${unclassified}</strong><span><b class="kpi-status warn">AI propone collegamenti</b></span></div>
           <div class="metric"><label>Collegati</label><strong>${linked}</strong><span><b class="kpi-status">Sopralluoghi, task, documenti</b></span></div>
-          <div class="metric"><label>Upload libero</label><strong>ON</strong><span><b class="kpi-status">Per utenti abilitati</b></span></div>
-        </section>
-
-        <section class="offline-sync-panel">
-          <div>
-            <h2>Mobile offline-first</h2>
-            <span class="field-hint">I contenuti raccolti in campo restano disponibili sul dispositivo e vengono sincronizzati appena torna connessione.</span>
-          </div>
-          <div class="offline-sync-grid">
-            <div class="offline-sync-item"><strong>37</strong><span>media raccolti offline oggi</span>${tag('Da sincronizzare','warn')}</div>
-            <div class="offline-sync-item"><strong>12</strong><span>vocali trascritti localmente</span>${tag('Pronti','blue')}</div>
-            <div class="offline-sync-item"><strong>3</strong><span>conflitti da verificare</span>${tag('Review','risk')}</div>
-            <div class="offline-sync-item"><strong>82%</strong><span>sincronizzazione completata</span>${tag('Sync')}</div>
-          </div>
         </section>
 
         <section class="media-intake">
           <div class="upload-drop">
             <div>
               <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/><path d="M4 19h16"/></svg>
-              <strong>Carica senza sopralluogo</strong>
+              <strong>Upload</strong>
               <p>Foto, video, vocali, PDF, XLS e tavole possono entrare in archivio. L'AI suggerisce cantiere, zona, sopralluogo, task o documento.</p>
               <div class="tags">${tag('Foto')}${tag('Video','blue')}${tag('Voice')}${tag('PDF','violet')}${tag('XLS','warn')}</div>
               <input id="mediaUploadInput" type="file" multiple accept="image/*,video/*,audio/*,.pdf,.xls,.xlsx,.doc,.docx" hidden>
@@ -3559,7 +4109,12 @@
       });
       grid.innerHTML = items.map(item => `
         <article class="media-card" data-open-media="${item.title}">
-          <div class="media-thumb ${item.kind === 'photo' ? '' : item.kind}"></div>
+          <div class="media-thumb ${item.kind === 'photo' ? '' : item.kind}">
+            <div class="media-preview-meta">
+              <strong>${item.title}</strong>
+              <span>${mediaKindLabel(item.kind)} - ${item.site}</span>
+            </div>
+          </div>
           <div class="media-card-body">
             <div class="media-card-actions">
               ${tag(item.kind.toUpperCase(), item.kind === 'doc' ? 'violet' : item.kind === 'audio' ? 'blue' : '')}
@@ -3636,6 +4191,40 @@
       `;
     }
 
+    function renderChatV2() {
+      const active = conversationChannels.find(channel => channel.id === activeConversation) || conversationChannels[0];
+      const channelRows = conversationChannels.map(channel =>
+        '<div class="row chat-channel-row ' + (channel.id === active.id ? 'active-summary' : '') + '" data-conversation-channel="' + channel.id + '">' +
+          '<div class="avatar">' + channel.avatar + '</div>' +
+          '<div><strong>' + channel.title + '</strong><span>' + (channel.id === active.id ? 'Canale aperto - ' : '') + channel.subtitle + '</span></div>' +
+          tag(channel.badge, channel.badgeClass) +
+        '</div>'
+      ).join('');
+      const messageRows = active.messages.map(message =>
+        '<div class="bubble ' + (message[2] === 'out' ? 'out' : '') + '"><strong>' + message[0] + '</strong><br>' + message[1] + '</div>'
+      ).join('');
+      const contextRows = active.context.map(row =>
+        '<div class="row"><div class="avatar">' + row[0] + '</div><div><strong>' + row[1] + '</strong><span>' + row[2] + '</span></div>' + tag(row[3], row[4]) + '</div>'
+      ).join('');
+
+      document.getElementById('chat').innerHTML =
+        '<div class="chat-layout">' +
+          '<section class="panel">' +
+            '<div class="panel-head"><div><h2>Canali</h2><p>Conversazioni per cantiere, team e fornitore</p></div></div>' +
+            '<div class="list">' + channelRows + '</div>' +
+          '</section>' +
+          '<section class="panel messages">' +
+            '<div class="panel-head"><div><h2>' + active.detailTitle + '</h2><p>' + active.detailSubtitle + '</p></div>' + tag('Attivo','blue') + '</div>' +
+            '<div class="message-list">' + messageRows + '</div>' +
+            '<div class="composer"><button class="icon-btn" data-action="Allegato pronto">+</button><div class="input">Messaggio, foto, PDF o comando vocale...</div><button class="icon-btn" data-action="Vocale registrato">Mic</button></div>' +
+          '</section>' +
+          '<section class="panel">' +
+            '<div class="panel-head"><div><h2>Contesto operativo</h2><p>Classificazione e impatti collegati</p></div></div>' +
+            '<div class="list">' + contextRows + '</div>' +
+          '</section>' +
+        '</div>';
+    }
+
     function renderDocuments() {
       const reviewCount = documentRows.filter(doc => doc.group === 'review').length;
       const approvedCount = documentRows.filter(doc => doc.group === 'approved').length;
@@ -3696,8 +4285,8 @@
       const visibleInspections = apiState.source === 'api'
         ? apiState.inspections.filter(item => dashboardMode !== 'project' || item.site_name === selectedSite.name)
         : [];
-      const openInspections = visibleInspections.filter(item => item.status !== 'closed').length || 5;
       const firstInspection = visibleInspections[0];
+      const inspectionSyncBadge = apiState.source === 'api' ? '' : tag('Sync in corso', 'warn');
       document.getElementById('inspections').innerHTML = `
         <div class="doc-toolbar">
           <div class="doc-tabs">
@@ -3710,21 +4299,9 @@
             Nuovo sopralluogo
           </button>
         </div>
-        <section class="offline-sync-panel">
-          <div>
-            <h2>Sopralluoghi mobile offline</h2>
-            <span class="field-hint">Foto, video, vocali, checklist, annotazioni e firme sono raccolti anche senza rete. Il backend consolida eventi e versioni al sync.</span>
-          </div>
-          <div class="offline-sync-grid">
-            <div class="offline-sync-item"><strong>${openInspections}</strong><span>sopralluoghi in raccolta offline</span>${tag(apiState.source === 'api' ? 'Backend' : 'Offline','warn')}</div>
-            <div class="offline-sync-item"><strong>28</strong><span>elementi da sincronizzare</span>${tag('Queue')}</div>
-            <div class="offline-sync-item"><strong>2</strong><span>verbali con firme pendenti</span>${tag('Firma','risk')}</div>
-            <div class="offline-sync-item"><strong>1</strong><span>conflitto annotazioni da risolvere</span>${tag('Conflitto','violet')}</div>
-          </div>
-        </section>
         <div class="grid equal">
           <section class="panel">
-            <div class="panel-head"><div><h2>Sopralluogo: ${firstInspection?.title || 'Isolamento Blocco B'}</h2><p>${firstInspection?.ai_summary || 'Report automatico pronto per chiusura'}</p></div>${tag(firstInspection ? statusLabel(firstInspection.status) : '4/5 firme','ok')}</div>
+            <div class="panel-head"><div><h2>Sopralluogo: ${firstInspection?.title || 'Isolamento Blocco B'}</h2><p>${firstInspection?.ai_summary || 'Report automatico pronto per chiusura'}</p></div><div class="tags">${tag(firstInspection ? statusLabel(firstInspection.status) : '4/5 firme','ok')}${inspectionSyncBadge}</div></div>
             <div class="list">
               <div class="activity"><div class="thumb pano"></div><div><h3>3 foto 360 collegate a planimetria</h3><p>Piano 2 · punti ispezione A, B e C con link sicuro nel report.</p><div class="tags">${tag('Foto 360','blue')}${tag('Planimetria')}</div></div><div class="owner"><span>Oggi</span></div></div>
               <div class="activity"><div class="thumb"></div><div><h3>14 foto e 2 vocali inclusi nel verbale</h3><p>Sintesi pronta, issue generate e responsabili assegnati.</p><div class="tags">${tag('Media')}${tag('Sintesi','violet')}</div></div><div class="owner"><span>10:58</span></div></div>
@@ -3746,20 +4323,221 @@
     }
 
     function renderSchedule() {
+      const filteredWbs = selectedScheduleSite === 'all' ? wbsItems : wbsItems.filter(item => item.site === selectedScheduleSite);
+      const totalBudget = filteredWbs.reduce((sum, item) => sum + item.budget, 0);
+      const totalForecast = filteredWbs.reduce((sum, item) => sum + item.forecast, 0);
+      const avgProgress = filteredWbs.length ? Math.round(filteredWbs.reduce((sum, item) => sum + item.progress, 0) / filteredWbs.length) : 0;
+      const overrun = totalForecast - totalBudget;
+      const visibleScheduleRows = selectedScheduleSite === 'all' ? scheduleRows : scheduleRows.filter(row => row[0] === selectedScheduleSite);
       document.getElementById('schedule').innerHTML = `
+        <div class="schedule-toolbar">
+          <div class="left-actions">
+            <input id="boqUploadInput" type="file" accept=".pdf,.xls,.xlsx,.csv" hidden>
+            <button class="primary" data-boq-upload="true">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              Importa computo
+            </button>
+            <button class="secondary" data-ai-generate-schedule="true">Genera WBS + crono</button>
+          </div>
+          <div class="right-actions">
+            <select id="scheduleSiteSelect">
+              <option value="all">Tutti i cantieri</option>
+              ${sites.map(site => `<option value="${site.name}" ${selectedScheduleSite === site.name ? 'selected' : ''}>${site.name}</option>`).join('')}
+            </select>
+            <div class="schedule-tabs">
+              ${[
+                ['wbs', 'WBS'],
+                ['planning', 'Pianificazione'],
+                ['budget', 'Budget'],
+                ['field', 'Campo']
+              ].map(tab => `<button class="${activeScheduleView === tab[0] ? 'active' : ''}" data-schedule-view="${tab[0]}">${tab[1]}</button>`).join('')}
+            </div>
+          </div>
+        </div>
+
         <section class="metrics">
-          <div class="metric"><label>Attivita</label><strong>186</strong><span><b class="kpi-status blue">Tutte in tabella</b></span></div>
-          <div class="metric" data-schedule-filter="modified" data-open-label="Attività modificate"><label>Modificate utente</label><strong>42</strong><span><b class="kpi-status">Audit attivo</b></span></div>
-          <div class="metric"><label>Extra costo previsto</label><strong>€78K</strong><span><b class="kpi-status risk">Forecast aggiornato</b></span></div>
+          <div class="metric"><label>WBS attive</label><strong>${filteredWbs.length}</strong><span><b class="kpi-status blue">${selectedScheduleSite === 'all' ? 'portfolio' : selectedScheduleSite}</b></span></div>
+          <div class="metric" data-schedule-filter="modified" data-open-label="Attività modificate"><label>Avanzamento</label><strong>${avgProgress}%</strong><span><b class="kpi-status">da WBS</b></span></div>
+          <div class="metric"><label>Extra costo previsto</label><strong>${formatCurrency(overrun)}</strong><span><b class="kpi-status ${overrun > 0 ? 'risk' : 'ok'}">forecast aggiornato</b></span></div>
           <div class="metric" data-schedule-filter="risk" data-open-label="Milestone a rischio"><label>Dati</label><strong>${scheduleSource === 'api' ? 'API' : 'Locali'}</strong><span><b class="kpi-status warn">${scheduleRows.length} righe caricate</b></span></div>
         </section>
+
+        <section class="panel timeline-panel">
+          <div class="panel-head"><div><h2>Cronoprogramma</h2><p>Vista settimanale: le WBS sono comprimibili, espandibili nelle sottoattività e mobili nel tempo o tra WBS.</p></div>${tag('Settimanale','blue')}</div>
+          <div class="timeline-window">
+            <div class="timeline-grid weekly" id="weeklyScheduleGrid">
+              <div class="timeline-cell timeline-head">Attività / WBS</div>
+              ${['Sett. 22','Sett. 23','Sett. 24','Sett. 25','Sett. 26','Sett. 27','Sett. 28','Sett. 29'].map(day => `<div class="timeline-cell timeline-head">${day}</div>`).join('')}
+              ${filteredWbs.map((item, index) => `
+                <div class="timeline-cell timeline-task-label" data-timeline-row-wbs="${item.id}">
+                  <div class="timeline-label-line">
+                    <button class="timeline-collapse" data-toggle-wbs="${item.id}" type="button">${expandedWbsIds.has(item.id) ? '-' : '+'}</button>
+                    <div><strong>${item.code} · ${item.title}</strong><span>${item.site} · ${item.owner}</span></div>
+                  </div>
+                </div>
+                ${Array.from({ length: 8 }).map((_, slot) => {
+                  const start = item.weekStart ?? (index % 4);
+                  const duration = item.weekSpan ?? (item.statusClass === 'risk' ? 3 : item.statusClass === 'warn' ? 2 : 4);
+                  const showBar = slot >= start && slot < start + duration;
+                  return `<div class="timeline-cell" data-week-slot="${slot}" data-drop-wbs="${item.id}">${showBar ? `<div class="timeline-bar ${item.statusClass}" draggable="true" data-timeline-wbs="${item.id}">${slot === start ? `${item.progress}%` : ''}</div>` : ''}</div>`;
+                }).join('')}
+                ${expandedWbsIds.has(item.id) ? item.subactions.map((sub, subIndex) => `
+                  <div class="timeline-cell timeline-task-label subtask" data-timeline-row-wbs="${item.id}"><strong>${sub.title}</strong><span>${sub.owner} · ${sub.due}</span></div>
+                  ${Array.from({ length: 8 }).map((_, slot) => {
+                    const start = sub.weekStart ?? Math.min(7, (item.weekStart ?? (index % 4)) + subIndex);
+                    const duration = sub.weekSpan ?? 1;
+                    const showBar = slot >= start && slot < start + duration;
+                    return `<div class="timeline-cell" data-week-slot="${slot}" data-drop-wbs="${item.id}">${showBar ? `<div class="timeline-bar subtask" draggable="true" data-timeline-subaction="${sub.id}" data-parent-wbs="${item.id}">${slot === start ? `${sub.done}%` : ''}</div>` : ''}</div>`;
+                  }).join('')}
+                `).join('') : ''}
+              `).join('')}
+            </div>
+          </div>
+        </section>
+
+        <div class="schedule-board">
+          <div class="schedule-panels">
+            <section class="panel">
+              <div class="panel-head"><div><h2>Computo importato</h2><p>Base economica e quantitativa per AI, WBS e budget.</p></div>${tag('PDF/XLS','violet')}</div>
+              <div class="boq-drop">
+                <strong>${scheduleSource === 'api' ? 'Dati caricati dal backend' : 'Simulazione computo locale pronta'}</strong>
+                <span>Carica un PDF o XLS: l'AI estrae voci, quantità, importi, categorie e propone WBS e cronoprogramma.</span>
+                <div class="tags">${tag('OCR')}${tag('Excel','blue')}${tag('Validazione PM','warn')}</div>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-head"><div><h2>Budget e forecast</h2><p>Costi da computo confrontati con previsione aggiornata.</p></div></div>
+              <div class="budget-grid">
+                <div class="budget-card"><label>Budget computo</label><strong>${formatCurrency(totalBudget)}</strong><span>${filteredWbs.length} WBS</span></div>
+                <div class="budget-card"><label>Forecast</label><strong>${formatCurrency(totalForecast)}</strong><span>${overrun > 0 ? 'extra costo previsto' : 'in linea'}</span></div>
+                <div class="budget-card"><label>Scostamento</label><strong>${formatCurrency(overrun)}</strong><span>${overrun > 0 ? 'da approvare' : 'ok'}</span></div>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <br>
         <table class="table">
-          <thead><tr><th>Cantiere</th><th>Attivita</th><th>Periodo</th><th>Avanzamento</th><th>Costo previsto</th><th>Forecast</th><th></th></tr></thead>
+          <thead><tr><th>Cantiere</th><th>Attività</th><th>Periodo</th><th>Avanzamento</th><th>Costo previsto</th><th>Forecast</th><th></th></tr></thead>
           <tbody>
-            ${scheduleRows.map(r => `<tr data-open-schedule="${r[1]}"><td><strong>${r[0]}</strong></td><td><strong>${r[1]}</strong><small>${r[2]}</small></td><td>${r[3]}</td><td><div class="bar"><span style="width:${r[4]}%"></span></div><small>${r[4]}%</small></td><td>${r[5]}</td><td style="color:var(--${r[7] || 'ink'})">${r[6]}</td><td><button class="secondary" data-action="Voce cronoprogramma modificabile">Modifica</button></td></tr>`).join('')}
+            ${visibleScheduleRows.map(r => `<tr data-open-schedule="${r[1]}"><td><strong>${r[0]}</strong></td><td><strong contenteditable="true" class="editable-cell">${r[1]}</strong><small>${r[2]}</small></td><td>${r[3]}</td><td><div class="bar"><span style="width:${r[4]}%"></span></div><small contenteditable="true" class="editable-cell">${r[4]}%</small></td><td>${r[5]}</td><td style="color:var(--${r[7] || 'ink'})">${r[6]}</td><td><button class="secondary" data-action="Voce cronoprogramma modificata">Salva</button></td></tr>`).join('')}
           </tbody>
         </table>
       `;
+    }
+
+    function moveItem(list, fromIndex, toIndex) {
+      if (fromIndex === toIndex || fromIndex < 0 || toIndex < 0) return list;
+      const next = [...list];
+      const [item] = next.splice(fromIndex, 1);
+      next.splice(toIndex, 0, item);
+      return next;
+    }
+
+    function wireScheduleDrag() {
+      let draggedWbsId = null;
+      let draggedSubaction = null;
+      let draggedTimeline = null;
+      document.querySelectorAll('[data-wbs-id]').forEach(item => {
+        item.addEventListener('dragstart', event => {
+          if (event.target.closest('[data-subaction-id]')) return;
+          draggedWbsId = item.dataset.wbsId;
+          item.classList.add('dragging');
+        });
+        item.addEventListener('dragend', () => {
+          draggedWbsId = null;
+          item.classList.remove('dragging');
+        });
+        item.addEventListener('dragover', event => event.preventDefault());
+        item.addEventListener('drop', event => {
+          event.preventDefault();
+          if (!draggedWbsId) return;
+          const from = wbsItems.findIndex(wbs => wbs.id === draggedWbsId);
+          const to = wbsItems.findIndex(wbs => wbs.id === item.dataset.wbsId);
+          wbsItems = moveItem(wbsItems, from, to);
+          renderSchedule();
+          showToast('WBS riordinata');
+        });
+      });
+
+      document.querySelectorAll('[data-subaction-id]').forEach(item => {
+        item.addEventListener('dragstart', event => {
+          draggedSubaction = {
+            id: item.dataset.subactionId,
+            parent: item.dataset.parentWbs
+          };
+          item.classList.add('dragging');
+          event.stopPropagation();
+        });
+        item.addEventListener('dragend', () => {
+          draggedSubaction = null;
+          item.classList.remove('dragging');
+        });
+        item.addEventListener('dragover', event => event.preventDefault());
+        item.addEventListener('drop', event => {
+          event.preventDefault();
+          event.stopPropagation();
+          if (!draggedSubaction || draggedSubaction.parent !== item.dataset.parentWbs) return;
+          const parent = wbsItems.find(wbs => wbs.id === item.dataset.parentWbs);
+          if (!parent) return;
+          const from = parent.subactions.findIndex(sub => sub.id === draggedSubaction.id);
+          const to = parent.subactions.findIndex(sub => sub.id === item.dataset.subactionId);
+          parent.subactions = moveItem(parent.subactions, from, to);
+          renderSchedule();
+          showToast('Sottoazioni riordinate');
+        });
+      });
+
+      document.querySelectorAll('[data-timeline-wbs]').forEach(bar => {
+        bar.addEventListener('dragstart', event => {
+          draggedTimeline = { type: 'wbs', id: bar.dataset.timelineWbs };
+          event.stopPropagation();
+        });
+      });
+
+      document.querySelectorAll('[data-timeline-subaction]').forEach(bar => {
+        bar.addEventListener('dragstart', event => {
+          draggedTimeline = { type: 'subaction', id: bar.dataset.timelineSubaction, parent: bar.dataset.parentWbs };
+          event.stopPropagation();
+        });
+      });
+
+      document.querySelectorAll('[data-week-slot][data-drop-wbs]').forEach(cell => {
+        cell.addEventListener('dragover', event => {
+          event.preventDefault();
+          cell.classList.add('drop-ready');
+        });
+        cell.addEventListener('dragleave', () => cell.classList.remove('drop-ready'));
+        cell.addEventListener('drop', event => {
+          event.preventDefault();
+          cell.classList.remove('drop-ready');
+          if (!draggedTimeline) return;
+          const week = Number(cell.dataset.weekSlot);
+          const targetWbsId = cell.dataset.dropWbs;
+          if (draggedTimeline.type === 'wbs') {
+            const wbs = wbsItems.find(item => item.id === draggedTimeline.id);
+            if (wbs) {
+              wbs.weekStart = week;
+              showToast(`WBS spostata alla settimana ${week + 22}`);
+            }
+          }
+          if (draggedTimeline.type === 'subaction') {
+            const sourceParent = wbsItems.find(item => item.id === draggedTimeline.parent);
+            const targetParent = wbsItems.find(item => item.id === targetWbsId);
+            const sub = sourceParent?.subactions.find(item => item.id === draggedTimeline.id);
+            if (sourceParent && targetParent && sub) {
+              sourceParent.subactions = sourceParent.subactions.filter(item => item.id !== draggedTimeline.id);
+              sub.weekStart = week;
+              targetParent.subactions.push(sub);
+              expandedWbsIds.add(targetParent.id);
+              showToast(`Sottoattività spostata in ${targetParent.code}`);
+            }
+          }
+          draggedTimeline = null;
+          renderSchedule();
+          wireScheduleDrag();
+        });
+      });
     }
 
     async function loadScheduleFromApi() {
@@ -3876,10 +4654,14 @@
       document.querySelectorAll('.nav button').forEach(b => b.classList.toggle('active', b.dataset.page === id));
       const page = pages.find(p => p[0] === id);
       if (!page) return setPage('dashboard');
+      if (id === 'chat') renderChatV2();
       if (id === 'media') renderMediaArchive();
       if (id === 'documents') renderDocuments();
       if (id === 'inspections') renderInspections();
-      if (id === 'schedule') renderSchedule();
+      if (id === 'schedule') {
+        renderSchedule();
+        wireScheduleDrag();
+      }
       if (id === 'issues') renderIssues();
       if (id === 'permissions') renderPermissions();
       document.getElementById('pageTitle').textContent = page[1];
@@ -3889,7 +4671,7 @@
       document.getElementById('breadcrumb').classList.toggle('show', id === 'dashboard' && dashboardMode === 'project');
       document.getElementById('breadcrumbProject').textContent = selectedSite.name;
       document.getElementById('scopePill').querySelector('span').textContent = dashboardMode === 'project' ? 'Vista cantiere' : `${sites.length} cantieri abilitati`;
-      document.getElementById('pageSubtitle').textContent = currentContextText(page);
+      document.getElementById('pageSubtitle').textContent = ['media', 'chat'].includes(id) ? '' : currentContextText(page);
       updateContextLabels();
       history.replaceState(null, '', '#' + id);
     }
@@ -4312,6 +5094,98 @@
         const action = event.target.closest('[data-action]');
         if (action) showToast(action.dataset.action);
 
+        const conversationChannel = event.target.closest('[data-conversation-channel]');
+        if (conversationChannel) {
+          activeConversation = conversationChannel.dataset.conversationChannel;
+          renderChatV2();
+          return;
+        }
+
+        const scheduleView = event.target.closest('[data-schedule-view]');
+        if (scheduleView) {
+          activeScheduleView = scheduleView.dataset.scheduleView;
+          renderSchedule();
+          wireScheduleDrag();
+          showToast(`Vista ${scheduleView.textContent} attiva`);
+          return;
+        }
+
+        const toggleWbs = event.target.closest('[data-toggle-wbs]');
+        if (toggleWbs) {
+          const id = toggleWbs.dataset.toggleWbs;
+          if (expandedWbsIds.has(id)) {
+            expandedWbsIds.delete(id);
+          } else {
+            expandedWbsIds.add(id);
+          }
+          renderSchedule();
+          wireScheduleDrag();
+          return;
+        }
+
+        const boqUpload = event.target.closest('[data-boq-upload]');
+        if (boqUpload) {
+          document.getElementById('boqUploadInput')?.click();
+          return;
+        }
+
+        const aiGenerateSchedule = event.target.closest('[data-ai-generate-schedule]');
+        if (aiGenerateSchedule) {
+          if (!wbsItems.some(item => item.id === 'wbs-ai-1')) {
+            wbsItems.unshift({
+              id: 'wbs-ai-1',
+              code: 'AI.1',
+              title: 'Nuova WBS da computo importato',
+              site: selectedScheduleSite === 'all' ? selectedSite.name : selectedScheduleSite,
+              phase: 'Da validare',
+              budget: 24500,
+              forecast: 25200,
+              progress: 0,
+              start: 'Da definire',
+              end: 'Da definire',
+              owner: 'PM',
+              status: 'Da validare',
+              statusClass: 'warn',
+              subactions: [
+                { id: 'wbs-ai-1-a', title: 'Validare voce computo', owner: 'PM', due: '48h', done: 0 },
+                { id: 'wbs-ai-1-b', title: 'Assegnare durata e dipendenze', owner: 'Site manager', due: '72h', done: 0 }
+              ]
+            });
+            expandedWbsIds.add('wbs-ai-1');
+          }
+          renderSchedule();
+          wireScheduleDrag();
+          showToast('AI: WBS e cronoprogramma generati');
+          return;
+        }
+
+        const addSubaction = event.target.closest('[data-add-subaction]');
+        if (addSubaction) {
+          const parent = wbsItems.find(item => item.id === addSubaction.dataset.addSubaction);
+          if (parent) {
+            parent.subactions.push({
+              id: `${parent.id}-${Date.now()}`,
+              title: 'Nuova sottoazione',
+              owner: 'Da assegnare',
+              due: 'Da definire',
+              done: 0
+            });
+            renderSchedule();
+            wireScheduleDrag();
+            showToast('Sottoazione aggiunta');
+          }
+          return;
+        }
+
+        const timelineWbs = event.target.closest('[data-timeline-wbs]');
+        if (timelineWbs) {
+          const wbs = wbsItems.find(item => item.id === timelineWbs.dataset.timelineWbs);
+          document.querySelectorAll('[data-wbs-id]').forEach(item => item.classList.remove('active-summary'));
+          document.querySelector(`[data-wbs-id="${timelineWbs.dataset.timelineWbs}"]`)?.classList.add('active-summary');
+          showToast(wbs ? `WBS derivata: ${wbs.code} - ${wbs.title}` : 'WBS derivata dal cronoprogramma');
+          return;
+        }
+
         const galleryAction = event.target.closest('[data-gallery-target]');
         if (galleryAction) {
           event.stopPropagation();
@@ -4463,12 +5337,52 @@
           if (count) showToast(`${count} file caricati in archivio media`);
           event.target.value = '';
         }
+        if (event.target.id === 'boqUploadInput') {
+          const file = event.target.files[0];
+          if (file) {
+            scheduleSource = 'local import';
+            if (!wbsItems.some(item => item.id === 'wbs-import-1')) {
+              wbsItems.push({
+                id: 'wbs-import-1',
+                code: 'IMP.1',
+                title: file.name.replace(/\.[^.]+$/, ''),
+                site: selectedScheduleSite === 'all' ? selectedSite.name : selectedScheduleSite,
+                phase: 'Import computo',
+                budget: 18600,
+                forecast: 18600,
+                progress: 0,
+                start: 'Da pianificare',
+                end: 'Da pianificare',
+                owner: 'PM',
+                status: 'Importato',
+                statusClass: 'blue',
+                subactions: [
+                  { id: 'wbs-import-1-a', title: 'Controllo quantità', owner: 'PM', due: '48h', done: 0 },
+                  { id: 'wbs-import-1-b', title: 'Associazione fase WBS', owner: 'AI + PM', due: '48h', done: 0 }
+              ]
+            });
+            expandedWbsIds.add('wbs-import-1');
+          }
+            renderSchedule();
+            wireScheduleDrag();
+            showToast(`Computo importato: ${file.name}`);
+          }
+          event.target.value = '';
+        }
       });
 
       document.body.addEventListener('input', event => {
         if (event.target.id === 'mediaSearchInput') {
           const filter = document.querySelector('[data-media-filter].active')?.dataset.mediaFilter || 'all';
           renderMediaItems(filter, event.target.value);
+        }
+      });
+
+      document.body.addEventListener('change', event => {
+        if (event.target.id === 'scheduleSiteSelect') {
+          selectedScheduleSite = event.target.value;
+          renderSchedule();
+          wireScheduleDrag();
         }
       });
 
@@ -4496,11 +5410,12 @@
 
     renderNav();
     renderDashboard();
-    renderChat();
+    renderChatV2();
     renderMediaArchive();
     renderDocuments();
     renderInspections();
     renderSchedule();
+    wireScheduleDrag();
     renderIssues();
     renderPermissions();
     renderFloatingChat();
