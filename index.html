@@ -278,7 +278,7 @@
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 10px;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     .portfolio-summary-panel {
@@ -298,8 +298,15 @@
     }
 
     .metric {
-      min-height: 96px;
-      padding: 14px;
+      min-height: 82px;
+      padding: 10px 12px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto auto auto;
+      row-gap: 6px;
+      align-content: center;
+      justify-items: center;
+      text-align: center;
     }
 
     .metric[data-open-page],
@@ -329,25 +336,35 @@
     }
 
     .metric label {
+      grid-column: 1;
+      grid-row: 2;
       color: var(--muted);
       display: block;
       font-size: 12px;
-      margin-bottom: 9px;
+      margin: 0;
+      min-width: 0;
     }
 
     .metric strong {
+      grid-column: 1;
+      grid-row: 1;
       display: block;
-      font-size: 25px;
+      font-size: 26px;
       line-height: 1;
+      justify-self: center;
     }
 
     .metric span {
+      grid-column: 1;
+      grid-row: 3;
       display: flex;
       align-items: center;
-      gap: 6px;
-      margin-top: 9px;
+      justify-content: center;
+      gap: 0;
+      margin: 0;
       color: var(--muted);
       font-size: 12px;
+      min-width: 0;
     }
 
     .dot {
@@ -545,6 +562,10 @@
       min-width: 0;
     }
 
+    .metric span:has(.kpi-status) {
+      gap: 0;
+    }
+
     .portfolio-kpi-row .metric span {
       grid-column: 1;
       grid-row: 3;
@@ -552,6 +573,39 @@
       justify-content: center;
       margin: 0;
       min-width: 0;
+    }
+
+    .kpi-status {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 22px;
+      border-radius: 999px;
+      padding: 4px 9px;
+      background: #eef8f6;
+      color: var(--brand);
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1.25;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .kpi-status.blue {
+      background: #eef7fb;
+      color: var(--brand-2);
+    }
+
+    .kpi-status.risk {
+      background: #fff0ee;
+      color: #a33a2f;
+    }
+
+    .kpi-status.warn {
+      background: #fff8e8;
+      color: #805306;
     }
 
     .ai-item[data-open-priority] {
@@ -685,10 +739,10 @@
     }
 
     .site-card {
-      padding: 14px 16px;
+      padding: 12px 16px;
       border-bottom: 1px solid var(--line);
       display: grid;
-      gap: 12px;
+      gap: 10px;
       cursor: pointer;
       transition: background .16s ease, transform .16s ease;
     }
@@ -796,7 +850,7 @@
     .site-kpis {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 8px;
+      gap: 6px;
     }
 
     .site-actions {
@@ -820,23 +874,161 @@
     }
 
     .site-kpi {
-      min-height: 58px;
+      min-height: 54px;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: #f8fafb;
-      padding: 9px;
+      padding: 8px 9px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto auto;
+      align-content: center;
+      justify-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-align: center;
     }
 
     .site-kpi small {
-      display: block;
-      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 22px;
+      border-radius: 999px;
+      padding: 3px 8px;
+      background: #eef8f6;
+      color: var(--brand);
       font-size: 11px;
-      margin-bottom: 5px;
+      font-weight: 800;
+      margin: 0;
+      line-height: 1.15;
+      min-width: 0;
+      white-space: nowrap;
+    }
+
+    .site-kpi small.blue {
+      background: #eef7fb;
+      color: var(--brand-2);
+    }
+
+    .site-kpi small.risk {
+      background: #fff0ee;
+      color: #a33a2f;
+    }
+
+    .site-kpi small.warn {
+      background: #fff8e8;
+      color: #805306;
     }
 
     .site-kpi strong {
-      font-size: 16px;
+      font-size: 17px;
       line-height: 1;
+      min-width: max-content;
+    }
+
+    .project-health {
+      display: grid;
+      grid-template-columns: minmax(220px, .72fr) minmax(0, 1.28fr) minmax(220px, .72fr);
+      gap: 12px;
+      align-items: stretch;
+      margin-bottom: 12px;
+    }
+
+    .project-health-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 12px;
+      display: grid;
+      gap: 8px;
+      min-height: 132px;
+    }
+
+    .project-health-card label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .project-health-card strong {
+      font-size: 20px;
+      line-height: 1.1;
+    }
+
+    .progress-compare {
+      display: grid;
+      gap: 8px;
+      align-content: center;
+    }
+
+    .progress-row {
+      display: grid;
+      grid-template-columns: 82px minmax(0, 1fr) 44px;
+      gap: 8px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .progress-track {
+      height: 10px;
+      border-radius: 999px;
+      background: #edf2f3;
+      overflow: hidden;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.05);
+    }
+
+    .progress-track span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--brand);
+    }
+
+    .progress-track.forecast span {
+      background: var(--warn);
+    }
+
+    .days-compare {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .days-pill {
+      border-radius: 8px;
+      background: #f8fafb;
+      border: 1px solid var(--line);
+      padding: 10px;
+      text-align: center;
+    }
+
+    .days-pill strong {
+      display: block;
+      font-size: 24px;
+      margin-bottom: 4px;
+    }
+
+    .days-pill span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .map-risk-summary {
+      display: grid;
+      gap: 8px;
+    }
+
+    .map-risk-summary .row {
+      grid-template-columns: 26px minmax(0, 1fr) auto;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .map-risk-summary .row:last-child {
+      border-bottom: 0;
     }
 
     .insight-list {
@@ -1859,6 +2051,207 @@
       resize: vertical;
     }
 
+    .field-hint {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .custom-variable-panel {
+      grid-column: 1 / -1;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfc;
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .custom-variable-panel h3 {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .variable-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .variable-token-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .variable-token {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 30px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      padding: 0 10px;
+      color: #43515f;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .variable-token input {
+      margin: 0;
+    }
+
+    .offline-sync-panel {
+      border: 1px solid #d8e6e4;
+      border-radius: 8px;
+      background: #f6fbfa;
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .offline-sync-panel h2 {
+      margin: 0;
+      font-size: 15px;
+    }
+
+    .offline-sync-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .offline-sync-item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 9px;
+      display: grid;
+      gap: 4px;
+      min-height: 68px;
+    }
+
+    .offline-sync-item strong {
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .offline-sync-item span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .team-invite-grid {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .team-invite-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .team-invite-card h3 {
+      margin: 0;
+      font-size: 13px;
+    }
+
+    .team-person {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: center;
+      min-height: 34px;
+      color: #43515f;
+      font-size: 12px;
+    }
+
+    .team-person input {
+      margin: 0;
+    }
+
+    .team-person strong {
+      display: block;
+      color: var(--ink);
+      font-size: 12px;
+    }
+
+    .workflow-builder {
+      grid-column: 1 / -1;
+      border: 1px solid #d8e6e4;
+      border-radius: 8px;
+      background: #f6fbfa;
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .workflow-steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .workflow-step {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 9px;
+      display: grid;
+      gap: 5px;
+      min-height: 74px;
+    }
+
+    .workflow-step small {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .workflow-step strong {
+      font-size: 13px;
+    }
+
+    .workflow-step span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .workflow-rule-card {
+      border: 1px solid #f0d6a8;
+      border-radius: 8px;
+      background: #fff8e8;
+      padding: 10px;
+      display: grid;
+      gap: 6px;
+      color: #6b5a3a;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .workflow-rule-card strong {
+      color: #805306;
+      font-size: 13px;
+    }
+
+    .save-template-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #43515f;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
     .modal-actions {
       grid-column: 1 / -1;
       display: flex;
@@ -2283,6 +2676,11 @@
       .search { min-width: 240px; width: 240px; }
       .metrics, .doc-grid, .permission-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .portfolio-grid { grid-template-columns: 1fr; }
+      .project-health { grid-template-columns: 1fr; }
+      .variable-grid { grid-template-columns: 1fr; }
+      .team-invite-grid { grid-template-columns: 1fr; }
+      .workflow-steps { grid-template-columns: 1fr; }
+      .offline-sync-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .media-grid { grid-template-columns: 1fr; }
       .site-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .activity { grid-template-columns: 62px minmax(0, 1fr); }
@@ -2471,6 +2869,10 @@
         phaseClass: 'risk',
         cover: '',
         progress: '68%',
+        plannedProgress: 72,
+        forecastProgress: 64,
+        plannedDaysLeft: 28,
+        forecastDaysLeft: 35,
         budget: '91%',
         issues: '42',
         docs: '16',
@@ -2487,6 +2889,10 @@
         phaseClass: 'warn',
         cover: 'alt',
         progress: '54%',
+        plannedProgress: 59,
+        forecastProgress: 51,
+        plannedDaysLeft: 42,
+        forecastDaysLeft: 49,
         budget: '76%',
         issues: '18',
         docs: '9',
@@ -2503,6 +2909,10 @@
         phaseClass: '',
         cover: 'pano',
         progress: '82%',
+        plannedProgress: 80,
+        forecastProgress: 78,
+        plannedDaysLeft: 18,
+        forecastDaysLeft: 21,
         budget: '88%',
         issues: '11',
         docs: '22',
@@ -2518,6 +2928,10 @@
         phaseClass: '',
         cover: 'alt',
         progress: '14%',
+        plannedProgress: 16,
+        forecastProgress: 14,
+        plannedDaysLeft: 96,
+        forecastDaysLeft: 101,
         budget: '22%',
         issues: '6',
         docs: '31',
@@ -2648,10 +3062,10 @@
           <div class="portfolio-summary-risk">
             ${renderRiskForecastCard('portfolio', '4 cantieri abilitati - vista aggregata')}
             <div class="portfolio-kpi-row">
-              <div class="metric" data-open-dashboard="portfolio" data-open-label="Cantieri aperti"><strong>4</strong><label>Cantieri aperti</label><span><i class="dot"></i>2 esecuzione, 1 avvio, 1 finiture</span></div>
-              <div class="metric" data-open-page="schedule" data-open-label="Avanzamento portfolio"><strong>55%</strong><label>Avanzamento medio</label><span><i class="dot blue"></i>+3% ultimi 7 giorni</span></div>
-              <div class="metric" data-open-page="issues" data-open-label="Rischi critici"><strong>9</strong><label>Rischi critici</label><span><i class="dot risk"></i>3 impattano tempi</span></div>
-              <div class="metric" data-open-page="schedule" data-open-label="Budget portfolio"><strong>€18.7M</strong><label>Budget portfolio</label><span><i class="dot warn"></i>€286K extra costo</span></div>
+              <div class="metric" data-open-dashboard="portfolio" data-open-label="Cantieri aperti"><strong>4</strong><label>Cantieri aperti</label><span><b class="kpi-status">2 esecuzione, 1 avvio, 1 finiture</b></span></div>
+              <div class="metric" data-open-page="schedule" data-open-label="Avanzamento portfolio"><strong>55%</strong><label>Avanzamento medio</label><span><b class="kpi-status blue">+3% ultimi 7 giorni</b></span></div>
+              <div class="metric" data-open-page="issues" data-open-label="Rischi critici"><strong>9</strong><label>Rischi critici</label><span><b class="kpi-status risk">3 impattano tempi</b></span></div>
+              <div class="metric" data-open-page="schedule" data-open-label="Budget portfolio"><strong>€18.7M</strong><label>Budget portfolio</label><span><b class="kpi-status warn">€286K forecast</b></span></div>
             </div>
           </div>
           <div class="portfolio-risk-note">
@@ -2707,10 +3121,10 @@
             </div>
           </div>
           <div class="site-kpis">
-            <div class="site-kpi" data-open-site="${site.name}" data-open-page-after-site="schedule" data-open-label="Avanzamento"><small>Avanz.</small><strong>${site.progress}</strong></div>
-            <div class="site-kpi" data-open-site="${site.name}" data-open-page-after-site="schedule" data-open-label="Budget"><small>Budget</small><strong>${site.budget}</strong></div>
-            <div class="site-kpi" data-open-site="${site.name}" data-open-page-after-site="issues" data-open-label="Issue"><small>Issue</small><strong>${site.issues}</strong></div>
-            <div class="site-kpi" data-open-site="${site.name}" data-open-page-after-site="documents" data-open-label="Documenti"><small>Doc</small><strong>${site.docs}</strong></div>
+            <div class="site-kpi" data-open-site="${site.name}" data-open-page-after-site="schedule" data-open-label="Avanzamento"><strong>${site.progress}</strong><small>Avanz.</small></div>
+            <div class="site-kpi" data-open-site="${site.name}" data-open-page-after-site="schedule" data-open-label="Budget"><strong>${site.budget}</strong><small class="warn">Budget</small></div>
+            <div class="site-kpi" data-open-site="${site.name}" data-open-page-after-site="issues" data-open-label="Issue"><strong>${site.issues}</strong><small class="risk">Issue</small></div>
+            <div class="site-kpi" data-open-site="${site.name}" data-open-page-after-site="documents" data-open-label="Documenti"><strong>${site.docs}</strong><small class="blue">Doc</small></div>
           </div>
           <div class="insight-list">
             ${site.insights.map(insight => `
@@ -2725,14 +3139,51 @@
       `).join('');
     }
 
+    function percentValue(value) {
+      return Number(String(value || '0').replace('%', '')) || 0;
+    }
+
+    function renderProjectHealth() {
+      const actual = percentValue(selectedSite.progress);
+      const planned = selectedSite.plannedProgress || actual;
+      const forecast = selectedSite.forecastProgress || actual;
+      const delay = Math.max(0, (selectedSite.forecastDaysLeft || 0) - (selectedSite.plannedDaysLeft || 0));
+      return `
+        <section class="panel project-health">
+          <div class="project-health-card">
+            <label>Fase corrente</label>
+            <strong>${selectedSite.phase}</strong>
+            <span class="kpi-status ${selectedSite.phaseClass || ''}">${selectedSite.location}</span>
+          </div>
+          <div class="project-health-card">
+            <label>Avanzamento lavori</label>
+            <div class="progress-compare">
+              <div class="progress-row"><span>Reale</span><div class="progress-track"><span style="width:${actual}%"></span></div><strong>${actual}%</strong></div>
+              <div class="progress-row"><span>Programma</span><div class="progress-track"><span style="width:${planned}%"></span></div><strong>${planned}%</strong></div>
+              <div class="progress-row"><span>Forecast</span><div class="progress-track forecast"><span style="width:${forecast}%"></span></div><strong>${forecast}%</strong></div>
+            </div>
+          </div>
+          <div class="project-health-card">
+            <label>Giorni residui</label>
+            <div class="days-compare">
+              <div class="days-pill"><strong>${selectedSite.plannedDaysLeft}</strong><span>da programma</span></div>
+              <div class="days-pill"><strong>${selectedSite.forecastDaysLeft}</strong><span>da forecast</span></div>
+            </div>
+            <span class="kpi-status ${delay ? 'warn' : ''}">${delay ? `slittamento stimato +${delay} giorni` : 'forecast in linea'}</span>
+          </div>
+        </section>
+      `;
+    }
+
     function renderProjectDetailDashboard() {
       document.getElementById('dashboard').innerHTML = `
         <section class="metrics">
-          <div class="metric" data-open-page="schedule" data-open-label="Cronoprogramma"><label>Avanzamento</label><strong>68%</strong><span><i class="dot"></i>+4% rispetto a venerdi</span></div>
-          <div class="metric" data-open-page="issues" data-open-label="Issue e Task"><label>Issue aperte</label><strong>42</strong><span><i class="dot risk"></i>7 critiche da sbloccare</span></div>
-          <div class="metric" data-open-page="schedule" data-open-label="Budget"><label>Budget consumato</label><strong>€4.8M</strong><span><i class="dot warn"></i>91% del forecast mensile</span></div>
-          <div class="metric" data-open-page="documents" data-open-label="Documenti"><label>Documenti in revisione</label><strong>16</strong><span><i class="dot blue"></i>5 contratti, 3 varianti</span></div>
+          <div class="metric" data-open-page="schedule" data-open-label="Cronoprogramma"><label>Avanzamento</label><strong>68%</strong><span><b class="kpi-status">+4% rispetto a venerdi</b></span></div>
+          <div class="metric" data-open-page="issues" data-open-label="Issue e Task"><label>Issue aperte</label><strong>42</strong><span><b class="kpi-status risk">7 critiche da sbloccare</b></span></div>
+          <div class="metric" data-open-page="schedule" data-open-label="Budget"><label>Budget consumato</label><strong>€4.8M</strong><span><b class="kpi-status warn">91% del forecast mensile</b></span></div>
+          <div class="metric" data-open-page="documents" data-open-label="Documenti"><label>Documenti in revisione</label><strong>16</strong><span><b class="kpi-status blue">5 contratti, 3 varianti</b></span></div>
         </section>
+        ${renderProjectHealth()}
         ${renderRiskForecastCard('site', selectedSite.name)}
         <div class="grid">
           <section class="panel">
@@ -2744,22 +3195,19 @@
           </section>
           <aside class="right-col">
             <section class="panel">
-              <div class="panel-head"><div><h2>Mappa rischi cantiere</h2><p>Issue, ritardi, foto 360 e contenuti recenti</p></div></div>
+              <div class="panel-head"><div><h2>Mappa rischi cantiere</h2><p>Zone operative, pin critici e impatti locali</p></div></div>
               <div class="map-wrap">
                 <div class="site-map">
                   <div class="block a">A</div><div class="block b">B</div><div class="block c">C</div><div class="block d">D</div>
                   <div class="pin one"></div><div class="pin two"></div><div class="pin three"></div>
                 </div>
-                <div class="gallery">
-                  <div class="gallery-head"><strong>Ultimi dal cantiere</strong><span>Foto, PDF, sopralluoghi</span></div>
-                  <div class="gallery-grid">
-                    <div class="gallery-card"><div class="thumb"></div><strong>Foto</strong><span>Isolamento Blocco B</span></div>
-                    <div class="gallery-card"><div class="thumb doc"></div><strong>PDF</strong><span>Variante impianti</span></div>
-                    <div class="gallery-card"><div class="thumb pano"></div><strong>360</strong><span>Sopralluogo piano 2</span></div>
-                  </div>
+                <div class="map-risk-summary">
+                  <div class="row"><div class="pin-marker">1</div><div><strong>Blocco B</strong><span>Isolamento incompleto, impatto cartongessi</span></div>${tag('Alta','risk')}</div>
+                  <div class="row"><div class="pin-marker" style="background: var(--warn)">2</div><div><strong>Piano 2</strong><span>Variante impianti da approvare</span></div>${tag('Budget','warn')}</div>
+                  <div class="row"><div class="pin-marker" style="background: var(--brand-2)">3</div><div><strong>Area nord</strong><span>Foto 360 disponibile nella scheda sopralluogo</span></div>${tag('360','blue')}</div>
                 </div>
                 <div class="shape-gallery">
-                  <div class="gallery-head"><strong>Immagini associate alle forme</strong><span>Cover da galleria</span></div>
+                  <div class="gallery-head"><strong>Zone mappa</strong><span>Coperture collegate ai blocchi</span></div>
                   <div class="shape-row">
                     <div class="shape-thumb"></div>
                     <div><strong>Blocco B</strong><span>Foto isolamento termico</span></div>
@@ -2822,10 +3270,23 @@
       const linked = items.filter(item => item.status === 'Collegato').length;
       media.innerHTML = `
         <section class="metrics">
-          <div class="metric"><label>Media visibili</label><strong>${items.length}</strong><span><i class="dot blue"></i>${dashboardMode === 'project' ? selectedSite.name : 'Tutti i cantieri abilitati'}</span></div>
-          <div class="metric"><label>Da classificare</label><strong>${unclassified}</strong><span><i class="dot warn"></i>AI propone collegamenti</span></div>
-          <div class="metric"><label>Collegati</label><strong>${linked}</strong><span><i class="dot"></i>Sopralluoghi, task, documenti</span></div>
-          <div class="metric"><label>Upload libero</label><strong>ON</strong><span><i class="dot"></i>Per utenti abilitati</span></div>
+          <div class="metric"><label>Media visibili</label><strong>${items.length}</strong><span><b class="kpi-status blue">${dashboardMode === 'project' ? selectedSite.name : 'Tutti i cantieri'}</b></span></div>
+          <div class="metric"><label>Da classificare</label><strong>${unclassified}</strong><span><b class="kpi-status warn">AI propone collegamenti</b></span></div>
+          <div class="metric"><label>Collegati</label><strong>${linked}</strong><span><b class="kpi-status">Sopralluoghi, task, documenti</b></span></div>
+          <div class="metric"><label>Upload libero</label><strong>ON</strong><span><b class="kpi-status">Per utenti abilitati</b></span></div>
+        </section>
+
+        <section class="offline-sync-panel">
+          <div>
+            <h2>Mobile offline-first</h2>
+            <span class="field-hint">I contenuti raccolti in campo restano disponibili sul dispositivo e vengono sincronizzati appena torna connessione.</span>
+          </div>
+          <div class="offline-sync-grid">
+            <div class="offline-sync-item"><strong>37</strong><span>media raccolti offline oggi</span>${tag('Da sincronizzare','warn')}</div>
+            <div class="offline-sync-item"><strong>12</strong><span>vocali trascritti localmente</span>${tag('Pronti','blue')}</div>
+            <div class="offline-sync-item"><strong>3</strong><span>conflitti da verificare</span>${tag('Review','risk')}</div>
+            <div class="offline-sync-item"><strong>82%</strong><span>sincronizzazione completata</span>${tag('Sync')}</div>
+          </div>
         </section>
 
         <section class="media-intake">
@@ -3017,6 +3478,18 @@
             Nuovo sopralluogo
           </button>
         </div>
+        <section class="offline-sync-panel">
+          <div>
+            <h2>Sopralluoghi mobile offline</h2>
+            <span class="field-hint">Foto, video, vocali, checklist, annotazioni e firme sono raccolti anche senza rete. Il backend consolida eventi e versioni al sync.</span>
+          </div>
+          <div class="offline-sync-grid">
+            <div class="offline-sync-item"><strong>5</strong><span>sopralluoghi in raccolta offline</span>${tag('Offline','warn')}</div>
+            <div class="offline-sync-item"><strong>28</strong><span>elementi da sincronizzare</span>${tag('Queue')}</div>
+            <div class="offline-sync-item"><strong>2</strong><span>verbali con firme pendenti</span>${tag('Firma','risk')}</div>
+            <div class="offline-sync-item"><strong>1</strong><span>conflitto annotazioni da risolvere</span>${tag('Conflitto','violet')}</div>
+          </div>
+        </section>
         <div class="grid equal">
           <section class="panel">
             <div class="panel-head"><div><h2>Sopralluogo: Isolamento Blocco B</h2><p>Report automatico pronto per chiusura</p></div>${tag('4/5 firme','ok')}</div>
@@ -3043,10 +3516,10 @@
     function renderSchedule() {
       document.getElementById('schedule').innerHTML = `
         <section class="metrics">
-          <div class="metric"><label>Attivita</label><strong>186</strong><span><i class="dot blue"></i>Tutte visibili nella tabella</span></div>
-          <div class="metric" data-schedule-filter="modified" data-open-label="Attività modificate"><label>Modificate utente</label><strong>42</strong><span><i class="dot"></i>Audit attivo</span></div>
-          <div class="metric"><label>Extra costo previsto</label><strong>€78K</strong><span><i class="dot risk"></i>Forecast aggiornato</span></div>
-          <div class="metric" data-schedule-filter="risk" data-open-label="Milestone a rischio"><label>Dati</label><strong>${scheduleSource === 'api' ? 'API' : 'Locali'}</strong><span><i class="dot warn"></i>${scheduleRows.length} righe caricate</span></div>
+          <div class="metric"><label>Attivita</label><strong>186</strong><span><b class="kpi-status blue">Tutte in tabella</b></span></div>
+          <div class="metric" data-schedule-filter="modified" data-open-label="Attività modificate"><label>Modificate utente</label><strong>42</strong><span><b class="kpi-status">Audit attivo</b></span></div>
+          <div class="metric"><label>Extra costo previsto</label><strong>€78K</strong><span><b class="kpi-status risk">Forecast aggiornato</b></span></div>
+          <div class="metric" data-schedule-filter="risk" data-open-label="Milestone a rischio"><label>Dati</label><strong>${scheduleSource === 'api' ? 'API' : 'Locali'}</strong><span><b class="kpi-status warn">${scheduleRows.length} righe caricate</b></span></div>
         </section>
         <table class="table">
           <thead><tr><th>Cantiere</th><th>Attivita</th><th>Periodo</th><th>Avanzamento</th><th>Costo previsto</th><th>Forecast</th><th></th></tr></thead>
@@ -3220,7 +3693,9 @@
               <option>Residenza Porta Nuova</option>
               <option>Green Offices Lambrate</option>
               <option>Hotel Aurora Renovation</option>
+              <option>+ Aggiungi nuovo valore</option>
             </select>
+            <span class="field-hint">Elenco configurabile per organizzazione, ruolo o singolo cantiere.</span>
           </div>
           <div class="field">
             <label>Area</label>
@@ -3228,6 +3703,7 @@
               <option>Blocco B · Piano 2</option>
               <option>Blocco A · Piano terra</option>
               <option>Facciata nord</option>
+              <option>+ Nuova area personalizzata</option>
             </select>
           </div>
           <div class="field">
@@ -3237,25 +3713,140 @@
               <option>Avanzamento lavori</option>
               <option>Sicurezza</option>
               <option>Chiusura lavorazione</option>
+              <option>+ Nuovo tipo personalizzato</option>
             </select>
           </div>
           <div class="field">
             <label>Data</label>
             <input type="date" value="2026-05-29">
           </div>
+          <div class="field">
+            <label>Tempo massimo annotazioni e firma</label>
+            <select>
+              <option>48 ore dalla bozza verbale</option>
+              <option>24 ore dalla bozza verbale</option>
+              <option>72 ore dalla bozza verbale</option>
+              <option>Custom</option>
+            </select>
+            <span class="field-hint">La scadenza viene comunicata automaticamente a tutti i partecipanti.</span>
+          </div>
+          <div class="field">
+            <label>Gestione ritardi firma</label>
+            <select>
+              <option>PM puo concedere tempi supplementari</option>
+              <option>Chiusura automatica a scadenza</option>
+              <option>Escalation a PM/Admin</option>
+            </select>
+          </div>
           <div class="field wide">
             <label>Partecipanti</label>
             <input value="Anna S., Marco R., Luca F., TermoCasa">
+            <span class="field-hint">Ruoli, fornitori, consulenti e gruppi invitabili sono variabili configurabili.</span>
           </div>
+          <section class="team-invite-grid">
+            <div class="team-invite-card">
+              <h3>Team interno</h3>
+              <label class="team-person"><input type="checkbox" checked><span><strong>Anna Sarti</strong>Project Manager</span>${tag('Responsabile','blue')}</label>
+              <label class="team-person"><input type="checkbox" checked><span><strong>Marco Riva</strong>Capocantiere</span>${tag('Operativo')}</label>
+              <label class="team-person"><input type="checkbox" checked><span><strong>Luca Ferri</strong>Site Manager</span>${tag('Report')}</label>
+              <label class="team-person"><input type="checkbox"><span><strong>Finance</strong>Budget e SAL</span>${tag('Opzionale')}</label>
+            </div>
+            <div class="team-invite-card">
+              <h3>Team esterno</h3>
+              <label class="team-person"><input type="checkbox" checked><span><strong>TermoCasa</strong>Fornitore isolamento</span>${tag('Da firmare','warn')}</label>
+              <label class="team-person"><input type="checkbox"><span><strong>Consulente sicurezza</strong>Audit HSE</span>${tag('Consulente','violet')}</label>
+              <label class="team-person"><input type="checkbox"><span><strong>Direzione lavori</strong>Validazione tecnica</span>${tag('Approva','blue')}</label>
+              <label class="team-person"><input type="checkbox"><span><strong>Committente</strong>Solo report approvato</span>${tag('Viewer')}</label>
+            </div>
+          </section>
           <div class="field wide">
             <label>Note iniziali</label>
             <textarea>Verificare isolamento, cartongessi e documentazione fotografica del piano 2.</textarea>
           </div>
           <div class="field wide">
             <label>Allegati previsti</label>
-            <div class="tags">${tag('Foto')}${tag('Video')}${tag('Foto 360','blue')}${tag('Vocali')}${tag('PDF')}</div>
+            <div class="variable-token-row">
+              <label class="variable-token"><input type="checkbox" checked>Foto</label>
+              <label class="variable-token"><input type="checkbox" checked>Video</label>
+              <label class="variable-token"><input type="checkbox" checked>Foto 360</label>
+              <label class="variable-token"><input type="checkbox" checked>Vocali</label>
+              <label class="variable-token"><input type="checkbox" checked>PDF</label>
+              <label class="variable-token"><input type="checkbox">XLS</label>
+            </div>
+          </div>
+          <section class="custom-variable-panel">
+            <div>
+              <h3>Variabili configurabili</h3>
+              <span class="field-hint">Ogni organizzazione puo personalizzare campi, opzioni, checklist, allegati obbligatori e automazioni AI.</span>
+            </div>
+            <div class="variable-grid">
+              <div class="field">
+                <label>Fase lavorazione</label>
+                <input value="Esecuzione impianti">
+              </div>
+              <div class="field">
+                <label>Checklist template</label>
+                <input value="Qualita impianti + sicurezza">
+              </div>
+              <div class="field">
+                <label>Priorita default</label>
+                <select>
+                  <option>Media</option>
+                  <option>Alta</option>
+                  <option>Critica</option>
+                  <option>Custom</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Scadenza task AI</label>
+                <input value="48 ore da creazione issue">
+              </div>
+              <div class="field">
+                <label>Classificazione AI</label>
+                <input value="Foto -> Issue/Task/Documento">
+              </div>
+              <div class="field">
+                <label>Modalita mobile</label>
+                <select>
+                  <option>Offline-first obbligatoria</option>
+                  <option>Online preferita, offline fallback</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Sync al ritorno rete</label>
+                <input value="Automatico con coda, audit e gestione conflitti">
+              </div>
+            </div>
+            <div class="workflow-builder">
+              <div class="field">
+                <label>Workflow sopralluogo</label>
+                <select>
+                  <option>Richiama template: Bozza -> Annotazioni -> Firme partecipanti</option>
+                  <option>Richiama template: Bozza -> Annotazioni tecniche -> Firme</option>
+                  <option>Richiama template: Bozza rapida -> Firme partecipanti</option>
+                  <option>Nuovo workflow personalizzato</option>
+                </select>
+                <span class="field-hint">Il workflow coinvolge i partecipanti al sopralluogo e governa bozza verbale, annotazioni, firme e chiusura.</span>
+              </div>
+              <div class="workflow-steps">
+                <div class="workflow-step"><small>Step 1</small><strong>Bozza verbale</strong><span>Invio automatico a tutti i partecipanti</span></div>
+                <div class="workflow-step"><small>Step 2</small><strong>Annotazioni</strong><span>Ogni partecipante puo inserire note entro il tempo massimo</span></div>
+                <div class="workflow-step"><small>Step 3</small><strong>Firma partecipanti</strong><span>Il flow resta aperto fino all'ultima firma</span></div>
+                <div class="workflow-step"><small>Eccezioni</small><strong>PM</strong><span>Proroga tempi o chiusura forzata con mancata firma registrata</span></div>
+              </div>
+              <div class="workflow-rule-card">
+                <strong>Regola di chiusura</strong>
+                <span>Il verbale si chiude solo quando tutti i partecipanti hanno firmato. Se uno o piu partecipanti non rispettano i tempi, il PM puo assegnare tempo supplementare oppure forzare la chiusura: il sistema registra la mancata firma come rifiuto/non adesione.</span>
+              </div>
+              <div class="workflow-rule-card">
+                <strong>Regola offline</strong>
+                <span>Bozza, annotazioni e firme possono essere raccolte offline sul mobile. La chiusura ufficiale viene consolidata al sync; conflitti, firme mancanti e versioni concorrenti restano tracciati nell'audit.</span>
+              </div>
+              <label class="save-template-row"><input type="checkbox" checked>Salva questo workflow come template riutilizzabile</label>
+            </div>
           </div>
           <div class="modal-actions">
+            <button class="secondary" data-action="Template variabili aggiornato">Salva template</button>
             <button class="secondary" data-action="Bozza sopralluogo salvata">Salva bozza</button>
             <button class="primary" data-action="Sopralluogo creato">Crea sopralluogo</button>
           </div>
