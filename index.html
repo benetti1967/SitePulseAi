@@ -2816,6 +2816,17 @@
     };
 
     const API_BASE = 'https://sitepulseai-api.benetti1967.workers.dev';
+    const LOCAL_DEMO_USER = 'admin@example.com';
+    const apiState = {
+      source: 'local',
+      error: '',
+      user: null,
+      tasks: [],
+      issues: [],
+      inspections: [],
+      documents: [],
+      media: []
+    };
 
     const pages = [
       ['dashboard', 'Dashboard', 'Portfolio cantieri · aggregato operativo e finanziario', ''],
@@ -2844,7 +2855,7 @@
     let scheduleRows = [...fallbackScheduleRows];
     let scheduleSource = 'fallback';
 
-    const documentRows = [
+    let documentRows = [
       { type: 'PDF', title: 'Variante impianti', meta: 'Documento · Blocco B · v3', status: 'In approvazione', owner: 'Anna S.', tagClass: 'warn', group: 'review' },
       { type: 'DWG', title: 'Tavole architettoniche', meta: 'Tavola · Piano 2 · v12', status: 'Approvato', owner: 'Marco R.', tagClass: 'blue', group: 'approved' },
       { type: 'CTR', title: 'Contratto fornitore', meta: 'Contratto · TermoCasa · riservato', status: 'Riservato', owner: 'Admin', tagClass: 'violet', group: 'sensitive' },
@@ -2852,7 +2863,7 @@
       { type: '360', title: 'Sopralluogo piano 2', meta: 'Foto 360 · report isolamento', status: 'Firmato 4/5', owner: 'Luca F.', tagClass: 'ok', group: 'approved' }
     ];
 
-    const mediaItems = [
+    let mediaItems = [
       { kind: 'photo', title: 'Foto isolamento Blocco B', site: 'Residenza Porta Nuova', uploadedBy: 'Luca F.', date: 'Oggi 10:42', confidence: '94%', suggestion: 'Sopralluogo: Isolamento Blocco B', target: 'Issue materiale mancante', status: 'Da confermare', tagClass: 'warn', tags: ['Foto', 'Blocco B', 'AI collegata'] },
       { kind: 'video', title: 'Video facciata nord', site: 'Hotel Aurora Renovation', uploadedBy: 'Direzione lavori', date: 'Ieri 16:10', confidence: '88%', suggestion: 'Task: verifica finiture facciata', target: 'Cronoprogramma facciata nord', status: 'Collegato', tagClass: 'ok', tags: ['Video', 'Facciata', 'Task'] },
       { kind: 'audio', title: 'Nota vocale consegna materiali', site: 'Green Offices Lambrate', uploadedBy: 'Sara M.', date: 'Oggi 08:31', confidence: '81%', suggestion: 'Issue: ritardo fornitore facciata sud', target: 'Fornitore AluSystem', status: 'Da revisionare', tagClass: 'risk', tags: ['Vocale', 'Fornitore', 'Issue'] },
@@ -2861,7 +2872,7 @@
       { kind: 'doc', title: 'Verbale riunione fornitori', site: 'Hotel Aurora Renovation', uploadedBy: 'Anna S.', date: '24 mag', confidence: '91%', suggestion: 'Report: riunione settimanale', target: '3 decisioni, 2 task', status: 'Collegato', tagClass: 'ok', tags: ['Documento', 'Report', 'Task'] }
     ];
 
-    const sites = [
+    let sites = [
       {
         name: 'Residenza Porta Nuova',
         location: 'Milano · 4 edifici · 126 unita',
@@ -3023,6 +3034,194 @@
       ]);
     }
 
+    function apiHeaders() {
+      return {
+        accept: 'application/json',
+        'x-sitepulse-demo-user': LOCAL_DEMO_USER
+      };
+    }
+
+    async function fetchApiData(path) {
+      const response = await fetch(`${API_BASE}${path}`, { headers: apiHeaders() });
+      if (!response.ok) {
+        const body = await response.json().catch(() => ({}));
+        const message = body.message || body.error || `HTTP ${response.status}`;
+        throw new Error(`${path}: ${message}`);
+      }
+      const payload = await response.json();
+      return payload.data || payload;
+    }
+
+    function formatApiDate(value) {
+      if (!value) return 'Data non disponibile';
+      return new Intl.DateTimeFormat('it-IT', {
+        day: '2-digit',
+        month: 'short',
+        hour: '2-digit',
+        minute: '2-digit'
+      }).format(new Date(value));
+    }
+
+    function mapApiSites(rows) {
+      const fallbackByName = new Map(sites.map(site => [site.name, site]));
+      return rows.map((row, index) => {
+        const fallback = fallbackByName.get(row.name) || sites[index] || sites[0];
+        return {
+          ...fallback,
+          id: row.id,
+          name: row.name || fallback.name,
+          location: row.location || fallback.location,
+          phase: row.phase || fallback.phase,
+          budgetTotal: Number(row.budget_total || fallback.budgetTotal || 0),
+          status: row.status || 'active'
+        };
+      });
+    }
+
+    function statusLabel(status) {
+      const labels = {
+        in_review: 'In revisione',
+        approved: 'Approvato',
+        closed: 'Chiuso',
+        open: 'Aperto'
+      };
+      return labels[status] || status || 'Da verificare';
+    }
+
+    function statusClass(status) {
+      if (['approved', 'closed', 'synced'].includes(status)) return 'ok';
+      if (['in_review', 'open'].includes(status)) return 'warn';
+      if (['blocked', 'critical'].includes(status)) return 'risk';
+      return '';
+    }
+
+    function mapApiDocuments(rows) {
+      return rows.map(row => ({
+        id: row.id,
+        type: row.document_type || 'DOC',
+        title: row.title || 'Documento senza titolo',
+        meta: `${row.site_name || 'Organizzazione'} - ${row.document_type || 'Documento'} - ${formatApiDate(row.updated_at)}`,
+        status: statusLabel(row.status),
+        owner: 'Backend',
+        tagClass: statusClass(row.status),
+        group: row.status === 'approved' ? 'approved' : row.status === 'reserved' ? 'sensitive' : 'review'
+      }));
+    }
+
+    function mediaKind(mime) {
+      if ((mime || '').startsWith('video/')) return 'video';
+      if ((mime || '').startsWith('audio/')) return 'audio';
+      if ((mime || '').includes('pdf') || (mime || '').includes('document')) return 'doc';
+      return 'photo';
+    }
+
+    function mapApiMedia(rows) {
+      return rows.map(row => {
+        const kind = mediaKind(row.mime_type);
+        const unassigned = !row.site_name;
+        return {
+          id: row.id,
+          kind,
+          title: row.file_name || 'Media senza nome',
+          site: row.site_name || 'Non assegnato',
+          uploadedBy: 'Sync backend',
+          date: formatApiDate(row.captured_at || row.created_at),
+          confidence: row.inspection_id ? '92%' : '71%',
+          suggestion: row.inspection_id ? `Sopralluogo: ${row.inspection_id}` : 'AI: collegamento da confermare',
+          target: row.ai_summary || 'Classificazione in corso',
+          status: unassigned ? 'Non classificato' : row.sync_status === 'synced' ? 'Collegato' : 'Da sincronizzare',
+          tagClass: unassigned ? 'warn' : 'ok',
+          tags: [kind.toUpperCase(), row.site_name || 'Upload libero', row.sync_status || 'synced']
+        };
+      });
+    }
+
+    function enrichSitesFromApi() {
+      const issueCounts = new Map();
+      const docCounts = new Map();
+      const scheduleBySite = new Map();
+      apiState.issues.forEach(issue => issueCounts.set(issue.site_name, (issueCounts.get(issue.site_name) || 0) + 1));
+      apiState.documents.forEach(doc => docCounts.set(doc.site_name, (docCounts.get(doc.site_name) || 0) + 1));
+      scheduleRows.forEach(row => {
+        const current = scheduleBySite.get(row[0]) || { total: 0, count: 0, budget: 0, forecast: 0 };
+        current.total += Number(row[4] || 0);
+        current.count += 1;
+        current.budget += Number(String(row[5]).replace(/[^\d,-]/g, '').replace(',', '.')) || 0;
+        current.forecast += Number(String(row[6]).replace(/[^\d,-]/g, '').replace(',', '.')) || 0;
+        scheduleBySite.set(row[0], current);
+      });
+      sites = sites.map(site => {
+        const schedule = scheduleBySite.get(site.name);
+        const progress = schedule?.count ? Math.round(schedule.total / schedule.count) : percentValue(site.progress);
+        return {
+          ...site,
+          progress: `${progress}%`,
+          forecastProgress: Math.max(0, progress - (issueCounts.get(site.name) || 0) * 2),
+          budget: schedule?.budget ? `${Math.min(99, Math.round((schedule.forecast / schedule.budget) * 100))}%` : site.budget,
+          issues: String(issueCounts.get(site.name) || 0),
+          docs: String(docCounts.get(site.name) || 0)
+        };
+      });
+      selectedSite = sites.find(site => site.name === selectedSite?.name) || sites[0];
+    }
+
+    function currentVisibleIssues() {
+      return dashboardMode === 'project'
+        ? apiState.issues.filter(issue => issue.site_name === selectedSite.name)
+        : apiState.issues;
+    }
+
+    function currentVisibleTasks() {
+      return dashboardMode === 'project'
+        ? apiState.tasks.filter(task => task.site_name === selectedSite.name)
+        : apiState.tasks;
+    }
+
+    async function loadBackendData() {
+      try {
+        const [me, apiSites, apiSchedule, apiTasks, apiIssues, apiInspections, apiMedia, apiDocuments] = await Promise.all([
+          fetchApiData('/api/me'),
+          fetchApiData('/api/sites'),
+          fetchApiData('/api/schedule'),
+          fetchApiData('/api/tasks'),
+          fetchApiData('/api/issues'),
+          fetchApiData('/api/inspections'),
+          fetchApiData('/api/media'),
+          fetchApiData('/api/documents')
+        ]);
+        apiState.source = 'api';
+        apiState.error = '';
+        apiState.user = me;
+        apiState.tasks = apiTasks || [];
+        apiState.issues = apiIssues || [];
+        apiState.inspections = apiInspections || [];
+        apiState.documents = apiDocuments || [];
+        apiState.media = apiMedia || [];
+        sites = mapApiSites(apiSites || []);
+        scheduleRows = mapApiScheduleRows(apiSchedule || []);
+        scheduleSource = 'api';
+        documentRows = mapApiDocuments(apiState.documents);
+        mediaItems = mapApiMedia(apiState.media);
+        enrichSitesFromApi();
+        showToast('Dati backend Cloudflare caricati');
+      } catch (error) {
+        apiState.source = 'local';
+        apiState.error = error.message;
+        scheduleRows = [...fallbackScheduleRows];
+        scheduleSource = 'fallback';
+        console.warn('API unavailable, using local data', error);
+        showToast('API non disponibile: vista locale attiva');
+      }
+      renderDashboard();
+      renderMediaArchive();
+      renderDocuments();
+      renderInspections();
+      renderSchedule();
+      renderIssues();
+      renderFloatingChat();
+      setPage(location.hash ? location.hash.slice(1) : 'dashboard');
+    }
+
     function renderNav() {
       document.getElementById('nav').innerHTML = pages.map(([id, label,, badge], index) => `
         <button class="${index === 0 ? 'active' : ''}" data-page="${id}" title="${label}">
@@ -3052,20 +3251,41 @@
       `;
     }
 
+    function portfolioMetrics() {
+      const totalSites = sites.length;
+      const avgProgress = totalSites
+        ? Math.round(sites.reduce((sum, site) => sum + percentValue(site.progress), 0) / totalSites)
+        : 0;
+      const criticalIssues = apiState.source === 'api'
+        ? apiState.issues.filter(issue => issue.severity === 'high' || issue.severity === 'critical').length
+        : 9;
+      const docCount = apiState.source === 'api' ? apiState.documents.length : 16;
+      const budgetTotal = sites.reduce((sum, site) => sum + Number(site.budgetTotal || 0), 0);
+      return {
+        totalSites,
+        avgProgress,
+        criticalIssues,
+        docCount,
+        budgetLabel: budgetTotal ? formatCurrency(budgetTotal).replace(/\s/g, '') : 'EUR18.7M',
+        sourceLabel: apiState.source === 'api' ? 'API Cloudflare' : 'Dati locali'
+      };
+    }
+
     function renderDashboard() {
       if (dashboardMode === 'project') {
         renderProjectDetailDashboard();
         return;
       }
+      const portfolio = portfolioMetrics();
       document.getElementById('dashboard').innerHTML = `
         <section class="panel portfolio-summary-panel">
           <div class="portfolio-summary-risk">
-            ${renderRiskForecastCard('portfolio', '4 cantieri abilitati - vista aggregata')}
+            ${renderRiskForecastCard('portfolio', `${portfolio.totalSites} cantieri visibili`)}
             <div class="portfolio-kpi-row">
-              <div class="metric" data-open-dashboard="portfolio" data-open-label="Cantieri aperti"><strong>4</strong><label>Cantieri aperti</label><span><b class="kpi-status">2 esecuzione, 1 avvio, 1 finiture</b></span></div>
-              <div class="metric" data-open-page="schedule" data-open-label="Avanzamento portfolio"><strong>55%</strong><label>Avanzamento medio</label><span><b class="kpi-status blue">+3% ultimi 7 giorni</b></span></div>
-              <div class="metric" data-open-page="issues" data-open-label="Rischi critici"><strong>9</strong><label>Rischi critici</label><span><b class="kpi-status risk">3 impattano tempi</b></span></div>
-              <div class="metric" data-open-page="schedule" data-open-label="Budget portfolio"><strong>€18.7M</strong><label>Budget portfolio</label><span><b class="kpi-status warn">€286K forecast</b></span></div>
+              <div class="metric" data-open-dashboard="portfolio" data-open-label="Cantieri aperti"><strong>${portfolio.totalSites}</strong><label>Cantieri aperti</label><span><b class="kpi-status">${portfolio.sourceLabel}</b></span></div>
+              <div class="metric" data-open-page="schedule" data-open-label="Avanzamento portfolio"><strong>${portfolio.avgProgress}%</strong><label>Avanzamento medio</label><span><b class="kpi-status blue">${scheduleRows.length} righe crono</b></span></div>
+              <div class="metric" data-open-page="issues" data-open-label="Rischi critici"><strong>${portfolio.criticalIssues}</strong><label>Rischi critici</label><span><b class="kpi-status risk">filtrati per ruolo</b></span></div>
+              <div class="metric" data-open-page="documents" data-open-label="Documenti"><strong>${portfolio.docCount}</strong><label>Documenti</label><span><b class="kpi-status warn">${portfolio.budgetLabel} budget</b></span></div>
             </div>
           </div>
           <div class="portfolio-risk-note">
@@ -3176,12 +3396,16 @@
     }
 
     function renderProjectDetailDashboard() {
+      const projectIssues = apiState.source === 'api' ? currentVisibleIssues().length : selectedSite.issues;
+      const projectDocs = apiState.source === 'api'
+        ? apiState.documents.filter(doc => doc.site_name === selectedSite.name).length
+        : selectedSite.docs;
       document.getElementById('dashboard').innerHTML = `
         <section class="metrics">
-          <div class="metric" data-open-page="schedule" data-open-label="Cronoprogramma"><label>Avanzamento</label><strong>68%</strong><span><b class="kpi-status">+4% rispetto a venerdi</b></span></div>
-          <div class="metric" data-open-page="issues" data-open-label="Issue e Task"><label>Issue aperte</label><strong>42</strong><span><b class="kpi-status risk">7 critiche da sbloccare</b></span></div>
-          <div class="metric" data-open-page="schedule" data-open-label="Budget"><label>Budget consumato</label><strong>€4.8M</strong><span><b class="kpi-status warn">91% del forecast mensile</b></span></div>
-          <div class="metric" data-open-page="documents" data-open-label="Documenti"><label>Documenti in revisione</label><strong>16</strong><span><b class="kpi-status blue">5 contratti, 3 varianti</b></span></div>
+          <div class="metric" data-open-page="schedule" data-open-label="Cronoprogramma"><label>Avanzamento</label><strong>${selectedSite.progress}</strong><span><b class="kpi-status">${scheduleSource === 'api' ? 'da backend' : '+4% rispetto a venerdi'}</b></span></div>
+          <div class="metric" data-open-page="issues" data-open-label="Issue e Task"><label>Issue aperte</label><strong>${projectIssues}</strong><span><b class="kpi-status risk">filtrate sul cantiere</b></span></div>
+          <div class="metric" data-open-page="schedule" data-open-label="Budget"><label>Budget consumato</label><strong>${selectedSite.budget}</strong><span><b class="kpi-status warn">forecast cantiere</b></span></div>
+          <div class="metric" data-open-page="documents" data-open-label="Documenti"><label>Documenti</label><strong>${projectDocs}</strong><span><b class="kpi-status blue">segregati per ruolo</b></span></div>
         </section>
         ${renderProjectHealth()}
         ${renderRiskForecastCard('site', selectedSite.name)}
@@ -3413,11 +3637,14 @@
     }
 
     function renderDocuments() {
+      const reviewCount = documentRows.filter(doc => doc.group === 'review').length;
+      const approvedCount = documentRows.filter(doc => doc.group === 'approved').length;
+      const sensitiveCount = documentRows.filter(doc => doc.group === 'sensitive').length;
       document.getElementById('documents').innerHTML = `
         <section class="doc-summary-grid">
-          <div class="doc-summary-card" data-doc-filter="review"><label>In revisione</label><strong>16</strong><span>5 contratti, 3 varianti</span></div>
-          <div class="doc-summary-card" data-doc-filter="approved"><label>Approvati</label><strong>84</strong><span>12 aggiornati questa settimana</span></div>
-          <div class="doc-summary-card" data-doc-filter="sensitive"><label>Riservati</label><strong>9</strong><span>Accesso PM/Admin</span></div>
+          <div class="doc-summary-card" data-doc-filter="review"><label>In revisione</label><strong>${reviewCount}</strong><span>${apiState.source === 'api' ? 'da backend' : '5 contratti, 3 varianti'}</span></div>
+          <div class="doc-summary-card" data-doc-filter="approved"><label>Approvati</label><strong>${approvedCount}</strong><span>versioning attivo</span></div>
+          <div class="doc-summary-card" data-doc-filter="sensitive"><label>Riservati</label><strong>${sensitiveCount}</strong><span>Accesso PM/Admin</span></div>
         </section>
 
         <div class="doc-toolbar">
@@ -3466,6 +3693,11 @@
     }
 
     function renderInspections() {
+      const visibleInspections = apiState.source === 'api'
+        ? apiState.inspections.filter(item => dashboardMode !== 'project' || item.site_name === selectedSite.name)
+        : [];
+      const openInspections = visibleInspections.filter(item => item.status !== 'closed').length || 5;
+      const firstInspection = visibleInspections[0];
       document.getElementById('inspections').innerHTML = `
         <div class="doc-toolbar">
           <div class="doc-tabs">
@@ -3484,7 +3716,7 @@
             <span class="field-hint">Foto, video, vocali, checklist, annotazioni e firme sono raccolti anche senza rete. Il backend consolida eventi e versioni al sync.</span>
           </div>
           <div class="offline-sync-grid">
-            <div class="offline-sync-item"><strong>5</strong><span>sopralluoghi in raccolta offline</span>${tag('Offline','warn')}</div>
+            <div class="offline-sync-item"><strong>${openInspections}</strong><span>sopralluoghi in raccolta offline</span>${tag(apiState.source === 'api' ? 'Backend' : 'Offline','warn')}</div>
             <div class="offline-sync-item"><strong>28</strong><span>elementi da sincronizzare</span>${tag('Queue')}</div>
             <div class="offline-sync-item"><strong>2</strong><span>verbali con firme pendenti</span>${tag('Firma','risk')}</div>
             <div class="offline-sync-item"><strong>1</strong><span>conflitto annotazioni da risolvere</span>${tag('Conflitto','violet')}</div>
@@ -3492,7 +3724,7 @@
         </section>
         <div class="grid equal">
           <section class="panel">
-            <div class="panel-head"><div><h2>Sopralluogo: Isolamento Blocco B</h2><p>Report automatico pronto per chiusura</p></div>${tag('4/5 firme','ok')}</div>
+            <div class="panel-head"><div><h2>Sopralluogo: ${firstInspection?.title || 'Isolamento Blocco B'}</h2><p>${firstInspection?.ai_summary || 'Report automatico pronto per chiusura'}</p></div>${tag(firstInspection ? statusLabel(firstInspection.status) : '4/5 firme','ok')}</div>
             <div class="list">
               <div class="activity"><div class="thumb pano"></div><div><h3>3 foto 360 collegate a planimetria</h3><p>Piano 2 · punti ispezione A, B e C con link sicuro nel report.</p><div class="tags">${tag('Foto 360','blue')}${tag('Planimetria')}</div></div><div class="owner"><span>Oggi</span></div></div>
               <div class="activity"><div class="thumb"></div><div><h3>14 foto e 2 vocali inclusi nel verbale</h3><p>Sintesi pronta, issue generate e responsabili assegnati.</p><div class="tags">${tag('Media')}${tag('Sintesi','violet')}</div></div><div class="owner"><span>10:58</span></div></div>
@@ -3548,6 +3780,39 @@
     }
 
     function renderIssues() {
+      const tasksForView = currentVisibleTasks();
+      const issuesForView = currentVisibleIssues();
+      if (apiState.source === 'api' && (tasksForView.length || issuesForView.length)) {
+        const cards = [
+          ...tasksForView.map(task => ({
+            title: task.title,
+            text: `${task.site_name || 'Organizzazione'} - ${statusLabel(task.status)} - scade ${task.due_at || 'da definire'}`,
+            status: task.status,
+            priority: task.priority || 'medium',
+            lane: task.status === 'blocked' ? 'Bloccato' : task.status === 'in_progress' ? 'In corso' : 'Da fare',
+            tags: [task.priority || 'task', 'Task']
+          })),
+          ...issuesForView.map(issue => ({
+            title: issue.title,
+            text: `${issue.site_name || 'Organizzazione'} - ${statusLabel(issue.status)} - scade ${issue.due_at || 'da definire'}`,
+            status: issue.status,
+            priority: issue.severity || 'medium',
+            lane: issue.status === 'blocked' ? 'Bloccato' : issue.status === 'in_progress' ? 'In corso' : 'Da fare',
+            tags: [issue.severity || 'issue', 'Issue']
+          }))
+        ];
+        const lane = name => cards.filter(card => card.lane === name).map(card => `
+          <article class="task-card"><h3>${card.title}</h3><p>${card.text}</p><div>${tag(card.tags[0], card.priority === 'high' ? 'risk' : 'warn')} ${tag(card.tags[1], 'blue')}</div></article>
+        `).join('') || `<article class="task-card"><h3>Nessun elemento</h3><p>Non ci sono elementi backend in questa colonna.</p><div>${tag('OK','ok')}</div></article>`;
+        document.getElementById('issues').innerHTML = `
+          <div class="kanban">
+            <section class="lane"><h2>Da fare</h2>${lane('Da fare')}</section>
+            <section class="lane"><h2>In corso</h2>${lane('In corso')}</section>
+            <section class="lane"><h2>Bloccato</h2>${lane('Bloccato')}</section>
+          </div>
+        `;
+        return;
+      }
       document.getElementById('issues').innerHTML = `
         <div class="kanban">
           <section class="lane"><h2>Da fare</h2>
@@ -3612,6 +3877,11 @@
       const page = pages.find(p => p[0] === id);
       if (!page) return setPage('dashboard');
       if (id === 'media') renderMediaArchive();
+      if (id === 'documents') renderDocuments();
+      if (id === 'inspections') renderInspections();
+      if (id === 'schedule') renderSchedule();
+      if (id === 'issues') renderIssues();
+      if (id === 'permissions') renderPermissions();
       document.getElementById('pageTitle').textContent = page[1];
       document.getElementById('pageSubtitle').textContent = id === 'dashboard'
         ? (dashboardMode === 'project' ? `${selectedSite.name} · ${selectedSite.phase}` : page[2])
@@ -4231,7 +4501,6 @@
     renderDocuments();
     renderInspections();
     renderSchedule();
-    loadScheduleFromApi();
     renderIssues();
     renderPermissions();
     renderFloatingChat();
@@ -4239,6 +4508,7 @@
     const initialPage = location.hash ? location.hash.slice(1) : 'dashboard';
     openPortfolio();
     setPage(initialPage);
+    loadBackendData();
     setTimeout(() => {
       showChatAlert('Nuovo messaggio dal campo', 'Residenza Porta Nuova: foto e vocale richiedono revisione QA.');
     }, 1800);
