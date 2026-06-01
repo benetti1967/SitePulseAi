@@ -150,10 +150,14 @@
     .topbar {
       min-height: 58px;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-columns: minmax(260px, 1fr) minmax(0, auto);
       gap: 16px;
       align-items: center;
       margin-bottom: 16px;
+    }
+
+    .topbar > div:first-child {
+      min-width: 0;
     }
 
     h1 {
@@ -164,7 +168,8 @@
     }
 
     .view-mode-chip {
-      width: max-content;
+      width: fit-content;
+      max-width: 100%;
       min-height: 24px;
       border-radius: 999px;
       border: 1px solid #c9d8d6;
@@ -179,6 +184,9 @@
       font-weight: 900;
       text-transform: uppercase;
       letter-spacing: .02em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .view-mode-chip.project {
@@ -197,6 +205,9 @@
       display: flex;
       gap: 8px;
       align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      min-width: 0;
     }
 
     .scope-pill {
@@ -1213,6 +1224,33 @@
     .tag.blue { background: #e8f1f7; color: var(--brand-2); }
     .tag.violet { background: #efedf7; color: var(--violet); }
     .tag.ok { background: #e8f2ec; color: var(--ok); }
+
+    [data-help] {
+      cursor: help;
+    }
+
+    .help-tooltip {
+      position: fixed;
+      z-index: 80;
+      max-width: 310px;
+      border: 1px solid #c9d8d6;
+      border-radius: 8px;
+      background: #10272b;
+      color: #f5fbfa;
+      padding: 10px 12px;
+      font-size: 12px;
+      line-height: 1.45;
+      box-shadow: 0 14px 32px rgba(16, 39, 43, .22);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(4px);
+      transition: opacity .14s ease, transform .14s ease;
+    }
+
+    .help-tooltip.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
     .owner {
       min-width: 132px;
@@ -2929,6 +2967,233 @@
       font-size: 12px;
     }
 
+    .issue-filter-row {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 2px 0 10px;
+      margin-bottom: 10px;
+    }
+
+    .issue-filter-row button {
+      min-height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: white;
+      color: #43515f;
+      padding: 0 12px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .issue-filter-row button.active {
+      border-color: #8eb9b4;
+      background: #eef8f6;
+      color: var(--brand);
+    }
+
+    .issue-count {
+      min-width: 21px;
+      min-height: 21px;
+      border-radius: 999px;
+      background: #eef1f2;
+      color: #43515f;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 7px;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .issue-strip-panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f8fafb;
+      padding: 12px;
+    }
+
+    .issue-strip-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .issue-strip-head h2 {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .issue-strip-head span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .issue-card-strip {
+      display: grid;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .issue-table-head {
+      min-width: 1400px;
+      display: grid;
+      grid-template-columns: minmax(225px, 1.15fr) minmax(190px, .86fr) minmax(105px, .48fr) minmax(120px, .55fr) minmax(105px, .48fr) minmax(105px, .48fr) minmax(125px, .55fr) minmax(190px, .85fr) minmax(190px, .85fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 0 14px 8px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+    }
+
+    .issue-table-head button {
+      border: 0;
+      background: transparent;
+      color: inherit;
+      padding: 0;
+      font: inherit;
+      text-transform: inherit;
+      letter-spacing: inherit;
+      text-align: left;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      min-width: 0;
+    }
+
+    .issue-table-head button.active {
+      color: var(--brand);
+    }
+
+    .sort-mark {
+      color: var(--brand);
+      font-size: 10px;
+    }
+
+    .issue-row-card {
+      min-width: 1400px;
+      grid-template-columns: minmax(225px, 1.15fr) minmax(190px, .86fr) minmax(105px, .48fr) minmax(120px, .55fr) minmax(105px, .48fr) minmax(105px, .48fr) minmax(125px, .55fr) minmax(190px, .85fr) minmax(190px, .85fr) auto;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+    }
+
+    .issue-row-card .task-card-head,
+    .issue-row-card .issue-origin-cell,
+    .issue-row-card .issue-person-cell,
+    .issue-row-card .tags,
+    .issue-row-card .task-card-actions {
+      min-width: 0;
+    }
+
+    .issue-row-card .task-card-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 8px;
+      justify-content: stretch;
+    }
+
+    .issue-row-card h3 {
+      font-size: 15px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .issue-row-card p {
+      font-size: 13px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .issue-origin-cell {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow: hidden;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .issue-origin-icons {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      flex: 0 0 auto;
+    }
+
+    .issue-origin-icon {
+      width: 25px;
+      height: 25px;
+      border-radius: 999px;
+      background: #eef8f6;
+      color: var(--brand);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .issue-origin-icon svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .issue-origin-site,
+    .issue-person-cell {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .issue-person-cell {
+      color: #43515f;
+    }
+
+    .issue-row-card .tags {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .issue-row-card .tags .kpi-status {
+      flex: 0 0 auto;
+      min-height: 25px;
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+
+    .issue-impact {
+      color: var(--muted);
+      font-size: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .issue-row-card .task-card-actions {
+      border-top: 0;
+      padding-top: 0;
+      justify-content: flex-end;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+    }
+
     .permission-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -3371,6 +3636,7 @@
   </div>
 
   <div class="toast" id="toast"></div>
+  <div class="help-tooltip" id="helpTooltip"></div>
   <div class="modal-backdrop" id="modalBackdrop">
     <div class="modal">
       <div class="modal-head">
@@ -3753,6 +4019,8 @@
 
     let dashboardMode = 'portfolio';
     let selectedSite = sites[0];
+    let activeIssueStatusFilter = 'all';
+    let issueSort = { key: 'impact', dir: 'desc' };
     let activeConversation = 'blocco-b';
     let activeChatSite = 'all';
     let chatUnreadCount = 3;
@@ -3865,8 +4133,16 @@
       }
     ];
 
-    function tag(text, cls = '') {
-      return `<span class="tag ${cls}">${text}</span>`;
+    function escapeAttr(value) {
+      return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function tag(text, cls = '', help = '') {
+      return `<span class="tag ${cls}"${help ? ` data-help="${escapeAttr(help)}"` : ''}>${text}</span>`;
     }
 
     function showToast(text) {
@@ -3875,6 +4151,24 @@
       toast.classList.add('show');
       clearTimeout(window.toastTimer);
       window.toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    function showHelpTooltip(target) {
+      const tooltip = document.getElementById('helpTooltip');
+      const text = target?.dataset.help;
+      if (!tooltip || !text) return;
+      const rect = target.getBoundingClientRect();
+      tooltip.textContent = text;
+      tooltip.classList.add('show');
+      const top = Math.min(window.innerHeight - tooltip.offsetHeight - 12, rect.bottom + 10);
+      const left = Math.min(window.innerWidth - tooltip.offsetWidth - 12, Math.max(12, rect.left));
+      tooltip.style.top = `${Math.max(12, top)}px`;
+      tooltip.style.left = `${left}px`;
+    }
+
+    function hideHelpTooltip() {
+      clearTimeout(window.helpTooltipTimer);
+      document.getElementById('helpTooltip')?.classList.remove('show');
     }
 
     function formatCurrency(value) {
@@ -4396,8 +4690,7 @@
             <div>
               <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/><path d="M4 19h16"/></svg>
               <strong>Upload</strong>
-              <p>Foto, video, vocali, PDF, XLS e tavole possono entrare in archivio. L'AI suggerisce cantiere, zona, sopralluogo, task o documento.</p>
-              <div class="tags">${tag('Foto')}${tag('Video','blue')}${tag('Voice')}${tag('PDF','violet')}${tag('XLS','warn')}</div>
+              <div class="tags">${tag('Upload libero','blue','Foto, video, vocali, PDF, XLS e tavole possono entrare in archivio. L AI suggerisce cantiere, zona, sopralluogo, task o documento.')}${tag('Foto')}${tag('Video','blue')}${tag('Voice')}${tag('PDF','violet')}${tag('XLS','warn')}</div>
               <input id="mediaUploadInput" type="file" multiple accept="image/*,video/*,audio/*,.pdf,.xls,.xlsx,.doc,.docx" hidden>
               <div class="media-actions">
                 <button class="primary" data-media-upload="true">Upload rapido</button>
@@ -4416,7 +4709,7 @@
               `).join('')}
             </div>
             <div class="ai-suggestion">
-              <strong>Ricerca intelligente.</strong> Se non ricordi il sopralluogo, cerca una zona, una persona, un fornitore o una frase detta nel vocale: l'archivio mostra i contenuti probabili e il collegamento suggerito.
+              <strong data-help="Se non ricordi il sopralluogo, cerca una zona, una persona, un fornitore o una frase detta nel vocale: l'archivio mostra i contenuti probabili e il collegamento suggerito.">Ricerca intelligente</strong>
             </div>
           </div>
         </section>
@@ -4691,7 +4984,7 @@
         </section>
 
         <section class="panel timeline-panel">
-          <div class="panel-head"><div><h2>Cronoprogramma</h2><p>Vista settimanale: le WBS sono comprimibili, espandibili nelle sottoattività e mobili nel tempo o tra WBS.</p></div>${tag('Settimanale','blue')}</div>
+          <div class="panel-head"><div><h2>Cronoprogramma</h2></div>${tag('Settimanale','blue','Le WBS sono comprimibili, espandibili nelle sottoattività e mobili nel tempo o tra WBS.')}</div>
           <div class="timeline-window">
             <div class="timeline-grid weekly" id="weeklyScheduleGrid">
               <div class="timeline-cell timeline-head">Attività / WBS</div>
@@ -4729,15 +5022,14 @@
         <div class="schedule-board">
           <div class="schedule-panels">
             <section class="panel">
-              <div class="panel-head"><div><h2>Computo importato</h2><p>Base economica e quantitativa per AI, WBS e budget.</p></div>${tag('PDF/XLS','violet')}</div>
+              <div class="panel-head"><div><h2>Computo importato</h2></div>${tag('PDF/XLS','violet','Base economica e quantitativa per AI, WBS e budget: da PDF o XLS vengono estratte voci, quantità, importi e categorie.')}</div>
               <div class="boq-drop">
                 <strong>${scheduleSource === 'api' ? 'Dati caricati dal backend' : 'Simulazione computo locale pronta'}</strong>
-                <span>Carica un PDF o XLS: l'AI estrae voci, quantità, importi, categorie e propone WBS e cronoprogramma.</span>
                 <div class="tags">${tag('OCR')}${tag('Excel','blue')}${tag('Validazione PM','warn')}</div>
               </div>
             </section>
             <section class="panel">
-              <div class="panel-head"><div><h2>Budget e forecast</h2><p>Costi da computo confrontati con previsione aggiornata.</p></div></div>
+              <div class="panel-head"><div><h2>Budget e forecast</h2></div>${tag('Forecast','warn','Costi da computo confrontati con previsione aggiornata e scostamenti da approvare.')}</div>
               <div class="budget-grid">
                 <div class="budget-card"><label>Budget computo</label><strong>${formatCurrency(totalBudget)}</strong><span>${filteredWbs.length} WBS</span></div>
                 <div class="budget-card"><label>Forecast</label><strong>${formatCurrency(totalForecast)}</strong><span>${overrun > 0 ? 'extra costo previsto' : 'in linea'}</span></div>
@@ -4978,40 +5270,148 @@
       return 'Chiuso';
     }
 
+    function issueFilterOptions(items) {
+      const count = status => status === 'all'
+        ? items.length
+        : items.filter(item => item.status === status).length;
+      return [
+        ['all', 'Tutti', count('all')],
+        ['open', 'Apertura', count('open')],
+        ['assigned', 'Presa in carico', count('assigned')],
+        ['in_progress', 'Lavorazione', count('in_progress')],
+        ['blocked', 'Bloccati', count('blocked')],
+        ['closure_proposed', 'Chiusura proposta', count('closure_proposed')],
+        ['validation', 'Validazione', count('validation')],
+        ['closed', 'Chiusi', count('closed')]
+      ];
+    }
+
     function currentWorkflowItems() {
       return dashboardMode === 'project'
         ? issueWorkflowItems.filter(item => item.site === selectedSite.name)
         : issueWorkflowItems;
     }
 
+    function parseIssueDue(value) {
+      const months = { gen: 0, feb: 1, mar: 2, apr: 3, mag: 4, giu: 5, lug: 6, ago: 7, set: 8, ott: 9, nov: 10, dic: 11 };
+      const match = String(value || '').toLowerCase().match(/(\d{1,2})\s+([a-z]{3})\s+(\d{1,2}):(\d{2})/);
+      if (!match) return Number.MAX_SAFE_INTEGER;
+      const [, day, month, hour, minute] = match;
+      return new Date(2026, months[month] ?? 0, Number(day), Number(hour), Number(minute)).getTime();
+    }
+
+    function issueDelayScore(item) {
+      const explicitDelay = String(item.impact || '').match(/\+(\d+)\s*g/i);
+      const delayDays = explicitDelay ? Number(explicitDelay[1]) : 0;
+      const statusWeight = item.status === 'blocked' ? 6 : item.status === 'validation' ? 2 : item.status === 'closure_proposed' ? 1 : 0;
+      const priorityWeight = item.priority === 'Critica' ? 4 : item.priority === 'Alta' ? 2 : 0;
+      const dueTime = parseIssueDue(item.due);
+      const today = new Date(2026, 5, 1).getTime();
+      const overdueDays = dueTime < today ? Math.ceil((today - dueTime) / 86400000) : 0;
+      return delayDays + statusWeight + priorityWeight + overdueDays;
+    }
+
+    function issueStatusRank(status) {
+      const order = {
+        open: 10,
+        assigned: 20,
+        in_progress: 30,
+        blocked: 40,
+        closure_proposed: 50,
+        validation: 60,
+        closed: 70
+      };
+      return order[status] || 99;
+    }
+
+    function issuePriorityRank(priority) {
+      const order = {
+        Critica: 40,
+        Alta: 30,
+        Media: 20,
+        Bassa: 10
+      };
+      return order[priority] || 0;
+    }
+
+    function issueSortValue(item, key) {
+      const [statusLabelText] = issueStatusMeta(item.status);
+      const values = {
+        title: item.title,
+        site: dashboardMode === 'project' ? item.origin : item.site,
+        creator: item.creator,
+        assignee: item.assignee,
+        due: parseIssueDue(item.due),
+        priority: issuePriorityRank(item.priority),
+        status: issueStatusRank(item.status),
+        wbs: item.wbs,
+        impact: issueDelayScore(item),
+        delay: issueDelayScore(item)
+      };
+      return values[key] ?? '';
+    }
+
+    function sortIssueItems(items) {
+      return [...items].sort((a, b) => {
+        const direction = issueSort.dir === 'asc' ? 1 : -1;
+        const aValue = issueSortValue(a, issueSort.key);
+        const bValue = issueSortValue(b, issueSort.key);
+        let result = typeof aValue === 'number' && typeof bValue === 'number'
+          ? aValue - bValue
+          : String(aValue).localeCompare(String(bValue), 'it', { sensitivity: 'base' });
+        if (result === 0 && issueSort.key !== 'due') {
+          result = parseIssueDue(a.due) - parseIssueDue(b.due);
+        }
+        return result * direction;
+      });
+    }
+
+    function issueSortButton(key, label) {
+      const active = issueSort.key === key;
+      const mark = active ? (issueSort.dir === 'asc' ? '▲' : '▼') : '';
+      return `<button class="${active ? 'active' : ''}" data-issue-sort="${key}">${label}${mark ? `<span class="sort-mark">${mark}</span>` : ''}</button>`;
+    }
+
+    function issueOriginIcons(origin) {
+      const value = String(origin || '').toLowerCase();
+      const iconSet = [];
+      if (value.includes('chat')) iconSet.push(['Chat', '<path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4Z"/>']);
+      if (value.includes('foto') || value.includes('sopralluogo')) iconSet.push(['Foto', '<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="m21 15-3.5-3.5L13 16l-2-2-4 5"/>']);
+      if (value.includes('vocale')) iconSet.push(['Vocale', '<path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/>']);
+      if (value.includes('documento') || value.includes('pdf')) iconSet.push(['Documento', '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/>']);
+      if (value.includes('upload')) iconSet.push(['Upload', '<path d="M12 3v12"/><path d="m7 8 5-5 5 5"/><path d="M5 21h14"/>']);
+      if (value.includes('manuale')) iconSet.push(['Manuale', '<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>']);
+      const icons = iconSet.length ? iconSet : [['Origine', '<circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/>']];
+      return `<span class="issue-origin-icons">${icons.map(([label, paths]) => `<span class="issue-origin-icon" title="${label}"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${paths}</svg></span>`).join('')}</span>`;
+    }
+
     function renderIssueCard(item) {
       const [statusLabelText,, statusClassName, actionLabel, nextStatus] = issueStatusMeta(item.status);
+      const contextLine = dashboardMode === 'project' ? '' : item.site;
       const actionButton = actionLabel
         ? `<button class="primary-mini" data-issue-transition="${item.id}" data-next-status="${nextStatus}">${actionLabel}</button>`
-        : `<button data-open-issue="${item.id}">Apri storico</button>`;
+        : '';
       const rejectButton = item.status === 'validation'
         ? `<button data-issue-transition="${item.id}" data-next-status="in_progress">Respingi</button>`
         : '';
       return `
-        <article class="task-card" data-open-issue="${item.id}">
+        <article class="task-card issue-row-card" data-open-issue="${item.id}">
           <div class="task-card-head">
             <h3>${item.title}</h3>
             ${tag(item.type, item.type === 'Issue' ? 'risk' : 'blue')}
           </div>
-          <p>${item.site} - ${item.origin}</p>
-          <div class="task-card-meta">
-            <span>Creato da ${item.creator}</span>
-            <span>Assegnato a ${item.assignee}</span>
-            <span>Scade ${item.due}</span>
+          <div class="issue-origin-cell">
+            ${issueOriginIcons(item.origin)}
+            <span class="issue-origin-site">${contextLine}</span>
           </div>
-          <div class="tags">
-            ${tag(item.priority, item.priorityClass)}
-            ${tag(statusLabelText, statusClassName)}
-            ${tag(item.wbs, 'blue')}
-          </div>
-          <p>${item.impact}</p>
+          <span class="issue-person-cell">${item.creator}</span>
+          <span class="issue-person-cell">${item.assignee}</span>
+          <span class="issue-person-cell">${item.due}</span>
+          <div class="tags">${tag(item.priority, item.priorityClass)}</div>
+          <div class="tags">${tag(statusLabelText, statusClassName)}</div>
+          <div class="tags">${tag(item.wbs, 'blue')}</div>
+          <span class="issue-impact">${item.impact}</span>
           <div class="task-card-actions">
-            <button data-open-issue="${item.id}">Dettaglio</button>
             ${rejectButton}
             ${actionButton}
           </div>
@@ -5021,26 +5421,30 @@
 
     function renderIssues() {
       const items = currentWorkflowItems();
-      const lanes = ['Apertura', 'Presa in carico', 'Lavorazione', 'Validazione', 'Chiuso'];
+      const filterOptions = issueFilterOptions(items);
+      const activeFilterExists = filterOptions.some(option => option[0] === activeIssueStatusFilter);
+      if (!activeFilterExists) activeIssueStatusFilter = 'all';
+      const filteredItems = activeIssueStatusFilter === 'all'
+        ? items
+        : items.filter(item => item.status === activeIssueStatusFilter);
+      const sortedItems = sortIssueItems(filteredItems);
+      const activeFilterLabel = filterOptions.find(option => option[0] === activeIssueStatusFilter)?.[1] || 'Tutti';
       const openCount = items.filter(item => item.status !== 'closed').length;
       const validationCount = items.filter(item => ['closure_proposed', 'validation'].includes(item.status)).length;
       const blockedCount = items.filter(item => item.status === 'blocked').length;
       const closedCount = items.filter(item => item.status === 'closed').length;
-      const laneHtml = lane => {
-        const laneItems = items.filter(item => issueLane(item.status) === lane);
-        return laneItems.map(renderIssueCard).join('') || `
-          <article class="task-card">
-            <h3>Nessun elemento</h3>
-            <p>Non ci sono task o issue in questa fase per la vista selezionata.</p>
-            <div>${tag('OK','ok')}</div>
-          </article>
-        `;
-      };
+      const emptyState = `
+        <article class="task-card">
+          <h3>Nessun elemento</h3>
+          <p>Non ci sono task o issue in questo stato per la vista selezionata.</p>
+          <div>${tag('OK','ok')}</div>
+        </article>
+      `;
       document.getElementById('issues').innerHTML = `
         <div class="issue-toolbar">
           <div>
             <h2>Flow apertura - validazione - chiusura</h2>
-            <p>Ogni card conserva origine, creatore, assegnatario, scadenza, evidenze, impatto e audit trail.</p>
+            <div class="tags">${tag('Flow apertura', 'blue', 'Ogni riga conserva origine, creatore, assegnatario, scadenza, evidenze, impatto e audit trail. Passa dallo stato aperto alla validazione fino alla chiusura tracciata.')}</div>
           </div>
           <button class="primary" data-create-issue="true">
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
@@ -5055,19 +5459,35 @@
           <div class="metric"><strong>${closedCount}</strong><label>Chiusi</label><span><b class="kpi-status ok">audit congelato</b></span></div>
         </section>
 
-        <section class="issue-flow">
-          ${[
-            ['Apertura', 'Da chat, sopralluogo, media, documento, crono o inserimento manuale.'],
-            ['Presa in carico', 'Assegnatario e scadenza obbligatori, con notifica mobile/web.'],
-            ['Lavorazione', 'Aggiornamenti, evidenze, blocchi e impatti su tempi/budget.'],
-            ['Validazione', 'Chiusura proposta, verifica PM/DL/HSE/Committente.'],
-            ['Chiuso', 'Storico, firme, evidenze e impatti non modificabili direttamente.']
-          ].map(step => `<div class="issue-step ${items.some(item => issueLane(item.status) === step[0]) ? 'active' : ''}"><strong>${step[0]}</strong><span>${step[1]}</span></div>`).join('')}
-        </section>
-
-        <div class="kanban">
-          ${lanes.map(lane => `<section class="lane"><h2>${lane}</h2>${laneHtml(lane)}</section>`).join('')}
+        <div class="issue-filter-row">
+          ${filterOptions.map(([status, label, count]) => `
+            <button class="${activeIssueStatusFilter === status ? 'active' : ''}" data-issue-filter="${status}">
+              ${label}<span class="issue-count">${count}</span>
+            </button>
+          `).join('')}
         </div>
+
+        <section class="issue-strip-panel">
+          <div class="issue-strip-head">
+            <h2>${activeFilterLabel}</h2>
+            <span>${filteredItems.length} elementi${dashboardMode === 'portfolio' ? ' - ogni card riporta il cantiere' : ''}</span>
+          </div>
+          <div class="issue-card-strip">
+            <div class="issue-table-head">
+              <span>${issueSortButton('title', 'Attivita')}</span>
+              <span>${issueSortButton('site', dashboardMode === 'portfolio' ? 'Cantiere / origine' : 'Origine')}</span>
+              <span>${issueSortButton('creator', 'Creatore')}</span>
+              <span>${issueSortButton('assignee', 'Assegnatario')}</span>
+              <span>${issueSortButton('due', 'Scadenza')}</span>
+              <span>${issueSortButton('priority', 'Priorita')}</span>
+              <span>${issueSortButton('status', 'Stato')}</span>
+              <span>${issueSortButton('wbs', 'WBS')}</span>
+              <span>${issueSortButton('impact', 'Impatto')}</span>
+              <span>Azioni</span>
+            </div>
+            ${sortedItems.length ? sortedItems.map(renderIssueCard).join('') : emptyState}
+          </div>
+        </section>
       `;
     }
 
@@ -5083,7 +5503,7 @@
         </section>
         <br>
         <section class="panel">
-          <div class="panel-head"><div><h2>Policy e audit trail</h2><p>Il backend decide sempre cosa e visibile, modificabile o scaricabile</p></div></div>
+          <div class="panel-head"><div><h2>Policy e audit trail</h2></div>${tag('Policy backend','violet','Il backend decide sempre cosa e visibile, modificabile o scaricabile, indipendentemente da cio che mostra il frontend.')}</div>
           <div class="list">
             <div class="row"><div class="avatar">RB</div><div><strong>Contratti e fatture</strong><span>Visibili solo a PM, Admin, Finance</span></div>${tag('Riservato','violet')}</div>
             <div class="row"><div class="avatar">AU</div><div><strong>Audit completo</strong><span>View, download, firma, modifica, export</span></div>${tag('Log')}</div>
@@ -5144,7 +5564,7 @@
       }
       renderGlobalSiteSelect();
       document.getElementById('scopePill').querySelector('span').textContent = scopeText;
-      document.getElementById('breadcrumb').classList.toggle('show', dashboardMode === 'project');
+      document.getElementById('breadcrumb').classList.remove('show');
       document.getElementById('breadcrumbProject').textContent = selectedSite.name;
       document.getElementById('chatActiveContext').textContent = dashboardMode === 'project'
         ? `Cantiere attivo: ${selectedSite.name}`
@@ -5170,10 +5590,10 @@
       document.getElementById('pageSubtitle').textContent = id === 'dashboard'
         ? (dashboardMode === 'project' ? `${selectedSite.name} · ${selectedSite.phase}` : page[2])
         : page[2];
-      document.getElementById('breadcrumb').classList.toggle('show', id === 'dashboard' && dashboardMode === 'project');
+      document.getElementById('breadcrumb').classList.remove('show');
       document.getElementById('breadcrumbProject').textContent = selectedSite.name;
       document.getElementById('scopePill').querySelector('span').textContent = dashboardMode === 'project' ? 'Vista cantiere' : `${sites.length} cantieri abilitati`;
-      document.getElementById('pageSubtitle').textContent = ['media', 'chat'].includes(id) ? '' : currentContextText(page);
+      document.getElementById('pageSubtitle').textContent = ['media', 'chat', 'documents'].includes(id) ? '' : currentContextText(page);
       updateContextLabels();
       history.replaceState(null, '', '#' + id);
     }
@@ -5681,6 +6101,27 @@
         if (button) setPage(button.dataset.page);
       });
 
+      document.body.addEventListener('mouseover', event => {
+        const helpTarget = event.target.closest('[data-help]');
+        if (!helpTarget) return;
+        clearTimeout(window.helpTooltipTimer);
+        window.helpTooltipTimer = setTimeout(() => showHelpTooltip(helpTarget), 2000);
+      });
+
+      document.body.addEventListener('mouseout', event => {
+        const helpTarget = event.target.closest('[data-help]');
+        if (helpTarget && (!event.relatedTarget || !helpTarget.contains(event.relatedTarget))) hideHelpTooltip();
+      });
+
+      document.body.addEventListener('focusin', event => {
+        const helpTarget = event.target.closest('[data-help]');
+        if (helpTarget) showHelpTooltip(helpTarget);
+      });
+
+      document.body.addEventListener('focusout', event => {
+        if (event.target.closest('[data-help]')) hideHelpTooltip();
+      });
+
       document.getElementById('globalSiteSelect')?.addEventListener('change', event => {
         const value = event.target.value;
         const activePage = document.querySelector('.view.active')?.id || (location.hash ? location.hash.slice(1) : 'dashboard');
@@ -5731,6 +6172,23 @@
       document.body.addEventListener('click', event => {
         const action = event.target.closest('[data-action]');
         if (action) showToast(action.dataset.action);
+
+        const issueFilter = event.target.closest('[data-issue-filter]');
+        if (issueFilter) {
+          activeIssueStatusFilter = issueFilter.dataset.issueFilter;
+          renderIssues();
+          return;
+        }
+
+        const issueSortTrigger = event.target.closest('[data-issue-sort]');
+        if (issueSortTrigger) {
+          const key = issueSortTrigger.dataset.issueSort;
+          issueSort = issueSort.key === key
+            ? { key, dir: issueSort.dir === 'asc' ? 'desc' : 'asc' }
+            : { key, dir: ['due', 'title', 'status'].includes(key) ? 'asc' : 'desc' };
+          renderIssues();
+          return;
+        }
 
         const issueTransition = event.target.closest('[data-issue-transition]');
         if (issueTransition) {
