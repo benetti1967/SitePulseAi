@@ -1,6 +1,7 @@
 {
   "name": "sitepulseai",
   "scripts": {
+    "build": "node scripts/build-static.mjs",
     "start": "node server.mjs"
   }
 }
