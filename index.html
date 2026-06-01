@@ -2160,6 +2160,97 @@
       font-size: 15px;
     }
 
+    .login-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background:
+        linear-gradient(135deg, rgba(25,92,89,.12), transparent 38%),
+        linear-gradient(315deg, rgba(40,122,160,.12), transparent 44%),
+        #edf2f3;
+      display: none;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .login-screen.show {
+      display: grid;
+    }
+
+    .login-card {
+      width: min(440px, 100%);
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      box-shadow: 0 28px 90px rgba(18,32,37,.20);
+      padding: 24px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .login-card .brand {
+      border-bottom: 0;
+      padding-bottom: 0;
+      color: var(--ink);
+      display: flex !important;
+    }
+
+    .login-card .brand strong {
+      color: var(--ink);
+    }
+
+    .login-card h1 {
+      font-size: 22px;
+    }
+
+    .login-options {
+      display: grid;
+      gap: 8px;
+    }
+
+    .login-option {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f8fafb;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .login-option:hover {
+      border-color: #b8c8ce;
+      background: #fff;
+    }
+
+    .login-option strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 3px;
+    }
+
+    .login-option span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .account-pill {
+      height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      color: #43515f;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 10px;
+      white-space: nowrap;
+      font-size: 13px;
+    }
+
     .form-grid {
       padding: 16px;
       display: grid;
@@ -3546,6 +3637,38 @@
   </style>
 </head>
 <body>
+  <section class="login-screen show" id="loginScreen">
+    <div class="login-card">
+      <div class="brand">
+        <div class="mark">C</div>
+        <div><strong>ConstructOS</strong><span>Demo access</span></div>
+      </div>
+      <div>
+        <h1>Accedi alla demo</h1>
+        <div class="subtitle">Scegli un profilo per testare viste e permessi diversi.</div>
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input id="loginEmail" value="pm.demo@sitepulse.ai">
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input id="loginPassword" type="password" value="Demo2026!">
+      </div>
+      <button class="primary" id="loginSubmit">Accedi</button>
+      <div class="login-options">
+        <button class="login-option" data-demo-login="pm">
+          <div><strong>Project Manager multi-cantiere</strong><span>Portfolio aggregato, più cantieri abilitati</span></div>
+          <span class="tag blue">PM</span>
+        </button>
+        <button class="login-option" data-demo-login="foreman">
+          <div><strong>Capocantiere mono-cantiere</strong><span>Accesso diretto a Residenza Porta Nuova</span></div>
+          <span class="tag">Cantiere</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
   <div class="app">
     <aside class="sidebar">
       <div class="brand">
@@ -3568,6 +3691,10 @@
           <div class="subtitle" id="pageSubtitle">Residenza Porta Nuova · Milano · 4 edifici · settimana 31</div>
         </div>
         <div class="actions">
+          <div class="account-pill" id="accountPill">
+            <span class="avatar" id="accountAvatar">PM</span>
+            <span id="accountLabel">Demo</span>
+          </div>
           <div class="scope-pill" id="scopePill">
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-7h6v7"/></svg>
             <span>4 cantieri abilitati</span>
@@ -3586,6 +3713,7 @@
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
             Nuovo report
           </button>
+          <button class="secondary" id="logoutButton">Esci</button>
         </div>
       </header>
 
@@ -4019,6 +4147,27 @@
 
     let dashboardMode = 'portfolio';
     let selectedSite = sites[0];
+    const demoUsers = {
+      pm: {
+        email: 'pm.demo@sitepulse.ai',
+        password: 'Demo2026!',
+        name: 'Paola Manager',
+        initials: 'PM',
+        role: 'Project Manager',
+        mode: 'portfolio',
+        allowedSites: sites.map(site => site.name)
+      },
+      foreman: {
+        email: 'capocantiere.demo@sitepulse.ai',
+        password: 'Demo2026!',
+        name: 'Marco Capocantiere',
+        initials: 'MC',
+        role: 'Capocantiere',
+        mode: 'project',
+        allowedSites: ['Residenza Porta Nuova']
+      }
+    };
+    let currentDemoUser = null;
     let activeIssueStatusFilter = 'all';
     let issueSort = { key: 'impact', dir: 'desc' };
     let activeConversation = 'blocco-b';
@@ -5541,9 +5690,12 @@
       const currentValue = dashboardMode === 'project'
         ? selectedSite.name
         : (activeView === 'schedule' && selectedScheduleSite !== 'all' ? selectedScheduleSite : 'portfolio');
+      const allowedSiteNames = currentDemoUser?.allowedSites || sites.map(site => site.name);
+      const allowedSites = sites.filter(site => allowedSiteNames.includes(site.name));
+      const portfolioOption = currentDemoUser?.mode === 'project' ? '' : '<option value="portfolio">Portfolio</option>';
       select.innerHTML = `
-        <option value="portfolio">Portfolio</option>
-        ${sites.map(site => `<option value="${site.name}">${site.name}</option>`).join('')}
+        ${portfolioOption}
+        ${allowedSites.map(site => `<option value="${site.name}">${site.name}</option>`).join('')}
       `;
       select.value = currentValue;
     }
@@ -6052,6 +6204,53 @@
       document.getElementById('modalBackdrop').classList.remove('show');
     }
 
+    function applyDemoUser(userKey) {
+      const user = demoUsers[userKey] || demoUsers.pm;
+      currentDemoUser = user;
+      localStorage.setItem('sitepulse_demo_user', userKey);
+      document.getElementById('loginScreen').classList.remove('show');
+      document.getElementById('accountAvatar').textContent = user.initials;
+      document.getElementById('accountLabel').textContent = `${user.name} · ${user.role}`;
+      if (user.mode === 'project') {
+        selectedSite = sites.find(site => site.name === user.allowedSites[0]) || sites[0];
+        dashboardMode = 'project';
+        selectedScheduleSite = selectedSite.name;
+        activeChatSite = selectedSite.name;
+        document.getElementById('globalSearch').placeholder = 'Cerca issue, documenti, fornitori';
+      } else {
+        dashboardMode = 'portfolio';
+        selectedScheduleSite = 'all';
+        activeChatSite = 'all';
+        document.getElementById('globalSearch').placeholder = 'Cerca cantieri, issue, fornitori';
+      }
+      renderDashboard();
+      renderFloatingChat();
+      setPage('dashboard');
+      showToast(`Accesso demo: ${user.role}`);
+    }
+
+    function loginWithCredentials() {
+      const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+      const password = document.getElementById('loginPassword').value;
+      const key = Object.keys(demoUsers).find(userKey =>
+        demoUsers[userKey].email.toLowerCase() === email && demoUsers[userKey].password === password
+      );
+      if (!key) {
+        showToast('Credenziali demo non valide');
+        return;
+      }
+      applyDemoUser(key);
+    }
+
+    function logoutDemoUser() {
+      localStorage.removeItem('sitepulse_demo_user');
+      currentDemoUser = null;
+      document.getElementById('loginScreen').classList.add('show');
+      document.getElementById('loginEmail').value = demoUsers.pm.email;
+      document.getElementById('loginPassword').value = demoUsers.pm.password;
+      showToast('Sessione demo chiusa');
+    }
+
     function renderFloatingChat() {
       const channels = ['all', ...sites.map(site => site.name)];
       document.getElementById('chatChannelList').innerHTML = channels.map(channel => `
@@ -6125,6 +6324,11 @@
       document.getElementById('globalSiteSelect')?.addEventListener('change', event => {
         const value = event.target.value;
         const activePage = document.querySelector('.view.active')?.id || (location.hash ? location.hash.slice(1) : 'dashboard');
+        if (currentDemoUser?.mode === 'project' && value === 'portfolio') {
+          renderGlobalSiteSelect();
+          showToast('Vista portfolio non disponibile per questo profilo');
+          return;
+        }
         if (value === 'portfolio') {
           dashboardMode = 'portfolio';
           selectedScheduleSite = 'all';
@@ -6621,6 +6825,14 @@
       document.getElementById('modalBackdrop').addEventListener('click', event => {
         if (event.target.id === 'modalBackdrop') closeModal();
       });
+      document.getElementById('loginSubmit').addEventListener('click', loginWithCredentials);
+      document.getElementById('loginPassword').addEventListener('keydown', event => {
+        if (event.key === 'Enter') loginWithCredentials();
+      });
+      document.querySelectorAll('[data-demo-login]').forEach(button => {
+        button.addEventListener('click', () => applyDemoUser(button.dataset.demoLogin));
+      });
+      document.getElementById('logoutButton').addEventListener('click', logoutDemoUser);
     }
 
     renderNav();
@@ -6638,6 +6850,10 @@
     const initialPage = location.hash ? location.hash.slice(1) : 'dashboard';
     openPortfolio();
     setPage(initialPage);
+    const savedDemoUser = localStorage.getItem('sitepulse_demo_user');
+    if (savedDemoUser && demoUsers[savedDemoUser]) {
+      applyDemoUser(savedDemoUser);
+    }
     loadBackendData();
     setTimeout(() => {
       showChatAlert('Nuovo messaggio dal campo', 'Residenza Porta Nuova: foto e vocale richiedono revisione QA.');
