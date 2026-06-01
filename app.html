@@ -163,6 +163,30 @@
       letter-spacing: 0;
     }
 
+    .view-mode-chip {
+      width: max-content;
+      min-height: 24px;
+      border-radius: 999px;
+      border: 1px solid #c9d8d6;
+      background: #eef8f6;
+      color: var(--brand);
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 4px 9px;
+      margin-bottom: 7px;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+    }
+
+    .view-mode-chip.project {
+      border-color: #f0d6a8;
+      background: #fff8e8;
+      color: #805306;
+    }
+
     .subtitle {
       color: var(--muted);
       font-size: 13px;
@@ -187,6 +211,23 @@
       align-items: center;
       gap: 8px;
       white-space: nowrap;
+    }
+
+    .context-select {
+      height: 38px;
+      min-width: 210px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      color: #43515f;
+      padding: 0 10px;
+      font-size: 13px;
+      outline: 0;
+    }
+
+    .context-select:focus {
+      border-color: #8eb9b4;
+      box-shadow: 0 0 0 3px rgba(18, 105, 96, .10);
     }
 
     .breadcrumb {
@@ -2498,6 +2539,43 @@
       display: flex;
       align-items: center;
       min-width: 0;
+      gap: 8px;
+    }
+
+    .timeline-label-main {
+      display: grid;
+      gap: 5px;
+      min-width: 0;
+    }
+
+    .timeline-meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .timeline-meta em {
+      font-style: normal;
+    }
+
+    .timeline-site-badge {
+      min-height: 20px;
+      border-radius: 999px;
+      background: #eef7fb;
+      color: var(--brand-2);
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 8px;
+      font-size: 10px;
+      font-weight: 850;
+      line-height: 1;
+      max-width: 180px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .timeline-task-label strong {
@@ -2557,6 +2635,23 @@
       background: #eef8f6;
       border-color: #bddbd6;
       color: var(--ok);
+    }
+
+    .timeline-bar.locked {
+      background: #edf1f2;
+      border-color: #cfd9dc;
+      color: #5b6870;
+      cursor: not-allowed;
+    }
+
+    .locked-note {
+      border: 1px solid #f0d6a8;
+      border-radius: 8px;
+      background: #fff8e8;
+      padding: 10px;
+      color: #6b5a3a;
+      font-size: 12px;
+      line-height: 1.4;
     }
 
     .wbs-list {
@@ -2696,7 +2791,7 @@
 
     .kanban {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 14px;
     }
 
@@ -2708,7 +2803,7 @@
       display: grid;
       align-content: start;
       gap: 10px;
-      min-height: 460px;
+      min-height: 360px;
     }
 
     .lane h2 {
@@ -2724,6 +2819,12 @@
       padding: 12px;
       display: grid;
       gap: 8px;
+      cursor: pointer;
+    }
+
+    .task-card:hover {
+      border-color: #b9cbc8;
+      box-shadow: 0 8px 18px rgba(20, 48, 55, .07);
     }
 
     .task-card h3 {
@@ -2737,6 +2838,95 @@
       color: var(--muted);
       font-size: 12px;
       line-height: 1.4;
+    }
+
+    .task-card-head,
+    .task-card-meta,
+    .task-card-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .task-card-head {
+      justify-content: space-between;
+    }
+
+    .task-card-meta {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .task-card-actions {
+      justify-content: flex-end;
+      border-top: 1px solid var(--line);
+      padding-top: 8px;
+    }
+
+    .task-card-actions button {
+      height: 30px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: #43515f;
+      padding: 0 10px;
+      font-size: 12px;
+      font-weight: 750;
+      cursor: pointer;
+    }
+
+    .task-card-actions button.primary-mini {
+      background: var(--brand);
+      border-color: var(--brand);
+      color: #fff;
+    }
+
+    .issue-flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .issue-step {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      padding: 10px;
+      display: grid;
+      gap: 5px;
+      min-height: 72px;
+    }
+
+    .issue-step strong {
+      font-size: 13px;
+    }
+
+    .issue-step span {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .issue-step.active {
+      border-color: #8eb9b4;
+      background: #f2faf8;
+    }
+
+    .issue-toolbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .issue-toolbar p {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 12px;
     }
 
     .permission-grid {
@@ -3061,6 +3251,7 @@
         padding-bottom: 2px;
       }
       .scope-pill { min-width: max-content; }
+      .context-select { min-width: 210px; }
       .search { min-width: 240px; width: 240px; }
       .metrics, .doc-grid, .permission-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .portfolio-grid { grid-template-columns: 1fr; }
@@ -3107,6 +3298,7 @@
     <main class="main">
       <header class="topbar">
         <div>
+          <div class="view-mode-chip" id="viewModeChip">Vista portfolio</div>
           <h1 id="pageTitle">Dashboard</h1>
           <div class="subtitle" id="pageSubtitle">Residenza Porta Nuova · Milano · 4 edifici · settimana 31</div>
         </div>
@@ -3115,6 +3307,9 @@
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-7h6v7"/></svg>
             <span>4 cantieri abilitati</span>
           </div>
+          <select class="context-select" id="globalSiteSelect" title="Seleziona vista">
+            <option value="portfolio">Portfolio</option>
+          </select>
           <div class="search">
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
             <input id="globalSearch" placeholder="Cerca issue, documenti, fornitori">
@@ -3312,15 +3507,19 @@
         phase: 'Finiture e collaudi',
         budget: 86000,
         forecast: 86000,
-        progress: 72,
+        progress: 100,
         start: '20 mag',
         end: '18 giu',
         owner: 'Direzione lavori',
-        status: 'In linea',
+        status: 'Completata',
         statusClass: 'ok',
+        locked: true,
+        validated: true,
+        accountingLinked: true,
+        completedAt: '28 mag',
         subactions: [
-          { id: 'wbs-4-a', title: 'Completamento pannelli nord', owner: 'AluSystem', due: '10 giu', done: 75 },
-          { id: 'wbs-4-b', title: 'Collaudo fotografico da mobile', owner: 'DL', due: '18 giu', done: 55 }
+          { id: 'wbs-4-a', title: 'Completamento pannelli nord', owner: 'AluSystem', due: '10 giu', done: 100, locked: true },
+          { id: 'wbs-4-b', title: 'Collaudo fotografico da mobile', owner: 'DL', due: '18 giu', done: 100, locked: true }
         ]
       }
     ];
@@ -3340,6 +3539,135 @@
       { kind: 'doc', title: 'DDT pannelli isolanti', site: 'Residenza Porta Nuova', uploadedBy: 'TermoCasa', date: '26 mag', confidence: '76%', suggestion: 'Documento: fornitura isolamento', target: 'Computo voce WBS-2.4', status: 'Senza sopralluogo', tagClass: 'violet', tags: ['PDF', 'DDT', 'Computo'] },
       { kind: 'photo', title: 'Foto area logistica ingresso nord', site: 'Logistica Nord Hub', uploadedBy: 'PM', date: 'Oggi 12:04', confidence: '69%', suggestion: 'Nuovo sopralluogo da creare', target: 'Avvio cantiere', status: 'Non classificato', tagClass: '', tags: ['Foto', 'Upload libero', 'Da assegnare'] },
       { kind: 'doc', title: 'Verbale riunione fornitori', site: 'Hotel Aurora Renovation', uploadedBy: 'Anna S.', date: '24 mag', confidence: '91%', suggestion: 'Report: riunione settimanale', target: '3 decisioni, 2 task', status: 'Collegato', tagClass: 'ok', tags: ['Documento', 'Report', 'Task'] }
+    ];
+
+    let issueWorkflowItems = [
+      {
+        id: 'iss-1',
+        type: 'Issue',
+        title: 'Isolamento mancante Blocco B',
+        site: 'Residenza Porta Nuova',
+        origin: 'Chat + foto mobile',
+        creator: 'Luca F.',
+        assignee: 'Marco R.',
+        validator: 'Anna S. PM',
+        priority: 'Alta',
+        priorityClass: 'risk',
+        status: 'assigned',
+        due: '02 giu 12:00',
+        impact: 'Tempi +3g, extra costo EUR 1.200',
+        wbs: '1.2 Isolamento Blocco B',
+        evidence: ['6 foto', '1 vocale', 'DDT TermoCasa'],
+        history: ['31 mag 10:42 aperta da Luca F.', '31 mag 10:44 AI assegna Marco R.', '31 mag 11:05 Marco R. conferma presa in carico']
+      },
+      {
+        id: 'tsk-1',
+        type: 'Task',
+        title: 'Validare variante impianto elettrico',
+        site: 'Residenza Porta Nuova',
+        origin: 'Documento PDF',
+        creator: 'AI da variante caricata',
+        assignee: 'Anna S.',
+        validator: 'PM + Finance',
+        priority: 'Media',
+        priorityClass: 'warn',
+        status: 'in_progress',
+        due: '03 giu 18:00',
+        impact: 'Budget +EUR 6.800',
+        wbs: '1.3 Impianto elettrico piano 2',
+        evidence: ['PDF variante v3', 'computo extra'],
+        history: ['30 mag 16:20 task creato da documento', '31 mag 09:12 revisione tecnica avviata']
+      },
+      {
+        id: 'iss-2',
+        type: 'Issue',
+        title: 'Ritardo consegna pannelli facciata sud',
+        site: 'Green Offices Lambrate',
+        origin: 'Nota vocale fornitore',
+        creator: 'Sara M.',
+        assignee: 'AluSystem',
+        validator: 'Site manager',
+        priority: 'Alta',
+        priorityClass: 'risk',
+        status: 'blocked',
+        due: '01 giu 17:00',
+        impact: 'Forecast +4g',
+        wbs: '2.1 Chiusura cartongessi',
+        evidence: ['2 vocali', 'mail fornitore'],
+        history: ['31 mag 08:31 issue aperta', '31 mag 12:00 bloccata per materiale non disponibile']
+      },
+      {
+        id: 'tsk-2',
+        type: 'Task',
+        title: 'Caricare evidenze chiusura facciata nord',
+        site: 'Hotel Aurora Renovation',
+        origin: 'Sopralluogo',
+        creator: 'Direzione lavori',
+        assignee: 'DL',
+        validator: 'PM',
+        priority: 'Bassa',
+        priorityClass: 'blue',
+        status: 'closure_proposed',
+        due: '02 giu 10:00',
+        impact: 'Nessun impatto forecast',
+        wbs: '3.4 Facciata nord',
+        evidence: ['12 foto', 'verbale firmato'],
+        history: ['29 mag 15:40 task aperto', '31 mag 18:12 chiusura proposta con evidenze']
+      },
+      {
+        id: 'iss-3',
+        type: 'Issue',
+        title: 'Permesso antincendio in revisione',
+        site: 'Hotel Aurora Renovation',
+        origin: 'Documento autorizzativo',
+        creator: 'PM',
+        assignee: 'Consulente antincendio',
+        validator: 'Committente',
+        priority: 'Critica',
+        priorityClass: 'risk',
+        status: 'validation',
+        due: '04 giu 12:00',
+        impact: 'Rischio apertura area lobby',
+        wbs: 'Autorizzazioni',
+        evidence: ['Richiesta integrazione', 'planimetria aggiornata'],
+        history: ['28 mag 09:10 issue aperta', '30 mag 11:35 integrazione caricata', '31 mag 16:00 inviata in validazione']
+      },
+      {
+        id: 'tsk-3',
+        type: 'Task',
+        title: 'Verifica iniziale area logistica nord',
+        site: 'Logistica Nord Hub',
+        origin: 'Upload foto libero',
+        creator: 'PM',
+        assignee: 'Site manager',
+        validator: 'PM',
+        priority: 'Media',
+        priorityClass: 'warn',
+        status: 'open',
+        due: '05 giu 09:00',
+        impact: 'Avvio cantiere',
+        wbs: 'Setup cantiere',
+        evidence: ['10 foto ingresso nord'],
+        history: ['31 mag 12:04 creata da upload libero']
+      },
+      {
+        id: 'tsk-4',
+        type: 'Task',
+        title: 'Report sopralluogo isolamento firmato',
+        site: 'Residenza Porta Nuova',
+        origin: 'Sopralluogo',
+        creator: 'Anna S.',
+        assignee: 'TermoCasa',
+        validator: 'PM',
+        priority: 'Media',
+        priorityClass: 'ok',
+        status: 'closed',
+        due: '31 mag 18:00',
+        impact: 'Chiuso con audit trail',
+        wbs: '1.2 Isolamento Blocco B',
+        evidence: ['Verbale firmato 5/5', 'foto QA'],
+        history: ['30 mag 10:00 aperto', '31 mag 17:22 validato', '31 mag 17:25 chiuso']
+      }
     ];
 
     let sites = [
@@ -4323,7 +4651,9 @@
     }
 
     function renderSchedule() {
-      const filteredWbs = selectedScheduleSite === 'all' ? wbsItems : wbsItems.filter(item => item.site === selectedScheduleSite);
+      const scheduleContextSite = dashboardMode === 'project' ? selectedSite.name : selectedScheduleSite;
+      const filteredWbs = scheduleContextSite === 'all' ? wbsItems : wbsItems.filter(item => item.site === scheduleContextSite);
+      const showScheduleSiteBadge = dashboardMode !== 'project' && scheduleContextSite === 'all';
       const totalBudget = filteredWbs.reduce((sum, item) => sum + item.budget, 0);
       const totalForecast = filteredWbs.reduce((sum, item) => sum + item.forecast, 0);
       const avgProgress = filteredWbs.length ? Math.round(filteredWbs.reduce((sum, item) => sum + item.progress, 0) / filteredWbs.length) : 0;
@@ -4340,16 +4670,15 @@
             <button class="secondary" data-ai-generate-schedule="true">Genera WBS + crono</button>
           </div>
           <div class="right-actions">
-            <select id="scheduleSiteSelect">
-              <option value="all">Tutti i cantieri</option>
-              ${sites.map(site => `<option value="${site.name}" ${selectedScheduleSite === site.name ? 'selected' : ''}>${site.name}</option>`).join('')}
+            <select id="scheduleSiteSelect" ${dashboardMode === 'project' ? 'disabled' : ''}>
+              <option value="all" ${scheduleContextSite === 'all' ? 'selected' : ''}>Tutti i cantieri</option>
+              ${sites.map(site => `<option value="${site.name}" ${scheduleContextSite === site.name ? 'selected' : ''}>${site.name}</option>`).join('')}
             </select>
             <div class="schedule-tabs">
               ${[
                 ['wbs', 'WBS'],
                 ['planning', 'Pianificazione'],
-                ['budget', 'Budget'],
-                ['field', 'Campo']
+                ['budget', 'Budget']
               ].map(tab => `<button class="${activeScheduleView === tab[0] ? 'active' : ''}" data-schedule-view="${tab[0]}">${tab[1]}</button>`).join('')}
             </div>
           </div>
@@ -4359,7 +4688,6 @@
           <div class="metric"><label>WBS attive</label><strong>${filteredWbs.length}</strong><span><b class="kpi-status blue">${selectedScheduleSite === 'all' ? 'portfolio' : selectedScheduleSite}</b></span></div>
           <div class="metric" data-schedule-filter="modified" data-open-label="Attività modificate"><label>Avanzamento</label><strong>${avgProgress}%</strong><span><b class="kpi-status">da WBS</b></span></div>
           <div class="metric"><label>Extra costo previsto</label><strong>${formatCurrency(overrun)}</strong><span><b class="kpi-status ${overrun > 0 ? 'risk' : 'ok'}">forecast aggiornato</b></span></div>
-          <div class="metric" data-schedule-filter="risk" data-open-label="Milestone a rischio"><label>Dati</label><strong>${scheduleSource === 'api' ? 'API' : 'Locali'}</strong><span><b class="kpi-status warn">${scheduleRows.length} righe caricate</b></span></div>
         </section>
 
         <section class="panel timeline-panel">
@@ -4372,14 +4700,17 @@
                 <div class="timeline-cell timeline-task-label" data-timeline-row-wbs="${item.id}">
                   <div class="timeline-label-line">
                     <button class="timeline-collapse" data-toggle-wbs="${item.id}" type="button">${expandedWbsIds.has(item.id) ? '-' : '+'}</button>
-                    <div><strong>${item.code} · ${item.title}</strong><span>${item.site} · ${item.owner}</span></div>
+                    <div class="timeline-label-main">
+                      <strong>${item.code} · ${item.title}</strong>
+                      <span class="timeline-meta">${showScheduleSiteBadge ? `<b class="timeline-site-badge">${item.site}</b>` : ''}<em>${item.owner}</em><em>${item.status}</em></span>
+                    </div>
                   </div>
                 </div>
                 ${Array.from({ length: 8 }).map((_, slot) => {
                   const start = item.weekStart ?? (index % 4);
                   const duration = item.weekSpan ?? (item.statusClass === 'risk' ? 3 : item.statusClass === 'warn' ? 2 : 4);
                   const showBar = slot >= start && slot < start + duration;
-                  return `<div class="timeline-cell" data-week-slot="${slot}" data-drop-wbs="${item.id}">${showBar ? `<div class="timeline-bar ${item.statusClass}" draggable="true" data-timeline-wbs="${item.id}">${slot === start ? `${item.progress}%` : ''}</div>` : ''}</div>`;
+                  return `<div class="timeline-cell" data-week-slot="${slot}" data-drop-wbs="${item.id}">${showBar ? `<div class="timeline-bar ${item.statusClass} ${isCompletedWbs(item) ? 'locked' : ''}" draggable="true" data-timeline-wbs="${item.id}">${slot === start ? `${item.progress}%` : ''}</div>` : ''}</div>`;
                 }).join('')}
                 ${expandedWbsIds.has(item.id) ? item.subactions.map((sub, subIndex) => `
                   <div class="timeline-cell timeline-task-label subtask" data-timeline-row-wbs="${item.id}"><strong>${sub.title}</strong><span>${sub.owner} · ${sub.due}</span></div>
@@ -4387,7 +4718,7 @@
                     const start = sub.weekStart ?? Math.min(7, (item.weekStart ?? (index % 4)) + subIndex);
                     const duration = sub.weekSpan ?? 1;
                     const showBar = slot >= start && slot < start + duration;
-                    return `<div class="timeline-cell" data-week-slot="${slot}" data-drop-wbs="${item.id}">${showBar ? `<div class="timeline-bar subtask" draggable="true" data-timeline-subaction="${sub.id}" data-parent-wbs="${item.id}">${slot === start ? `${sub.done}%` : ''}</div>` : ''}</div>`;
+                    return `<div class="timeline-cell" data-week-slot="${slot}" data-drop-wbs="${item.id}">${showBar ? `<div class="timeline-bar subtask ${isCompletedSubaction(sub) ? 'locked' : ''}" draggable="true" data-timeline-subaction="${sub.id}" data-parent-wbs="${item.id}">${slot === start ? `${sub.done}%` : ''}</div>` : ''}</div>`;
                   }).join('')}
                 `).join('') : ''}
               `).join('')}
@@ -4432,6 +4763,14 @@
       const [item] = next.splice(fromIndex, 1);
       next.splice(toIndex, 0, item);
       return next;
+    }
+
+    function isCompletedWbs(wbs) {
+      return !!wbs && (wbs.locked || wbs.validated || Number(wbs.progress) >= 100 || String(wbs.status).toLowerCase().includes('complet'));
+    }
+
+    function isCompletedSubaction(sub) {
+      return !!sub && (sub.locked || Number(sub.done) >= 100);
     }
 
     function wireScheduleDrag() {
@@ -4517,6 +4856,11 @@
           if (draggedTimeline.type === 'wbs') {
             const wbs = wbsItems.find(item => item.id === draggedTimeline.id);
             if (wbs) {
+              if (isCompletedWbs(wbs)) {
+                openCompletedScheduleModal(wbs, week, 'WBS');
+                draggedTimeline = null;
+                return;
+              }
               wbs.weekStart = week;
               showToast(`WBS spostata alla settimana ${week + 22}`);
             }
@@ -4526,6 +4870,11 @@
             const targetParent = wbsItems.find(item => item.id === targetWbsId);
             const sub = sourceParent?.subactions.find(item => item.id === draggedTimeline.id);
             if (sourceParent && targetParent && sub) {
+              if (isCompletedWbs(sourceParent) || isCompletedSubaction(sub)) {
+                openCompletedScheduleModal({ ...sub, code: sourceParent.code, validated: sourceParent.validated, accountingLinked: sourceParent.accountingLinked }, week, 'Sottoattività');
+                draggedTimeline = null;
+                return;
+              }
               sourceParent.subactions = sourceParent.subactions.filter(item => item.id !== draggedTimeline.id);
               sub.weekStart = week;
               targetParent.subactions.push(sub);
@@ -4608,6 +4957,120 @@
       `;
     }
 
+    function issueStatusMeta(status) {
+      const map = {
+        open: ['Aperto', 'Da prendere in carico', 'warn', 'Prendi in carico', 'assigned'],
+        assigned: ['In carico', 'Responsabile assegnato', 'blue', 'Avvia lavorazione', 'in_progress'],
+        in_progress: ['In lavorazione', 'Aggiornamento evidenze', '', 'Proponi chiusura', 'closure_proposed'],
+        blocked: ['Bloccato', 'Escalation PM', 'risk', 'Sblocca', 'in_progress'],
+        closure_proposed: ['Chiusura proposta', 'Evidenze caricate', 'warn', 'Invia a validazione', 'validation'],
+        validation: ['In validazione', 'Validator richiesto', 'violet', 'Valida e chiudi', 'closed'],
+        closed: ['Chiuso', 'Audit congelato', 'ok', '', '']
+      };
+      return map[status] || map.open;
+    }
+
+    function issueLane(status) {
+      if (status === 'open') return 'Apertura';
+      if (status === 'assigned') return 'Presa in carico';
+      if (['in_progress', 'blocked'].includes(status)) return 'Lavorazione';
+      if (['closure_proposed', 'validation'].includes(status)) return 'Validazione';
+      return 'Chiuso';
+    }
+
+    function currentWorkflowItems() {
+      return dashboardMode === 'project'
+        ? issueWorkflowItems.filter(item => item.site === selectedSite.name)
+        : issueWorkflowItems;
+    }
+
+    function renderIssueCard(item) {
+      const [statusLabelText,, statusClassName, actionLabel, nextStatus] = issueStatusMeta(item.status);
+      const actionButton = actionLabel
+        ? `<button class="primary-mini" data-issue-transition="${item.id}" data-next-status="${nextStatus}">${actionLabel}</button>`
+        : `<button data-open-issue="${item.id}">Apri storico</button>`;
+      const rejectButton = item.status === 'validation'
+        ? `<button data-issue-transition="${item.id}" data-next-status="in_progress">Respingi</button>`
+        : '';
+      return `
+        <article class="task-card" data-open-issue="${item.id}">
+          <div class="task-card-head">
+            <h3>${item.title}</h3>
+            ${tag(item.type, item.type === 'Issue' ? 'risk' : 'blue')}
+          </div>
+          <p>${item.site} - ${item.origin}</p>
+          <div class="task-card-meta">
+            <span>Creato da ${item.creator}</span>
+            <span>Assegnato a ${item.assignee}</span>
+            <span>Scade ${item.due}</span>
+          </div>
+          <div class="tags">
+            ${tag(item.priority, item.priorityClass)}
+            ${tag(statusLabelText, statusClassName)}
+            ${tag(item.wbs, 'blue')}
+          </div>
+          <p>${item.impact}</p>
+          <div class="task-card-actions">
+            <button data-open-issue="${item.id}">Dettaglio</button>
+            ${rejectButton}
+            ${actionButton}
+          </div>
+        </article>
+      `;
+    }
+
+    function renderIssues() {
+      const items = currentWorkflowItems();
+      const lanes = ['Apertura', 'Presa in carico', 'Lavorazione', 'Validazione', 'Chiuso'];
+      const openCount = items.filter(item => item.status !== 'closed').length;
+      const validationCount = items.filter(item => ['closure_proposed', 'validation'].includes(item.status)).length;
+      const blockedCount = items.filter(item => item.status === 'blocked').length;
+      const closedCount = items.filter(item => item.status === 'closed').length;
+      const laneHtml = lane => {
+        const laneItems = items.filter(item => issueLane(item.status) === lane);
+        return laneItems.map(renderIssueCard).join('') || `
+          <article class="task-card">
+            <h3>Nessun elemento</h3>
+            <p>Non ci sono task o issue in questa fase per la vista selezionata.</p>
+            <div>${tag('OK','ok')}</div>
+          </article>
+        `;
+      };
+      document.getElementById('issues').innerHTML = `
+        <div class="issue-toolbar">
+          <div>
+            <h2>Flow apertura - validazione - chiusura</h2>
+            <p>Ogni card conserva origine, creatore, assegnatario, scadenza, evidenze, impatto e audit trail.</p>
+          </div>
+          <button class="primary" data-create-issue="true">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            Nuovo task / issue
+          </button>
+        </div>
+
+        <section class="metrics">
+          <div class="metric"><strong>${openCount}</strong><label>Aperti</label><span><b class="kpi-status warn">da gestire</b></span></div>
+          <div class="metric"><strong>${validationCount}</strong><label>In validazione</label><span><b class="kpi-status violet">PM / validator</b></span></div>
+          <div class="metric"><strong>${blockedCount}</strong><label>Bloccati</label><span><b class="kpi-status risk">escalation</b></span></div>
+          <div class="metric"><strong>${closedCount}</strong><label>Chiusi</label><span><b class="kpi-status ok">audit congelato</b></span></div>
+        </section>
+
+        <section class="issue-flow">
+          ${[
+            ['Apertura', 'Da chat, sopralluogo, media, documento, crono o inserimento manuale.'],
+            ['Presa in carico', 'Assegnatario e scadenza obbligatori, con notifica mobile/web.'],
+            ['Lavorazione', 'Aggiornamenti, evidenze, blocchi e impatti su tempi/budget.'],
+            ['Validazione', 'Chiusura proposta, verifica PM/DL/HSE/Committente.'],
+            ['Chiuso', 'Storico, firme, evidenze e impatti non modificabili direttamente.']
+          ].map(step => `<div class="issue-step ${items.some(item => issueLane(item.status) === step[0]) ? 'active' : ''}"><strong>${step[0]}</strong><span>${step[1]}</span></div>`).join('')}
+        </section>
+
+        <div class="kanban">
+          ${lanes.map(lane => `<section class="lane"><h2>${lane}</h2>${laneHtml(lane)}</section>`).join('')}
+        </div>
+      `;
+    }
+
     function renderPermissions() {
       document.getElementById('permissions').innerHTML = `
         <section class="permission-grid">
@@ -4631,16 +5094,55 @@
     }
 
     function currentContextText(page) {
+      if (page[0] === 'schedule' && dashboardMode !== 'project' && selectedScheduleSite !== 'all') {
+        return `${selectedScheduleSite} - ${page[2]}`;
+      }
       if (dashboardMode === 'project') {
         return `${selectedSite.name} - ${page[2]}`;
       }
       return `${sites.length} cantieri visibili - ${page[2]}`;
     }
 
+    function effectiveViewContext() {
+      const activeView = document.querySelector('.view.active')?.id || (location.hash ? location.hash.slice(1) : 'dashboard');
+      if (dashboardMode === 'project') {
+        return { mode: 'project', label: selectedSite.name };
+      }
+      if (activeView === 'schedule' && selectedScheduleSite !== 'all') {
+        return { mode: 'project', label: selectedScheduleSite };
+      }
+      return { mode: 'portfolio', label: `${sites.length} cantieri abilitati` };
+    }
+
+    function renderGlobalSiteSelect() {
+      const select = document.getElementById('globalSiteSelect');
+      if (!select) return;
+      const activeView = document.querySelector('.view.active')?.id || (location.hash ? location.hash.slice(1) : 'dashboard');
+      const currentValue = dashboardMode === 'project'
+        ? selectedSite.name
+        : (activeView === 'schedule' && selectedScheduleSite !== 'all' ? selectedScheduleSite : 'portfolio');
+      select.innerHTML = `
+        <option value="portfolio">Portfolio</option>
+        ${sites.map(site => `<option value="${site.name}">${site.name}</option>`).join('')}
+      `;
+      select.value = currentValue;
+    }
+
     function updateContextLabels() {
-      const scopeText = dashboardMode === 'project'
-        ? `Cantiere attivo: ${selectedSite.name}`
-        : `${sites.length} cantieri abilitati`;
+      const effective = effectiveViewContext();
+      const scopeText = effective.mode === 'project'
+        ? `Cantiere attivo: ${effective.label}`
+        : effective.label;
+      const modeChip = document.getElementById('viewModeChip');
+      if (modeChip) {
+        modeChip.textContent = dashboardMode === 'project' ? `Vista cantiere · ${selectedSite.name}` : 'Vista portfolio';
+        modeChip.classList.toggle('project', dashboardMode === 'project');
+      }
+      if (modeChip) {
+        modeChip.textContent = effective.mode === 'project' ? `Vista cantiere - ${effective.label}` : 'Vista portfolio';
+        modeChip.classList.toggle('project', effective.mode === 'project');
+      }
+      renderGlobalSiteSelect();
       document.getElementById('scopePill').querySelector('span').textContent = scopeText;
       document.getElementById('breadcrumb').classList.toggle('show', dashboardMode === 'project');
       document.getElementById('breadcrumbProject').textContent = selectedSite.name;
@@ -4679,6 +5181,7 @@
     function openSite(siteName) {
       selectedSite = sites.find(site => site.name === siteName) || sites[0];
       dashboardMode = 'project';
+      selectedScheduleSite = selectedSite.name;
       activeChatSite = selectedSite.name;
       document.getElementById('globalSearch').placeholder = 'Cerca issue, documenti, fornitori';
       renderDashboard();
@@ -4691,6 +5194,7 @@
 
     function openPortfolio() {
       dashboardMode = 'portfolio';
+      selectedScheduleSite = 'all';
       activeChatSite = 'all';
       document.getElementById('globalSearch').placeholder = 'Cerca cantieri, issue, fornitori';
       renderDashboard();
@@ -4964,6 +5468,115 @@
       `);
     }
 
+    function openCompletedScheduleModal(item, targetWeek, type = 'WBS') {
+      const title = `${type} completata: revisione richiesta`;
+      const subtitle = `${item.code ? `${item.code} · ` : ''}${item.title} · nuova settimana richiesta ${targetWeek + 22}`;
+      openModal(title, subtitle, `
+        <div class="document-detail">
+          <div class="locked-note">
+            Questa voce è completata${item.validated ? ' e validata' : ''}${item.accountingLinked ? ', con SAL/contabilità collegata' : ''}. Non può essere spostata direttamente perché altererebbe storico, SAL, forecast e audit trail.
+          </div>
+          <div class="pin-list">
+            <div class="pin-item"><div class="pin-marker">1</div><div><strong>Versione originale bloccata</strong><span>Restano data pianificata, data effettiva, firme, SAL e allegati.</span></div>${tag('Audit','violet')}</div>
+            <div class="pin-item"><div class="pin-marker" style="background: var(--warn)">2</div><div><strong>Nuova revisione cronoprogramma</strong><span>Il sistema crea una variante o una nuova attività collegata.</span></div>${tag('Forecast','warn')}</div>
+            <div class="pin-item"><div class="pin-marker" style="background: var(--brand-2)">3</div><div><strong>Motivazione obbligatoria</strong><span>PM e organizzazione mantengono tracciabilità completa.</span></div>${tag('PM','blue')}</div>
+          </div>
+          <div class="detail-actions">
+            <button class="primary" data-create-schedule-revision="${item.id || ''}" data-target-week="${targetWeek}">Crea revisione</button>
+            <button class="secondary" data-reopen-schedule-item="${item.id || ''}">Riapri con motivazione</button>
+            <button class="secondary" data-duplicate-schedule-item="${item.id || ''}" data-target-week="${targetWeek}">Duplica nuova attività</button>
+          </div>
+        </div>
+      `);
+    }
+
+    function openIssueDetail(id) {
+      const item = issueWorkflowItems.find(entry => entry.id === id);
+      if (!item) return;
+      const [statusLabelText,, statusClassName] = issueStatusMeta(item.status);
+      openModal(`${item.type}: ${item.title}`, `${item.site} - ${item.origin}`, `
+        <div class="document-detail">
+          <div class="detail-grid">
+            <div class="detail-preview"></div>
+            <div class="detail-content">
+              <h3>${item.title}</h3>
+              <p>${item.impact}</p>
+              <div class="tags">
+                ${tag(item.priority, item.priorityClass)}
+                ${tag(statusLabelText, statusClassName)}
+                ${tag(item.wbs, 'blue')}
+              </div>
+              <div class="pin-list">
+                <div class="pin-item"><div class="pin-marker">1</div><div><strong>Apertura</strong><span>Creato da ${item.creator} da ${item.origin}</span></div>${tag(item.type, item.type === 'Issue' ? 'risk' : 'blue')}</div>
+                <div class="pin-item"><div class="pin-marker" style="background: var(--brand-2)">2</div><div><strong>Responsabilita</strong><span>Assegnato a ${item.assignee}; validatore ${item.validator}</span></div>${tag('Ruoli','blue')}</div>
+                <div class="pin-item"><div class="pin-marker" style="background: var(--warn)">3</div><div><strong>Scadenza e impatto</strong><span>${item.due} - ${item.impact}</span></div>${tag('Timing','warn')}</div>
+              </div>
+              <div class="audit-list">
+                ${item.history.map(row => `<div class="audit-row"><div class="avatar">AU</div><div><strong>${row}</strong><span>Audit trail non modificabile</span></div></div>`).join('')}
+              </div>
+              <div class="detail-actions">
+                <button class="secondary" data-action="Evidenze aperte">${item.evidence.join(', ')}</button>
+                <button class="secondary" data-action="Collegamento WBS aperto">${item.wbs}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `);
+    }
+
+    function openIssueCreateModal() {
+      openModal('Nuovo task / issue', 'Apertura manuale o da evidenza selezionata', `
+        <div class="form-grid">
+          <div class="field">
+            <label>Tipo</label>
+            <select><option>Issue</option><option>Task</option><option>Richiesta chiarimento</option></select>
+          </div>
+          <div class="field">
+            <label>Cantiere</label>
+            <select>${sites.map(site => `<option ${dashboardMode === 'project' && selectedSite.name === site.name ? 'selected' : ''}>${site.name}</option>`).join('')}</select>
+          </div>
+          <div class="field wide">
+            <label>Titolo</label>
+            <input value="Nuova criticita da verificare">
+          </div>
+          <div class="field">
+            <label>Assegnatario</label>
+            <select><option>Marco R.</option><option>Anna S.</option><option>Site manager</option><option>Fornitore esterno</option></select>
+          </div>
+          <div class="field">
+            <label>Validatore</label>
+            <select><option>PM</option><option>Direzione lavori</option><option>HSE</option><option>Committente</option></select>
+          </div>
+          <div class="field">
+            <label>Priorita</label>
+            <select><option>Media</option><option>Alta</option><option>Critica</option><option>Bassa</option></select>
+          </div>
+          <div class="field">
+            <label>Scadenza</label>
+            <input type="datetime-local" value="2026-06-03T18:00">
+          </div>
+          <div class="field wide">
+            <label>Impatto</label>
+            <textarea>Indicare impatto su tempi, costi, qualita o sicurezza.</textarea>
+          </div>
+          <div class="field wide">
+            <label>Evidenze</label>
+            <div class="variable-token-row">
+              <label class="variable-token"><input type="checkbox" checked>Foto</label>
+              <label class="variable-token"><input type="checkbox">Video</label>
+              <label class="variable-token"><input type="checkbox">Vocale</label>
+              <label class="variable-token"><input type="checkbox">Documento</label>
+              <label class="variable-token"><input type="checkbox">WBS</label>
+            </div>
+          </div>
+          <div class="detail-actions wide">
+            <button class="secondary" data-action="Bozza task salvata">Salva bozza</button>
+            <button class="primary" data-create-issue-demo="true">Apri e notifica</button>
+          </div>
+        </div>
+      `);
+    }
+
     function openPriorityModal(type) {
       const details = {
         milestone: {
@@ -5068,6 +5681,31 @@
         if (button) setPage(button.dataset.page);
       });
 
+      document.getElementById('globalSiteSelect')?.addEventListener('change', event => {
+        const value = event.target.value;
+        const activePage = document.querySelector('.view.active')?.id || (location.hash ? location.hash.slice(1) : 'dashboard');
+        if (value === 'portfolio') {
+          dashboardMode = 'portfolio';
+          selectedScheduleSite = 'all';
+          activeChatSite = 'all';
+          document.getElementById('globalSearch').placeholder = 'Cerca cantieri, issue, fornitori';
+          renderDashboard();
+          renderFloatingChat();
+          setPage(activePage);
+          showToast('Vista portfolio');
+          return;
+        }
+        selectedSite = sites.find(site => site.name === value) || selectedSite || sites[0];
+        dashboardMode = 'project';
+        selectedScheduleSite = selectedSite.name;
+        activeChatSite = selectedSite.name;
+        document.getElementById('globalSearch').placeholder = 'Cerca issue, documenti, fornitori';
+        renderDashboard();
+        renderFloatingChat();
+        setPage(activePage);
+        showToast(`Vista cantiere: ${selectedSite.name}`);
+      });
+
       document.getElementById('chatOpenButton').addEventListener('click', openFloatingChat);
       document.getElementById('chatAlert').addEventListener('click', openFloatingChat);
       document.getElementById('chatMinimize').addEventListener('click', minimizeFloatingChat);
@@ -5093,6 +5731,60 @@
       document.body.addEventListener('click', event => {
         const action = event.target.closest('[data-action]');
         if (action) showToast(action.dataset.action);
+
+        const issueTransition = event.target.closest('[data-issue-transition]');
+        if (issueTransition) {
+          event.stopPropagation();
+          const item = issueWorkflowItems.find(entry => entry.id === issueTransition.dataset.issueTransition);
+          if (item) {
+            const nextStatus = issueTransition.dataset.nextStatus;
+            item.status = nextStatus;
+            const [label] = issueStatusMeta(nextStatus);
+            item.history.push(`${new Date().toLocaleString('it-IT', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })} stato aggiornato: ${label}`);
+            renderIssues();
+            showToast(`${item.type} aggiornata: ${label}`);
+          }
+          return;
+        }
+
+        const issueCreate = event.target.closest('[data-create-issue]');
+        if (issueCreate) {
+          openIssueCreateModal();
+          return;
+        }
+
+        const issueCreateDemo = event.target.closest('[data-create-issue-demo]');
+        if (issueCreateDemo) {
+          const siteName = dashboardMode === 'project' ? selectedSite.name : sites[0].name;
+          issueWorkflowItems.unshift({
+            id: `iss-${Date.now()}`,
+            type: 'Issue',
+            title: 'Nuova criticita da verificare',
+            site: siteName,
+            origin: 'Inserimento manuale web',
+            creator: 'Tu',
+            assignee: 'Marco R.',
+            validator: 'PM',
+            priority: 'Media',
+            priorityClass: 'warn',
+            status: 'open',
+            due: '03 giu 18:00',
+            impact: 'Da classificare su tempi, costi, qualita o sicurezza',
+            wbs: 'Da collegare',
+            evidence: ['Foto'],
+            history: ['01 giu apertura manuale da web']
+          });
+          closeModal();
+          renderIssues();
+          showToast('Issue aperta e notificata');
+          return;
+        }
+
+        const issueDetail = event.target.closest('[data-open-issue]');
+        if (issueDetail) {
+          openIssueDetail(issueDetail.dataset.openIssue);
+          return;
+        }
 
         const conversationChannel = event.target.closest('[data-conversation-channel]');
         if (conversationChannel) {
@@ -5182,7 +5874,69 @@
           const wbs = wbsItems.find(item => item.id === timelineWbs.dataset.timelineWbs);
           document.querySelectorAll('[data-wbs-id]').forEach(item => item.classList.remove('active-summary'));
           document.querySelector(`[data-wbs-id="${timelineWbs.dataset.timelineWbs}"]`)?.classList.add('active-summary');
-          showToast(wbs ? `WBS derivata: ${wbs.code} - ${wbs.title}` : 'WBS derivata dal cronoprogramma');
+          showToast(wbs && isCompletedWbs(wbs) ? 'WBS completata: spostamento vincolato a revisione' : wbs ? `WBS derivata: ${wbs.code} - ${wbs.title}` : 'WBS derivata dal cronoprogramma');
+          return;
+        }
+
+        const createScheduleRevision = event.target.closest('[data-create-schedule-revision]');
+        if (createScheduleRevision) {
+          const original = wbsItems.find(item => item.id === createScheduleRevision.dataset.createScheduleRevision);
+          if (original && !wbsItems.some(item => item.id === `${original.id}-rev`)) {
+            const revision = {
+              ...original,
+              id: `${original.id}-rev`,
+              code: `${original.code}.R1`,
+              title: `${original.title} - revisione`,
+              progress: 0,
+              locked: false,
+              validated: false,
+              accountingLinked: false,
+              status: 'Revisione',
+              statusClass: 'warn',
+              weekStart: Number(createScheduleRevision.dataset.targetWeek),
+              subactions: original.subactions.map(sub => ({ ...sub, id: `${sub.id}-rev`, done: 0, locked: false }))
+            };
+            wbsItems.push(revision);
+            expandedWbsIds.add(revision.id);
+            closeModal();
+            renderSchedule();
+            wireScheduleDrag();
+            showToast('Revisione cronoprogramma creata con audit');
+          }
+          return;
+        }
+
+        const reopenScheduleItem = event.target.closest('[data-reopen-schedule-item]');
+        if (reopenScheduleItem) {
+          showToast('Riapertura richiesta: serve motivazione PM');
+          return;
+        }
+
+        const duplicateScheduleItem = event.target.closest('[data-duplicate-schedule-item]');
+        if (duplicateScheduleItem) {
+          const original = wbsItems.find(item => item.id === duplicateScheduleItem.dataset.duplicateScheduleItem);
+          if (original) {
+            const copyId = `${original.id}-copy-${Date.now()}`;
+            wbsItems.push({
+              ...original,
+              id: copyId,
+              code: `${original.code}.N`,
+              title: `${original.title} - nuova attività`,
+              progress: 0,
+              locked: false,
+              validated: false,
+              accountingLinked: false,
+              status: 'Nuova',
+              statusClass: 'blue',
+              weekStart: Number(duplicateScheduleItem.dataset.targetWeek),
+              subactions: original.subactions.map(sub => ({ ...sub, id: `${sub.id}-${Date.now()}`, done: 0, locked: false }))
+            });
+            expandedWbsIds.add(copyId);
+            closeModal();
+            renderSchedule();
+            wireScheduleDrag();
+            showToast('Nuova attività collegata creata');
+          }
           return;
         }
 
@@ -5383,6 +6137,9 @@
           selectedScheduleSite = event.target.value;
           renderSchedule();
           wireScheduleDrag();
+          updateContextLabels();
+          const page = pages.find(p => p[0] === 'schedule');
+          if (page) document.getElementById('pageSubtitle').textContent = currentContextText(page);
         }
       });
 
