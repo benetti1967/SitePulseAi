@@ -3303,6 +3303,78 @@
       font-size: 14px;
     }
 
+    .team-directory {
+      display: grid;
+      gap: 10px;
+    }
+
+    .team-row {
+      display: grid;
+      grid-template-columns: 42px minmax(210px, 1.1fr) minmax(150px, .8fr) minmax(210px, 1fr) minmax(145px, .7fr) minmax(160px, .8fr) auto;
+      gap: 12px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 10px 12px;
+      min-width: 1060px;
+    }
+
+    .team-table-head {
+      min-width: 1060px;
+      display: grid;
+      grid-template-columns: 42px minmax(210px, 1.1fr) minmax(150px, .8fr) minmax(210px, 1fr) minmax(145px, .7fr) minmax(160px, .8fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 0 12px 8px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+    }
+
+    .team-main {
+      min-width: 0;
+      display: grid;
+      gap: 3px;
+    }
+
+    .team-main strong {
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .team-main span,
+    .team-cell {
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .team-actions {
+      display: flex;
+      gap: 6px;
+      justify-content: flex-end;
+      white-space: nowrap;
+    }
+
+    .team-actions button {
+      height: 30px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: #43515f;
+      padding: 0 10px;
+      font-size: 12px;
+      font-weight: 750;
+      cursor: pointer;
+    }
+
     .checks {
       display: grid;
       gap: 8px;
@@ -3597,7 +3669,7 @@
         display: block;
       }
       .brand, .sidebar-card { display: none; }
-      .nav { grid-template-columns: repeat(8, minmax(44px, 1fr)); overflow-x: auto; }
+      .nav { grid-template-columns: repeat(9, minmax(44px, 1fr)); overflow-x: auto; }
       .nav button { width: auto; height: 58px; }
       .main { padding: 12px 12px 88px; }
       .topbar { grid-template-columns: 1fr; }
@@ -3688,16 +3760,12 @@
         <div>
           <div class="view-mode-chip" id="viewModeChip">Vista portfolio</div>
           <h1 id="pageTitle">Dashboard</h1>
-          <div class="subtitle" id="pageSubtitle">Residenza Porta Nuova · Milano · 4 edifici · settimana 31</div>
+          <div class="subtitle" id="pageSubtitle">Sintesi operativa e finanziaria</div>
         </div>
         <div class="actions">
           <div class="account-pill" id="accountPill">
             <span class="avatar" id="accountAvatar">PM</span>
             <span id="accountLabel">Demo</span>
-          </div>
-          <div class="scope-pill" id="scopePill">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-7h6v7"/></svg>
-            <span>4 cantieri abilitati</span>
           </div>
           <select class="context-select" id="globalSiteSelect" title="Seleziona vista">
             <option value="portfolio">Portfolio</option>
@@ -3730,6 +3798,7 @@
       <section class="view" id="inspections"></section>
       <section class="view" id="schedule"></section>
       <section class="view" id="issues"></section>
+      <section class="view" id="team"></section>
       <section class="view" id="permissions"></section>
     </main>
   </div>
@@ -3743,7 +3812,7 @@
       <header class="chat-window-head">
         <div>
           <strong>Chat cantieri</strong>
-          <span id="chatActiveContext">Tutti i cantieri visibili</span>
+          <span id="chatActiveContext">Chat portfolio</span>
         </div>
         <div class="chat-window-actions">
           <button type="button" id="chatMinimize" title="Minimizza">_</button>
@@ -3789,6 +3858,7 @@
       inspections: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>',
       schedule: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5M4 19h16M8 16V9M12 16V6M16 16v-4"/></svg>',
       issues: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.3 3h3.4L22 20H2L10.3 3Z"/><path d="M12 9v4M12 17h.01"/></svg>',
+      team: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
       permissions: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 4 7v6c0 5 3.5 7.5 8 8 4.5-.5 8-3 8-8V7l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg>'
     };
 
@@ -3806,14 +3876,15 @@
     };
 
     const pages = [
-      ['dashboard', 'Dashboard', 'Portfolio cantieri · aggregato operativo e finanziario', ''],
-      ['chat', 'Conversazioni', 'Chat operativa strutturata da mobile', '18'],
-      ['media', 'Archivio media', 'Foto, video, vocali e documenti caricabili senza sopralluogo', '12'],
-      ['documents', 'Documenti', 'Archivio segregato per cantiere, profilo e policy', '16'],
-      ['inspections', 'Sopralluoghi', 'Report automatici, foto 360 e firme partecipanti', '5'],
-      ['schedule', 'Cronoprogramma + Budget', 'Import PDF, voci modificabili e forecast costi', '3'],
-      ['issues', 'Issue e Task', 'Kanban operativo collegato a fornitori, crono e budget', '42'],
-      ['permissions', 'Utenti e Permessi', 'Login unico, ruoli, audit trail e segregazione documentale', '']
+      ['dashboard', 'Dashboard', 'Sintesi operativa e finanziaria', ''],
+      ['chat', 'Conversazioni', 'Messaggi, allegati e richieste dal campo', '18'],
+      ['media', 'Archivio media', 'Contenuti e classificazione AI', '12'],
+      ['documents', 'Documenti', 'Archivio, versioni e validazioni', '16'],
+      ['inspections', 'Sopralluoghi', 'Verbali, partecipanti e firme', '5'],
+      ['schedule', 'Cronoprogramma + Budget', 'WBS, tempi e costi', '3'],
+      ['issues', 'Issue e Task', 'Aperture, responsabilita e chiusure', '42'],
+      ['team', 'Team di progetto', 'Membri, incarichi e aziende', '10'],
+      ['permissions', 'Utenti e Permessi', 'Ruoli, accessi e audit', '']
     ];
 
     const activities = [
@@ -3925,6 +3996,35 @@
       { type: 'SAL', title: 'Stato avanzamento lavori', meta: 'SAL · Maggio · collegato al budget', status: 'In revisione', owner: 'PM', tagClass: '', group: 'review' },
       { type: '360', title: 'Sopralluogo piano 2', meta: 'Foto 360 · report isolamento', status: 'Firmato 4/5', owner: 'Luca F.', tagClass: 'ok', group: 'approved' }
     ];
+
+    const documentAuditByTitle = {
+      'Variante impianti': [
+        { avatar: 'AI', title: 'Classificazione proposta', meta: 'AI backend - collegata a WBS 1.3 impianto elettrico - v1' },
+        { avatar: 'LF', title: 'Caricata nuova versione v3', meta: 'Luca F. - mobile sync - oggi 10:42' },
+        { avatar: 'AS', title: 'Inviata in approvazione tecnica', meta: 'Anna S. - richiesta validazione DL - oggi 11:12' },
+        { avatar: 'PM', title: 'Impatto budget stimato', meta: 'PM - forecast +EUR 6.800 - audit modificabile solo con nuova versione' }
+      ],
+      'Tavole architettoniche': [
+        { avatar: 'MR', title: 'Aggiornata tavola piano 2', meta: 'Marco R. - versione v12 - ieri 17:20' },
+        { avatar: 'DL', title: 'Validazione tecnica completata', meta: 'Direzione lavori - approvato senza note - oggi 09:10' },
+        { avatar: 'AI', title: 'Collegamenti ricostruiti', meta: 'AI backend - 3 sopralluoghi e 2 issue collegate' }
+      ],
+      'Contratto fornitore': [
+        { avatar: 'AD', title: 'Documento marcato riservato', meta: 'Admin - visibile solo PM, Admin, Finance - 28 mag 15:03' },
+        { avatar: 'TC', title: 'Upload fornitore ricevuto', meta: 'TermoCasa - portale esterno - 28 mag 14:48' },
+        { avatar: 'PM', title: 'Download bloccato', meta: 'Profilo non autorizzato - evento registrato - oggi 08:55' }
+      ],
+      'Stato avanzamento lavori': [
+        { avatar: 'FI', title: 'SAL maggio caricato', meta: 'Finance - collegato a budget portfolio - 31 mag 18:00' },
+        { avatar: 'PM', title: 'Richiesta integrazione contabile', meta: 'PM - mancano evidenze su 2 voci computo - oggi 09:30' },
+        { avatar: 'AI', title: 'Coerenza avanzamento verificata', meta: 'AI backend - confronto foto/WBS/budget - scostamento 3%' }
+      ],
+      'Sopralluogo piano 2': [
+        { avatar: 'LF', title: 'Caricate 14 foto e 2 vocali', meta: 'Luca F. - sopralluogo piano 2 - oggi 10:58' },
+        { avatar: 'AS', title: 'Verbale inviato ai partecipanti', meta: 'Anna S. - firma richiesta entro 48 ore - oggi 11:05' },
+        { avatar: 'TC', title: 'Firma mancante', meta: 'TermoCasa - promemoria inviato - scadenza domani 18:00' }
+      ]
+    };
 
     let mediaItems = [
       { kind: 'photo', title: 'Foto isolamento Blocco B', site: 'Residenza Porta Nuova', uploadedBy: 'Luca F.', date: 'Oggi 10:42', confidence: '94%', suggestion: 'Sopralluogo: Isolamento Blocco B', target: 'Issue materiale mancante', status: 'Da confermare', tagClass: 'warn', tags: ['Foto', 'Blocco B', 'AI collegata'] },
@@ -4062,6 +4162,19 @@
         evidence: ['Verbale firmato 5/5', 'foto QA'],
         history: ['30 mag 10:00 aperto', '31 mag 17:22 validato', '31 mag 17:25 chiuso']
       }
+    ];
+
+    let projectTeamMembers = [
+      { initials: 'AS', name: 'Anna Sarti', role: 'Project Manager', company: 'UrbanBuild Group', type: 'Interno', sites: ['Residenza Porta Nuova', 'Hotel Aurora Renovation'], status: 'Attivo', statusClass: 'ok', permissions: 'PM, workflow, budget', contact: 'anna.sarti@urbanbuild.it' },
+      { initials: 'MR', name: 'Marco Riva', role: 'Capocantiere', company: 'UrbanBuild Group', type: 'Interno', sites: ['Residenza Porta Nuova'], status: 'Attivo', statusClass: 'ok', permissions: 'Task, issue, sopralluoghi', contact: 'marco.riva@urbanbuild.it' },
+      { initials: 'LF', name: 'Luca Ferri', role: 'Site Manager', company: 'UrbanBuild Group', type: 'Interno', sites: ['Residenza Porta Nuova', 'Logistica Nord Hub'], status: 'Attivo', statusClass: 'ok', permissions: 'Mobile, report, media', contact: 'luca.ferri@urbanbuild.it' },
+      { initials: 'SM', name: 'Sara Moretti', role: 'Site Manager', company: 'UrbanBuild Group', type: 'Interno', sites: ['Green Offices Lambrate'], status: 'Attivo', statusClass: 'ok', permissions: 'Mobile, task, documenti', contact: 'sara.moretti@urbanbuild.it' },
+      { initials: 'DL', name: 'Direzione lavori', role: 'Validatore tecnico', company: 'Studio DL Milano', type: 'Consulente', sites: ['Residenza Porta Nuova', 'Hotel Aurora Renovation'], status: 'Invitato', statusClass: 'warn', permissions: 'Validazione, documenti', contact: 'dl@studiodl.it' },
+      { initials: 'TC', name: 'TermoCasa', role: 'Fornitore isolamento', company: 'TermoCasa Srl', type: 'Fornitore', sites: ['Residenza Porta Nuova'], status: 'Attivo', statusClass: 'ok', permissions: 'Upload, firma verbali', contact: 'cantieri@termocasa.it' },
+      { initials: 'AL', name: 'AluSystem', role: 'Fornitore facciate', company: 'AluSystem Spa', type: 'Fornitore', sites: ['Green Offices Lambrate', 'Hotel Aurora Renovation'], status: 'Da confermare', statusClass: 'warn', permissions: 'Task fornitore, media', contact: 'pm@alusystem.it' },
+      { initials: 'HS', name: 'Consulente HSE', role: 'Sicurezza', company: 'SafeBuild Consulting', type: 'Consulente', sites: ['Logistica Nord Hub'], status: 'Attivo', statusClass: 'ok', permissions: 'Audit HSE, sopralluoghi', contact: 'hse@safebuild.it' },
+      { initials: 'FI', name: 'Finance', role: 'Budget e SAL', company: 'UrbanBuild Group', type: 'Interno', sites: ['Portfolio'], status: 'Limitato', statusClass: 'blue', permissions: 'Budget, SAL, no chat campo', contact: 'finance@urbanbuild.it' },
+      { initials: 'CM', name: 'Committente', role: 'Viewer approvazioni', company: 'Real Estate Developer', type: 'Committente', sites: ['Portfolio'], status: 'Viewer', statusClass: 'violet', permissions: 'Report approvati, validazioni', contact: 'committente@example.com' }
     ];
 
     let sites = [
@@ -5042,6 +5155,7 @@
           <div><strong>${doc.title}</strong><span>${doc.meta}</span></div>
           <div>${tag(doc.status, doc.tagClass)}</div>
           <span>${doc.owner}</span>
+          <button class="secondary" data-open-audit="${doc.title}" data-document-meta="${doc.meta}" data-document-status="${doc.status}" data-document-owner="${doc.owner}" data-document-class="${doc.tagClass}">Audit</button>
           <button class="icon-btn" title="Apri documento" data-open-document="${doc.title}" data-document-meta="${doc.meta}" data-document-status="${doc.status}" data-document-owner="${doc.owner}" data-document-class="${doc.tagClass}">
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
           </button>
@@ -5662,14 +5776,77 @@
       `;
     }
 
+    function visibleTeamMembers() {
+      return dashboardMode === 'project'
+        ? projectTeamMembers.filter(member => member.sites.includes(selectedSite.name) || member.sites.includes('Portfolio'))
+        : projectTeamMembers;
+    }
+
+    function renderTeam() {
+      const members = visibleTeamMembers();
+      const externalCount = members.filter(member => ['Fornitore', 'Consulente', 'Committente'].includes(member.type)).length;
+      const pendingCount = members.filter(member => ['Invitato', 'Da confermare'].includes(member.status)).length;
+      const siteCoverage = dashboardMode === 'project'
+        ? selectedSite.name
+        : `${sites.length} cantieri`;
+      document.getElementById('team').innerHTML = `
+        <section class="metrics">
+          <div class="metric"><strong>${members.length}</strong><label>Membri visibili</label><span><b class="kpi-status blue">${siteCoverage}</b></span></div>
+          <div class="metric"><strong>${externalCount}</strong><label>Esterni</label><span><b class="kpi-status warn">fornitori e consulenti</b></span></div>
+          <div class="metric"><strong>${pendingCount}</strong><label>Da confermare</label><span><b class="kpi-status risk">inviti / onboarding</b></span></div>
+          <div class="metric"><strong>${members.filter(member => member.status === 'Attivo').length}</strong><label>Attivi</label><span><b class="kpi-status ok">operativi</b></span></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>Team di progetto</h2>
+            </div>
+            <div class="tags">
+              ${tag('Segregato per cantiere','blue','La vista mostra solo i membri visibili nel contesto portfolio o nel cantiere selezionato. I permessi effettivi restano governati dal backend.')}
+              ${tag('Interni / esterni','violet','Team interni, fornitori, consulenti e committenti possono avere incarichi e permessi differenti per cantiere.')}
+            </div>
+          </div>
+          <div class="issue-filter-row">
+            ${['Tutti','Interno','Fornitore','Consulente','Committente'].map(type => `<button class="${type === 'Tutti' ? 'active' : ''}" data-team-filter="${type}">${type}<span class="issue-count">${type === 'Tutti' ? members.length : members.filter(member => member.type === type).length}</span></button>`).join('')}
+          </div>
+          <div class="team-directory" id="teamDirectory">
+            ${renderTeamDirectory(members)}
+          </div>
+        </section>
+      `;
+    }
+
+    function renderTeamDirectory(members) {
+      return `
+        <div class="team-table-head">
+          <span></span>
+          <span>Membro</span>
+          <span>Tipo</span>
+          <span>Cantieri</span>
+          <span>Stato</span>
+          <span>Permessi</span>
+          <span>Azioni</span>
+        </div>
+        ${members.map(member => `
+          <article class="team-row">
+            <div class="avatar">${member.initials}</div>
+            <div class="team-main"><strong>${member.name}</strong><span>${member.role} - ${member.company}</span></div>
+            <div class="team-cell">${member.type}</div>
+            <div class="team-cell">${member.sites.join(', ')}</div>
+            <div class="tags">${tag(member.status, member.statusClass)}</div>
+            <div class="team-cell">${member.permissions}</div>
+            <div class="team-actions">
+              <button data-action="Profilo team aperto">Profilo</button>
+              <button data-action="Permessi membro aperti">Permessi</button>
+            </div>
+          </article>
+        `).join('')}
+      `;
+    }
+
     function currentContextText(page) {
-      if (page[0] === 'schedule' && dashboardMode !== 'project' && selectedScheduleSite !== 'all') {
-        return `${selectedScheduleSite} - ${page[2]}`;
-      }
-      if (dashboardMode === 'project') {
-        return `${selectedSite.name} - ${page[2]}`;
-      }
-      return `${sites.length} cantieri visibili - ${page[2]}`;
+      return page[2] || '';
     }
 
     function effectiveViewContext() {
@@ -5702,25 +5879,17 @@
 
     function updateContextLabels() {
       const effective = effectiveViewContext();
-      const scopeText = effective.mode === 'project'
-        ? `Cantiere attivo: ${effective.label}`
-        : effective.label;
       const modeChip = document.getElementById('viewModeChip');
       if (modeChip) {
-        modeChip.textContent = dashboardMode === 'project' ? `Vista cantiere · ${selectedSite.name}` : 'Vista portfolio';
-        modeChip.classList.toggle('project', dashboardMode === 'project');
-      }
-      if (modeChip) {
-        modeChip.textContent = effective.mode === 'project' ? `Vista cantiere - ${effective.label}` : 'Vista portfolio';
+        modeChip.textContent = effective.mode === 'project' ? 'Vista cantiere' : 'Vista portfolio';
         modeChip.classList.toggle('project', effective.mode === 'project');
       }
       renderGlobalSiteSelect();
-      document.getElementById('scopePill').querySelector('span').textContent = scopeText;
       document.getElementById('breadcrumb').classList.remove('show');
       document.getElementById('breadcrumbProject').textContent = selectedSite.name;
       document.getElementById('chatActiveContext').textContent = dashboardMode === 'project'
-        ? `Cantiere attivo: ${selectedSite.name}`
-        : 'Tutti i cantieri visibili';
+        ? `Chat: ${selectedSite.name}`
+        : 'Chat portfolio';
     }
 
     function setPage(id) {
@@ -5737,14 +5906,11 @@
         wireScheduleDrag();
       }
       if (id === 'issues') renderIssues();
+      if (id === 'team') renderTeam();
       if (id === 'permissions') renderPermissions();
       document.getElementById('pageTitle').textContent = page[1];
-      document.getElementById('pageSubtitle').textContent = id === 'dashboard'
-        ? (dashboardMode === 'project' ? `${selectedSite.name} · ${selectedSite.phase}` : page[2])
-        : page[2];
       document.getElementById('breadcrumb').classList.remove('show');
       document.getElementById('breadcrumbProject').textContent = selectedSite.name;
-      document.getElementById('scopePill').querySelector('span').textContent = dashboardMode === 'project' ? 'Vista cantiere' : `${sites.length} cantieri abilitati`;
       document.getElementById('pageSubtitle').textContent = ['media', 'chat', 'documents'].includes(id) ? '' : currentContextText(page);
       updateContextLabels();
       history.replaceState(null, '', '#' + id);
@@ -5793,6 +5959,7 @@
               <div class="detail-actions">
                 <button class="secondary" data-action="Anteprima documento">Anteprima</button>
                 <button class="secondary" data-action="Versioni documento">Versioni</button>
+                <button class="secondary" data-open-audit="${title}" data-document-meta="${trigger.dataset.documentMeta}" data-document-status="${trigger.dataset.documentStatus}" data-document-owner="${trigger.dataset.documentOwner}" data-document-class="${trigger.dataset.documentClass || ''}">Audit</button>
                 <button class="secondary" data-action="Condivisione documento">Condividi</button>
               </div>
             </div>
@@ -5802,16 +5969,27 @@
       if (notify) showToast(`Aperto ${trigger.dataset.openDocument}`);
     }
 
-    function openAuditModal() {
-      openModal('Audit documentale', 'Accessi, modifiche e blocchi recenti', `
+    function openAuditModal(trigger = null) {
+      const active = document.querySelector('.doc-row.active-summary');
+      const source = trigger?.dataset?.openAudit && trigger.dataset.openAudit !== 'true' ? trigger : active;
+      const title = source?.dataset?.openAudit && source.dataset.openAudit !== 'true'
+        ? source.dataset.openAudit
+        : source?.dataset?.openDocument || 'Documenti recenti';
+      const meta = source?.dataset?.documentMeta || 'Registro complessivo dei documenti visibili';
+      const rows = documentAuditByTitle[title] || [
+        { avatar: 'AI', title: 'Classificazione e policy verificate', meta: `${title} - regole di accesso applicate` },
+        { avatar: 'PM', title: 'Consultazione audit richiesta', meta: 'Evento registrato nel registro documentale' },
+        { avatar: 'SYS', title: 'Nessun blocco recente', meta: 'Permessi coerenti con ruolo e cantiere selezionati' }
+      ];
+      const status = source?.dataset?.documentStatus || 'Registro';
+      const owner = source?.dataset?.documentOwner || 'Sistema';
+      openModal('Audit documentale', `${title} - ${meta}`, `
+        <div class="tags">${tag(status, source?.dataset?.documentClass || '')}${tag(`Owner ${owner}`, 'blue')}${tag('Audit trail', 'violet')}</div>
         <div class="audit-list">
-          <div class="audit-row"><div class="avatar">AS</div><div><strong>Approvata variante impianti</strong><span>Anna S. · oggi 11:12</span></div></div>
-          <div class="audit-row"><div class="avatar">LF</div><div><strong>Caricate 14 foto</strong><span>Luca F. · sopralluogo piano 2</span></div></div>
-          <div class="audit-row"><div class="avatar">PM</div><div><strong>Download contratto bloccato</strong><span>Profilo non autorizzato</span></div></div>
+          ${rows.map(row => `<div class="audit-row"><div class="avatar">${row.avatar}</div><div><strong>${row.title}</strong><span>${row.meta}</span></div></div>`).join('')}
         </div>
       `);
     }
-
     function openInspectionCreateModal() {
       openModal('Nuovo sopralluogo', 'Crea una sessione di raccolta prove e report', `
         <div class="form-grid">
@@ -6268,7 +6446,7 @@
       `).join('');
 
       document.getElementById('chatActiveContext').textContent = activeChatSite === 'all'
-        ? 'Tutti i cantieri visibili'
+        ? 'Chat portfolio'
         : `Chat: ${activeChatSite}`;
       document.getElementById('chatUnread').textContent = chatUnreadCount;
     }
@@ -6381,6 +6559,17 @@
         if (issueFilter) {
           activeIssueStatusFilter = issueFilter.dataset.issueFilter;
           renderIssues();
+          return;
+        }
+
+        const teamFilter = event.target.closest('[data-team-filter]');
+        if (teamFilter) {
+          document.querySelectorAll('[data-team-filter]').forEach(button => button.classList.remove('active'));
+          teamFilter.classList.add('active');
+          const type = teamFilter.dataset.teamFilter;
+          const members = visibleTeamMembers().filter(member => type === 'Tutti' || member.type === type);
+          const directory = document.getElementById('teamDirectory');
+          if (directory) directory.innerHTML = renderTeamDirectory(members);
           return;
         }
 
@@ -6714,15 +6903,15 @@
           showToast(`Aperta voce: ${scheduleRow.dataset.openSchedule}`);
         }
 
-        const documentTrigger = event.target.closest('[data-open-document]');
-        if (documentTrigger) {
-          openDocumentDetail(documentTrigger);
+        const auditTrigger = event.target.closest('[data-open-audit]');
+        if (auditTrigger) {
+          openAuditModal(auditTrigger);
           return;
         }
 
-        const auditTrigger = event.target.closest('[data-open-audit]');
-        if (auditTrigger) {
-          openAuditModal();
+        const documentTrigger = event.target.closest('[data-open-document]');
+        if (documentTrigger) {
+          openDocumentDetail(documentTrigger);
           return;
         }
 
@@ -6844,6 +7033,7 @@
     renderSchedule();
     wireScheduleDrag();
     renderIssues();
+    renderTeam();
     renderPermissions();
     renderFloatingChat();
     wireEvents();
@@ -6861,3 +7051,6 @@
   </script>
 </body>
 </html>
+
+
+
