@@ -1706,6 +1706,7 @@
 
     .doc-list {
       display: grid;
+      overflow-x: auto;
     }
 
     .doc-row {
@@ -1747,6 +1748,121 @@
       width: 38px;
       height: 38px;
       border-radius: 8px;
+    }
+
+    .document-intake {
+      display: grid;
+      grid-template-columns: minmax(300px, .72fr) minmax(0, 1.28fr);
+      gap: 12px;
+      align-items: stretch;
+      margin-bottom: 12px;
+    }
+
+    .document-upload-panel {
+      min-height: 148px;
+      border: 1px dashed #aebdc2;
+      border-radius: 8px;
+      background: #fbfcfc;
+      display: grid;
+      align-items: center;
+      padding: 16px;
+    }
+
+    .document-upload-panel .upload-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .document-upload-panel .icon {
+      color: var(--brand);
+    }
+
+    .document-upload-panel strong {
+      font-size: 16px;
+    }
+
+    .document-tools {
+      display: grid;
+      gap: 8px;
+      align-content: start;
+    }
+
+    .document-archive-tools {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 0 0 8px;
+      flex-wrap: wrap;
+    }
+
+    .document-archive-tools .tags {
+      gap: 8px;
+    }
+
+    .document-table-head,
+    .document-row {
+      display: grid;
+      grid-template-columns: 48px minmax(230px, 1.35fr) minmax(160px, .95fr) minmax(120px, .7fr) 96px minmax(150px, .85fr) 140px;
+      gap: 12px;
+      align-items: center;
+      min-width: 980px;
+    }
+
+    .document-table-head.project,
+    .document-row.project {
+      grid-template-columns: 48px minmax(250px, 1.45fr) minmax(150px, .9fr) minmax(140px, .85fr) 96px minmax(150px, .85fr) 140px;
+    }
+
+    .document-table-head {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    .document-row {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      cursor: pointer;
+      background: #fff;
+      transition: background .16s ease;
+    }
+
+    .document-row:hover,
+    .document-row.active-summary {
+      background: #fbfcfc;
+    }
+
+    .document-row:last-child {
+      border-bottom: 0;
+    }
+
+    .document-main strong,
+    .document-cell strong {
+      display: block;
+      color: var(--ink);
+      font-size: 14px;
+      margin-bottom: 3px;
+    }
+
+    .document-main span,
+    .document-cell span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .document-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 6px;
+      align-items: center;
     }
 
     .media-intake {
@@ -1972,6 +2088,551 @@
 
     .media-card-actions button {
       flex: 1;
+    }
+
+    .media-archive-tools {
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) auto;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 12px;
+    }
+
+    .media-view-toggle {
+      display: inline-flex;
+      gap: 6px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      align-self: start;
+    }
+
+    .media-view-toggle button {
+      height: 32px;
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      padding: 0 10px;
+      color: #53616b;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .media-view-toggle button.active {
+      background: #eef8f6;
+      color: var(--brand);
+    }
+
+    .media-archive-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .media-date-group {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      overflow-x: auto;
+      box-shadow: var(--shadow);
+    }
+
+    .media-date-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      background: #f8fbfa;
+    }
+
+    .media-date-head strong {
+      font-size: 14px;
+    }
+
+    .media-table-head,
+    .media-row {
+      display: grid;
+      grid-template-columns: 46px minmax(220px, 1.4fr) minmax(160px, .9fr) 130px minmax(180px, 1fr) 150px 96px;
+      gap: 12px;
+      align-items: center;
+      padding: 10px 12px;
+      min-width: 1120px;
+    }
+
+    .media-table-head {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--line);
+      background: #fbfcfc;
+    }
+
+    .media-row {
+      border-bottom: 1px solid var(--line);
+      cursor: pointer;
+    }
+
+    .media-row:last-child {
+      border-bottom: 0;
+    }
+
+    .media-row:hover {
+      background: #f7fbfa;
+    }
+
+    .media-type-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: #eaf4f3;
+      color: var(--brand);
+    }
+
+    .media-type-icon svg {
+      width: 19px;
+      height: 19px;
+    }
+
+    .media-main {
+      min-width: 0;
+    }
+
+    .media-main strong {
+      display: block;
+      font-size: 14px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .media-main span,
+    .media-cell {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      min-width: 0;
+    }
+
+    .media-cell strong {
+      display: block;
+      color: var(--ink);
+      font-size: 12px;
+    }
+
+    .media-row .tags {
+      gap: 5px;
+    }
+
+    /* Compact module headers: keep the top of every module information-dense. */
+    .main {
+      padding: 12px 14px;
+    }
+
+    .topbar {
+      min-height: 48px;
+      gap: 10px;
+      margin-bottom: 10px;
+      align-items: start;
+    }
+
+    .view-mode-chip {
+      min-height: 20px;
+      padding: 2px 8px;
+      margin-bottom: 4px;
+      font-size: 10px;
+    }
+
+    h1 {
+      font-size: 22px;
+    }
+
+    .subtitle {
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    .actions {
+      gap: 7px;
+    }
+
+    .context-select,
+    .scope-pill,
+    .search,
+    .icon-btn,
+    .account-pill,
+    button.primary,
+    button.secondary {
+      min-height: 34px;
+    }
+
+    .context-select,
+    .search {
+      height: 34px;
+    }
+
+    .metrics,
+    .doc-summary-grid {
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .metric,
+    .doc-summary-card {
+      min-height: 58px;
+      padding: 8px 10px;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-rows: auto auto;
+      column-gap: 10px;
+      row-gap: 3px;
+      align-items: center;
+      justify-items: start;
+      text-align: left;
+    }
+
+    .metric strong,
+    .doc-summary-card strong {
+      grid-column: 1;
+      grid-row: 1 / span 2;
+      min-width: 48px;
+      justify-self: center;
+      text-align: center;
+      font-size: 25px;
+      line-height: 1;
+      margin: 0;
+    }
+
+    .metric label,
+    .doc-summary-card label {
+      grid-column: 2;
+      grid-row: 1;
+      margin: 0;
+      font-size: 12px;
+      align-self: end;
+    }
+
+    .metric span,
+    .doc-summary-card span {
+      grid-column: 2;
+      grid-row: 2;
+      justify-content: flex-start;
+      margin: 0;
+      font-size: 11px;
+      align-self: start;
+    }
+
+    .kpi-status,
+    .tag {
+      min-height: 19px;
+      padding: 3px 8px;
+      font-size: 10.5px;
+    }
+
+    .panel-head {
+      min-height: 42px;
+      padding: 9px 12px;
+    }
+
+    .panel-head h2 {
+      font-size: 14px;
+    }
+
+    .panel-head p {
+      margin-top: 2px;
+      font-size: 11px;
+    }
+
+    .portfolio-summary-panel {
+      padding: 8px;
+      margin-bottom: 8px;
+    }
+
+    .portfolio-summary-risk {
+      grid-template-columns: 230px minmax(0, 1fr);
+      gap: 8px;
+    }
+
+    .portfolio-summary-risk .ai-forecast-card {
+      padding: 8px 10px;
+    }
+
+    .portfolio-summary-risk .ai-forecast-card strong {
+      font-size: 19px;
+      margin-bottom: 3px;
+    }
+
+    .portfolio-summary-risk .forecast-visual {
+      width: min(150px, 100%);
+    }
+
+    .portfolio-kpi-row {
+      gap: 8px;
+      min-width: 680px;
+    }
+
+    .portfolio-kpi-row .metric {
+      min-height: 58px;
+      padding: 8px 10px;
+      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-rows: auto auto;
+      justify-items: start;
+      text-align: left;
+      align-content: center;
+    }
+
+    .portfolio-kpi-row .metric strong {
+      grid-column: 1;
+      grid-row: 1 / span 2;
+      min-width: 46px;
+      font-size: 24px;
+    }
+
+    .portfolio-kpi-row .metric label {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .portfolio-kpi-row .metric span {
+      grid-column: 2;
+      grid-row: 2;
+      justify-content: flex-start;
+    }
+
+    .grid,
+    .portfolio-grid,
+    .documents-layout,
+    .schedule-board,
+    .schedule-panels {
+      gap: 10px;
+    }
+
+    .site-card {
+      padding: 10px 12px;
+      gap: 8px;
+    }
+
+    .site-summary {
+      grid-template-columns: 62px minmax(0, 1fr);
+      gap: 10px;
+    }
+
+    .site-cover {
+      height: 62px;
+    }
+
+    .doc-toolbar,
+    .schedule-toolbar,
+    .issue-toolbar {
+      margin-bottom: 8px;
+      gap: 8px;
+    }
+
+    .issue-filter-row {
+      padding-bottom: 6px;
+      margin-bottom: 6px;
+    }
+
+    .media-intake {
+      grid-template-columns: minmax(230px, .55fr) minmax(0, 1.45fr);
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .upload-drop {
+      min-height: 126px;
+      padding: 12px;
+    }
+
+    .upload-drop strong {
+      font-size: 16px;
+      margin: 6px 0 5px;
+    }
+
+    .upload-drop .icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    .media-search {
+      gap: 8px;
+    }
+
+    .media-search-box {
+      height: 38px;
+    }
+
+    .media-archive-tools,
+    .team-panel-tools {
+      gap: 6px;
+      padding-bottom: 8px;
+      margin-bottom: 8px;
+    }
+
+    .media-intake {
+      grid-template-columns: minmax(360px, .75fr) minmax(0, 1.25fr);
+      align-items: stretch;
+    }
+
+    .upload-drop {
+      min-height: 138px;
+      place-items: stretch;
+      text-align: left;
+    }
+
+    .upload-drop > div {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr) auto;
+      gap: 8px 12px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .upload-drop .icon {
+      grid-column: 1;
+      grid-row: 1 / span 2;
+      margin: 0;
+      align-self: center;
+    }
+
+    .upload-drop strong {
+      grid-column: 2;
+      grid-row: 1;
+      margin: 0;
+      align-self: end;
+    }
+
+    .upload-drop .tags {
+      grid-column: 2 / -1;
+      grid-row: 2;
+      align-self: start;
+    }
+
+    .upload-drop input {
+      display: none;
+    }
+
+    .upload-drop .media-actions {
+      grid-column: 3;
+      grid-row: 1 / span 2;
+      justify-content: flex-end;
+      align-self: center;
+      margin-top: 0;
+    }
+
+    .upload-drop .media-actions button {
+      min-height: 34px;
+      white-space: nowrap;
+    }
+
+    .media-search {
+      align-content: start;
+    }
+
+    .media-archive-tools {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 6px;
+      border-bottom: 0;
+    }
+
+    .media-archive-tools .tags {
+      order: 1;
+    }
+
+    .media-view-toggle {
+      order: 2;
+      margin-left: auto;
+    }
+
+    .media-table-head.project,
+    .media-row.project {
+      grid-template-columns: 46px minmax(220px, 1.3fr) 130px minmax(180px, 1fr) minmax(155px, .8fr) 150px 96px;
+    }
+
+    .upload-drop {
+      min-height: 148px;
+      display: block;
+      padding: 14px;
+    }
+
+    .upload-drop .upload-content {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 10px;
+      align-content: start;
+      width: 100%;
+      min-width: 0;
+      height: 100%;
+    }
+
+    .upload-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 28px;
+      width: 100%;
+      min-width: 0;
+      grid-column: auto;
+      grid-row: auto;
+      justify-self: stretch;
+    }
+
+    .upload-title .icon {
+      width: 22px;
+      height: 22px;
+      margin: 0;
+      flex: 0 0 auto;
+    }
+
+    .upload-title strong {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.1;
+    }
+
+    .upload-tags {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 24px;
+      width: 100%;
+      min-width: 0;
+      grid-column: auto;
+      grid-row: auto;
+      justify-self: stretch;
+    }
+
+    .upload-drop .upload-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-start;
+      margin: 0;
+      width: 100%;
+      min-width: 0;
+      grid-column: auto;
+      grid-row: auto;
+      justify-self: stretch;
+    }
+
+    .upload-drop .upload-actions button {
+      min-height: 34px;
+    }
+
+    .media-archive-tools {
+      margin-top: 0;
+      background: transparent;
     }
 
     .audit-list {
@@ -3088,6 +3749,70 @@
       color: var(--brand);
     }
 
+    .team-panel-tools {
+      display: grid;
+      gap: 8px;
+      padding-bottom: 12px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .team-panel-tools .issue-filter-row {
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .team-panel-tools .tags {
+      justify-content: flex-start;
+    }
+
+    .report-export {
+      display: grid;
+      gap: 14px;
+    }
+
+    .report-options {
+      display: grid;
+      gap: 8px;
+      max-height: 260px;
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+      background: #f8fbfa;
+    }
+
+    .report-option {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid #dbe5e7;
+      border-radius: 8px;
+      background: white;
+    }
+
+    .report-option strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .report-option span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    .report-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
     .issue-count {
       min-width: 21px;
       min-height: 21px;
@@ -3652,6 +4377,9 @@
       .portfolio-grid { grid-template-columns: 1fr; }
       .doc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .media-intake { grid-template-columns: 1fr; }
+      .upload-drop {
+        min-height: 108px;
+      }
       .media-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
@@ -3672,15 +4400,75 @@
       .nav { grid-template-columns: repeat(9, minmax(44px, 1fr)); overflow-x: auto; }
       .nav button { width: auto; height: 58px; }
       .main { padding: 12px 12px 88px; }
-      .topbar { grid-template-columns: 1fr; }
-      .actions {
-        overflow-x: auto;
-        max-width: calc(100vw - 24px);
-        padding-bottom: 2px;
+      .topbar {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        margin-bottom: 8px;
       }
-      .scope-pill { min-width: max-content; }
-      .context-select { min-width: 210px; }
-      .search { min-width: 240px; width: 240px; }
+      .topbar > div:first-child {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        gap: 8px;
+        align-items: center;
+      }
+      .topbar .view-mode-chip {
+        margin-bottom: 0;
+      }
+      .topbar h1 {
+        font-size: 20px;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .topbar .subtitle {
+        display: none;
+      }
+      .actions {
+        width: 100%;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 36px 42px 46px;
+        gap: 6px;
+        align-items: center;
+        overflow: visible;
+        max-width: none;
+        padding-bottom: 0;
+      }
+      .account-pill {
+        display: none;
+      }
+      .context-select {
+        min-width: 0;
+        width: 100%;
+      }
+      .search {
+        grid-column: 1 / -1;
+        min-width: 0;
+        width: 100%;
+        order: 2;
+      }
+      .icon-btn,
+      #logoutButton {
+        width: 36px;
+        padding: 0;
+      }
+      #logoutButton {
+        font-size: 0;
+      }
+      #logoutButton:after {
+        content: "Es";
+        font-size: 12px;
+      }
+      .actions .primary {
+        width: 42px;
+        min-width: 42px;
+        padding: 0;
+        font-size: 0;
+        justify-content: center;
+      }
+      .actions .primary .icon {
+        margin: 0;
+      }
       .metrics, .doc-grid, .permission-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .portfolio-grid { grid-template-columns: 1fr; }
       .project-health { grid-template-columns: 1fr; }
@@ -3689,6 +4477,40 @@
       .workflow-steps { grid-template-columns: 1fr; }
       .offline-sync-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .media-grid { grid-template-columns: 1fr; }
+      .upload-drop > div {
+        grid-template-columns: 28px minmax(0, 1fr);
+      }
+      .upload-drop .upload-content {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 8px;
+      }
+      .upload-title {
+        grid-column: 1;
+      }
+      .upload-tags {
+        grid-column: 1;
+      }
+      .upload-drop .media-actions {
+        grid-column: 1 / -1;
+        grid-row: 3;
+        margin-top: 0;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 6px;
+      }
+      .upload-drop .media-actions button {
+        width: 100%;
+      }
+      .media-archive-tools {
+        align-items: flex-start;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .media-view-toggle {
+        margin-left: 0;
+      }
       .site-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .activity { grid-template-columns: 62px minmax(0, 1fr); }
       .owner { grid-column: 2; justify-items: start; min-width: 0; }
@@ -3705,6 +4527,30 @@
       .chat-feed {
         height: 240px;
       }
+    }
+
+    #media .upload-drop .upload-content {
+      grid-template-columns: minmax(0, 1fr) !important;
+      width: 100% !important;
+    }
+
+    #media .upload-title,
+    #media .upload-tags,
+    #media .upload-actions {
+      grid-column: 1 / -1 !important;
+      grid-row: auto !important;
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+
+    #media .upload-actions {
+      display: flex !important;
+      flex-wrap: wrap !important;
+    }
+
+    #media .upload-actions button {
+      width: auto;
+      flex: 0 1 auto;
     }
   </style>
 </head>
@@ -3777,9 +4623,9 @@
           <button class="icon-btn" title="Notifiche" data-action="Notifiche">
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>
           </button>
-          <button class="primary" data-action="Report generato">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-            Nuovo report
+          <button class="primary" data-open-report-export="true">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3v4a2 2 0 0 0 2 2h4"/><path d="M5 3h9l5 5v13H5z"/><path d="M8 17h8M8 13h8"/></svg>
+            Scarica report
           </button>
           <button class="secondary" id="logoutButton">Esci</button>
         </div>
@@ -4415,6 +5261,389 @@
       window.toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
     }
 
+    function currentPageId() {
+      return document.querySelector('.view.active')?.id || 'dashboard';
+    }
+
+    function reportModules() {
+      return pages.map(page => ({ id: page[0], label: page[1] }));
+    }
+
+    function reportScopeOptions() {
+      const activeSite = dashboardMode === 'project' ? selectedSite.name : selectedScheduleSite;
+      return [
+        { value: 'current', label: dashboardMode === 'project' ? `Cantiere attivo: ${selectedSite.name}` : 'Vista corrente' },
+        { value: 'portfolio', label: 'Portfolio visibile' },
+        ...sites.map(site => ({ value: site.name, label: site.name }))
+      ].filter((option, index, list) => list.findIndex(item => item.value === option.value) === index);
+    }
+
+    function scopeSiteName(scope) {
+      if (scope === 'current') return dashboardMode === 'project' ? selectedSite.name : null;
+      if (scope === 'portfolio') return null;
+      return scope;
+    }
+
+    function itemMatchesScope(item, scope) {
+      const siteName = scopeSiteName(scope);
+      if (!siteName) return true;
+      return !item.site || item.site === siteName || item.meta?.includes(siteName);
+    }
+
+    function chatReportRows(scope = 'current') {
+      const siteName = scopeSiteName(scope);
+      const source = siteName
+        ? { [siteName]: chatMessagesBySite[siteName] || [] }
+        : chatMessagesBySite;
+      return Object.entries(source).flatMap(([site, messages]) => messages.map(([author, text], index) => {
+        const isAi = author === 'AI';
+        const hasMedia = /foto|vocale|video|pdf|allego|caricat/i.test(text);
+        const hasTask = /task|issue|wbs|cronoprogramma|forecast|scadenza|assegn/i.test(text);
+        const privacy = /contratto|budget|forecast|permesso|variante/i.test(text) ? 'Riservata' : hasMedia ? 'Operativa' : 'Standard';
+        const threadEvents = messages
+          .map(([rowAuthor, rowText], rowIndex) => `${rowIndex + 1}. ${rowAuthor}: ${rowText}`)
+          .join(' | ');
+        return {
+          title: text,
+          meta: `${site === 'all' ? 'Portfolio' : site} - ${author} - ${index + 1}`,
+          site: site === 'all' ? null : site,
+          type: 'Conversazione',
+          date: index === 0 ? '02/06/2026 10:42' : index === 1 ? '02/06/2026 10:46' : '02/06/2026 11:12',
+          channel: site === 'all' ? 'Portfolio operativo' : site,
+          author,
+          role: isAi ? 'AI backend' : author.includes('Luca') ? 'Site manager' : author.includes('Anna') ? 'PM / DL' : author.includes('Marco') ? 'Capocantiere' : author.includes('Sara') ? 'Site manager' : author,
+          threadEvents,
+          attachments: hasMedia ? (text.toLowerCase().includes('vocale') ? 'Foto + vocale' : 'Media') : 'Nessuno',
+          aiOutcome: isAi ? text : hasTask ? 'AI suggerisce task/issue' : hasMedia ? 'AI classifica contenuto' : 'Nessuna azione AI',
+          assignment: text.includes('Anna') ? 'Anna S.' : text.includes('Marco') || text.includes('TermoCasa') ? 'Marco R. / TermoCasa' : isAi ? 'Workflow automatico' : 'Da valutare',
+          sensitivity: privacy
+        };
+      }));
+    }
+
+    function reportItems(moduleId, scope = 'current') {
+      const inspectionFallback = [
+        { title: 'Isolamento Blocco B', meta: '3 foto 360 - 14 foto - 2 issue - 4/5 firme', site: 'Residenza Porta Nuova', type: 'Sopralluogo' },
+        { title: 'Facciata nord', meta: 'Report avanzamento e pin QA', site: 'Hotel Aurora Renovation', type: 'Sopralluogo' },
+        { title: 'Avvio cantiere ingresso nord', meta: 'Checklist logistica e sicurezza', site: 'Logistica Nord Hub', type: 'Sopralluogo' },
+        { title: 'Strutture e facciate', meta: 'Verifica fornitore e tempi', site: 'Green Offices Lambrate', type: 'Sopralluogo' }
+      ];
+      const rows = {
+        dashboard: sites.map(site => ({ title: site.name, meta: `${site.phase} - avanzamento ${site.progress}% - budget ${site.budgetUsed}%`, site: site.name, type: 'Cantiere' })),
+        chat: chatReportRows(scope),
+        media: mediaItems.map(item => ({
+          ...item,
+          title: item.title,
+          meta: `${item.kind} - ${item.uploadedBy} - ${item.date} - ${item.status}`,
+          site: item.site,
+          type: 'Media'
+        })),
+        documents: documentRows.map(doc => ({ title: doc.title, meta: `${doc.meta} - ${doc.status} - owner ${doc.owner}`, site: null, type: doc.type })),
+        inspections: (apiState.source === 'api' && apiState.inspections.length ? apiState.inspections.map(item => ({ title: item.title || item.id, meta: `${item.ai_summary || statusLabel(item.status)} - ${formatApiDate(item.updated_at)}`, site: item.site_name, type: 'Sopralluogo' })) : inspectionFallback),
+        schedule: wbsItems.map(item => ({ title: `${item.code} - ${item.title}`, meta: `${item.phase} - settimana ${item.weekStart + 22}/${item.weekEnd + 22} - ${item.progress}%`, site: item.site, type: 'WBS' })),
+        issues: issueWorkflowItems.map(item => ({ title: item.title, meta: `${item.type} - ${item.status} - ${item.due} - ${item.impact}`, site: item.site, type: item.type })),
+        team: visibleTeamMembers().map(member => ({ title: member.name, meta: `${member.role} - ${member.company} - ${member.status} - ${member.permissions}`, site: member.sites.join(', '), type: member.type })),
+        permissions: [
+          { title: 'Superamministratore', meta: 'Accesso globale, organizzazioni, policy e audit', site: null, type: 'Ruolo' },
+          { title: 'Amministratore organizzazione', meta: 'Crea cantieri, utenti, ruoli e workflow', site: null, type: 'Ruolo' },
+          { title: 'Project Manager', meta: 'Cantiere, budget, issue, sopralluoghi e validazioni', site: null, type: 'Ruolo' },
+          { title: 'Fornitore / consulente', meta: 'Upload, task assegnati, firme e documenti autorizzati', site: null, type: 'Ruolo' }
+        ]
+      }[moduleId] || [];
+      return rows.filter(item => itemMatchesScope(item, scope));
+    }
+
+    function reportSelection(items, type) {
+      if (type === 'last3') return items.slice(0, 3);
+      if (type === 'aggregate') return items;
+      if (type === 'all') return items;
+      const checked = Array.from(document.querySelectorAll('[data-report-item]:checked')).map(input => Number(input.value));
+      return checked.length ? checked.map(index => items[index]).filter(Boolean) : items.slice(0, 3);
+    }
+
+    function renderChatReportTable(items) {
+      return `
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Canale / cantiere</th>
+              <th>Autore</th>
+              <th>Ruolo</th>
+              <th>Messaggio</th>
+              <th>Thread / interazioni</th>
+              <th>Allegati</th>
+              <th>Esito AI</th>
+              <th>Assegnazione</th>
+              <th>Sensibilita</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${items.map(item => `
+              <tr>
+                <td>${escapeAttr(item.date)}</td>
+                <td>${escapeAttr(item.channel)}</td>
+                <td>${escapeAttr(item.author)}</td>
+                <td>${escapeAttr(item.role)}</td>
+                <td><strong>${escapeAttr(item.title)}</strong></td>
+                <td>${escapeAttr(item.threadEvents)}</td>
+                <td>${escapeAttr(item.attachments)}</td>
+                <td>${escapeAttr(item.aiOutcome)}</td>
+                <td>${escapeAttr(item.assignment)}</td>
+                <td><span class="pill">${escapeAttr(item.sensitivity)}</span></td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function sanitizeFileName(value) {
+      return String(value || 'file')
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-zA-Z0-9._-]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        .toLowerCase() || 'file';
+    }
+
+    function mediaFileExtension(item) {
+      return ({ photo: 'jpg', video: 'mp4', audio: 'm4a', doc: 'pdf' })[item.kind] || 'bin';
+    }
+
+    function mediaNeedsWatermark(item) {
+      const ext = mediaFileExtension(item);
+      return ['jpg', 'pdf'].includes(ext);
+    }
+
+    function crc32(bytes) {
+      if (!window.crcTable) {
+        window.crcTable = Array.from({ length: 256 }, (_, n) => {
+          let c = n;
+          for (let k = 0; k < 8; k += 1) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+          return c >>> 0;
+        });
+      }
+      let crc = 0 ^ -1;
+      for (let i = 0; i < bytes.length; i += 1) crc = (crc >>> 8) ^ window.crcTable[(crc ^ bytes[i]) & 0xff];
+      return (crc ^ -1) >>> 0;
+    }
+
+    function writeZipUint16(value) {
+      return [value & 0xff, (value >>> 8) & 0xff];
+    }
+
+    function writeZipUint32(value) {
+      return [value & 0xff, (value >>> 8) & 0xff, (value >>> 16) & 0xff, (value >>> 24) & 0xff];
+    }
+
+    function createZip(entries) {
+      const encoder = new TextEncoder();
+      const localParts = [];
+      const centralParts = [];
+      let offset = 0;
+      entries.forEach(entry => {
+        const nameBytes = encoder.encode(entry.name);
+        const dataBytes = entry.bytes || encoder.encode(entry.content || '');
+        const crc = crc32(dataBytes);
+        const localHeader = new Uint8Array([
+          ...writeZipUint32(0x04034b50), ...writeZipUint16(20), ...writeZipUint16(0), ...writeZipUint16(0),
+          ...writeZipUint16(0), ...writeZipUint16(0), ...writeZipUint32(crc),
+          ...writeZipUint32(dataBytes.length), ...writeZipUint32(dataBytes.length),
+          ...writeZipUint16(nameBytes.length), ...writeZipUint16(0)
+        ]);
+        localParts.push(localHeader, nameBytes, dataBytes);
+        const centralHeader = new Uint8Array([
+          ...writeZipUint32(0x02014b50), ...writeZipUint16(20), ...writeZipUint16(20), ...writeZipUint16(0),
+          ...writeZipUint16(0), ...writeZipUint16(0), ...writeZipUint16(0), ...writeZipUint32(crc),
+          ...writeZipUint32(dataBytes.length), ...writeZipUint32(dataBytes.length),
+          ...writeZipUint16(nameBytes.length), ...writeZipUint16(0), ...writeZipUint16(0),
+          ...writeZipUint16(0), ...writeZipUint16(0), ...writeZipUint32(0), ...writeZipUint32(offset)
+        ]);
+        centralParts.push(centralHeader, nameBytes);
+        offset += localHeader.length + nameBytes.length + dataBytes.length;
+      });
+      const centralSize = centralParts.reduce((sum, part) => sum + part.length, 0);
+      const end = new Uint8Array([
+        ...writeZipUint32(0x06054b50), ...writeZipUint16(0), ...writeZipUint16(0),
+        ...writeZipUint16(entries.length), ...writeZipUint16(entries.length),
+        ...writeZipUint32(centralSize), ...writeZipUint32(offset), ...writeZipUint16(0)
+      ]);
+      return new Blob([...localParts, ...centralParts, end], { type: 'application/zip' });
+    }
+
+    function mediaArchiveEntries(items, scopeLabel) {
+      const exportId = `EXP-${Date.now()}`;
+      const watermark = `SitePulseAI - ${currentDemoUser?.name || 'Utente'} - ${scopeLabel} - ${exportId}`;
+      const files = items.map((item, index) => {
+        const ext = mediaFileExtension(item);
+        const folder = sanitizeFileName(item.site || 'portfolio');
+        const fileName = `${String(index + 1).padStart(3, '0')}-${sanitizeFileName(item.title)}.${ext}`;
+        const stamped = mediaNeedsWatermark(item);
+        return {
+          item,
+          path: `media/${folder}/${fileName}`,
+          stamped,
+          content: [
+            `SIMULAZIONE FILE ORIGINALE: ${item.title}`,
+            `Tipo: ${mediaKindLabel(item.kind)}`,
+            `Cantiere: ${item.site || scopeLabel}`,
+            `Caricato da: ${item.uploadedBy || 'n/d'}`,
+            `Data: ${item.date || 'n/d'}`,
+            `Stato: ${item.status || 'n/d'}`,
+            stamped ? `WATERMARK APPLICATO: ${watermark}` : 'Watermark non richiesto per questa tipologia',
+            `AI: ${item.suggestion || 'n/d'}`,
+            `Collegamento: ${item.target || 'n/d'}`
+          ].join('\n')
+        };
+      });
+      const manifest = {
+        export_id: exportId,
+        generated_at: new Date().toISOString(),
+        scope: scopeLabel,
+        generated_by: currentDemoUser?.email || 'demo',
+        policy: 'ZIP media con file singoli; watermark obbligatorio per PDF e JPG; audit export registrato.',
+        files: files.map(file => ({
+          path: file.path,
+          title: file.item.title,
+          site: file.item.site,
+          kind: file.item.kind,
+          uploaded_by: file.item.uploadedBy,
+          status: file.item.status,
+          watermark: file.stamped ? 'applied_or_required' : 'not_required',
+          ai_suggestion: file.item.suggestion,
+          linked_to: file.item.target
+        }))
+      };
+      const auditRows = [
+        'export_id,timestamp,user,scope,file,action,watermark,audit_note',
+        ...files.map(file => [
+          exportId,
+          new Date().toISOString(),
+          currentDemoUser?.email || 'demo',
+          scopeLabel,
+          file.path,
+          'media_export_zip',
+          file.stamped ? 'watermark_pdf_jpg' : 'not_required',
+          'tracked_in_document_audit'
+        ].map(value => `"${String(value).replace(/"/g, '""')}"`).join(','))
+      ].join('\n');
+      return [
+        { name: 'manifest.json', content: JSON.stringify(manifest, null, 2) },
+        { name: 'audit.csv', content: auditRows },
+        { name: 'README.txt', content: `Archivio media SitePulseAI\n${watermark}\nI file PDF/JPG sono marcati o marcabili dal backend prima del download definitivo.\nOgni riga e registrata in audit.csv.` },
+        ...files.map(file => ({ name: file.path, content: file.content }))
+      ];
+    }
+
+    function downloadMediaArchive(items, scopeLabel, type) {
+      const zip = createZip(mediaArchiveEntries(items, scopeLabel));
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(zip);
+      link.download = `sitepulseai-media-${type}-${Date.now()}.zip`;
+      link.click();
+      URL.revokeObjectURL(link.href);
+      showToast(`ZIP media scaricato: ${items.length} file`);
+    }
+
+    function openReportExportModal(defaultModule = currentPageId()) {
+      const moduleLabel = pages.find(page => page[0] === defaultModule)?.[1] || defaultModule;
+      const scopeOptions = reportScopeOptions().map(option => `<option value="${escapeAttr(option.value)}">${option.label}</option>`).join('');
+      openModal(defaultModule === 'media' ? 'Scarica ZIP media' : `Scarica report ${moduleLabel}`, 'Export personalizzato sul modulo aperto', `
+        <div class="report-export">
+          <input type="hidden" id="reportModule" value="${escapeAttr(defaultModule)}">
+          <div class="form-grid">
+            <div class="field">
+              <label>Modulo</label>
+              <input value="${moduleLabel}" disabled>
+            </div>
+            <div class="field">
+              <label>Perimetro</label>
+              <select id="reportScope">${scopeOptions}</select>
+            </div>
+            <div class="field">
+              <label>Tipo report</label>
+              <select id="reportType">
+                <option value="last3">Ultimi 3 report / elementi</option>
+                <option value="selected">Selezione multipla</option>
+                <option value="all">Tutti gli elementi</option>
+                <option value="aggregate">Aggregato sintetico</option>
+              </select>
+            </div>
+          </div>
+          <div id="reportPreview"></div>
+          <div class="report-footer">
+            <span class="muted" id="reportExportMeta">Report HTML stampabile, pronto per conversione PDF backend.</span>
+            <button class="primary" data-download-report="true">Scarica report</button>
+          </div>
+        </div>
+      `);
+      refreshReportPreview();
+    }
+
+    function refreshReportPreview() {
+      const moduleId = document.getElementById('reportModule')?.value || currentPageId();
+      const scope = document.getElementById('reportScope')?.value || 'current';
+      const type = document.getElementById('reportType')?.value || 'last3';
+      const items = reportItems(moduleId, scope);
+      const shown = type === 'last3' ? items.slice(0, 3) : items;
+      const preview = document.getElementById('reportPreview');
+      const moduleLabel = pages.find(page => page[0] === moduleId)?.[1] || moduleId;
+      if (!preview) return;
+      preview.innerHTML = `
+        <div class="report-options">
+          ${shown.map((item, index) => `
+            <label class="report-option">
+              <input type="checkbox" data-report-item value="${index}" ${type === 'selected' ? '' : 'checked'} ${type === 'selected' ? '' : 'disabled'}>
+              <span><strong>${escapeAttr(item.title)}</strong><span>${escapeAttr(item.meta)}</span></span>
+              ${moduleId === 'chat'
+                ? tag(item.author || 'Conversazione', item.author === 'AI' ? 'violet' : 'blue')
+                : moduleId === 'media'
+                  ? `${tag((item.kind || 'file').toUpperCase(), item.kind === 'doc' ? 'violet' : item.kind === 'photo' ? 'blue' : '')}${mediaNeedsWatermark(item) ? tag('Watermark', 'warn') : tag('No watermark')}`
+                  : tag(item.type || moduleLabel, type === 'aggregate' ? 'violet' : 'blue')}
+            </label>
+          `).join('') || '<div class="report-option"><span><strong>Nessun elemento disponibile</strong><span>Cambia modulo o perimetro.</span></span></div>'}
+        </div>
+      `;
+      const meta = document.getElementById('reportExportMeta');
+      if (meta) meta.textContent = moduleId === 'media'
+        ? `${moduleLabel}: ${items.length} file disponibili - scarico ZIP con manifest, audit e watermark PDF/JPG.`
+        : `${moduleLabel}: ${items.length} elementi disponibili - ${type === 'aggregate' ? 'report aggregato' : type === 'all' ? 'scarico completo' : type === 'selected' ? 'selezione multipla' : 'ultimi 3'}.`;
+      const downloadButton = document.querySelector('[data-download-report]');
+      if (downloadButton) downloadButton.textContent = moduleId === 'media' ? 'Scarica ZIP media' : 'Scarica report';
+    }
+
+    function downloadReport() {
+      const moduleId = currentPageId();
+      const scope = document.getElementById('reportScope')?.value || 'current';
+      const type = document.getElementById('reportType')?.value || 'last3';
+      const moduleLabel = pages.find(page => page[0] === moduleId)?.[1] || moduleId;
+      const items = reportSelection(reportItems(moduleId, scope), type);
+      const scopeLabel = reportScopeOptions().find(option => option.value === scope)?.label || scope;
+      if (moduleId === 'media') {
+        downloadMediaArchive(items, scopeLabel, type);
+        return;
+      }
+      const totals = type === 'aggregate'
+        ? `<p><strong>Totale elementi:</strong> ${items.length}</p><p><strong>Tipologie:</strong> ${[...new Set(items.map(item => item.type))].join(', ')}</p>`
+        : '';
+      const content = moduleId === 'chat'
+        ? renderChatReportTable(items)
+        : items.map(item => `<div class="item"><div class="type">${escapeAttr(item.type)}</div><h3>${escapeAttr(item.title)}</h3><div class="meta">${escapeAttr(item.meta)}</div></div>`).join('');
+      const body = `
+        <!doctype html><html><head><meta charset="utf-8"><title>${moduleLabel} - report</title>
+        <style>body{font-family:Arial,sans-serif;margin:32px;color:#142022}h1{margin:0 0 6px}p{color:#566872}.item{border:1px solid #d8e0e2;border-radius:8px;padding:12px;margin:10px 0}.meta{color:#566872;font-size:13px}.type{font-weight:700;color:#0f6661}table{width:100%;border-collapse:collapse;margin-top:18px;font-size:12px}th{background:#eef4f3;color:#43515f;text-align:left;text-transform:uppercase;font-size:10px;letter-spacing:.03em}th,td{border:1px solid #d8e0e2;padding:8px;vertical-align:top}td strong{font-size:12px}.pill{display:inline-block;border-radius:999px;background:#eef8f6;color:#0f6661;font-weight:700;padding:3px 7px;white-space:nowrap}</style></head>
+        <body><h1>${moduleLabel}</h1><p>${scopeLabel} - ${new Date().toLocaleString('it-IT')}</p>${totals}
+        ${content}
+        </body></html>`;
+      const blob = new Blob([body], { type: 'text/html;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `sitepulseai-${moduleId}-${type}-${Date.now()}.html`;
+      link.click();
+      URL.revokeObjectURL(link.href);
+      showToast(`Report scaricato: ${moduleLabel}`);
+    }
+
     function showHelpTooltip(target) {
       const tooltip = document.getElementById('helpTooltip');
       const text = target?.dataset.help;
@@ -4539,6 +5768,7 @@
         type: row.document_type || 'DOC',
         title: row.title || 'Documento senza titolo',
         meta: `${row.site_name || 'Organizzazione'} - ${row.document_type || 'Documento'} - ${formatApiDate(row.updated_at)}`,
+        site: row.site_name || null,
         status: statusLabel(row.status),
         owner: 'Backend',
         tagClass: statusClass(row.status),
@@ -4934,6 +6164,37 @@
         : mediaItems;
     }
 
+    function mediaCreatedLabel(item) {
+      const raw = String(item.date || '').toLowerCase();
+      if (raw.includes('oggi')) return 'Oggi';
+      if (raw.includes('ieri')) return 'Ieri';
+      if (raw.includes('mag')) return item.date;
+      return 'Data non assegnata';
+    }
+
+    function mediaDateRank(label) {
+      if (label === 'Oggi') return 0;
+      if (label === 'Ieri') return 1;
+      const match = String(label).match(/(\d+)/);
+      return match ? 40 - Number(match[1]) : 99;
+    }
+
+    function mediaTypeIcon(kind) {
+      const icons = {
+        photo: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v14H4z"/><path d="m4 15 4-4 4 4 3-3 5 5"/><circle cx="15" cy="9" r="1"/></svg>',
+        video: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h12v12H4z"/><path d="m16 10 5-3v10l-5-3z"/></svg>',
+        audio: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v10"/><path d="M8 7v6"/><path d="M16 7v6"/><path d="M5 11v2"/><path d="M19 11v2"/><path d="M12 17v4"/><path d="M8 21h8"/></svg>',
+        doc: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v6h5"/><path d="M9 15h6"/></svg>'
+      };
+      return icons[kind] || icons.photo;
+    }
+
+    function mediaConnectionLabel(item) {
+      if (item.status === 'Collegato') return 'Collegato';
+      if (item.suggestion?.includes('Nuovo sopralluogo')) return 'Da organizzare';
+      return item.status || 'Da classificare';
+    }
+
     function renderMediaArchive(filter = 'all', search = '') {
       const media = document.getElementById('media');
       if (!media) return;
@@ -4949,14 +6210,15 @@
 
         <section class="media-intake">
           <div class="upload-drop">
-            <div>
-              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/><path d="M4 19h16"/></svg>
-              <strong>Upload</strong>
-              <div class="tags">${tag('Upload libero','blue','Foto, video, vocali, PDF, XLS e tavole possono entrare in archivio. L AI suggerisce cantiere, zona, sopralluogo, task o documento.')}${tag('Foto')}${tag('Video','blue')}${tag('Voice')}${tag('PDF','violet')}${tag('XLS','warn')}</div>
+            <div class="upload-content">
+              <div class="upload-title">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/><path d="M4 19h16"/></svg>
+                <strong>Upload</strong>
+              </div>
+              <div class="tags upload-tags">${tag('Upload libero','blue','Foto, video, vocali, PDF, XLS e tavole possono entrare in archivio. L AI suggerisce cantiere, zona, sopralluogo, task o documento.')}${tag('Foto')}${tag('Video','blue')}${tag('Voice')}${tag('PDF','violet')}${tag('XLS','warn')}</div>
               <input id="mediaUploadInput" type="file" multiple accept="image/*,video/*,audio/*,.pdf,.xls,.xlsx,.doc,.docx" hidden>
-              <div class="media-actions">
-                <button class="primary" data-media-upload="true">Upload rapido</button>
-                <button class="secondary" data-media-simulate="true">Simula classificazione AI</button>
+              <div class="media-actions upload-actions">
+                <button class="primary" data-media-upload="true">Avvia upload</button>
               </div>
             </div>
           </div>
@@ -4976,12 +6238,23 @@
           </div>
         </section>
 
-        <section class="media-grid" id="mediaGrid"></section>
+        <div class="media-archive-tools">
+          <div class="tags">
+            ${tag('Raggruppati per data','blue','I media sono ordinati per data di creazione o sincronizzazione, cosi anche grandi volumi restano navigabili.')}
+            ${tag('Vista tabellare','','Ogni riga mostra tipo, cantiere, autore, collegamento AI, stato e azioni.')}
+            ${tag('Anteprima su click','violet')}
+          </div>
+          <div class="media-view-toggle">
+            <button class="active" data-media-view="table">${mediaTypeIcon('doc')} Tabella</button>
+            <button data-media-view="cards">${mediaTypeIcon('photo')} Card</button>
+          </div>
+        </div>
+        <section class="media-archive-list" id="mediaGrid"></section>
       `;
-      renderMediaItems(filter, search);
+      renderMediaItems(filter, search, 'table');
     }
 
-    function renderMediaItems(filter = 'all', search = '') {
+    function renderMediaItems(filter = 'all', search = '', view = document.querySelector('[data-media-view].active')?.dataset.mediaView || 'table') {
       const grid = document.getElementById('mediaGrid');
       if (!grid) return;
       const term = search.trim().toLowerCase();
@@ -4990,7 +6263,9 @@
         const text = `${item.title} ${item.site} ${item.uploadedBy} ${item.suggestion} ${item.target} ${item.tags.join(' ')}`.toLowerCase();
         return matchesFilter && (!term || text.includes(term));
       });
-      grid.innerHTML = items.map(item => `
+      if (view === 'cards') {
+        grid.className = 'media-grid';
+        grid.innerHTML = items.map(item => `
         <article class="media-card" data-open-media="${item.title}">
           <div class="media-thumb ${item.kind === 'photo' ? '' : item.kind}">
             <div class="media-preview-meta">
@@ -5013,7 +6288,53 @@
             </div>
           </div>
         </article>
-      `).join('') || '<section class="panel"><div class="panel-head"><div><h2>Nessun media trovato</h2><p>Modifica ricerca o filtro.</p></div></div></section>';
+        `).join('') || '<section class="panel"><div class="panel-head"><div><h2>Nessun media trovato</h2><p>Modifica ricerca o filtro.</p></div></div></section>';
+        return;
+      }
+      grid.className = 'media-archive-list';
+      const grouped = items.reduce((acc, item) => {
+        const label = mediaCreatedLabel(item);
+        acc[label] = acc[label] || [];
+        acc[label].push(item);
+        return acc;
+      }, {});
+      const labels = Object.keys(grouped).sort((a, b) => mediaDateRank(a) - mediaDateRank(b));
+      const isProjectMediaView = dashboardMode === 'project';
+      grid.innerHTML = labels.map(label => {
+        const group = grouped[label].sort((a, b) => String(a.title).localeCompare(String(b.title)));
+        const pendingCount = group.filter(item => ['Da confermare', 'Da revisionare', 'Non classificato', 'Senza sopralluogo'].includes(item.status)).length;
+        return `
+          <section class="media-date-group">
+            <div class="media-date-head">
+              <strong>${label}</strong>
+              <div class="tags">${tag(`${group.length} media`, 'blue')}${pendingCount ? tag(`${pendingCount} da classificare`, 'warn') : tag('tutti gestiti', 'ok')}</div>
+            </div>
+            <div class="media-table-head ${isProjectMediaView ? 'project' : ''}">
+              ${isProjectMediaView
+                ? '<span>Tipo</span><span>File / contenuto</span><span>Caricato da</span><span>Area / contesto</span><span>Collegamento</span><span>Stato</span><span>Azioni</span>'
+                : '<span>Tipo</span><span>File / contenuto</span><span>Cantiere</span><span>Caricato da</span><span>AI / collegamento</span><span>Stato</span><span>Azioni</span>'}
+            </div>
+            ${group.map(item => `
+              <article class="media-row ${isProjectMediaView ? 'project' : ''}" data-open-media="${escapeAttr(item.title)}">
+                <div class="media-type-icon" title="${mediaKindLabel(item.kind)}">${mediaTypeIcon(item.kind)}</div>
+                <div class="media-main">
+                  <strong>${item.title}</strong>
+                  <span>${mediaKindLabel(item.kind)} - ${item.date}</span>
+                </div>
+                ${isProjectMediaView
+                  ? `<div class="media-cell"><strong>${item.uploadedBy}</strong><span>${item.confidence} AI</span></div>
+                     <div class="media-cell"><strong>${item.target}</strong><span>${item.tags.slice(0, 2).join(' - ')}</span></div>
+                     <div class="media-cell">${tag(mediaConnectionLabel(item), item.tagClass)}<span>${item.suggestion}</span></div>`
+                  : `<div class="media-cell"><strong>${item.site}</strong><span>${item.target}</span></div>
+                     <div class="media-cell"><strong>${item.uploadedBy}</strong><span>${item.confidence} AI</span></div>
+                     <div class="media-cell">${tag(mediaConnectionLabel(item), item.tagClass)}<span>${item.suggestion}</span></div>`}
+                <div class="tags">${tag(item.status, item.tagClass)}${tag(item.kind.toUpperCase())}</div>
+                <div><button class="secondary" data-open-media="${escapeAttr(item.title)}">Apri</button></div>
+              </article>
+            `).join('')}
+          </section>
+        `;
+      }).join('') || '<section class="panel"><div class="panel-head"><div><h2>Nessun media trovato</h2><p>Modifica ricerca o filtro.</p></div></div></section>';
     }
 
     function openMediaDetail(title) {
@@ -5037,6 +6358,45 @@
               </div>
             </div>
           </div>
+        </div>
+      `);
+    }
+
+    function openMediaUploadFlow() {
+      openModal('Upload media', 'Caricamento con opzione di analisi AI nel flow', `
+        <div class="form-grid">
+          <div class="field">
+            <label>Cantiere</label>
+            <select>
+              <option>${dashboardMode === 'project' ? selectedSite.name : 'Rileva automaticamente'}</option>
+              ${sites.map(site => `<option>${site.name}</option>`).join('')}
+            </select>
+          </div>
+          <div class="field">
+            <label>Analisi AI</label>
+            <select id="mediaAiMode">
+              <option value="auto">Analizza subito e proponi collegamenti</option>
+              <option value="review">Analizza ma richiedi conferma manuale</option>
+              <option value="later">Carica ora, analizza dopo</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Visibilita</label>
+            <select>
+              <option>Team di cantiere</option>
+              <option>Solo PM / amministratori</option>
+              <option>Fornitore assegnato</option>
+            </select>
+          </div>
+        </div>
+        <div class="audit-list">
+          <div class="audit-row"><div class="avatar">1</div><div><strong>Seleziona file</strong><span>Foto, video, vocali, PDF, XLS o documenti dal dispositivo.</span></div></div>
+          <div class="audit-row"><div class="avatar">2</div><div><strong>Opzione AI</strong><span>Il sistema classifica cantiere, area, sopralluogo, task, issue, WBS o documento collegato.</span></div></div>
+          <div class="audit-row"><div class="avatar">3</div><div><strong>Audit upload</strong><span>Upload, classificazione, conferme e modifiche restano tracciate.</span></div></div>
+        </div>
+        <div class="detail-actions">
+          <button class="primary" data-media-pick-files="true">Scegli file</button>
+          <button class="secondary" data-action="Bozza upload salvata">Salva bozza</button>
         </div>
       `);
     }
@@ -5112,29 +6472,65 @@
       const reviewCount = documentRows.filter(doc => doc.group === 'review').length;
       const approvedCount = documentRows.filter(doc => doc.group === 'approved').length;
       const sensitiveCount = documentRows.filter(doc => doc.group === 'sensitive').length;
+      const visibleDocuments = dashboardMode === 'project' ? documentRows.filter(doc => documentSite(doc) === selectedSite.name || !documentSite(doc)).length : documentRows.length;
       document.getElementById('documents').innerHTML = `
         <section class="doc-summary-grid">
-          <div class="doc-summary-card" data-doc-filter="review"><label>In revisione</label><strong>${reviewCount}</strong><span>${apiState.source === 'api' ? 'da backend' : '5 contratti, 3 varianti'}</span></div>
-          <div class="doc-summary-card" data-doc-filter="approved"><label>Approvati</label><strong>${approvedCount}</strong><span>versioning attivo</span></div>
-          <div class="doc-summary-card" data-doc-filter="sensitive"><label>Riservati</label><strong>${sensitiveCount}</strong><span>Accesso PM/Admin</span></div>
+          <div class="doc-summary-card active-summary" data-doc-filter="all"><strong>${visibleDocuments}</strong><label>Documenti visibili</label><span><b class="kpi-status blue">${dashboardMode === 'project' ? selectedSite.name : 'Tutti i cantieri'}</b></span></div>
+          <div class="doc-summary-card" data-doc-filter="review"><strong>${reviewCount}</strong><label>In revisione</label><span><b class="kpi-status warn">workflow aperti</b></span></div>
+          <div class="doc-summary-card" data-doc-filter="approved"><strong>${approvedCount}</strong><label>Approvati</label><span><b class="kpi-status ok">versioni congelate</b></span></div>
+          <div class="doc-summary-card" data-doc-filter="sensitive"><strong>${sensitiveCount}</strong><label>Riservati</label><span><b class="kpi-status violet">policy accessi</b></span></div>
         </section>
 
-        <div class="doc-toolbar">
-          <div class="doc-tabs">
-            <button class="active">Tutti</button>
-            <button>PDF</button>
-            <button>Tavole</button>
-            <button>Contratti</button>
-            <button>SAL</button>
+        <div class="document-intake">
+          <section class="document-upload-panel">
+            <div>
+              <div class="upload-title">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/></svg>
+                <strong>Carica documento</strong>
+              </div>
+              <div class="tags upload-tags">
+                ${tag('Versioning', 'blue')}
+                ${tag('Audit trail', 'ok')}
+                ${tag('Policy accessi', 'violet')}
+                ${tag('Watermark export', 'warn')}
+              </div>
+              <div class="media-actions upload-actions">
+                <button class="primary" data-document-upload="true">Avvia upload</button>
+              </div>
+            </div>
+          </section>
+          <section class="document-tools">
+            <div class="media-search-box">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+              <input id="documentSearchInput" placeholder="Cerca: variante, tavola, contratto, fornitore, WBS">
+            </div>
+            <div class="filter-row">
+              <button class="active" data-document-type="all">Tutti</button>
+              <button data-document-type="pdf">PDF</button>
+              <button data-document-type="dwg">Tavole</button>
+              <button data-document-type="ctr">Contratti</button>
+              <button data-document-type="sal">SAL</button>
+              <button data-document-type="360">Report</button>
+            </div>
+            <div class="ai-suggestion" data-help="L'AI propone collegamenti a sopralluoghi, task, WBS e budget, ma la pubblicazione resta validata da profili autorizzati."><strong>Ricerca documentale intelligente</strong></div>
+          </section>
+        </div>
+
+        <div class="document-archive-tools">
+          <div class="tags">
+            ${tag('Raggruppati per stato', 'blue')}
+            ${tag('Versioni e firme visibili', 'ok')}
+            ${tag('Audit su riga', 'violet')}
           </div>
-          <button class="secondary" data-action="Upload documento">Carica documento</button>
+          <div class="view-switch">
+            <button class="active" type="button">Tabella</button>
+          </div>
         </div>
 
         <div class="documents-layout">
           <section class="panel">
             <div class="panel-head">
-              <div><h2>Documenti recenti</h2><p>Segregati per cantiere, area, fornitore e profilo</p></div>
-              <button class="secondary" data-open-audit="true">Audit documentale</button>
+              <div><h2>Archivio documentale</h2><p>Versioni, owner, policy, collegamenti e audit trail.</p></div>
             </div>
             <div class="doc-list">
               <div id="documentList"></div>
@@ -5145,22 +6541,90 @@
       renderDocumentList('all');
     }
 
-    function renderDocumentList(filter = 'all') {
+    function documentSite(doc) {
+      return doc.site || (doc.meta.includes('TermoCasa') || doc.meta.includes('Blocco B') || doc.title.includes('Variante') ? 'Residenza Porta Nuova'
+        : doc.title.includes('Tavole') ? 'Hotel Aurora Renovation'
+        : doc.title.includes('SAL') ? 'Green Offices Lambrate'
+        : doc.title.includes('Sopralluogo') ? 'Residenza Porta Nuova'
+        : null);
+    }
+
+    function documentVersion(doc) {
+      const found = `${doc.meta} ${doc.title}`.match(/v\d+/i);
+      if (found) return found[0].toUpperCase();
+      if (doc.status.includes('Firmato')) return 'Firmato';
+      return doc.group === 'approved' ? 'Finale' : 'Bozza';
+    }
+
+    function documentPolicy(doc) {
+      if (doc.group === 'sensitive') return ['Riservato PM/Admin', 'violet'];
+      if (doc.group === 'review') return ['Review e firma', 'warn'];
+      if (doc.status.includes('Firmato')) return ['Verbale firmato', 'ok'];
+      return ['Versione validata', 'ok'];
+    }
+
+    function documentContext(doc) {
+      const parts = doc.meta.split(/Â·| - /).map(part => part.trim()).filter(Boolean);
+      return {
+        kind: parts[0] || doc.type,
+        area: parts[1] || 'Area non assegnata',
+        link: parts[2] || doc.status
+      };
+    }
+
+    function renderDocumentList(filter = 'all', type = document.querySelector('[data-document-type].active')?.dataset.documentType || 'all', search = document.getElementById('documentSearchInput')?.value || '') {
       const list = document.getElementById('documentList');
       if (!list) return;
-      const items = filter === 'all' ? documentRows : documentRows.filter(doc => doc.group === filter);
-      list.innerHTML = items.map(doc => `
-        <div class="doc-row" data-open-document="${doc.title}" data-document-meta="${doc.meta}" data-document-status="${doc.status}" data-document-owner="${doc.owner}" data-document-class="${doc.tagClass}">
-          <div class="doc-icon">${doc.type}</div>
-          <div><strong>${doc.title}</strong><span>${doc.meta}</span></div>
-          <div>${tag(doc.status, doc.tagClass)}</div>
-          <span>${doc.owner}</span>
-          <button class="secondary" data-open-audit="${doc.title}" data-document-meta="${doc.meta}" data-document-status="${doc.status}" data-document-owner="${doc.owner}" data-document-class="${doc.tagClass}">Audit</button>
-          <button class="icon-btn" title="Apri documento" data-open-document="${doc.title}" data-document-meta="${doc.meta}" data-document-status="${doc.status}" data-document-owner="${doc.owner}" data-document-class="${doc.tagClass}">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
-          </button>
+      const normalizedSearch = search.trim().toLowerCase();
+      const isProjectDocumentView = dashboardMode === 'project';
+      const items = documentRows.filter(doc => {
+        const site = documentSite(doc);
+        const matchesContext = !isProjectDocumentView || !site || site === selectedSite.name;
+        const matchesGroup = filter === 'all' || doc.group === filter;
+        const matchesType = type === 'all' || doc.type.toLowerCase() === type;
+        const context = documentContext(doc);
+        const haystack = `${doc.type} ${doc.title} ${doc.meta} ${doc.status} ${doc.owner} ${site || ''} ${context.kind} ${context.area}`.toLowerCase();
+        return matchesContext && matchesGroup && matchesType && (!normalizedSearch || haystack.includes(normalizedSearch));
+      });
+      const headClass = isProjectDocumentView ? 'project' : '';
+      const siteHeading = isProjectDocumentView ? 'Area / contesto' : 'Cantiere / contesto';
+      const secondaryHeading = isProjectDocumentView ? 'Collegamento' : 'Owner';
+      list.innerHTML = `
+        <div class="document-table-head ${headClass}">
+          <span>Tipo</span>
+          <span>Documento</span>
+          <span>${siteHeading}</span>
+          <span>${secondaryHeading}</span>
+          <span>Versione</span>
+          <span>Stato / policy</span>
+          <span>Azioni</span>
         </div>
-      `).join('');
+        ${items.length ? items.map(doc => {
+          const site = documentSite(doc);
+          const context = documentContext(doc);
+          const policy = documentPolicy(doc);
+          const contextMain = isProjectDocumentView ? context.area : (site || 'Organizzazione');
+          const contextSub = isProjectDocumentView ? context.kind : context.area;
+          const secondaryMain = isProjectDocumentView ? context.link : doc.owner;
+          const secondarySub = isProjectDocumentView ? doc.owner : context.kind;
+          return `
+            <article class="doc-row document-row ${headClass}" data-open-document="${escapeAttr(doc.title)}" data-document-meta="${escapeAttr(doc.meta)}" data-document-status="${escapeAttr(doc.status)}" data-document-owner="${escapeAttr(doc.owner)}" data-document-class="${escapeAttr(doc.tagClass)}">
+              <div class="doc-icon">${escapeAttr(doc.type)}</div>
+              <div class="document-main"><strong>${escapeAttr(doc.title)}</strong><span>${escapeAttr(doc.meta.replace(/Â·/g, '-'))}</span></div>
+              <div class="document-cell"><strong>${escapeAttr(contextMain)}</strong><span>${escapeAttr(contextSub)}</span></div>
+              <div class="document-cell"><strong>${escapeAttr(secondaryMain)}</strong><span>${escapeAttr(secondarySub)}</span></div>
+              <div>${tag(documentVersion(doc), 'blue')}</div>
+              <div class="tags">${tag(doc.status, doc.tagClass)}${tag(policy[0], policy[1])}</div>
+              <div class="document-actions">
+                <button class="secondary" data-open-audit="${escapeAttr(doc.title)}" data-document-meta="${escapeAttr(doc.meta)}" data-document-status="${escapeAttr(doc.status)}" data-document-owner="${escapeAttr(doc.owner)}" data-document-class="${escapeAttr(doc.tagClass)}">Audit</button>
+                <button class="icon-btn" title="Apri documento" data-open-document="${escapeAttr(doc.title)}" data-document-meta="${escapeAttr(doc.meta)}" data-document-status="${escapeAttr(doc.status)}" data-document-owner="${escapeAttr(doc.owner)}" data-document-class="${escapeAttr(doc.tagClass)}">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+              </div>
+            </article>
+          `;
+        }).join('') : '<div class="empty-state">Nessun documento trovato con i filtri attivi.</div>'}
+      `;
       const first = list.querySelector('[data-open-document]');
       if (first) first.classList.add('active-summary');
     }
@@ -5798,17 +7262,14 @@
         </section>
 
         <section class="panel">
-          <div class="panel-head">
-            <div>
-              <h2>Team di progetto</h2>
+          <div class="team-panel-tools">
+            <div class="issue-filter-row">
+              ${['Tutti','Interno','Fornitore','Consulente','Committente'].map(type => `<button class="${type === 'Tutti' ? 'active' : ''}" data-team-filter="${type}">${type}<span class="issue-count">${type === 'Tutti' ? members.length : members.filter(member => member.type === type).length}</span></button>`).join('')}
             </div>
             <div class="tags">
               ${tag('Segregato per cantiere','blue','La vista mostra solo i membri visibili nel contesto portfolio o nel cantiere selezionato. I permessi effettivi restano governati dal backend.')}
               ${tag('Interni / esterni','violet','Team interni, fornitori, consulenti e committenti possono avere incarichi e permessi differenti per cantiere.')}
             </div>
-          </div>
-          <div class="issue-filter-row">
-            ${['Tutti','Interno','Fornitore','Consulente','Committente'].map(type => `<button class="${type === 'Tutti' ? 'active' : ''}" data-team-filter="${type}">${type}<span class="issue-count">${type === 'Tutti' ? members.length : members.filter(member => member.type === type).length}</span></button>`).join('')}
           </div>
           <div class="team-directory" id="teamDirectory">
             ${renderTeamDirectory(members)}
@@ -5959,6 +7420,7 @@
               <div class="detail-actions">
                 <button class="secondary" data-action="Anteprima documento">Anteprima</button>
                 <button class="secondary" data-action="Versioni documento">Versioni</button>
+                <button class="secondary" data-document-governance="${escapeAttr(title)}" data-document-meta="${escapeAttr(trigger.dataset.documentMeta)}" data-document-status="${escapeAttr(trigger.dataset.documentStatus)}" data-document-owner="${escapeAttr(trigger.dataset.documentOwner)}" data-document-class="${escapeAttr(trigger.dataset.documentClass || '')}">Flow PM</button>
                 <button class="secondary" data-open-audit="${title}" data-document-meta="${trigger.dataset.documentMeta}" data-document-status="${trigger.dataset.documentStatus}" data-document-owner="${trigger.dataset.documentOwner}" data-document-class="${trigger.dataset.documentClass || ''}">Audit</button>
                 <button class="secondary" data-action="Condivisione documento">Condividi</button>
               </div>
@@ -5967,6 +7429,133 @@
         </div>
       `);
       if (notify) showToast(`Aperto ${trigger.dataset.openDocument}`);
+    }
+
+    function openDocumentUploadFlow() {
+      openModal('Upload documento', 'Caricamento, classificazione, versioning e invio al PM per eventuale governance', `
+        <div class="form-grid">
+          <div class="form-field">
+            <label>Cantiere</label>
+            <select>
+              <option>${dashboardMode === 'project' ? selectedSite.name : 'Rileva automaticamente'}</option>
+              ${sites.map(site => `<option>${site.name}</option>`).join('')}
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Tipo documento</label>
+            <select>
+              <option>PDF</option>
+              <option>Tavola DWG</option>
+              <option>Contratto</option>
+              <option>SAL</option>
+              <option>Verbale / report</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Tipo salvataggio</label>
+            <select>
+              <option>Salva come nuovo documento</option>
+              <option>Salva bozza modificabile</option>
+              <option>Salva nuova versione</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Visibilita iniziale</label>
+            <select>
+              <option>Area temporanea PM</option>
+              <option>Policy documento corrente</option>
+              <option>Solo PM/Admin</option>
+              <option>Team cantiere autorizzato</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Analisi AI</label>
+            <select>
+              <option>Classifica e proponi collegamenti</option>
+              <option>Classifica senza pubblicare</option>
+              <option>Non analizzare ora</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Presa in carico dopo upload</label>
+            <select>
+              <option>Notifica al PM per decisione</option>
+              <option>AI segnala al PM possibile revisione</option>
+              <option>Archivia senza workflow, audit attivo</option>
+            </select>
+          </div>
+          <div class="form-field full">
+            <label>Note versione</label>
+            <textarea rows="4" placeholder="Descrivi origine, motivo del caricamento, versione o collegamenti utili al PM."></textarea>
+          </div>
+        </div>
+        <div class="audit-list">
+          <div class="audit-row"><div class="avatar">1</div><div><strong>File</strong><span>Selezione documento, riconoscimento formato e associazione al cantiere.</span></div></div>
+          <div class="audit-row"><div class="avatar">2</div><div><strong>Versioning</strong><span>Nuovo documento, bozza o nuova versione vengono salvati nello storico.</span></div></div>
+          <div class="audit-row"><div class="avatar">3</div><div><strong>Presa in carico PM</strong><span>Dopo il caricamento il PM decide se aprire revisione, approvazione gerarchica o semplice archiviazione.</span></div></div>
+        </div>
+        <div class="detail-actions">
+          <button class="secondary" data-action="Selezione file documento">Scegli file</button>
+          <button class="secondary" data-action="Bozza upload documento salvata">Salva bozza</button>
+          <button class="primary" data-action="Documento caricato e notificato al PM">Carica e notifica PM</button>
+        </div>
+      `);
+      showToast('Flow upload documento pronto');
+    }
+
+    function openDocumentGovernanceFlow(trigger) {
+      const title = trigger.dataset.documentGovernance || trigger.dataset.openDocument || 'Documento';
+      const meta = trigger.dataset.documentMeta || 'Documento operativo';
+      openModal('Flow PM documento', `${title} - ${meta}`, `
+        <div class="form-grid">
+          <div class="form-field">
+            <label>Decisione PM</label>
+            <select>
+              <option>Nessuna revisione, archivia come ricevuto</option>
+              <option>Richiedi revisione tecnica</option>
+              <option>Avvia approvazione gerarchica</option>
+              <option>Blocca documento e richiedi integrazioni</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Catena gerarchica</label>
+            <select>
+              <option>PM -> DL -> Committente</option>
+              <option>PM -> HSE -> DL</option>
+              <option>PM -> Finance -> Admin</option>
+              <option>Workflow custom organizzazione</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Scadenza risposta</label>
+            <input type="datetime-local">
+          </div>
+          <div class="form-field">
+            <label>Impatto</label>
+            <select>
+              <option>Nessun impatto</option>
+              <option>Impatto tempi</option>
+              <option>Impatto budget</option>
+              <option>Impatto tempi e budget</option>
+            </select>
+          </div>
+          <div class="form-field full">
+            <label>Istruzioni PM</label>
+            <textarea rows="4" placeholder="Indica cosa devono verificare i revisori, chi firma e quali evidenze sono richieste."></textarea>
+          </div>
+        </div>
+        <div class="audit-list">
+          <div class="audit-row"><div class="avatar">PM</div><div><strong>Valutazione</strong><span>Il PM prende visione del documento caricato o suggerito dall'AI.</span></div></div>
+          <div class="audit-row"><div class="avatar">WF</div><div><strong>Workflow</strong><span>Se necessario vengono coinvolti solo i profili previsti dalla catena gerarchica o dal workflow custom.</span></div></div>
+          <div class="audit-row"><div class="avatar">AU</div><div><strong>Chiusura auditabile</strong><span>Approvazioni, rifiuti, mancata risposta e integrazioni restano nello storico del documento.</span></div></div>
+        </div>
+        <div class="detail-actions">
+          <button class="secondary" data-action="Documento archiviato senza workflow">Archivia</button>
+          <button class="secondary" data-action="Richiesta integrazione inviata">Richiedi integrazione</button>
+          <button class="primary" data-action="Workflow PM documento avviato">Avvia workflow</button>
+        </div>
+      `);
+      showToast(`Flow PM pronto: ${title}`);
     }
 
     function openAuditModal(trigger = null) {
@@ -6552,6 +8141,18 @@
       });
 
       document.body.addEventListener('click', event => {
+        const reportExport = event.target.closest('[data-open-report-export]');
+        if (reportExport) {
+          openReportExportModal();
+          return;
+        }
+
+        const reportDownload = event.target.closest('[data-download-report]');
+        if (reportDownload) {
+          downloadReport();
+          return;
+        }
+
         const action = event.target.closest('[data-action]');
         if (action) showToast(action.dataset.action);
 
@@ -6864,15 +8465,20 @@
 
         const mediaUpload = event.target.closest('[data-media-upload]');
         if (mediaUpload) {
-          const input = document.getElementById('mediaUploadInput');
-          if (input) input.click();
+          openMediaUploadFlow();
           return;
         }
 
-        const mediaSimulate = event.target.closest('[data-media-simulate]');
-        if (mediaSimulate) {
-          renderMediaItems('all', 'isolamento');
-          showToast('AI: contenuti correlati a isolamento e sopralluoghi');
+        const documentUpload = event.target.closest('[data-document-upload]');
+        if (documentUpload) {
+          openDocumentUploadFlow();
+          return;
+        }
+
+        const mediaPickFiles = event.target.closest('[data-media-pick-files]');
+        if (mediaPickFiles) {
+          const input = document.getElementById('mediaUploadInput');
+          if (input) input.click();
           return;
         }
 
@@ -6881,7 +8487,18 @@
           document.querySelectorAll('[data-media-filter]').forEach(button => button.classList.remove('active'));
           mediaFilter.classList.add('active');
           const search = document.getElementById('mediaSearchInput')?.value || '';
-          renderMediaItems(mediaFilter.dataset.mediaFilter, search);
+          const view = document.querySelector('[data-media-view].active')?.dataset.mediaView || 'table';
+          renderMediaItems(mediaFilter.dataset.mediaFilter, search, view);
+          return;
+        }
+
+        const mediaView = event.target.closest('[data-media-view]');
+        if (mediaView) {
+          document.querySelectorAll('[data-media-view]').forEach(button => button.classList.remove('active'));
+          mediaView.classList.add('active');
+          const filter = document.querySelector('[data-media-filter].active')?.dataset.mediaFilter || 'all';
+          const search = document.getElementById('mediaSearchInput')?.value || '';
+          renderMediaItems(filter, search, mediaView.dataset.mediaView);
           return;
         }
 
@@ -6909,6 +8526,12 @@
           return;
         }
 
+        const documentGovernance = event.target.closest('[data-document-governance]');
+        if (documentGovernance) {
+          openDocumentGovernanceFlow(documentGovernance);
+          return;
+        }
+
         const documentTrigger = event.target.closest('[data-open-document]');
         if (documentTrigger) {
           openDocumentDetail(documentTrigger);
@@ -6931,12 +8554,28 @@
         if (docFilter) {
           document.querySelectorAll('[data-doc-filter]').forEach(card => card.classList.remove('active-summary'));
           docFilter.classList.add('active-summary');
-          renderDocumentList(docFilter.dataset.docFilter);
+          const type = document.querySelector('[data-document-type].active')?.dataset.documentType || 'all';
+          const search = document.getElementById('documentSearchInput')?.value || '';
+          renderDocumentList(docFilter.dataset.docFilter, type, search);
           showToast('Documenti filtrati');
+        }
+
+        const documentType = event.target.closest('[data-document-type]');
+        if (documentType) {
+          document.querySelectorAll('[data-document-type]').forEach(button => button.classList.remove('active'));
+          documentType.classList.add('active');
+          const filter = document.querySelector('[data-doc-filter].active-summary')?.dataset.docFilter || 'all';
+          const search = document.getElementById('documentSearchInput')?.value || '';
+          renderDocumentList(filter, documentType.dataset.documentType, search);
         }
       });
 
       document.body.addEventListener('change', event => {
+        if (['reportModule', 'reportScope', 'reportType'].includes(event.target.id)) {
+          refreshReportPreview();
+          return;
+        }
+
         if (event.target.id === 'mediaUploadInput') {
           const count = event.target.files.length;
           if (count) showToast(`${count} file caricati in archivio media`);
@@ -6979,7 +8618,14 @@
       document.body.addEventListener('input', event => {
         if (event.target.id === 'mediaSearchInput') {
           const filter = document.querySelector('[data-media-filter].active')?.dataset.mediaFilter || 'all';
-          renderMediaItems(filter, event.target.value);
+          const view = document.querySelector('[data-media-view].active')?.dataset.mediaView || 'table';
+          renderMediaItems(filter, event.target.value, view);
+        }
+
+        if (event.target.id === 'documentSearchInput') {
+          const filter = document.querySelector('[data-doc-filter].active-summary')?.dataset.docFilter || 'all';
+          const type = document.querySelector('[data-document-type].active')?.dataset.documentType || 'all';
+          renderDocumentList(filter, type, event.target.value);
         }
       });
 
