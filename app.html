@@ -1865,6 +1865,403 @@
       align-items: center;
     }
 
+    .document-command-bar {
+      display: grid;
+      grid-template-columns: 112px minmax(320px, 1fr) auto auto;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .document-upload-badge {
+      position: relative;
+      width: 46px;
+      height: 46px;
+      border: 0;
+      border-radius: 14px;
+      background: var(--brand);
+      color: white;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 10px 24px rgba(15, 102, 97, .22);
+      cursor: pointer;
+    }
+
+    .document-upload-badge .icon {
+      width: 22px;
+      height: 22px;
+    }
+
+    .document-upload-badge:after {
+      content: "Upload";
+      position: absolute;
+      left: 52px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 1px solid #cbe3df;
+      border-radius: 999px;
+      background: #eef8f6;
+      color: var(--brand);
+      padding: 3px 8px;
+      font-size: 10.5px;
+      font-weight: 850;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .document-command-bar .media-search-box {
+      min-width: 0;
+    }
+
+    .document-command-bar .filter-row {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding-bottom: 0;
+    }
+
+    .media-command-bar {
+      display: grid;
+      grid-template-columns: 112px minmax(320px, 1fr) auto auto;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .media-upload-badge {
+      position: relative;
+      width: 46px;
+      height: 46px;
+      border: 0;
+      border-radius: 14px;
+      background: var(--brand);
+      color: white;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 10px 24px rgba(15, 102, 97, .22);
+      cursor: pointer;
+    }
+
+    .media-upload-badge .icon {
+      width: 22px;
+      height: 22px;
+    }
+
+    .media-upload-badge:after {
+      content: "Upload";
+      position: absolute;
+      left: 52px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 1px solid #cbe3df;
+      border-radius: 999px;
+      background: #eef8f6;
+      color: var(--brand);
+      padding: 3px 8px;
+      font-size: 10.5px;
+      font-weight: 850;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .inspection-action-badge {
+      position: relative;
+      width: 46px;
+      height: 46px;
+      border: 0;
+      border-radius: 14px;
+      background: var(--brand);
+      color: white;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 10px 24px rgba(15, 102, 97, .22);
+      cursor: pointer;
+    }
+
+    .inspection-action-badge .icon {
+      width: 22px;
+      height: 22px;
+    }
+
+    .inspection-action-badge:after {
+      content: "Nuovo";
+      position: absolute;
+      left: 52px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 1px solid #cbe3df;
+      border-radius: 999px;
+      background: #eef8f6;
+      color: var(--brand);
+      padding: 3px 8px;
+      font-size: 10.5px;
+      font-weight: 850;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .schedule-action-badge,
+    .issue-action-badge {
+      position: relative;
+      width: 46px;
+      height: 46px;
+      border: 0;
+      border-radius: 14px;
+      background: var(--brand);
+      color: white;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 10px 24px rgba(15, 102, 97, .22);
+      cursor: pointer;
+    }
+
+    .schedule-action-badge .icon,
+    .issue-action-badge .icon {
+      width: 22px;
+      height: 22px;
+    }
+
+    .schedule-action-badge:after,
+    .issue-action-badge:after {
+      position: absolute;
+      left: 52px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 1px solid #cbe3df;
+      border-radius: 999px;
+      background: #eef8f6;
+      color: var(--brand);
+      padding: 3px 8px;
+      font-size: 10.5px;
+      font-weight: 850;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .schedule-action-badge:after {
+      content: "Importa";
+    }
+
+    .issue-action-badge:after {
+      content: "Nuovo";
+    }
+
+    .media-command-bar .schedule-tabs,
+    .media-command-bar .issue-filter-row {
+      margin: 0;
+      padding: 7px 8px 8px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      min-height: 46px;
+      align-items: center;
+      border: 1px solid #cfdadd;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, .72);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.65), 0 6px 16px rgba(20, 32, 34, .04);
+      scrollbar-width: thin;
+      scrollbar-color: #9aa3a9 transparent;
+      scroll-padding-inline: 8px;
+    }
+
+    .media-command-bar .issue-filter-row::-webkit-scrollbar {
+      height: 5px;
+    }
+
+    .media-command-bar .issue-filter-row::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .media-command-bar .issue-filter-row::-webkit-scrollbar-thumb {
+      background: #9aa3a9;
+      border-radius: 999px;
+    }
+
+    .media-command-bar .issue-filter-row button {
+      min-height: 34px;
+      flex: 0 0 auto;
+      box-shadow: 0 4px 10px rgba(20, 32, 34, .04);
+    }
+
+    .issue-command-bar {
+      grid-template-columns: 112px minmax(280px, 1fr) auto;
+    }
+
+    .issue-command-bar .issue-filter-row {
+      grid-column: 1 / -1;
+      width: 100%;
+      margin-top: -2px;
+    }
+
+    .issue-command-bar .view-switch {
+      justify-self: end;
+    }
+
+    .inspection-table-head,
+    .inspection-row {
+      display: grid;
+      grid-template-columns: 46px minmax(230px, 1.25fr) minmax(160px, .9fr) minmax(130px, .75fr) minmax(130px, .75fr) minmax(170px, .95fr) 120px;
+      gap: 12px;
+      align-items: center;
+      min-width: 1040px;
+    }
+
+    .inspection-table-head {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    .inspection-row {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      background: white;
+    }
+
+    .inspection-row:last-child {
+      border-bottom: 0;
+    }
+
+    .inspection-cell strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .inspection-cell span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    .media-command-bar .media-search-box {
+      min-width: 0;
+    }
+
+    .media-command-bar .filter-row {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding-bottom: 0;
+    }
+
+    .folder-strip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 2px 0 10px;
+      margin-bottom: 4px;
+    }
+
+    .folder-chip,
+    .folder-create {
+      min-height: 36px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: white;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 12px;
+      white-space: nowrap;
+      color: #33464f;
+      box-shadow: 0 6px 16px rgba(20, 32, 34, .04);
+      cursor: pointer;
+    }
+
+    .folder-create {
+      background: #eef8f6;
+      border-color: #cbe3df;
+      color: var(--brand);
+      font-weight: 850;
+    }
+
+    .folder-chip strong,
+    .folder-create strong {
+      font-size: 12px;
+    }
+
+    .folder-chip span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .folder-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      background: #eaf4f3;
+      color: var(--brand);
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+    }
+
+    .folder-icon svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    @media (max-width: 1180px) {
+      .document-command-bar,
+      .media-command-bar {
+        grid-template-columns: 112px minmax(260px, 1fr) auto;
+      }
+
+      .document-command-bar .filter-row,
+      .media-command-bar .filter-row {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .document-command-bar,
+      .media-command-bar {
+        grid-template-columns: 1fr;
+      }
+
+      .document-upload-badge:after,
+      .media-upload-badge:after {
+        left: 52px;
+      }
+
+      .document-command-bar .filter-row,
+      .document-command-bar .view-switch,
+      .media-command-bar .filter-row,
+      .media-command-bar .media-view-toggle {
+        grid-column: 1;
+      }
+    }
+
+    .view-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: white;
+      box-shadow: var(--shadow);
+    }
+
+    .view-switch button {
+      height: 30px;
+      border: 0;
+      border-radius: 999px;
+      padding: 0 11px;
+      background: transparent;
+      color: #53616b;
+      font-weight: 850;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .view-switch button.active {
+      background: #eef8f6;
+      color: var(--brand);
+    }
+
     .media-intake {
       display: grid;
       grid-template-columns: minmax(280px, .8fr) minmax(0, 1.2fr);
@@ -3565,6 +3962,74 @@
       font-size: 14px;
     }
 
+    .boq-file-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfc;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: 58px minmax(0, 1fr);
+      gap: 12px;
+      align-items: center;
+    }
+
+    .boq-file-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: #e6f2fb;
+      color: #146b93;
+      font-weight: 900;
+      font-size: 13px;
+    }
+
+    .boq-file-main {
+      display: grid;
+      gap: 5px;
+      min-width: 0;
+    }
+
+    .boq-file-main strong {
+      font-size: 15px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .boq-file-main span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .boq-file-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .boq-file-grid div {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 9px 10px;
+      display: grid;
+      gap: 3px;
+      min-height: 54px;
+    }
+
+    .boq-file-grid label {
+      color: var(--muted);
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .boq-file-grid strong {
+      font-size: 15px;
+    }
+
     .editable-cell {
       border: 1px solid transparent;
       border-radius: 6px;
@@ -3860,10 +4325,10 @@
     }
 
     .issue-table-head {
-      min-width: 1400px;
+      min-width: 1220px;
       display: grid;
-      grid-template-columns: minmax(225px, 1.15fr) minmax(190px, .86fr) minmax(105px, .48fr) minmax(120px, .55fr) minmax(105px, .48fr) minmax(105px, .48fr) minmax(125px, .55fr) minmax(190px, .85fr) minmax(190px, .85fr) auto;
-      gap: 12px;
+      grid-template-columns: minmax(205px, 1.05fr) minmax(165px, .82fr) 92px 108px 92px 86px 112px minmax(150px, .78fr) minmax(135px, .68fr) 118px;
+      gap: 10px;
       align-items: center;
       padding: 0 14px 8px;
       color: var(--muted);
@@ -3899,11 +4364,11 @@
     }
 
     .issue-row-card {
-      min-width: 1400px;
-      grid-template-columns: minmax(225px, 1.15fr) minmax(190px, .86fr) minmax(105px, .48fr) minmax(120px, .55fr) minmax(105px, .48fr) minmax(105px, .48fr) minmax(125px, .55fr) minmax(190px, .85fr) minmax(190px, .85fr) auto;
+      min-width: 1220px;
+      grid-template-columns: minmax(205px, 1.05fr) minmax(165px, .82fr) 92px 108px 92px 86px 112px minmax(150px, .78fr) minmax(135px, .68fr) 118px;
       align-items: center;
-      gap: 12px;
-      padding: 12px 14px;
+      gap: 10px;
+      padding: 10px 12px;
     }
 
     .issue-row-card .task-card-head,
@@ -4006,8 +4471,19 @@
       border-top: 0;
       padding-top: 0;
       justify-content: flex-end;
-      flex-wrap: nowrap;
+      flex-wrap: wrap;
       white-space: nowrap;
+      gap: 5px;
+    }
+
+    .issue-row-card .task-card-actions button {
+      max-width: 112px;
+      height: 28px;
+      padding: 0 9px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      border-radius: 8px;
+      font-size: 11.5px;
     }
 
     .permission-grid {
@@ -4142,12 +4618,25 @@
     .field-chat {
       position: fixed;
       right: 18px;
+      left: auto;
       bottom: 18px;
       width: min(390px, calc(100vw - 36px));
       z-index: 30;
       display: grid;
       gap: 10px;
       pointer-events: none;
+    }
+
+    .field-chat.minimized {
+      width: 58px;
+    }
+
+    .field-chat.open {
+      width: min(390px, calc(100vw - 36px));
+    }
+
+    .field-chat.dragging {
+      user-select: none;
     }
 
     .field-chat * {
@@ -4187,10 +4676,10 @@
     .chat-window {
       display: none;
       overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: white;
-      box-shadow: 0 22px 70px rgba(18, 32, 37, .22);
+      border: 1px solid rgba(10, 45, 50, .16);
+      border-radius: 28px;
+      background: #f7f8f5;
+      box-shadow: 0 28px 80px rgba(18, 32, 37, .28);
     }
 
     .field-chat.open .chat-window {
@@ -4198,19 +4687,47 @@
     }
 
     .chat-window-head {
-      min-height: 54px;
-      padding: 10px 12px;
-      background: var(--dark);
+      min-height: 66px;
+      padding: 10px 12px 11px;
+      background: #0d2a2d;
       color: white;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
+      cursor: grab;
+      touch-action: none;
+    }
+
+    .chat-window-head:active,
+    .chat-tray-button:active {
+      cursor: grabbing;
+    }
+
+    .chat-head-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .chat-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #24d366, #0f8d62);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,.22);
+      flex: 0 0 auto;
     }
 
     .chat-window-head strong {
       display: block;
       font-size: 14px;
+      line-height: 1.1;
     }
 
     .chat-window-head span {
@@ -4232,9 +4749,9 @@
     }
 
     .chat-window-actions button {
-      width: 30px;
-      height: 30px;
-      border-radius: 7px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
       background: rgba(255,255,255,.12);
       color: white;
       display: grid;
@@ -4242,11 +4759,11 @@
     }
 
     .chat-channel-list {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      display: flex;
+      overflow-x: auto;
       gap: 6px;
-      padding: 10px;
-      background: #f6f8f8;
+      padding: 10px 12px;
+      background: #edf3f0;
       border-bottom: 1px solid var(--line);
     }
 
@@ -4258,10 +4775,11 @@
       color: #43515f;
       font-size: 12px;
       cursor: pointer;
-      padding: 0 8px;
+      padding: 0 12px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      flex: 0 0 auto;
     }
 
     .chat-channel-list button.active {
@@ -4272,20 +4790,22 @@
     }
 
     .chat-feed {
-      height: 260px;
+      height: 310px;
       overflow: auto;
       padding: 12px;
       display: grid;
       align-content: start;
       gap: 9px;
-      background: #eef2f0;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(15,102,97,.08), transparent 23%),
+        linear-gradient(180deg, #e8f1ed 0%, #dce8e2 100%);
     }
 
     .chat-bubble {
       max-width: 82%;
-      border-radius: 8px;
+      border-radius: 18px 18px 18px 5px;
       background: white;
-      padding: 9px 10px;
+      padding: 9px 11px;
       box-shadow: 0 1px 2px rgba(0,0,0,.06);
       font-size: 13px;
       line-height: 1.35;
@@ -4293,7 +4813,8 @@
 
     .chat-bubble.out {
       justify-self: end;
-      background: #dff2e8;
+      background: #d9fdd3;
+      border-radius: 18px 18px 5px 18px;
     }
 
     .chat-bubble strong {
@@ -4304,11 +4825,11 @@
 
     .chat-compose {
       display: grid;
-      grid-template-columns: 34px minmax(0, 1fr) 42px;
+      grid-template-columns: 36px minmax(0, 1fr) 42px;
       gap: 8px;
-      padding: 10px;
+      padding: 10px 12px 12px;
       border-top: 1px solid var(--line);
-      background: white;
+      background: #f7f8f5;
     }
 
     .chat-compose button,
@@ -4333,24 +4854,41 @@
     .chat-compose input {
       min-width: 0;
       border: 1px solid var(--line);
-      padding: 0 10px;
+      padding: 0 14px;
       outline: 0;
+      border-radius: 999px;
+      background: white;
     }
 
     .chat-tray-button {
+      position: relative;
       justify-self: end;
-      height: 48px;
-      min-width: 230px;
+      width: 58px;
+      height: 58px;
+      min-width: 58px;
       border-radius: 999px;
-      background: var(--dark);
+      background: #24d366;
       color: white;
-      box-shadow: 0 16px 40px rgba(18, 32, 37, .28);
+      box-shadow: 0 14px 34px rgba(18, 32, 37, .24);
       display: inline-flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 0 14px;
+      justify-content: center;
+      padding: 0;
       font-weight: 800;
+      cursor: grab;
+      touch-action: none;
+    }
+
+    .chat-tray-button:before {
+      content: "";
+      width: 28px;
+      height: 28px;
+      background: currentColor;
+      mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='black' d='M12.04 2C6.58 2 2.13 6.28 2.13 11.54c0 1.89.58 3.65 1.57 5.13L2 22l5.5-1.62a10.2 10.2 0 0 0 4.54 1.06c5.46 0 9.91-4.28 9.91-9.54S17.5 2 12.04 2Zm5.78 13.47c-.24.67-1.38 1.28-1.95 1.36-.5.07-1.14.1-1.84-.12-.42-.13-.97-.31-1.67-.61-2.94-1.27-4.86-4.22-5.01-4.42-.15-.2-1.2-1.6-1.2-3.05 0-1.45.76-2.16 1.03-2.46.27-.3.59-.37.78-.37h.56c.18 0 .42-.07.66.5.24.58.82 2 .89 2.15.07.15.12.32.02.52-.1.2-.15.32-.3.49-.15.17-.32.38-.45.51-.15.15-.31.32-.13.62.18.3.79 1.3 1.69 2.1 1.16 1.03 2.14 1.35 2.44 1.5.3.15.48.13.66-.08.18-.2.76-.88.96-1.18.2-.3.4-.25.67-.15.27.1 1.73.82 2.03.97.3.15.5.22.57.34.07.13.07.72-.17 1.38Z'/%3E%3C/svg%3E") center / contain no-repeat;
+    }
+
+    .chat-tray-button span:first-child {
+      display: none;
     }
 
     .field-chat.open .chat-tray-button {
@@ -4358,13 +4896,17 @@
     }
 
     .chat-count {
-      min-width: 24px;
-      height: 24px;
+      position: absolute;
+      right: -4px;
+      top: -4px;
+      min-width: 21px;
+      height: 21px;
       border-radius: 999px;
       background: #d85d4f;
       display: grid;
       place-items: center;
-      font-size: 12px;
+      font-size: 11px;
+      border: 2px solid white;
     }
 
     @media (max-width: 1180px) {
@@ -4517,12 +5059,19 @@
       .kanban { grid-template-columns: 1fr; }
       .field-chat {
         right: 12px;
+        left: auto;
         bottom: 86px;
+        width: calc(100vw - 24px);
+      }
+      .field-chat.minimized {
+        width: 58px;
+      }
+      .field-chat.open {
         width: calc(100vw - 24px);
       }
       .chat-tray-button {
         min-width: 0;
-        width: 100%;
+        width: 58px;
       }
       .chat-feed {
         height: 240px;
@@ -4655,13 +5204,16 @@
       <span id="chatAlertText">Foto e vocale caricati da Residenza Porta Nuova.</span>
     </div>
     <section class="chat-window" aria-label="Chat cantieri visibili">
-      <header class="chat-window-head">
-        <div>
-          <strong>Chat cantieri</strong>
-          <span id="chatActiveContext">Chat portfolio</span>
+      <header class="chat-window-head" id="chatDragHandle">
+        <div class="chat-head-left">
+          <div class="chat-avatar">SP</div>
+          <div>
+            <strong>Chat cantieri</strong>
+            <span id="chatActiveContext">Chat portfolio</span>
+          </div>
         </div>
         <div class="chat-window-actions">
-          <button type="button" id="chatMinimize" title="Minimizza">_</button>
+          <button type="button" id="chatMinimize" title="Minimizza">×</button>
         </div>
       </header>
       <div class="chat-channel-list" id="chatChannelList"></div>
@@ -4751,6 +5303,20 @@
     let activeScheduleView = 'wbs';
     let selectedScheduleSite = 'all';
     let expandedWbsIds = new Set(['wbs-1', 'wbs-2', 'wbs-3', 'wbs-4']);
+    const boqFileInfo = {
+      name: 'Computo_Portfolio_Maggio_2026.xlsx',
+      version: 'v3',
+      source: 'XLS',
+      uploadedBy: 'PM',
+      uploadedAt: '31 mag 18:00',
+      rows: 42,
+      amount: 18700000,
+      status: 'Da validare',
+      statusClass: 'warn',
+      linkedWbs: 8,
+      linkedBudget: 'Budget e forecast',
+      audit: 'Upload, OCR, mapping WBS e validazione PM tracciati'
+    };
     let wbsItems = [
       {
         id: 'wbs-1',
@@ -4843,6 +5409,13 @@
       { type: '360', title: 'Sopralluogo piano 2', meta: 'Foto 360 · report isolamento', status: 'Firmato 4/5', owner: 'Luca F.', tagClass: 'ok', group: 'approved' }
     ];
 
+    const documentFolders = [
+      { name: 'Data room committente', count: 18, scope: 'Contratti, SAL, varianti', className: 'violet' },
+      { name: 'Varianti impianti', count: 6, scope: 'Workflow PM/DL', className: 'warn' },
+      { name: 'Tavole approvate', count: 12, scope: 'Versioni congelate', className: 'blue' },
+      { name: 'Fornitori', count: 9, scope: 'Contratti e DDT', className: '' }
+    ];
+
     const documentAuditByTitle = {
       'Variante impianti': [
         { avatar: 'AI', title: 'Classificazione proposta', meta: 'AI backend - collegata a WBS 1.3 impianto elettrico - v1' },
@@ -4879,6 +5452,20 @@
       { kind: 'doc', title: 'DDT pannelli isolanti', site: 'Residenza Porta Nuova', uploadedBy: 'TermoCasa', date: '26 mag', confidence: '76%', suggestion: 'Documento: fornitura isolamento', target: 'Computo voce WBS-2.4', status: 'Senza sopralluogo', tagClass: 'violet', tags: ['PDF', 'DDT', 'Computo'] },
       { kind: 'photo', title: 'Foto area logistica ingresso nord', site: 'Logistica Nord Hub', uploadedBy: 'PM', date: 'Oggi 12:04', confidence: '69%', suggestion: 'Nuovo sopralluogo da creare', target: 'Avvio cantiere', status: 'Non classificato', tagClass: '', tags: ['Foto', 'Upload libero', 'Da assegnare'] },
       { kind: 'doc', title: 'Verbale riunione fornitori', site: 'Hotel Aurora Renovation', uploadedBy: 'Anna S.', date: '24 mag', confidence: '91%', suggestion: 'Report: riunione settimanale', target: '3 decisioni, 2 task', status: 'Collegato', tagClass: 'ok', tags: ['Documento', 'Report', 'Task'] }
+    ];
+
+    const mediaFolders = [
+      { name: 'Sopralluogo Blocco B', count: 22, scope: 'Foto, vocali, 360', className: 'blue' },
+      { name: 'Facciata nord', count: 34, scope: 'Video e foto QA', className: '' },
+      { name: 'Data room fotografica', count: 120, scope: 'Download ZIP', className: 'violet' },
+      { name: 'Da classificare', count: 7, scope: 'AI propone', className: 'warn' }
+    ];
+
+    const inspectionFolders = [
+      { name: 'Bozze sopralluogo', count: 3, scope: 'Da organizzare', className: 'warn' },
+      { name: 'In raccolta mobile', count: 4, scope: 'Offline/sync', className: 'blue' },
+      { name: 'Verbali da firmare', count: 5, scope: 'Annotazioni e firme', className: 'violet' },
+      { name: 'Chiusi', count: 12, scope: 'Audit congelato', className: 'ok' }
     ];
 
     let issueWorkflowItems = [
@@ -5321,6 +5908,46 @@
       }));
     }
 
+    function scheduleReportRows(scope = 'current') {
+      const siteName = scopeSiteName(scope);
+      const rows = siteName ? wbsItems.filter(item => item.site === siteName) : wbsItems;
+      const totalBudget = rows.reduce((sum, item) => sum + item.budget, 0);
+      const totalForecast = rows.reduce((sum, item) => sum + item.forecast, 0);
+      const linkedSubactions = rows.reduce((sum, item) => sum + (item.subactions?.length || 0), 0);
+      return [
+        {
+          title: boqFileInfo.name,
+          meta: `Versione ${boqFileInfo.version} - ${boqFileInfo.source} - ${boqFileInfo.rows} righe - ${formatCurrency(boqFileInfo.amount)} - ${boqFileInfo.status}`,
+          site: siteName,
+          type: 'Computo',
+          category: 'File importato'
+        },
+        {
+          title: 'Budget e forecast collegati',
+          meta: `Budget ${formatCurrency(totalBudget)} - Forecast ${formatCurrency(totalForecast)} - Scostamento ${formatCurrency(totalForecast - totalBudget)} - ${rows.length} WBS - ${linkedSubactions} sottoazioni`,
+          site: siteName,
+          type: 'Budget',
+          category: 'Sintesi economica'
+        },
+        ...rows.flatMap(item => [
+          {
+            title: `${item.code} - ${item.title}`,
+            meta: `${item.phase} - ${item.owner} - ${item.status} - avanzamento ${item.progress}% - budget ${formatCurrency(item.budget)} - forecast ${formatCurrency(item.forecast)}`,
+            site: item.site,
+            type: 'WBS',
+            category: item.phase
+          },
+          ...(item.subactions || []).map((sub, index) => ({
+            title: `${item.code}.${index + 1} - ${sub.title}`,
+            meta: `Sottoazione di ${item.code} - owner ${sub.owner} - scade ${sub.due} - avanzamento ${sub.done}%`,
+            site: item.site,
+            type: 'Sottoazione',
+            category: item.title
+          }))
+        ])
+      ];
+    }
+
     function reportItems(moduleId, scope = 'current') {
       const inspectionFallback = [
         { title: 'Isolamento Blocco B', meta: '3 foto 360 - 14 foto - 2 issue - 4/5 firme', site: 'Residenza Porta Nuova', type: 'Sopralluogo' },
@@ -5340,9 +5967,15 @@
         })),
         documents: documentRows.map(doc => ({ title: doc.title, meta: `${doc.meta} - ${doc.status} - owner ${doc.owner}`, site: null, type: doc.type })),
         inspections: (apiState.source === 'api' && apiState.inspections.length ? apiState.inspections.map(item => ({ title: item.title || item.id, meta: `${item.ai_summary || statusLabel(item.status)} - ${formatApiDate(item.updated_at)}`, site: item.site_name, type: 'Sopralluogo' })) : inspectionFallback),
-        schedule: wbsItems.map(item => ({ title: `${item.code} - ${item.title}`, meta: `${item.phase} - settimana ${item.weekStart + 22}/${item.weekEnd + 22} - ${item.progress}%`, site: item.site, type: 'WBS' })),
+        schedule: scheduleReportRows(scope),
         issues: issueWorkflowItems.map(item => ({ title: item.title, meta: `${item.type} - ${item.status} - ${item.due} - ${item.impact}`, site: item.site, type: item.type })),
-        team: visibleTeamMembers().map(member => ({ title: member.name, meta: `${member.role} - ${member.company} - ${member.status} - ${member.permissions}`, site: member.sites.join(', '), type: member.type })),
+        team: visibleTeamMembers().map(member => ({
+          ...member,
+          title: member.name,
+          meta: `${member.role} - ${member.company} - ${member.status} - ${member.permissions} - ${member.contact}`,
+          site: member.sites.join(', '),
+          type: member.type
+        })),
         permissions: [
           { title: 'Superamministratore', meta: 'Accesso globale, organizzazioni, policy e audit', site: null, type: 'Ruolo' },
           { title: 'Amministratore organizzazione', meta: 'Crea cantieri, utenti, ruoli e workflow', site: null, type: 'Ruolo' },
@@ -5351,6 +5984,46 @@
         ]
       }[moduleId] || [];
       return rows.filter(item => itemMatchesScope(item, scope));
+    }
+
+    function renderTeamReportCards(items) {
+      const byType = items.reduce((groups, member) => {
+        const key = member.type || 'Team';
+        groups[key] = groups[key] || [];
+        groups[key].push(member);
+        return groups;
+      }, {});
+      return Object.entries(byType).map(([type, members]) => `
+        <section class="team-report-section">
+          <h2>${escapeAttr(type)} <span>${members.length}</span></h2>
+          <div class="team-report-grid">
+            ${members.map(member => `
+              <article class="team-report-card">
+                <div class="team-photo">${escapeAttr(member.initials || member.name?.slice(0, 2) || 'UT')}</div>
+                <div class="team-report-main">
+                  <div class="team-report-top">
+                    <div>
+                      <h3>${escapeAttr(member.name)}</h3>
+                      <p>${escapeAttr(member.role)}</p>
+                    </div>
+                    <span class="pill ${escapeAttr(member.statusClass || '')}">${escapeAttr(member.status || 'n/d')}</span>
+                  </div>
+                  <div class="team-report-tags">
+                    <span>${escapeAttr(member.type || 'Ruolo')}</span>
+                    <span>${escapeAttr(member.company || 'Azienda n/d')}</span>
+                  </div>
+                  <dl>
+                    <div><dt>Cantieri</dt><dd>${escapeAttr((member.sites || []).join(', '))}</dd></div>
+                    <div><dt>Permessi</dt><dd>${escapeAttr(member.permissions || 'n/d')}</dd></div>
+                    <div><dt>Contatto</dt><dd>${escapeAttr(member.contact || 'n/d')}</dd></div>
+                    <div><dt>Profilo operativo</dt><dd>${escapeAttr(member.status === 'Attivo' ? 'Abilitato alle funzioni assegnate' : 'Da verificare / completare onboarding')}</dd></div>
+                  </dl>
+                </div>
+              </article>
+            `).join('')}
+          </div>
+        </section>
+      `).join('');
     }
 
     function reportSelection(items, type) {
@@ -5391,6 +6064,33 @@
                 <td>${escapeAttr(item.aiOutcome)}</td>
                 <td>${escapeAttr(item.assignment)}</td>
                 <td><span class="pill">${escapeAttr(item.sensitivity)}</span></td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function renderScheduleReportTable(items) {
+      return `
+        <table>
+          <thead>
+            <tr>
+              <th>Tipo</th>
+              <th>Elemento collegato</th>
+              <th>Cantiere</th>
+              <th>Categoria</th>
+              <th>Dettagli</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${items.map(item => `
+              <tr>
+                <td><span class="pill ${item.type === 'Computo' ? 'violet' : item.type === 'Budget' ? 'warn' : item.type === 'Sottoazione' ? 'blue' : ''}">${escapeAttr(item.type)}</span></td>
+                <td><strong>${escapeAttr(item.title)}</strong></td>
+                <td>${escapeAttr(item.site || 'Portfolio')}</td>
+                <td>${escapeAttr(item.category || '-')}</td>
+                <td>${escapeAttr(item.meta)}</td>
               </tr>
             `).join('')}
           </tbody>
@@ -5599,6 +6299,8 @@
                 ? tag(item.author || 'Conversazione', item.author === 'AI' ? 'violet' : 'blue')
                 : moduleId === 'media'
                   ? `${tag((item.kind || 'file').toUpperCase(), item.kind === 'doc' ? 'violet' : item.kind === 'photo' ? 'blue' : '')}${mediaNeedsWatermark(item) ? tag('Watermark', 'warn') : tag('No watermark')}`
+                  : moduleId === 'team'
+                    ? tag(`${item.initials || 'UT'} - ${item.type || 'Team'}`, item.statusClass || 'blue')
                   : tag(item.type || moduleLabel, type === 'aggregate' ? 'violet' : 'blue')}
             </label>
           `).join('') || '<div class="report-option"><span><strong>Nessun elemento disponibile</strong><span>Cambia modulo o perimetro.</span></span></div>'}
@@ -5607,6 +6309,10 @@
       const meta = document.getElementById('reportExportMeta');
       if (meta) meta.textContent = moduleId === 'media'
         ? `${moduleLabel}: ${items.length} file disponibili - scarico ZIP con manifest, audit e watermark PDF/JPG.`
+        : moduleId === 'team'
+          ? `${moduleLabel}: ${items.length} membri disponibili - report a card con foto/avatar, ruolo, azienda, cantieri, contatto e permessi.`
+        : moduleId === 'schedule'
+          ? `${moduleLabel}: report completo con computo importato, WBS, sottoazioni, budget e forecast collegati.`
         : `${moduleLabel}: ${items.length} elementi disponibili - ${type === 'aggregate' ? 'report aggregato' : type === 'all' ? 'scarico completo' : type === 'selected' ? 'selezione multipla' : 'ultimi 3'}.`;
       const downloadButton = document.querySelector('[data-download-report]');
       if (downloadButton) downloadButton.textContent = moduleId === 'media' ? 'Scarica ZIP media' : 'Scarica report';
@@ -5617,7 +6323,8 @@
       const scope = document.getElementById('reportScope')?.value || 'current';
       const type = document.getElementById('reportType')?.value || 'last3';
       const moduleLabel = pages.find(page => page[0] === moduleId)?.[1] || moduleId;
-      const items = reportSelection(reportItems(moduleId, scope), type);
+      const baseItems = reportItems(moduleId, scope);
+      const items = moduleId === 'schedule' ? baseItems : reportSelection(baseItems, type);
       const scopeLabel = reportScopeOptions().find(option => option.value === scope)?.label || scope;
       if (moduleId === 'media') {
         downloadMediaArchive(items, scopeLabel, type);
@@ -5628,10 +6335,25 @@
         : '';
       const content = moduleId === 'chat'
         ? renderChatReportTable(items)
+        : moduleId === 'team'
+          ? renderTeamReportCards(items)
+        : moduleId === 'schedule'
+          ? renderScheduleReportTable(items)
         : items.map(item => `<div class="item"><div class="type">${escapeAttr(item.type)}</div><h3>${escapeAttr(item.title)}</h3><div class="meta">${escapeAttr(item.meta)}</div></div>`).join('');
       const body = `
         <!doctype html><html><head><meta charset="utf-8"><title>${moduleLabel} - report</title>
-        <style>body{font-family:Arial,sans-serif;margin:32px;color:#142022}h1{margin:0 0 6px}p{color:#566872}.item{border:1px solid #d8e0e2;border-radius:8px;padding:12px;margin:10px 0}.meta{color:#566872;font-size:13px}.type{font-weight:700;color:#0f6661}table{width:100%;border-collapse:collapse;margin-top:18px;font-size:12px}th{background:#eef4f3;color:#43515f;text-align:left;text-transform:uppercase;font-size:10px;letter-spacing:.03em}th,td{border:1px solid #d8e0e2;padding:8px;vertical-align:top}td strong{font-size:12px}.pill{display:inline-block;border-radius:999px;background:#eef8f6;color:#0f6661;font-weight:700;padding:3px 7px;white-space:nowrap}</style></head>
+        <style>
+          body{font-family:Arial,sans-serif;margin:32px;color:#142022;background:#fff}
+          h1{margin:0 0 6px;font-size:30px}p{color:#566872}.item{border:1px solid #d8e0e2;border-radius:8px;padding:12px;margin:10px 0}.meta{color:#566872;font-size:13px}.type{font-weight:700;color:#0f6661}
+          table{width:100%;border-collapse:collapse;margin-top:18px;font-size:12px}th{background:#eef4f3;color:#43515f;text-align:left;text-transform:uppercase;font-size:10px;letter-spacing:.03em}th,td{border:1px solid #d8e0e2;padding:8px;vertical-align:top}td strong{font-size:12px}
+          .pill{display:inline-block;border-radius:999px;background:#eef8f6;color:#0f6661;font-weight:700;padding:4px 9px;white-space:nowrap;font-size:11px}.pill.warn{background:#fff3dc;color:#8b5f00}.pill.ok{background:#e9f8ef;color:#0f6b3d}.pill.violet{background:#f0eafa;color:#61419b}.pill.blue{background:#e6f2fb;color:#146b93}
+          .team-report-section{margin-top:22px}.team-report-section h2{display:flex;align-items:center;gap:8px;margin:0 0 10px;font-size:18px;color:#0f6661}.team-report-section h2 span{border-radius:999px;background:#eef8f6;color:#0f6661;font-size:12px;padding:3px 8px}
+          .team-report-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:14px}.team-report-card{display:grid;grid-template-columns:82px minmax(0,1fr);gap:14px;border:1px solid #d8e0e2;border-radius:12px;padding:14px;background:#fbfcfc;break-inside:avoid;box-shadow:0 6px 18px rgba(20,32,34,.06)}
+          .team-photo{width:82px;height:82px;border-radius:18px;background:linear-gradient(145deg,#dfeeed,#b9d6d2);display:grid;place-items:center;color:#0f6661;font-size:22px;font-weight:900;box-shadow:inset 0 0 0 1px rgba(15,102,97,.14)}
+          .team-report-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.team-report-card h3{margin:0;font-size:18px}.team-report-card p{margin:3px 0 0;font-size:13px}.team-report-tags{display:flex;gap:6px;flex-wrap:wrap;margin:9px 0}.team-report-tags span{border-radius:999px;background:#eef4f3;color:#43515f;font-weight:700;font-size:11px;padding:4px 8px}
+          dl{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;margin:0}dt{color:#566872;font-size:10px;text-transform:uppercase;font-weight:800;letter-spacing:.03em}dd{margin:2px 0 0;font-size:12px;color:#142022;line-height:1.35}
+          @media print{body{margin:18px}.team-report-grid{grid-template-columns:1fr 1fr}.team-report-card{box-shadow:none}}
+        </style></head>
         <body><h1>${moduleLabel}</h1><p>${scopeLabel} - ${new Date().toLocaleString('it-IT')}</p>${totals}
         ${content}
         </body></html>`;
@@ -6195,6 +6917,29 @@
       return item.status || 'Da classificare';
     }
 
+    function folderIconSvg() {
+      return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h7l2 2h9v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><path d="M3 7V5a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v2"/></svg>';
+    }
+
+    function renderFolderStrip(kind, folders) {
+      return `
+        <div class="folder-strip" aria-label="Cartelle ${kind === 'media' ? 'media' : 'documenti'}">
+          <button class="folder-create" data-create-folder="${kind}">
+            <span class="folder-icon">${folderIconSvg()}</span>
+            <strong>Nuova cartella</strong>
+          </button>
+          ${folders.map(folder => `
+            <button class="folder-chip" data-open-folder="${escapeAttr(folder.name)}" data-folder-kind="${kind}">
+              <span class="folder-icon">${folderIconSvg()}</span>
+              <strong>${escapeAttr(folder.name)}</strong>
+              <span>${folder.count} file - ${escapeAttr(folder.scope)}</span>
+              ${tag(folder.className === 'violet' ? 'data room' : folder.className === 'warn' ? 'review' : folder.className === 'blue' ? 'ordinata' : 'folder', folder.className)}
+            </button>
+          `).join('')}
+        </div>
+      `;
+    }
+
     function renderMediaArchive(filter = 'all', search = '') {
       const media = document.getElementById('media');
       if (!media) return;
@@ -6208,47 +6953,26 @@
           <div class="metric"><label>Collegati</label><strong>${linked}</strong><span><b class="kpi-status">Sopralluoghi, task, documenti</b></span></div>
         </section>
 
-        <section class="media-intake">
-          <div class="upload-drop">
-            <div class="upload-content">
-              <div class="upload-title">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/><path d="M4 19h16"/></svg>
-                <strong>Upload</strong>
-              </div>
-              <div class="tags upload-tags">${tag('Upload libero','blue','Foto, video, vocali, PDF, XLS e tavole possono entrare in archivio. L AI suggerisce cantiere, zona, sopralluogo, task o documento.')}${tag('Foto')}${tag('Video','blue')}${tag('Voice')}${tag('PDF','violet')}${tag('XLS','warn')}</div>
-              <input id="mediaUploadInput" type="file" multiple accept="image/*,video/*,audio/*,.pdf,.xls,.xlsx,.doc,.docx" hidden>
-              <div class="media-actions upload-actions">
-                <button class="primary" data-media-upload="true">Avvia upload</button>
-              </div>
-            </div>
+        <div class="media-command-bar">
+          <button class="media-upload-badge" data-media-upload="true" data-help="Upload media: scegli foto, video, vocali o file; l'AI propone cantiere, sopralluogo, task, documento o WBS; l'utente conferma i collegamenti.">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/><path d="M4 19h16"/></svg>
+          </button>
+          <div class="media-search-box" data-help="Cerca per zona, persona, fornitore, frase del vocale o contenuto visuale. L'AI mostra i collegamenti probabili.">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+            <input id="mediaSearchInput" value="${search}" placeholder="Cerca media, area, fornitore. Upload: file -> AI -> collegamenti">
           </div>
-          <div class="media-search">
-            <div class="media-search-box">
-              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-              <input id="mediaSearchInput" value="${search}" placeholder="Cerca: foto isolamento, video facciata, DDT, vocale fornitore">
-            </div>
-            <div class="filter-row">
-              ${['all', 'photo', 'video', 'audio', 'doc'].map(type => `
-                <button class="${filter === type ? 'active' : ''}" data-media-filter="${type}">${type === 'all' ? 'Tutti' : type.toUpperCase()}</button>
-              `).join('')}
-            </div>
-            <div class="ai-suggestion">
-              <strong data-help="Se non ricordi il sopralluogo, cerca una zona, una persona, un fornitore o una frase detta nel vocale: l'archivio mostra i contenuti probabili e il collegamento suggerito.">Ricerca intelligente</strong>
-            </div>
-          </div>
-        </section>
-
-        <div class="media-archive-tools">
-          <div class="tags">
-            ${tag('Raggruppati per data','blue','I media sono ordinati per data di creazione o sincronizzazione, cosi anche grandi volumi restano navigabili.')}
-            ${tag('Vista tabellare','','Ogni riga mostra tipo, cantiere, autore, collegamento AI, stato e azioni.')}
-            ${tag('Anteprima su click','violet')}
+          <div class="filter-row">
+            ${['all', 'photo', 'video', 'audio', 'doc'].map(type => `
+              <button class="${filter === type ? 'active' : ''}" data-media-filter="${type}">${type === 'all' ? 'Tutti' : type.toUpperCase()}</button>
+            `).join('')}
           </div>
           <div class="media-view-toggle">
             <button class="active" data-media-view="table">${mediaTypeIcon('doc')} Tabella</button>
             <button data-media-view="cards">${mediaTypeIcon('photo')} Card</button>
           </div>
         </div>
+        ${renderFolderStrip('media', mediaFolders)}
+        <input id="mediaUploadInput" type="file" multiple accept="image/*,video/*,audio/*,.pdf,.xls,.xlsx,.doc,.docx" hidden>
         <section class="media-archive-list" id="mediaGrid"></section>
       `;
       renderMediaItems(filter, search, 'table');
@@ -6388,15 +7112,87 @@
               <option>Fornitore assegnato</option>
             </select>
           </div>
+          <div class="field">
+            <label>Cartella</label>
+            <select>
+              <option>Crea cartella automatica da upload</option>
+              ${mediaFolders.map(folder => `<option>${folder.name}</option>`).join('')}
+            </select>
+          </div>
         </div>
         <div class="audit-list">
           <div class="audit-row"><div class="avatar">1</div><div><strong>Seleziona file</strong><span>Foto, video, vocali, PDF, XLS o documenti dal dispositivo.</span></div></div>
-          <div class="audit-row"><div class="avatar">2</div><div><strong>Opzione AI</strong><span>Il sistema classifica cantiere, area, sopralluogo, task, issue, WBS o documento collegato.</span></div></div>
-          <div class="audit-row"><div class="avatar">3</div><div><strong>Audit upload</strong><span>Upload, classificazione, conferme e modifiche restano tracciate.</span></div></div>
+          <div class="audit-row"><div class="avatar">2</div><div><strong>Cartella</strong><span>Puoi salvare 20 foto in una cartella sopralluogo, area, data room o gruppo AI.</span></div></div>
+          <div class="audit-row"><div class="avatar">3</div><div><strong>Opzione AI</strong><span>Il sistema classifica cantiere, area, sopralluogo, task, issue, WBS o documento collegato.</span></div></div>
+          <div class="audit-row"><div class="avatar">4</div><div><strong>Audit upload</strong><span>Upload, cartella, classificazione, conferme e modifiche restano tracciate.</span></div></div>
         </div>
         <div class="detail-actions">
           <button class="primary" data-media-pick-files="true">Scegli file</button>
           <button class="secondary" data-action="Bozza upload salvata">Salva bozza</button>
+        </div>
+      `);
+    }
+
+    function openFolderCreateFlow(kind) {
+      const isMedia = kind === 'media';
+      openModal(isMedia ? 'Nuova cartella media' : 'Nuova cartella documenti', isMedia ? 'Organizza upload multipli, sopralluoghi e data room fotografiche' : 'Organizza documenti, versioni e data room', `
+        <div class="form-grid">
+          <div class="field">
+            <label>Nome cartella</label>
+            <input placeholder="${isMedia ? 'Es. Sopralluogo facciata 02-06' : 'Es. Data room committente'}">
+          </div>
+          <div class="field">
+            <label>Tipo cartella</label>
+            <select>
+              <option>${isMedia ? 'Upload multiplo foto/video' : 'Data room documentale'}</option>
+              <option>Sopralluogo</option>
+              <option>Area / WBS</option>
+              <option>Fornitore</option>
+              <option>Cartella AI suggerita</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Cantiere</label>
+            <select>
+              <option>${dashboardMode === 'project' ? selectedSite.name : 'Portfolio / tutti i cantieri'}</option>
+              ${sites.map(site => `<option>${site.name}</option>`).join('')}
+            </select>
+          </div>
+          <div class="field">
+            <label>Permessi</label>
+            <select>
+              <option>Policy eredita dal cantiere</option>
+              <option>Solo PM/Admin</option>
+              <option>Team cantiere autorizzato</option>
+              <option>Data room con watermark e audit</option>
+            </select>
+          </div>
+        </div>
+        <div class="audit-list">
+          <div class="audit-row"><div class="avatar">1</div><div><strong>Struttura</strong><span>La cartella raggruppa file per data, sopralluogo, area, WBS o fornitore.</span></div></div>
+          <div class="audit-row"><div class="avatar">2</div><div><strong>Download</strong><span>${isMedia ? 'Lo scarico crea ZIP con sottocartelle, manifest, audit e watermark dove previsto.' : 'La data room scarica solo file autorizzati, con versioni e audit trail.'}</span></div></div>
+          <div class="audit-row"><div class="avatar">3</div><div><strong>Audit</strong><span>Creazione cartella, upload, spostamenti e download restano tracciati.</span></div></div>
+        </div>
+        <div class="detail-actions">
+          <button class="secondary" data-action="Cartella salvata come bozza">Salva bozza</button>
+          <button class="primary" data-action="${isMedia ? 'Cartella media creata' : 'Cartella documenti creata'}">Crea cartella</button>
+        </div>
+      `);
+    }
+
+    function openFolderDetail(trigger) {
+      const name = trigger.dataset.openFolder || 'Cartella';
+      const kind = trigger.dataset.folderKind || 'media';
+      openModal(name, kind === 'media' ? 'Cartella media organizzata per file, data e collegamenti AI' : 'Cartella documentale con versioni, policy e audit', `
+        <div class="audit-list">
+          <div class="audit-row"><div class="avatar">F</div><div><strong>File organizzati</strong><span>Vista tabellare, anteprima su click e filtri per data, tipo, autore e stato.</span></div></div>
+          <div class="audit-row"><div class="avatar">AI</div><div><strong>Collegamenti suggeriti</strong><span>Sopralluoghi, task, issue, WBS e documenti collegati alla cartella.</span></div></div>
+          <div class="audit-row"><div class="avatar">ZIP</div><div><strong>Scarico cartella / data room</strong><span>Download con manifest, audit trail e watermark su contenuti protetti.</span></div></div>
+        </div>
+        <div class="detail-actions">
+          <button class="secondary" data-action="Cartella filtrata">Apri vista filtrata</button>
+          <button class="secondary" data-action="File spostati nella cartella">Organizza file</button>
+          <button class="primary" data-action="Data room scaricata">Scarica data room</button>
         </div>
       `);
     }
@@ -6481,51 +7277,28 @@
           <div class="doc-summary-card" data-doc-filter="sensitive"><strong>${sensitiveCount}</strong><label>Riservati</label><span><b class="kpi-status violet">policy accessi</b></span></div>
         </section>
 
-        <div class="document-intake">
-          <section class="document-upload-panel">
-            <div>
-              <div class="upload-title">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/></svg>
-                <strong>Carica documento</strong>
-              </div>
-              <div class="tags upload-tags">
-                ${tag('Versioning', 'blue')}
-                ${tag('Audit trail', 'ok')}
-                ${tag('Policy accessi', 'violet')}
-                ${tag('Watermark export', 'warn')}
-              </div>
-              <div class="media-actions upload-actions">
-                <button class="primary" data-document-upload="true">Avvia upload</button>
-              </div>
-            </div>
-          </section>
-          <section class="document-tools">
-            <div class="media-search-box">
-              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-              <input id="documentSearchInput" placeholder="Cerca: variante, tavola, contratto, fornitore, WBS">
-            </div>
-            <div class="filter-row">
-              <button class="active" data-document-type="all">Tutti</button>
-              <button data-document-type="pdf">PDF</button>
-              <button data-document-type="dwg">Tavole</button>
-              <button data-document-type="ctr">Contratti</button>
-              <button data-document-type="sal">SAL</button>
-              <button data-document-type="360">Report</button>
-            </div>
-            <div class="ai-suggestion" data-help="L'AI propone collegamenti a sopralluoghi, task, WBS e budget, ma la pubblicazione resta validata da profili autorizzati."><strong>Ricerca documentale intelligente</strong></div>
-          </section>
-        </div>
-
-        <div class="document-archive-tools">
-          <div class="tags">
-            ${tag('Raggruppati per stato', 'blue')}
-            ${tag('Versioni e firme visibili', 'ok')}
-            ${tag('Audit su riga', 'violet')}
+        <div class="document-command-bar">
+          <button class="document-upload-badge" data-document-upload="true" data-help="Upload documento: scegli file, AI propone classificazione e collegamenti, salvi come nuovo documento o nuova versione, poi il PM decide eventuale workflow.">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/></svg>
+          </button>
+          <div class="media-search-box" data-help="Cerca per nome, tipo, fornitore, cantiere, WBS o stato. Dal badge upload: file, AI, versioning e notifica PM per eventuale workflow.">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="documentSearchInput" placeholder="Cerca documenti, WBS, fornitore. Upload: file -> AI -> PM">
+          </div>
+          <div class="filter-row">
+            <button class="active" data-document-type="all">Tutti</button>
+            <button data-document-type="pdf">PDF</button>
+            <button data-document-type="dwg">Tavole</button>
+            <button data-document-type="ctr">Contratti</button>
+            <button data-document-type="sal">SAL</button>
+            <button data-document-type="360">Report</button>
           </div>
           <div class="view-switch">
             <button class="active" type="button">Tabella</button>
+            <button type="button">Card</button>
           </div>
         </div>
+        ${renderFolderStrip('documents', documentFolders)}
 
         <div class="documents-layout">
           <section class="panel">
@@ -6572,6 +7345,18 @@
       };
     }
 
+    function documentDisplayMeta(doc) {
+      const context = documentContext(doc);
+      return [context.area, context.link].filter(Boolean).join(' - ') || doc.status;
+    }
+
+    function documentOwnerDetail(doc) {
+      if (doc.group === 'sensitive') return 'Accesso limitato';
+      if (doc.group === 'review') return 'Workflow PM';
+      if (doc.status.includes('Firmato')) return 'Firma tracciata';
+      return 'Versioning attivo';
+    }
+
     function renderDocumentList(filter = 'all', type = document.querySelector('[data-document-type].active')?.dataset.documentType || 'all', search = document.getElementById('documentSearchInput')?.value || '') {
       const list = document.getElementById('documentList');
       if (!list) return;
@@ -6606,11 +7391,11 @@
           const contextMain = isProjectDocumentView ? context.area : (site || 'Organizzazione');
           const contextSub = isProjectDocumentView ? context.kind : context.area;
           const secondaryMain = isProjectDocumentView ? context.link : doc.owner;
-          const secondarySub = isProjectDocumentView ? doc.owner : context.kind;
+          const secondarySub = isProjectDocumentView ? documentOwnerDetail(doc) : documentOwnerDetail(doc);
           return `
             <article class="doc-row document-row ${headClass}" data-open-document="${escapeAttr(doc.title)}" data-document-meta="${escapeAttr(doc.meta)}" data-document-status="${escapeAttr(doc.status)}" data-document-owner="${escapeAttr(doc.owner)}" data-document-class="${escapeAttr(doc.tagClass)}">
               <div class="doc-icon">${escapeAttr(doc.type)}</div>
-              <div class="document-main"><strong>${escapeAttr(doc.title)}</strong><span>${escapeAttr(doc.meta.replace(/Â·/g, '-'))}</span></div>
+              <div class="document-main"><strong>${escapeAttr(doc.title)}</strong><span>${escapeAttr(documentDisplayMeta(doc))}</span></div>
               <div class="document-cell"><strong>${escapeAttr(contextMain)}</strong><span>${escapeAttr(contextSub)}</span></div>
               <div class="document-cell"><strong>${escapeAttr(secondaryMain)}</strong><span>${escapeAttr(secondarySub)}</span></div>
               <div>${tag(documentVersion(doc), 'blue')}</div>
@@ -6670,6 +7455,84 @@
       `;
     }
 
+    function renderInspections() {
+      const visibleInspections = apiState.source === 'api'
+        ? apiState.inspections.filter(item => dashboardMode !== 'project' || item.site_name === selectedSite.name)
+        : [];
+      const inspectionRows = visibleInspections.length ? visibleInspections.map((item, index) => ({
+        title: item.title || `Sopralluogo ${index + 1}`,
+        site: item.site_name || selectedSite.name,
+        area: item.area || 'Area da classificare',
+        owner: item.created_by || 'PM',
+        status: statusLabel(item.status),
+        statusClass: statusClass(item.status),
+        draft: item.status === 'draft' || index === 0 ? 'Bozza' : 'Consolidato',
+        evidence: item.ai_summary || 'Media e note sincronizzate',
+        due: item.due_at || '48h firma'
+      })) : [
+        { title: 'Isolamento Blocco B', site: 'Residenza Porta Nuova', area: 'Blocco B - Piano 2', owner: 'Luca F.', status: 'Bozza', statusClass: 'warn', draft: 'Bozza PM', evidence: '14 foto, 2 vocali, 3 foto 360', due: 'Da inviare' },
+        { title: 'Facciata nord', site: 'Hotel Aurora Renovation', area: 'Facciata nord', owner: 'Direzione lavori', status: 'In raccolta', statusClass: 'blue', draft: 'Mobile sync', evidence: 'Video + foto QA', due: 'Oggi 18:00' },
+        { title: 'Riunione fornitori', site: 'Green Offices Lambrate', area: 'Fornitori facciata', owner: 'Anna S.', status: 'Da firmare', statusClass: 'violet', draft: 'Verbale v1', evidence: '3 decisioni, 2 task', due: '48h firma' },
+        { title: 'Chiusura cartongessi', site: 'Residenza Porta Nuova', area: 'Blocco B', owner: 'Marco R.', status: 'Chiuso', statusClass: 'ok', draft: 'Audit congelato', evidence: 'Report firmato 4/4', due: '31 mag' }
+      ].filter(item => dashboardMode !== 'project' || item.site === selectedSite.name);
+      const draftCount = inspectionRows.filter(row => row.status === 'Bozza').length;
+      const mobileCount = inspectionRows.filter(row => row.status === 'In raccolta').length;
+      const signatureCount = inspectionRows.filter(row => row.status === 'Da firmare').length;
+      const closedCount = inspectionRows.filter(row => row.status === 'Chiuso').length;
+      document.getElementById('inspections').innerHTML = `
+        <section class="metrics">
+          <div class="metric"><strong>${draftCount}</strong><label>Bozze</label><span><b class="kpi-status warn">da organizzare</b></span></div>
+          <div class="metric"><strong>${mobileCount}</strong><label>In raccolta</label><span><b class="kpi-status blue">mobile/offline</b></span></div>
+          <div class="metric"><strong>${signatureCount}</strong><label>Da firmare</label><span><b class="kpi-status violet">verbali</b></span></div>
+          <div class="metric"><strong>${closedCount}</strong><label>Chiusi</label><span><b class="kpi-status ok">audit congelato</b></span></div>
+        </section>
+
+        <div class="media-command-bar">
+          <button class="inspection-action-badge" data-open-inspection-create="true" data-help="Flow sopralluogo: bozza, partecipanti, raccolta mobile offline, sync, bozza verbale PM, annotazioni, firme e chiusura auditabile.">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="media-search-box" data-help="Cerca sopralluoghi per cantiere, area, partecipante, WBS, media, stato firma o contenuto verbale.">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+            <input placeholder="Cerca sopralluoghi, area, WBS, partecipanti. Flow: bozza -> mobile -> PM -> firme">
+          </div>
+          <div class="filter-row">
+            <button class="active">Tutti</button>
+            <button>Bozze</button>
+            <button>Mobile</button>
+            <button>Firma</button>
+            <button>Chiusi</button>
+          </div>
+          <div class="view-switch">
+            <button class="active" type="button">Tabella</button>
+            <button type="button">Card</button>
+          </div>
+        </div>
+        ${renderFolderStrip('inspections', inspectionFolders)}
+
+        <div class="documents-layout">
+          <section class="panel">
+            <div class="panel-head"><div><h2>Registro sopralluoghi</h2><p>Bozze, raccolta mobile, verbali, firme e audit trail.</p></div></div>
+            <div class="doc-list">
+              <div class="inspection-table-head">
+                <span>Tipo</span><span>Sopralluogo</span><span>Cantiere / area</span><span>Owner</span><span>Fase</span><span>Evidenze / scadenza</span><span>Azioni</span>
+              </div>
+              ${inspectionRows.map(row => `
+                <article class="inspection-row">
+                  <div class="doc-icon">SP</div>
+                  <div class="inspection-cell"><strong>${escapeAttr(row.title)}</strong><span>${escapeAttr(row.draft)}</span></div>
+                  <div class="inspection-cell"><strong>${escapeAttr(dashboardMode === 'project' ? row.area : row.site)}</strong><span>${escapeAttr(dashboardMode === 'project' ? row.site : row.area)}</span></div>
+                  <div class="inspection-cell"><strong>${escapeAttr(row.owner)}</strong><span>PM review</span></div>
+                  <div class="tags">${tag(row.status, row.statusClass)}</div>
+                  <div class="inspection-cell"><strong>${escapeAttr(row.evidence)}</strong><span>${escapeAttr(row.due)}</span></div>
+                  <div class="document-actions"><button class="secondary" data-open-inspection-attachment="true">Apri</button></div>
+                </article>
+              `).join('')}
+            </div>
+          </section>
+        </div>
+      `;
+    }
+
     function renderSchedule() {
       const scheduleContextSite = dashboardMode === 'project' ? selectedSite.name : selectedScheduleSite;
       const filteredWbs = scheduleContextSite === 'all' ? wbsItems : wbsItems.filter(item => item.site === scheduleContextSite);
@@ -6680,27 +7543,25 @@
       const overrun = totalForecast - totalBudget;
       const visibleScheduleRows = selectedScheduleSite === 'all' ? scheduleRows : scheduleRows.filter(row => row[0] === selectedScheduleSite);
       document.getElementById('schedule').innerHTML = `
-        <div class="schedule-toolbar">
-          <div class="left-actions">
-            <input id="boqUploadInput" type="file" accept=".pdf,.xls,.xlsx,.csv" hidden>
-            <button class="primary" data-boq-upload="true">
-              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-              Importa computo
-            </button>
-            <button class="secondary" data-ai-generate-schedule="true">Genera WBS + crono</button>
+        <div class="media-command-bar">
+          <input id="boqUploadInput" type="file" accept=".pdf,.xls,.xlsx,.csv" hidden>
+          <button class="schedule-action-badge" data-boq-upload="true" data-help="Importa computo PDF/XLS: l'AI estrae voci, quantita, importi, genera WBS, cronoprogramma e forecast budget da validare.">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/><path d="M4 19h16"/></svg>
+          </button>
+          <div class="media-search-box" data-help="Cerca WBS, lavorazioni, fornitori, settimane, budget o scostamenti. Le WBS restano trascinabili sulla timeline.">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+            <input placeholder="Cerca WBS, lavorazioni, budget. Import: computo -> AI -> crono">
           </div>
-          <div class="right-actions">
-            <select id="scheduleSiteSelect" ${dashboardMode === 'project' ? 'disabled' : ''}>
-              <option value="all" ${scheduleContextSite === 'all' ? 'selected' : ''}>Tutti i cantieri</option>
-              ${sites.map(site => `<option value="${site.name}" ${scheduleContextSite === site.name ? 'selected' : ''}>${site.name}</option>`).join('')}
-            </select>
-            <div class="schedule-tabs">
-              ${[
-                ['wbs', 'WBS'],
-                ['planning', 'Pianificazione'],
-                ['budget', 'Budget']
-              ].map(tab => `<button class="${activeScheduleView === tab[0] ? 'active' : ''}" data-schedule-view="${tab[0]}">${tab[1]}</button>`).join('')}
-            </div>
+          <select id="scheduleSiteSelect" ${dashboardMode === 'project' ? 'disabled' : ''}>
+            <option value="all" ${scheduleContextSite === 'all' ? 'selected' : ''}>Tutti i cantieri</option>
+            ${sites.map(site => `<option value="${site.name}" ${scheduleContextSite === site.name ? 'selected' : ''}>${site.name}</option>`).join('')}
+          </select>
+          <div class="schedule-tabs">
+            ${[
+              ['wbs', 'WBS'],
+              ['planning', 'Pianificazione'],
+              ['budget', 'Budget']
+            ].map(tab => `<button class="${activeScheduleView === tab[0] ? 'active' : ''}" data-schedule-view="${tab[0]}">${tab[1]}</button>`).join('')}
           </div>
         </div>
 
@@ -6751,8 +7612,22 @@
             <section class="panel">
               <div class="panel-head"><div><h2>Computo importato</h2></div>${tag('PDF/XLS','violet','Base economica e quantitativa per AI, WBS e budget: da PDF o XLS vengono estratte voci, quantità, importi e categorie.')}</div>
               <div class="boq-drop">
-                <strong>${scheduleSource === 'api' ? 'Dati caricati dal backend' : 'Simulazione computo locale pronta'}</strong>
-                <div class="tags">${tag('OCR')}${tag('Excel','blue')}${tag('Validazione PM','warn')}</div>
+                <div class="boq-file-card">
+                  <div class="boq-file-icon">${escapeAttr(boqFileInfo.source)}</div>
+                  <div class="boq-file-main">
+                    <strong>${escapeAttr(boqFileInfo.name)}</strong>
+                    <span>${scheduleSource === 'api' ? 'Dati caricati dal backend' : 'File dimostrativo locale'} Â· ${escapeAttr(boqFileInfo.version)} Â· caricato da ${escapeAttr(boqFileInfo.uploadedBy)} Â· ${escapeAttr(boqFileInfo.uploadedAt)}</span>
+                    <div class="tags">${tag(boqFileInfo.status, boqFileInfo.statusClass)}${tag('Versioning attivo','blue')}${tag('Audit import','violet')}</div>
+                  </div>
+                </div>
+                <div class="boq-file-grid">
+                  <div><label>Righe</label><strong>${boqFileInfo.rows}</strong></div>
+                  <div><label>Importo</label><strong>${formatCurrency(boqFileInfo.amount)}</strong></div>
+                  <div><label>WBS collegate</label><strong>${filteredWbs.length}</strong></div>
+                  <div><label>Versione</label><strong>${escapeAttr(boqFileInfo.version)}</strong></div>
+                </div>
+                <div class="tags">${tag('OCR')}${tag('Excel','blue')}${tag('Mapping WBS','ok')}${tag('Validazione PM','warn')}</div>
+                <small>${escapeAttr(boqFileInfo.audit)}. Il report cronoprogramma include computo, WBS, sottoazioni, budget, forecast e scostamenti collegati.</small>
               </div>
             </section>
             <section class="panel">
@@ -7112,14 +7987,25 @@
       return `<span class="issue-origin-icons">${icons.map(([label, paths]) => `<span class="issue-origin-icon" title="${label}"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${paths}</svg></span>`).join('')}</span>`;
     }
 
+    function compactIssueActionLabel(label) {
+      return ({
+        'Prendi in carico': 'Prendi',
+        'Avvia lavorazione': 'Avvia',
+        'Proponi chiusura': 'Chiudi',
+        'Invia a validazione': 'Valida',
+        'Valida e chiudi': 'Chiudi',
+        'Sblocca': 'Sblocca'
+      })[label] || label;
+    }
+
     function renderIssueCard(item) {
       const [statusLabelText,, statusClassName, actionLabel, nextStatus] = issueStatusMeta(item.status);
       const contextLine = dashboardMode === 'project' ? '' : item.site;
       const actionButton = actionLabel
-        ? `<button class="primary-mini" data-issue-transition="${item.id}" data-next-status="${nextStatus}">${actionLabel}</button>`
+        ? `<button class="primary-mini" title="${escapeAttr(actionLabel)}" data-issue-transition="${item.id}" data-next-status="${nextStatus}">${compactIssueActionLabel(actionLabel)}</button>`
         : '';
       const rejectButton = item.status === 'validation'
-        ? `<button data-issue-transition="${item.id}" data-next-status="in_progress">Respingi</button>`
+        ? `<button title="Respingi e rimanda in lavorazione" data-issue-transition="${item.id}" data-next-status="in_progress">Respingi</button>`
         : '';
       return `
         <article class="task-card issue-row-card" data-open-issue="${item.id}">
@@ -7168,17 +8054,6 @@
         </article>
       `;
       document.getElementById('issues').innerHTML = `
-        <div class="issue-toolbar">
-          <div>
-            <h2>Flow apertura - validazione - chiusura</h2>
-            <div class="tags">${tag('Flow apertura', 'blue', 'Ogni riga conserva origine, creatore, assegnatario, scadenza, evidenze, impatto e audit trail. Passa dallo stato aperto alla validazione fino alla chiusura tracciata.')}</div>
-          </div>
-          <button class="primary" data-create-issue="true">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-            Nuovo task / issue
-          </button>
-        </div>
-
         <section class="metrics">
           <div class="metric"><strong>${openCount}</strong><label>Aperti</label><span><b class="kpi-status warn">da gestire</b></span></div>
           <div class="metric"><strong>${validationCount}</strong><label>In validazione</label><span><b class="kpi-status violet">PM / validator</b></span></div>
@@ -7186,17 +8061,30 @@
           <div class="metric"><strong>${closedCount}</strong><label>Chiusi</label><span><b class="kpi-status ok">audit congelato</b></span></div>
         </section>
 
-        <div class="issue-filter-row">
+        <div class="media-command-bar issue-command-bar">
+          <button class="issue-action-badge" data-create-issue="true" data-help="Crea task o issue: origine, creatore, assegnatario, scadenza, stato, WBS, impatto e audit trail vengono tracciati.">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="media-search-box" data-help="Cerca task e issue per cantiere, origine, assegnatario, WBS, scadenza, stato o impatto. Le colonne sono ordinabili.">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+            <input placeholder="Cerca task, issue, WBS, assegnatario. Flow: apertura -> lavoro -> validazione">
+          </div>
+          <div class="issue-filter-row">
           ${filterOptions.map(([status, label, count]) => `
             <button class="${activeIssueStatusFilter === status ? 'active' : ''}" data-issue-filter="${status}">
               ${label}<span class="issue-count">${count}</span>
             </button>
           `).join('')}
+          </div>
+          <div class="view-switch">
+            <button class="active" type="button">Tabella</button>
+            <button type="button">Card</button>
+          </div>
         </div>
 
         <section class="issue-strip-panel">
           <div class="issue-strip-head">
-            <h2>${activeFilterLabel}</h2>
+            <h2>Registro task / issue - ${activeFilterLabel}</h2>
             <span>${filteredItems.length} elementi${dashboardMode === 'portfolio' ? ' - ogni card riporta il cantiere' : ''}</span>
           </div>
           <div class="issue-card-strip">
@@ -7460,6 +8348,13 @@
             </select>
           </div>
           <div class="form-field">
+            <label>Cartella</label>
+            <select>
+              <option>Data room / cartella da scegliere</option>
+              ${documentFolders.map(folder => `<option>${folder.name}</option>`).join('')}
+            </select>
+          </div>
+          <div class="form-field">
             <label>Visibilita iniziale</label>
             <select>
               <option>Area temporanea PM</option>
@@ -7491,8 +8386,9 @@
         </div>
         <div class="audit-list">
           <div class="audit-row"><div class="avatar">1</div><div><strong>File</strong><span>Selezione documento, riconoscimento formato e associazione al cantiere.</span></div></div>
-          <div class="audit-row"><div class="avatar">2</div><div><strong>Versioning</strong><span>Nuovo documento, bozza o nuova versione vengono salvati nello storico.</span></div></div>
-          <div class="audit-row"><div class="avatar">3</div><div><strong>Presa in carico PM</strong><span>Dopo il caricamento il PM decide se aprire revisione, approvazione gerarchica o semplice archiviazione.</span></div></div>
+          <div class="audit-row"><div class="avatar">2</div><div><strong>Cartella / data room</strong><span>Il documento viene organizzato in una cartella scaricabile o riservata.</span></div></div>
+          <div class="audit-row"><div class="avatar">3</div><div><strong>Versioning</strong><span>Nuovo documento, bozza o nuova versione vengono salvati nello storico.</span></div></div>
+          <div class="audit-row"><div class="avatar">4</div><div><strong>Presa in carico PM</strong><span>Dopo il caricamento il PM decide se aprire revisione, approvazione gerarchica o semplice archiviazione.</span></div></div>
         </div>
         <div class="detail-actions">
           <button class="secondary" data-action="Selezione file documento">Scegli file</button>
@@ -7580,7 +8476,7 @@
       `);
     }
     function openInspectionCreateModal() {
-      openModal('Nuovo sopralluogo', 'Crea una sessione di raccolta prove e report', `
+      openModal('Bozza sopralluogo', 'Crea una bozza organizzativa prima della raccolta mobile e del verbale', `
         <div class="form-grid">
           <div class="field">
             <label>Cantiere</label>
@@ -7614,6 +8510,15 @@
           <div class="field">
             <label>Data</label>
             <input type="date" value="2026-05-29">
+          </div>
+          <div class="field">
+            <label>Fase iniziale</label>
+            <select>
+              <option>Bozza - organizzazione sopralluogo</option>
+              <option>Programmato - pronto per invio partecipanti</option>
+              <option>In raccolta mobile</option>
+            </select>
+            <span class="field-hint">La bozza resta modificabile finche il PM non invia il sopralluogo ai partecipanti.</span>
           </div>
           <div class="field">
             <label>Tempo massimo annotazioni e firma</label>
@@ -7743,7 +8648,7 @@
           <div class="modal-actions">
             <button class="secondary" data-action="Template variabili aggiornato">Salva template</button>
             <button class="secondary" data-action="Bozza sopralluogo salvata">Salva bozza</button>
-            <button class="primary" data-action="Sopralluogo creato">Crea sopralluogo</button>
+            <button class="primary" data-action="Bozza inviata ai partecipanti">Conferma e invia</button>
           </div>
         </div>
       `);
@@ -8041,6 +8946,7 @@
     }
 
     function openFloatingChat() {
+      resetFloatingChatPosition();
       document.getElementById('fieldChat').classList.add('open');
       document.getElementById('fieldChat').classList.remove('minimized');
       document.getElementById('chatAlert').classList.remove('show');
@@ -8051,6 +8957,7 @@
     function minimizeFloatingChat() {
       document.getElementById('fieldChat').classList.remove('open');
       document.getElementById('fieldChat').classList.add('minimized');
+      resetFloatingChatPosition();
     }
 
     function showChatAlert(title, text) {
@@ -8059,6 +8966,89 @@
       document.getElementById('chatAlert').classList.add('show');
       chatUnreadCount += 1;
       renderFloatingChat();
+    }
+
+    function applyStoredChatPosition() {
+      const chat = document.getElementById('fieldChat');
+      const stored = localStorage.getItem('sitepulse_chat_position_v2');
+      if (!chat || !stored) return;
+      try {
+        const position = JSON.parse(stored);
+        const width = chat.offsetWidth || 360;
+        const height = chat.offsetHeight || 80;
+        const left = Math.max(8, Math.min(window.innerWidth - width - 8, Number(position.left)));
+        const top = Math.max(8, Math.min(window.innerHeight - height - 8, Number(position.top)));
+        chat.style.left = `${left}px`;
+        chat.style.top = `${top}px`;
+        chat.style.right = 'auto';
+        chat.style.bottom = 'auto';
+      } catch {
+        localStorage.removeItem('sitepulse_chat_position_v2');
+      }
+    }
+
+    function resetFloatingChatPosition() {
+      const chat = document.getElementById('fieldChat');
+      if (!chat) return;
+      localStorage.removeItem('sitepulse_chat_position_v2');
+      chat.style.left = 'auto';
+      chat.style.top = 'auto';
+      chat.style.right = window.innerWidth <= 760 ? '12px' : '18px';
+      chat.style.bottom = window.innerWidth <= 760 ? '86px' : '18px';
+    }
+
+    function enableFloatingChatDrag() {
+      const chat = document.getElementById('fieldChat');
+      const handles = [document.getElementById('chatOpenButton'), document.getElementById('chatDragHandle')].filter(Boolean);
+      if (!chat || !handles.length) return;
+      resetFloatingChatPosition();
+
+      handles.forEach(handle => {
+        handle.addEventListener('pointerdown', event => {
+          if (event.target.closest('button, input, textarea, select, a')) return;
+          if (event.button !== undefined && event.button !== 0) return;
+          const rect = chat.getBoundingClientRect();
+          const startX = event.clientX;
+          const startY = event.clientY;
+          const startLeft = rect.left;
+          const startTop = rect.top;
+          let moved = false;
+          chat.classList.add('dragging');
+          handle.setPointerCapture?.(event.pointerId);
+
+          const onMove = moveEvent => {
+            const dx = moveEvent.clientX - startX;
+            const dy = moveEvent.clientY - startY;
+            if (Math.abs(dx) + Math.abs(dy) > 5) moved = true;
+            const width = chat.offsetWidth;
+            const height = chat.offsetHeight;
+            const left = Math.max(8, Math.min(window.innerWidth - width - 8, startLeft + dx));
+            const top = Math.max(8, Math.min(window.innerHeight - height - 8, startTop + dy));
+            chat.style.left = `${left}px`;
+            chat.style.top = `${top}px`;
+            chat.style.right = 'auto';
+            chat.style.bottom = 'auto';
+          };
+
+          const onUp = upEvent => {
+            handle.releasePointerCapture?.(upEvent.pointerId);
+            handle.removeEventListener('pointermove', onMove);
+            handle.removeEventListener('pointerup', onUp);
+            handle.removeEventListener('pointercancel', onUp);
+            chat.classList.remove('dragging');
+            const finalRect = chat.getBoundingClientRect();
+            localStorage.setItem('sitepulse_chat_position_v2', JSON.stringify({ left: finalRect.left, top: finalRect.top }));
+            if (moved) {
+              window.chatDragSuppressClick = true;
+              setTimeout(() => { window.chatDragSuppressClick = false; }, 0);
+            }
+          };
+
+          handle.addEventListener('pointermove', onMove);
+          handle.addEventListener('pointerup', onUp);
+          handle.addEventListener('pointercancel', onUp);
+        });
+      });
     }
 
     function wireEvents() {
@@ -8118,9 +9108,19 @@
         showToast(`Vista cantiere: ${selectedSite.name}`);
       });
 
-      document.getElementById('chatOpenButton').addEventListener('click', openFloatingChat);
+      document.getElementById('chatOpenButton').addEventListener('click', event => {
+        if (window.chatDragSuppressClick) {
+          event.preventDefault();
+          return;
+        }
+        openFloatingChat();
+      });
       document.getElementById('chatAlert').addEventListener('click', openFloatingChat);
-      document.getElementById('chatMinimize').addEventListener('click', minimizeFloatingChat);
+      document.getElementById('chatMinimize').addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        minimizeFloatingChat();
+      });
       document.getElementById('chatChannelList').addEventListener('click', event => {
         const button = event.target.closest('[data-chat-site]');
         if (!button) return;
@@ -8141,6 +9141,14 @@
       });
 
       document.body.addEventListener('click', event => {
+        const chatClose = event.target.closest('#chatMinimize');
+        if (chatClose) {
+          event.preventDefault();
+          event.stopPropagation();
+          minimizeFloatingChat();
+          return;
+        }
+
         const reportExport = event.target.closest('[data-open-report-export]');
         if (reportExport) {
           openReportExportModal();
@@ -8155,6 +9163,18 @@
 
         const action = event.target.closest('[data-action]');
         if (action) showToast(action.dataset.action);
+
+        const createFolder = event.target.closest('[data-create-folder]');
+        if (createFolder) {
+          openFolderCreateFlow(createFolder.dataset.createFolder);
+          return;
+        }
+
+        const openFolder = event.target.closest('[data-open-folder]');
+        if (openFolder) {
+          openFolderDetail(openFolder);
+          return;
+        }
 
         const issueFilter = event.target.closest('[data-issue-filter]');
         if (issueFilter) {
@@ -8683,6 +9703,7 @@
     renderPermissions();
     renderFloatingChat();
     wireEvents();
+    enableFloatingChatDrag();
     const initialPage = location.hash ? location.hash.slice(1) : 'dashboard';
     openPortfolio();
     setPage(initialPage);
