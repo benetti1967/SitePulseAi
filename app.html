@@ -318,6 +318,127 @@
       padding: 0 12px;
     }
 
+    .account-pill {
+      min-height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      color: #263f47;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 12px 0 8px;
+      cursor: pointer;
+      max-width: 310px;
+    }
+
+    .account-pill:hover {
+      border-color: #8eb9b4;
+      box-shadow: 0 0 0 3px rgba(18, 105, 96, .08);
+    }
+
+    .profile-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 45;
+      background: rgba(18, 32, 37, .24);
+      opacity: 0;
+      pointer-events: none;
+      transition: .18s ease;
+    }
+
+    .profile-backdrop.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .profile-drawer {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: min(390px, 100vw);
+      height: 100%;
+      background: #f8fafb;
+      border-left: 1px solid var(--line);
+      box-shadow: -24px 0 70px rgba(18, 32, 37, .18);
+      transform: translateX(100%);
+      transition: .2s ease;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .profile-backdrop.show .profile-drawer {
+      transform: translateX(0);
+    }
+
+    .profile-head {
+      min-height: 76px;
+      padding: 16px;
+      background: white;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .profile-head-main {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .profile-head-main strong,
+    .profile-section strong {
+      display: block;
+      font-size: 15px;
+    }
+
+    .profile-head-main span,
+    .profile-section span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .profile-body {
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+      align-content: start;
+      overflow: auto;
+    }
+
+    .profile-section {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      padding: 12px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .profile-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      color: #43515f;
+      font-size: 13px;
+    }
+
+    .profile-footer {
+      padding: 14px;
+      border-top: 1px solid var(--line);
+      background: white;
+      display: grid;
+      gap: 8px;
+    }
+
+    .profile-footer button {
+      width: 100%;
+    }
+
     .view {
       display: none;
     }
@@ -4443,6 +4564,9 @@
 
     .issue-person-cell {
       color: #43515f;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
     }
 
     .issue-row-card .tags {
@@ -4502,6 +4626,66 @@
     .role-card h3 {
       margin: 0 0 10px;
       font-size: 14px;
+    }
+
+    .role-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .role-card-head h3 {
+      margin: 0;
+    }
+
+    .role-badge {
+      min-height: 24px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 4px 9px;
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1.2;
+      white-space: nowrap;
+      background: #eef4f3;
+      color: #43515f;
+    }
+
+    .role-badge.admin,
+    .role-badge.pm {
+      background: #eaf4ff;
+      color: #125f8c;
+    }
+
+    .role-badge.site,
+    .role-badge.foreman {
+      background: #eef8f6;
+      color: var(--brand);
+    }
+
+    .role-badge.supplier {
+      background: #fff8e8;
+      color: #805306;
+    }
+
+    .role-badge.consultant {
+      background: #f0eafa;
+      color: #61419b;
+    }
+
+    .role-badge.client {
+      background: #fff0ee;
+      color: #a33a2f;
+    }
+
+    .role-badge.viewer {
+      background: #eef1f2;
+      color: #43515f;
     }
 
     .team-directory {
@@ -4646,31 +4830,37 @@
     .chat-alert {
       display: none;
       margin-left: auto;
-      max-width: 330px;
+      width: min(360px, calc(100vw - 96px));
       border: 1px solid #f0d6a8;
-      border-radius: 8px;
+      border-radius: 14px;
       background: #fff8e8;
       box-shadow: var(--shadow);
-      padding: 10px 12px;
+      padding: 9px 12px;
       color: #513b15;
       cursor: pointer;
+      align-items: center;
+      gap: 10px;
     }
 
     .chat-alert.show {
-      display: block;
+      display: flex;
     }
 
     .chat-alert strong {
       display: block;
       font-size: 13px;
-      margin-bottom: 3px;
+      margin-bottom: 0;
+      white-space: nowrap;
     }
 
     .chat-alert span {
       display: block;
       font-size: 12px;
       color: #735b2b;
-      line-height: 1.35;
+      line-height: 1.25;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .chat-window {
@@ -4990,16 +5180,12 @@
         order: 2;
       }
       .icon-btn,
-      #logoutButton {
+      .account-pill {
         width: 36px;
         padding: 0;
       }
-      #logoutButton {
-        font-size: 0;
-      }
-      #logoutButton:after {
-        content: "Es";
-        font-size: 12px;
+      .account-pill #accountLabel {
+        display: none;
       }
       .actions .primary {
         width: 42px;
@@ -5158,10 +5344,10 @@
           <div class="subtitle" id="pageSubtitle">Sintesi operativa e finanziaria</div>
         </div>
         <div class="actions">
-          <div class="account-pill" id="accountPill">
+          <button class="account-pill" id="accountPill" type="button" title="Apri profilo">
             <span class="avatar" id="accountAvatar">PM</span>
             <span id="accountLabel">Demo</span>
-          </div>
+          </button>
           <select class="context-select" id="globalSiteSelect" title="Seleziona vista">
             <option value="portfolio">Portfolio</option>
           </select>
@@ -5176,7 +5362,6 @@
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3v4a2 2 0 0 0 2 2h4"/><path d="M5 3h9l5 5v13H5z"/><path d="M8 17h8M8 13h8"/></svg>
             Scarica report
           </button>
-          <button class="secondary" id="logoutButton">Esci</button>
         </div>
       </header>
 
@@ -5231,6 +5416,51 @@
   </div>
 
   <div class="toast" id="toast"></div>
+  <div class="profile-backdrop" id="profileBackdrop" aria-hidden="true">
+    <aside class="profile-drawer" role="dialog" aria-label="Profilo utente">
+      <header class="profile-head">
+        <div class="profile-head-main">
+          <span class="avatar" id="profileAvatar">PM</span>
+          <div>
+            <strong id="profileName">Paola Manager</strong>
+            <span id="profileRole">Project Manager</span>
+          </div>
+        </div>
+        <button class="icon-btn" id="profileClose" type="button" title="Chiudi">×</button>
+      </header>
+      <div class="profile-body">
+        <section class="profile-section">
+          <strong>Anagrafica</strong>
+          <div class="profile-row"><span>Email</span><b id="profileEmail">pm.demo@sitepulse.ai</b></div>
+          <div class="profile-row"><span>Organizzazione</span><b id="profileOrganization">UrbanBuild Group</b></div>
+          <div class="profile-row"><span>Azienda</span><b id="profileCompany">UrbanBuild Group</b></div>
+          <div class="profile-row"><span>Telefono</span><b id="profilePhone">+39 02 0000 0000</b></div>
+        </section>
+        <section class="profile-section">
+          <strong>Contesto attivo</strong>
+          <div class="profile-row"><span>Vista</span><b id="profileView">Portfolio</b></div>
+          <div class="profile-row"><span>Cantiere</span><b id="profileSite">Tutti i cantieri</b></div>
+        </section>
+        <section class="profile-section">
+          <strong>Permessi</strong>
+          <div class="profile-row"><span>Ruolo</span><b id="profilePermissionRole">PM</b></div>
+          <div class="profile-row"><span>Cantieri abilitati</span><b id="profileAllowedSites">4</b></div>
+          <div class="tags" id="profileAllowedSiteTags"></div>
+        </section>
+        <section class="profile-section">
+          <strong>Sessione</strong>
+          <div class="profile-row"><span>Stato account</span><b id="profileAccountStatus">Attivo</b></div>
+          <div class="profile-row"><span>Ultimo accesso</span><b id="profileLastLogin">Oggi 09:12</b></div>
+          <span>Nel backend reale qui vengono mostrati identity provider, tenant, ultimo accesso e policy applicata.</span>
+        </section>
+      </div>
+      <footer class="profile-footer">
+        <button class="secondary" data-open-page="team" data-open-label="Team di progetto">Team di progetto</button>
+        <button class="secondary" data-open-page="permissions" data-open-label="Utenti e Permessi">Utenti e Permessi</button>
+        <button class="primary" id="logoutButton">Esci</button>
+      </footer>
+    </aside>
+  </div>
   <div class="help-tooltip" id="helpTooltip"></div>
   <div class="modal-backdrop" id="modalBackdrop">
     <div class="modal">
@@ -5828,6 +6058,116 @@
       }
     ];
 
+    function slugId(value) {
+      return String(value || 'item')
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-zA-Z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        .toLowerCase();
+    }
+
+    function projectConversationChannels(siteName = selectedSite.name) {
+      const siteSlug = slugId(siteName);
+      const templates = {
+        'Residenza Porta Nuova': [
+          ['blocco-b', 'B', 'Blocco B', 'Foto + vocale - 10:42', '18', 'blue', 'Squadra impianti - 12 partecipanti', [
+            ['Luca Ferri', 'Foto e vocale: manca isolamento termico nel piano 2. Ho lasciato i dettagli.', 'in'],
+            ['SitePulseAi AI', 'Creo issue e assegno a Marco R. con scadenza domani.', 'out'],
+            ['Marco R.', 'Ricevuto. Verifico con fornitore entro pranzo.', 'in']
+          ], [
+            ['IS', 'Issue - materiale mancante', 'Priorita alta', 'Alta', 'risk'],
+            ['MR', 'Assegnato a Marco R.', 'Scadenza domani', 'Task', ''],
+            ['EUR', 'Impatto forecast', 'Possibile extra costo EUR 1.200', 'Budget', 'warn']
+          ]],
+          ['sicurezza', 'S', 'Sicurezza', 'Checklist ponteggi', '3', 'warn', 'HSE - capocantiere - fornitori in area', [
+            ['Anna S.', 'Checklist ponteggi aggiornata, manca foto parapetto lato nord.', 'in'],
+            ['SitePulseAi AI', 'Ho preparato task verifica parapetto con priorita media.', 'out']
+          ], [
+            ['HSE', 'Checklist ponteggi', '1 punto aperto', 'Safety', 'warn'],
+            ['DOC', 'Verbale sicurezza', 'Bozza aggiornabile', 'Doc', 'blue']
+          ]]
+        ],
+        'Green Offices Lambrate': [
+          ['facciata-est', 'F', 'Facciata est', 'Foto avanzamento - 09:20', '6', 'blue', 'Facciate - DL - fornitore rivestimenti', [
+            ['Sara M.', 'Caricate foto avanzamento facciata est, montanti completati al piano 3.', 'in'],
+            ['SitePulseAi AI', 'Progress aggiornato al 54%. Nessuna issue critica nuova.', 'out'],
+            ['AluSystem', 'Confermiamo posa pannelli domani mattina.', 'in']
+          ], [
+            ['AV', 'Avanzamento facciata', 'Progress 54%', 'WBS', 'blue'],
+            ['QA', 'Controllo montanti', 'Foto collegate a sopralluogo', 'Media', ''],
+            ['BUD', 'Forecast invariato', 'Nessun extra costo', 'OK', 'ok']
+          ]],
+          ['cartongessi', 'C', 'Cartongessi', 'Chiusura locali tecnici', '4', 'warn', 'Interni - site manager - subappaltatore', [
+            ['PM', 'La chiusura cartongessi va riallineata con il passaggio impianti.', 'in'],
+            ['SitePulseAi AI', 'Propongo spostamento sottoazione su settimana 27 e notifica fornitore.', 'out']
+          ], [
+            ['WBS', '2.1 Chiusura cartongessi', 'Rischio +2 giorni', 'Tempo', 'warn'],
+            ['FOR', 'Subappaltatore', 'In attesa conferma', 'Task', '']
+          ]]
+        ],
+        'Hotel Aurora Renovation': [
+          ['lobby', 'L', 'Lobby', 'Finiture e varianti', '5', 'violet', 'DL - interior - committente', [
+            ['Direzione lavori', 'Serve conferma sulle finiture lobby entro oggi.', 'in'],
+            ['SitePulseAi AI', 'Bozza verbale pronta con 3 decisioni e 2 task.', 'out']
+          ], [
+            ['VAR', 'Variante finiture', 'In approvazione', 'Doc', 'violet'],
+            ['PM', 'Committente', 'Risposta richiesta', 'Workflow', 'warn']
+          ]],
+          ['impianti-hotel', 'I', 'Impianti', 'Collaudi camere', '2', 'blue', 'MEP - collaudi - manutenzione', [
+            ['Tecnico MEP', 'Collaudo piano 2 completato, allego checklist.', 'in'],
+            ['SitePulseAi AI', 'Checklist collegata al SAL e al report collaudi.', 'out']
+          ], [
+            ['SAL', 'Collaudi piano 2', 'Collegato al budget', 'SAL', 'blue'],
+            ['QA', 'Checklist', 'Archiviata', 'OK', 'ok']
+          ]]
+        ],
+        'Logistica Nord Hub': [
+          ['computo', 'C', 'Computo', 'Voci da verificare', '12', 'warn', 'PM - planner - computista', [
+            ['PM', 'Computo importato, 12 voci da verificare prima della baseline.', 'in'],
+            ['SitePulseAi AI', 'Ho generato le prime WBS e il budget preliminare.', 'out']
+          ], [
+            ['XLS', 'Computo importato', '42 righe caricate', 'Import', 'blue'],
+            ['PM', 'Validazione computo', 'Richiesta conferma', 'Review', 'warn']
+          ]],
+          ['area-ingresso', 'A', 'Area ingresso', 'Foto logistica', '4', 'blue', 'Capocantiere - sicurezza - trasporti', [
+            ['Site manager', 'Caricate foto area ingresso nord per layout mezzi.', 'in'],
+            ['SitePulseAi AI', 'Creo sopralluogo di avvio e task segnaletica.', 'out']
+          ], [
+            ['LOG', 'Layout ingresso', 'Da organizzare', 'Task', 'warn'],
+            ['IMG', 'Foto area nord', 'Collegate', 'Media', 'blue']
+          ]]
+        ]
+      };
+      const rows = templates[siteName] || templates['Residenza Porta Nuova'];
+      return rows.map(([id, avatar, title, subtitle, badge, badgeClass, detailSubtitle, messages, context]) => ({
+        id: `${siteSlug}-${id}`,
+        avatar,
+        title,
+        subtitle,
+        badge,
+        badgeClass,
+        detailTitle: `Canale: ${title}`,
+        detailSubtitle: `${siteName} - ${detailSubtitle}`,
+        messages,
+        context
+      }));
+    }
+
+    function visibleConversationChannels() {
+      if (dashboardMode === 'project') return projectConversationChannels(selectedSite.name);
+      return conversationChannels.map(channel => ({
+        ...channel,
+        id: `portfolio-${channel.id}`,
+        detailSubtitle: `Portfolio - ${channel.detailSubtitle}`,
+        subtitle: `Aggregato - ${channel.subtitle}`
+      }));
+    }
+
+    function resetActiveConversationForContext() {
+      const channels = visibleConversationChannels();
+      activeConversation = channels[0]?.id || activeConversation;
+    }
+
     function escapeAttr(value) {
       return String(value || '')
         .replace(/&/g, '&amp;')
@@ -5838,6 +6178,57 @@
 
     function tag(text, cls = '', help = '') {
       return `<span class="tag ${cls}"${help ? ` data-help="${escapeAttr(help)}"` : ''}>${text}</span>`;
+    }
+
+    function roleBadge(role = '', compact = false) {
+      const value = String(role || '').toLowerCase();
+      let cls = 'viewer';
+      let label = role || 'Viewer';
+      if (value.includes('super') || value.includes('admin')) {
+        cls = 'admin';
+        label = compact ? 'Admin' : role;
+      } else if (value.includes('project manager') || value === 'pm' || value.includes('pm')) {
+        cls = 'pm';
+        label = compact ? 'PM' : role;
+      } else if (value.includes('capocantiere') || value.includes('site manager')) {
+        cls = value.includes('capocantiere') ? 'foreman' : 'site';
+        label = compact ? (value.includes('capocantiere') ? 'Capo' : 'Site') : role;
+      } else if (value.includes('fornitore') || value.includes('subappaltatore')) {
+        cls = 'supplier';
+        label = compact ? 'Forn.' : role;
+      } else if (value.includes('consulente') || value.includes('direzione') || value.includes('hse') || value.includes('validatore')) {
+        cls = 'consultant';
+        label = compact ? 'Cons.' : role;
+      } else if (value.includes('committente') || value.includes('investitore')) {
+        cls = 'client';
+        label = compact ? 'Client' : role;
+      }
+      return `<span class="role-badge ${cls}" title="${escapeAttr(role)}">${escapeAttr(label)}</span>`;
+    }
+
+    function roleForPerson(value = '') {
+      const text = String(value || '').toLowerCase();
+      const member = projectTeamMembers?.find(person => {
+        const first = person.name.split(' ')[0]?.toLowerCase();
+        const initials = person.initials?.toLowerCase();
+        return text.includes(person.name.toLowerCase())
+          || (first && text.includes(first))
+          || (initials && text === initials)
+          || text.includes(person.company.toLowerCase().split(' ')[0]);
+      });
+      if (member) return member.role;
+      if (text.includes('ai')) return 'AI backend';
+      if (text === 'pm' || text.includes('project manager')) return 'Project Manager';
+      if (text.includes('direzione') || text === 'dl') return 'Validatore tecnico';
+      if (text.includes('fornitore') || text.includes('termocasa') || text.includes('alusystem')) return 'Fornitore';
+      if (text.includes('consulente') || text.includes('hse')) return 'Consulente';
+      if (text.includes('committente')) return 'Committente';
+      return '';
+    }
+
+    function personWithRoleBadge(name = '') {
+      const role = roleForPerson(name);
+      return `<span class="issue-person-name">${escapeAttr(name)}</span>${role ? roleBadge(role, true) : ''}`;
     }
 
     function showToast(text) {
@@ -6004,7 +6395,7 @@
                   <div class="team-report-top">
                     <div>
                       <h3>${escapeAttr(member.name)}</h3>
-                      <p>${escapeAttr(member.role)}</p>
+                      <p>${roleBadge(member.role, true)}</p>
                     </div>
                     <span class="pill ${escapeAttr(member.statusClass || '')}">${escapeAttr(member.status || 'n/d')}</span>
                   </div>
@@ -7046,11 +7437,11 @@
                   <span>${mediaKindLabel(item.kind)} - ${item.date}</span>
                 </div>
                 ${isProjectMediaView
-                  ? `<div class="media-cell"><strong>${item.uploadedBy}</strong><span>${item.confidence} AI</span></div>
+                ? `<div class="media-cell"><strong>${personWithRoleBadge(item.uploadedBy)}</strong><span>${item.confidence} AI</span></div>
                      <div class="media-cell"><strong>${item.target}</strong><span>${item.tags.slice(0, 2).join(' - ')}</span></div>
                      <div class="media-cell">${tag(mediaConnectionLabel(item), item.tagClass)}<span>${item.suggestion}</span></div>`
                   : `<div class="media-cell"><strong>${item.site}</strong><span>${item.target}</span></div>
-                     <div class="media-cell"><strong>${item.uploadedBy}</strong><span>${item.confidence} AI</span></div>
+                     <div class="media-cell"><strong>${personWithRoleBadge(item.uploadedBy)}</strong><span>${item.confidence} AI</span></div>
                      <div class="media-cell">${tag(mediaConnectionLabel(item), item.tagClass)}<span>${item.suggestion}</span></div>`}
                 <div class="tags">${tag(item.status, item.tagClass)}${tag(item.kind.toUpperCase())}</div>
                 <div><button class="secondary" data-open-media="${escapeAttr(item.title)}">Apri</button></div>
@@ -7231,8 +7622,10 @@
     }
 
     function renderChatV2() {
-      const active = conversationChannels.find(channel => channel.id === activeConversation) || conversationChannels[0];
-      const channelRows = conversationChannels.map(channel =>
+      const channels = visibleConversationChannels();
+      const active = channels.find(channel => channel.id === activeConversation) || channels[0];
+      if (active) activeConversation = active.id;
+      const channelRows = channels.map(channel =>
         '<div class="row chat-channel-row ' + (channel.id === active.id ? 'active-summary' : '') + '" data-conversation-channel="' + channel.id + '">' +
           '<div class="avatar">' + channel.avatar + '</div>' +
           '<div><strong>' + channel.title + '</strong><span>' + (channel.id === active.id ? 'Canale aperto - ' : '') + channel.subtitle + '</span></div>' +
@@ -7249,7 +7642,7 @@
       document.getElementById('chat').innerHTML =
         '<div class="chat-layout">' +
           '<section class="panel">' +
-            '<div class="panel-head"><div><h2>Canali</h2><p>Conversazioni per cantiere, team e fornitore</p></div></div>' +
+            '<div class="panel-head"><div><h2>Canali</h2><p>' + (dashboardMode === 'project' ? selectedSite.name + ' - conversazioni operative filtrate' : 'Portfolio - conversazioni aggregate sui cantieri visibili') + '</p></div></div>' +
             '<div class="list">' + channelRows + '</div>' +
           '</section>' +
           '<section class="panel messages">' +
@@ -7397,7 +7790,7 @@
               <div class="doc-icon">${escapeAttr(doc.type)}</div>
               <div class="document-main"><strong>${escapeAttr(doc.title)}</strong><span>${escapeAttr(documentDisplayMeta(doc))}</span></div>
               <div class="document-cell"><strong>${escapeAttr(contextMain)}</strong><span>${escapeAttr(contextSub)}</span></div>
-              <div class="document-cell"><strong>${escapeAttr(secondaryMain)}</strong><span>${escapeAttr(secondarySub)}</span></div>
+              <div class="document-cell"><strong>${isProjectDocumentView ? escapeAttr(secondaryMain) : personWithRoleBadge(secondaryMain)}</strong><span>${escapeAttr(secondarySub)}</span></div>
               <div>${tag(documentVersion(doc), 'blue')}</div>
               <div class="tags">${tag(doc.status, doc.tagClass)}${tag(policy[0], policy[1])}</div>
               <div class="document-actions">
@@ -7521,7 +7914,7 @@
                   <div class="doc-icon">SP</div>
                   <div class="inspection-cell"><strong>${escapeAttr(row.title)}</strong><span>${escapeAttr(row.draft)}</span></div>
                   <div class="inspection-cell"><strong>${escapeAttr(dashboardMode === 'project' ? row.area : row.site)}</strong><span>${escapeAttr(dashboardMode === 'project' ? row.site : row.area)}</span></div>
-                  <div class="inspection-cell"><strong>${escapeAttr(row.owner)}</strong><span>PM review</span></div>
+                  <div class="inspection-cell"><strong>${personWithRoleBadge(row.owner)}</strong><span>PM review</span></div>
                   <div class="tags">${tag(row.status, row.statusClass)}</div>
                   <div class="inspection-cell"><strong>${escapeAttr(row.evidence)}</strong><span>${escapeAttr(row.due)}</span></div>
                   <div class="document-actions"><button class="secondary" data-open-inspection-attachment="true">Apri</button></div>
@@ -7583,7 +7976,7 @@
                     <button class="timeline-collapse" data-toggle-wbs="${item.id}" type="button">${expandedWbsIds.has(item.id) ? '-' : '+'}</button>
                     <div class="timeline-label-main">
                       <strong>${item.code} · ${item.title}</strong>
-                      <span class="timeline-meta">${showScheduleSiteBadge ? `<b class="timeline-site-badge">${item.site}</b>` : ''}<em>${item.owner}</em><em>${item.status}</em></span>
+                      <span class="timeline-meta">${showScheduleSiteBadge ? `<b class="timeline-site-badge">${item.site}</b>` : ''}${roleBadge(roleForPerson(item.owner) || item.owner, true)}<em>${item.status}</em></span>
                     </div>
                   </div>
                 </div>
@@ -8017,8 +8410,8 @@
             ${issueOriginIcons(item.origin)}
             <span class="issue-origin-site">${contextLine}</span>
           </div>
-          <span class="issue-person-cell">${item.creator}</span>
-          <span class="issue-person-cell">${item.assignee}</span>
+          <span class="issue-person-cell">${personWithRoleBadge(item.creator)}</span>
+          <span class="issue-person-cell">${personWithRoleBadge(item.assignee)}</span>
           <span class="issue-person-cell">${item.due}</span>
           <div class="tags">${tag(item.priority, item.priorityClass)}</div>
           <div class="tags">${tag(statusLabelText, statusClassName)}</div>
@@ -8107,14 +8500,33 @@
     }
 
     function renderPermissions() {
+      const canManageRoles = ['Project Manager', 'Admin organizzazione', 'Superamministratore'].some(role => (currentDemoUser?.role || '').includes(role));
       document.getElementById('permissions').innerHTML = `
+        <section class="panel">
+          <div class="panel-head">
+            <div><h2>Governance ruoli</h2><p>Creazione e modifica riservate ad amministratori e PM autorizzati.</p></div>
+            <div class="detail-actions">
+              ${canManageRoles
+                ? `<button class="secondary" data-open-role-editor="edit">Modifica ruolo</button><button class="primary" data-open-role-editor="create">Crea ruolo</button>`
+                : tag('Solo lettura', 'warn', 'Il profilo corrente puo consultare ruoli e permessi ma non crearli o modificarli.')}
+            </div>
+          </div>
+          <div class="tags">
+            ${tag('PM / Admin', 'blue', 'Solo questi profili possono creare ruoli, modificarne permessi e assegnarli ai cantieri.')}
+            ${tag('Audit obbligatorio', 'violet', 'Ogni modifica ruolo deve essere registrata con autore, data, motivazione e policy impattate.')}
+            ${tag('Segregazione', 'warn', 'I ruoli non danno accesso globale se non autorizzati da organizzazione, cantiere e modulo.')}
+          </div>
+        </section>
+        <br>
         <section class="permission-grid">
           ${[
-            ['Capocantiere', ['Chat e task cantiere','Sopralluoghi e report','Documenti operativi']],
             ['Project Manager', ['Cronoprogramma editabile','Budget e SAL','Approvazioni documenti']],
-            ['Subappaltatore', ['Solo progetti assegnati','Upload foto e PDF','Nessun budget']],
-            ['Investitore', ['Dashboard portfolio','Report approvati','No chat grezze']]
-          ].map(r => `<article class="role-card"><h3>${r[0]}</h3><div class="checks">${r[1].map(x => `<span>${x}</span>`).join('')}</div></article>`).join('')}
+            ['Capocantiere', ['Chat e task cantiere','Sopralluoghi e report','Documenti operativi']],
+            ['Fornitore / Subappaltatore', ['Solo progetti assegnati','Upload foto e PDF','Nessun budget']],
+            ['Consulente / DL', ['Validazioni tecniche','Documenti e sopralluoghi','Annotazioni e firme']],
+            ['Committente / Investitore', ['Dashboard portfolio','Report approvati','No chat grezze']],
+            ['Admin organizzazione', ['Utenti, cantieri e policy','Ruoli e audit','Segregazione dati']]
+          ].map(r => `<article class="role-card"><div class="role-card-head"><h3>${r[0]}</h3>${roleBadge(r[0])}</div><div class="checks">${r[1].map(x => `<span>${x}</span>`).join('')}</div></article>`).join('')}
         </section>
         <br>
         <section class="panel">
@@ -8151,6 +8563,10 @@
 
         <section class="panel">
           <div class="team-panel-tools">
+            <div class="panel-head" style="padding:0;border:0">
+              <div><h2>Censimento utenti</h2><p>Inserisci anagrafica, ruolo, cantieri e invito operativo.</p></div>
+              <div class="detail-actions"><button class="primary" data-open-user-registry="true">Censisci utente</button></div>
+            </div>
             <div class="issue-filter-row">
               ${['Tutti','Interno','Fornitore','Consulente','Committente'].map(type => `<button class="${type === 'Tutti' ? 'active' : ''}" data-team-filter="${type}">${type}<span class="issue-count">${type === 'Tutti' ? members.length : members.filter(member => member.type === type).length}</span></button>`).join('')}
             </div>
@@ -8180,8 +8596,8 @@
         ${members.map(member => `
           <article class="team-row">
             <div class="avatar">${member.initials}</div>
-            <div class="team-main"><strong>${member.name}</strong><span>${member.role} - ${member.company}</span></div>
-            <div class="team-cell">${member.type}</div>
+            <div class="team-main"><strong>${member.name}</strong><span>${member.company}</span></div>
+            <div class="team-cell">${roleBadge(member.role, true)}<br><span>${member.type}</span></div>
             <div class="team-cell">${member.sites.join(', ')}</div>
             <div class="tags">${tag(member.status, member.statusClass)}</div>
             <div class="team-cell">${member.permissions}</div>
@@ -8262,6 +8678,7 @@
       document.getElementById('breadcrumbProject').textContent = selectedSite.name;
       document.getElementById('pageSubtitle').textContent = ['media', 'chat', 'documents'].includes(id) ? '' : currentContextText(page);
       updateContextLabels();
+      updateProfilePanel();
       history.replaceState(null, '', '#' + id);
     }
 
@@ -8270,6 +8687,7 @@
       dashboardMode = 'project';
       selectedScheduleSite = selectedSite.name;
       activeChatSite = selectedSite.name;
+      resetActiveConversationForContext();
       document.getElementById('globalSearch').placeholder = 'Cerca issue, documenti, fornitori';
       renderDashboard();
       renderFloatingChat();
@@ -8283,6 +8701,7 @@
       dashboardMode = 'portfolio';
       selectedScheduleSite = 'all';
       activeChatSite = 'all';
+      resetActiveConversationForContext();
       document.getElementById('globalSearch').placeholder = 'Cerca cantieri, issue, fornitori';
       renderDashboard();
       renderFloatingChat();
@@ -8469,7 +8888,7 @@
       const status = source?.dataset?.documentStatus || 'Registro';
       const owner = source?.dataset?.documentOwner || 'Sistema';
       openModal('Audit documentale', `${title} - ${meta}`, `
-        <div class="tags">${tag(status, source?.dataset?.documentClass || '')}${tag(`Owner ${owner}`, 'blue')}${tag('Audit trail', 'violet')}</div>
+        <div class="tags">${tag(status, source?.dataset?.documentClass || '')}${roleBadge(roleForPerson(owner) || owner, true)}${tag('Audit trail', 'violet')}</div>
         <div class="audit-list">
           ${rows.map(row => `<div class="audit-row"><div class="avatar">${row.avatar}</div><div><strong>${row.title}</strong><span>${row.meta}</span></div></div>`).join('')}
         </div>
@@ -8546,17 +8965,17 @@
           <section class="team-invite-grid">
             <div class="team-invite-card">
               <h3>Team interno</h3>
-              <label class="team-person"><input type="checkbox" checked><span><strong>Anna Sarti</strong>Project Manager</span>${tag('Responsabile','blue')}</label>
-              <label class="team-person"><input type="checkbox" checked><span><strong>Marco Riva</strong>Capocantiere</span>${tag('Operativo')}</label>
-              <label class="team-person"><input type="checkbox" checked><span><strong>Luca Ferri</strong>Site Manager</span>${tag('Report')}</label>
-              <label class="team-person"><input type="checkbox"><span><strong>Finance</strong>Budget e SAL</span>${tag('Opzionale')}</label>
+              <label class="team-person"><input type="checkbox" checked><span><strong>Anna Sarti</strong>${roleBadge('Project Manager', true)}</span>${tag('Responsabile','blue')}</label>
+              <label class="team-person"><input type="checkbox" checked><span><strong>Marco Riva</strong>${roleBadge('Capocantiere', true)}</span>${tag('Operativo')}</label>
+              <label class="team-person"><input type="checkbox" checked><span><strong>Luca Ferri</strong>${roleBadge('Site Manager', true)}</span>${tag('Report')}</label>
+              <label class="team-person"><input type="checkbox"><span><strong>Finance</strong>${roleBadge('Admin organizzazione', true)}</span>${tag('Opzionale')}</label>
             </div>
             <div class="team-invite-card">
               <h3>Team esterno</h3>
-              <label class="team-person"><input type="checkbox" checked><span><strong>TermoCasa</strong>Fornitore isolamento</span>${tag('Da firmare','warn')}</label>
-              <label class="team-person"><input type="checkbox"><span><strong>Consulente sicurezza</strong>Audit HSE</span>${tag('Consulente','violet')}</label>
-              <label class="team-person"><input type="checkbox"><span><strong>Direzione lavori</strong>Validazione tecnica</span>${tag('Approva','blue')}</label>
-              <label class="team-person"><input type="checkbox"><span><strong>Committente</strong>Solo report approvato</span>${tag('Viewer')}</label>
+              <label class="team-person"><input type="checkbox" checked><span><strong>TermoCasa</strong>${roleBadge('Fornitore isolamento', true)}</span>${tag('Da firmare','warn')}</label>
+              <label class="team-person"><input type="checkbox"><span><strong>Consulente sicurezza</strong>${roleBadge('Consulente HSE', true)}</span>${tag('Consulente','violet')}</label>
+              <label class="team-person"><input type="checkbox"><span><strong>Direzione lavori</strong>${roleBadge('Validatore tecnico', true)}</span>${tag('Approva','blue')}</label>
+              <label class="team-person"><input type="checkbox"><span><strong>Committente</strong>${roleBadge('Committente', true)}</span>${tag('Viewer')}</label>
             </div>
           </section>
           <div class="field wide">
@@ -8876,6 +9295,203 @@
       document.getElementById('modalBackdrop').classList.remove('show');
     }
 
+    function updateProfilePanel() {
+      const user = currentDemoUser || demoUsers.pm;
+      const allowedSites = user.allowedSites || sites.map(site => site.name);
+      const linkedMember = projectTeamMembers.find(member => member.role === user.role || member.name.includes(user.name.split(' ')[0]));
+      document.getElementById('profileAvatar').textContent = user.initials;
+      document.getElementById('profileName').textContent = user.name;
+      document.getElementById('profileRole').textContent = user.role;
+      document.getElementById('profileEmail').textContent = user.email;
+      document.getElementById('profileOrganization').textContent = 'UrbanBuild Group';
+      document.getElementById('profileCompany').textContent = linkedMember?.company || 'UrbanBuild Group';
+      document.getElementById('profilePhone').textContent = linkedMember?.contact?.includes('@') ? '+39 02 0000 0000' : (linkedMember?.contact || '+39 02 0000 0000');
+      document.getElementById('profileAccountStatus').textContent = linkedMember?.status || 'Attivo';
+      document.getElementById('profileLastLogin').textContent = new Date().toLocaleString('it-IT', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+      document.getElementById('profileView').textContent = dashboardMode === 'project' ? 'Cantiere' : 'Portfolio';
+      document.getElementById('profileSite').textContent = dashboardMode === 'project' ? selectedSite.name : 'Tutti i cantieri';
+      document.getElementById('profilePermissionRole').innerHTML = roleBadge(user.role, true);
+      document.getElementById('profileAllowedSites').textContent = allowedSites.length;
+      document.getElementById('profileAllowedSiteTags').innerHTML = allowedSites.map(site => tag(site === 'Portfolio' ? 'Portfolio' : site, site === selectedSite.name ? 'blue' : '')).join('');
+    }
+
+    function openProfilePanel() {
+      updateProfilePanel();
+      document.getElementById('profileBackdrop').classList.add('show');
+      document.getElementById('profileBackdrop').setAttribute('aria-hidden', 'false');
+    }
+
+    function closeProfilePanel() {
+      document.getElementById('profileBackdrop').classList.remove('show');
+      document.getElementById('profileBackdrop').setAttribute('aria-hidden', 'true');
+    }
+
+    function openRoleEditor(mode = 'create') {
+      const isEdit = mode === 'edit';
+      const title = isEdit ? 'Modifica ruolo' : 'Crea ruolo';
+      openModal(title, 'Funzione riservata a PM e amministratori autorizzati', `
+        <div class="form-grid">
+          <div class="field">
+            <label>Nome ruolo</label>
+            <input value="${isEdit ? 'Fornitore isolamento' : 'Nuovo ruolo operativo'}">
+          </div>
+          <div class="field">
+            <label>Famiglia ruolo</label>
+            <select>
+              <option>Project Manager</option>
+              <option>Capocantiere / Site manager</option>
+              <option>Fornitore / Subappaltatore</option>
+              <option>Consulente / DL / HSE</option>
+              <option>Committente / Viewer</option>
+              <option>Admin organizzazione</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Ambito</label>
+            <select>
+              <option>Organizzazione</option>
+              <option selected>Cantiere selezionato</option>
+              <option>Uno o piu cantieri</option>
+              <option>Solo modulo specifico</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Policy base</label>
+            <select>
+              <option>Solo lettura</option>
+              <option selected>Operativo con upload</option>
+              <option>Validazione e firma</option>
+              <option>Gestione completa PM</option>
+              <option>Amministrazione</option>
+            </select>
+          </div>
+          <div class="field wide">
+            <label>Moduli abilitati</label>
+            <div class="variable-token-row">
+              ${['Chat','Media','Documenti','Sopralluoghi','Cronoprogramma','Issue/Task','Team','Report'].map((name, index) => `<label class="variable-token"><input type="checkbox" ${index < 5 ? 'checked' : ''}>${name}</label>`).join('')}
+            </div>
+          </div>
+          <div class="field wide">
+            <label>Azioni consentite</label>
+            <div class="variable-token-row">
+              ${['Vedere','Caricare','Modificare','Validare','Firmare','Scaricare report','Gestire utenti','Gestire budget'].map((name, index) => `<label class="variable-token"><input type="checkbox" ${index < 3 ? 'checked' : ''}>${name}</label>`).join('')}
+            </div>
+          </div>
+          <div class="field">
+            <label>Limite download</label>
+            <select>
+              <option>Nessun download</option>
+              <option selected>Download con audit</option>
+              <option>Download con watermark</option>
+              <option>Download approvato da PM</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Scadenza ruolo</label>
+            <select>
+              <option>Nessuna</option>
+              <option selected>Fine incarico cantiere</option>
+              <option>30 giorni</option>
+              <option>Data personalizzata</option>
+            </select>
+          </div>
+          <div class="field wide">
+            <label>Motivazione audit</label>
+            <textarea rows="4">Ruolo creato/modificato da PM per assegnazione operativa tracciata su cantiere e moduli autorizzati.</textarea>
+          </div>
+        </div>
+        <div class="audit-list">
+          <div class="audit-row"><div class="avatar">RB</div><div><strong>RBAC</strong><span>Il ruolo determina cosa l'utente puo fare nei moduli autorizzati.</span></div></div>
+          <div class="audit-row"><div class="avatar">CTX</div><div><strong>Contesto</strong><span>Organizzazione, cantiere e modulo limitano sempre l'accesso effettivo.</span></div></div>
+          <div class="audit-row"><div class="avatar">AU</div><div><strong>Audit</strong><span>Ogni creazione o modifica ruolo viene registrata e versionata.</span></div></div>
+        </div>
+        <div class="detail-actions">
+          <button class="secondary" data-action="Bozza ruolo salvata">Salva bozza</button>
+          <button class="primary" data-action="${isEdit ? 'Ruolo modificato e audit registrato' : 'Ruolo creato e audit registrato'}">${isEdit ? 'Salva modifica' : 'Crea ruolo'}</button>
+        </div>
+      `);
+    }
+
+    function openUserRegistryModal() {
+      openModal('Censisci utente', 'Anagrafica, organizzazione, ruolo, cantieri e invito', `
+        <div class="form-grid">
+          <div class="field">
+            <label>Nome</label>
+            <input value="Nuovo utente">
+          </div>
+          <div class="field">
+            <label>Cognome</label>
+            <input value="Cantiere">
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input value="utente@azienda.it">
+          </div>
+          <div class="field">
+            <label>Telefono</label>
+            <input value="+39 ">
+          </div>
+          <div class="field">
+            <label>Azienda</label>
+            <input value="Azienda / fornitore">
+          </div>
+          <div class="field">
+            <label>Tipo soggetto</label>
+            <select>
+              <option>Interno</option>
+              <option>Fornitore</option>
+              <option>Consulente</option>
+              <option>Committente</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Ruolo iniziale</label>
+            <select>
+              <option>Project Manager</option>
+              <option>Capocantiere</option>
+              <option>Site Manager</option>
+              <option>Fornitore isolamento</option>
+              <option>Consulente HSE</option>
+              <option>Committente</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Stato invito</label>
+            <select>
+              <option>Invia invito</option>
+              <option>Salva bozza anagrafica</option>
+              <option>Utente gia attivo</option>
+            </select>
+          </div>
+          <div class="field wide">
+            <label>Cantieri abilitati</label>
+            <div class="variable-token-row">
+              ${sites.map((site, index) => `<label class="variable-token"><input type="checkbox" ${index === 0 ? 'checked' : ''}>${site.name}</label>`).join('')}
+            </div>
+          </div>
+          <div class="field wide">
+            <label>Permessi iniziali</label>
+            <div class="variable-token-row">
+              ${['Chat','Upload media','Documenti','Sopralluoghi','Task assegnati','Firma verbali','Report','Budget'].map((perm, index) => `<label class="variable-token"><input type="checkbox" ${index < 5 ? 'checked' : ''}>${perm}</label>`).join('')}
+            </div>
+          </div>
+          <div class="field wide">
+            <label>Note onboarding</label>
+            <textarea rows="4">Anagrafica censita da PM/Admin. L'accesso diventa effettivo dopo invito, accettazione e applicazione policy.</textarea>
+          </div>
+        </div>
+        <div class="audit-list">
+          <div class="audit-row"><div class="avatar">AN</div><div><strong>Anagrafica</strong><span>Dati identificativi, azienda, contatti e tipo soggetto.</span></div></div>
+          <div class="audit-row"><div class="avatar">RB</div><div><strong>Ruolo</strong><span>Il ruolo iniziale richiama le policy definite in Utenti e Permessi.</span></div></div>
+          <div class="audit-row"><div class="avatar">INV</div><div><strong>Invito</strong><span>Invio email, primo accesso e accettazione condizioni vengono tracciati.</span></div></div>
+        </div>
+        <div class="detail-actions">
+          <button class="secondary" data-action="Bozza anagrafica salvata">Salva bozza</button>
+          <button class="primary" data-action="Utente censito e invito inviato">Censisci e invita</button>
+        </div>
+      `);
+    }
+
     function applyDemoUser(userKey) {
       const user = demoUsers[userKey] || demoUsers.pm;
       currentDemoUser = user;
@@ -8888,16 +9504,19 @@
         dashboardMode = 'project';
         selectedScheduleSite = selectedSite.name;
         activeChatSite = selectedSite.name;
+        resetActiveConversationForContext();
         document.getElementById('globalSearch').placeholder = 'Cerca issue, documenti, fornitori';
       } else {
         dashboardMode = 'portfolio';
         selectedScheduleSite = 'all';
         activeChatSite = 'all';
+        resetActiveConversationForContext();
         document.getElementById('globalSearch').placeholder = 'Cerca cantieri, issue, fornitori';
       }
       renderDashboard();
       renderFloatingChat();
       setPage('dashboard');
+      updateProfilePanel();
       showToast(`Accesso demo: ${user.role}`);
     }
 
@@ -8917,6 +9536,7 @@
     function logoutDemoUser() {
       localStorage.removeItem('sitepulse_demo_user');
       currentDemoUser = null;
+      closeProfilePanel();
       document.getElementById('loginScreen').classList.add('show');
       document.getElementById('loginEmail').value = demoUsers.pm.email;
       document.getElementById('loginPassword').value = demoUsers.pm.password;
@@ -9090,6 +9710,7 @@
           dashboardMode = 'portfolio';
           selectedScheduleSite = 'all';
           activeChatSite = 'all';
+          resetActiveConversationForContext();
           document.getElementById('globalSearch').placeholder = 'Cerca cantieri, issue, fornitori';
           renderDashboard();
           renderFloatingChat();
@@ -9101,6 +9722,7 @@
         dashboardMode = 'project';
         selectedScheduleSite = selectedSite.name;
         activeChatSite = selectedSite.name;
+        resetActiveConversationForContext();
         document.getElementById('globalSearch').placeholder = 'Cerca issue, documenti, fornitori';
         renderDashboard();
         renderFloatingChat();
@@ -9163,6 +9785,18 @@
 
         const action = event.target.closest('[data-action]');
         if (action) showToast(action.dataset.action);
+
+        const roleEditor = event.target.closest('[data-open-role-editor]');
+        if (roleEditor) {
+          openRoleEditor(roleEditor.dataset.openRoleEditor);
+          return;
+        }
+
+        const userRegistry = event.target.closest('[data-open-user-registry]');
+        if (userRegistry) {
+          openUserRegistryModal();
+          return;
+        }
 
         const createFolder = event.target.closest('[data-create-folder]');
         if (createFolder) {
@@ -9680,6 +10314,11 @@
       document.getElementById('modalBackdrop').addEventListener('click', event => {
         if (event.target.id === 'modalBackdrop') closeModal();
       });
+      document.getElementById('accountPill').addEventListener('click', openProfilePanel);
+      document.getElementById('profileClose').addEventListener('click', closeProfilePanel);
+      document.getElementById('profileBackdrop').addEventListener('click', event => {
+        if (event.target.id === 'profileBackdrop') closeProfilePanel();
+      });
       document.getElementById('loginSubmit').addEventListener('click', loginWithCredentials);
       document.getElementById('loginPassword').addEventListener('keydown', event => {
         if (event.key === 'Enter') loginWithCredentials();
@@ -9712,9 +10351,6 @@
       applyDemoUser(savedDemoUser);
     }
     loadBackendData();
-    setTimeout(() => {
-      showChatAlert('Nuovo messaggio dal campo', 'Residenza Porta Nuova: foto e vocale richiedono revisione QA.');
-    }, 1800);
   </script>
 </body>
 </html>
