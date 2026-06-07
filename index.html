@@ -197,6 +197,18 @@
       <div id="modalBody"></div>
     </div>
   </div>
+  <script>
+    window.SITEPULSE_CONFIG = window.SITEPULSE_CONFIG || {
+      apiBase: 'https://sitepulseai-api.benetti1967.workers.dev'
+    };
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/service-worker.js').catch(function (error) {
+          console.warn('service worker registration failed', error);
+        });
+      });
+    }
+  </script>
   <script src="assets/sitepulse-app.js" defer></script>
 </body>
 </html>

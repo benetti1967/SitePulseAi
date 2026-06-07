@@ -7,6 +7,32 @@
 - R2 bucket: `sitepulseai-documents`
 - Worker API name: `sitepulseai-api`
 
+## Wrangler configs
+
+The project uses two Wrangler configurations:
+
+- `wrangler.jsonc`: frontend static PWA deploy from `dist/`;
+- local `wrangler.toml`: backend API Worker with D1 and R2 bindings.
+
+Create the local backend config from the tracked example:
+
+```powershell
+Copy-Item -Path wrangler.toml.example -Destination wrangler.toml -Force
+```
+
+`wrangler.toml` is intentionally ignored by Git because it contains environment-specific IDs.
+
+## Cloudflare resources
+
+Create the D1 database and R2 bucket if they do not already exist:
+
+```powershell
+npx wrangler d1 create sitepulseai-db
+npx wrangler r2 bucket create sitepulseai-documents
+```
+
+Copy the returned D1 `database_id` into local `wrangler.toml`.
+
 ## D1 setup
 
 Run `schema.sql` in the D1 console first.
@@ -21,7 +47,18 @@ For an existing Phase 2 database, run migrations in order:
 
 ```text
 migrations/0002_security_offline_backend.sql
+migrations/0003_finish_security_offline_backend.sql
 migrations/0003_operational_write_permissions.sql
+```
+
+Equivalent Wrangler commands:
+
+```powershell
+npx wrangler d1 execute sitepulseai-db --file=schema.sql
+npx wrangler d1 execute sitepulseai-db --file=migrations/0002_security_offline_backend.sql
+npx wrangler d1 execute sitepulseai-db --file=migrations/0003_finish_security_offline_backend.sql
+npx wrangler d1 execute sitepulseai-db --file=migrations/0003_operational_write_permissions.sql
+npx wrangler d1 execute sitepulseai-db --file=seed.sql
 ```
 
 ## Worker bindings
@@ -44,6 +81,24 @@ npx wrangler secret put OPENAI_API_KEY
 ```
 
 If `OPENAI_API_KEY` is not configured, `/api/ai/analyze` returns a clearly marked `demo_fallback` response. This keeps the UI testable but avoids presenting simulated analysis as production AI.
+
+## Frontend API base
+
+The frontend reads the API URL from:
+
+1. `window.SITEPULSE_CONFIG.apiBase` in `index.html`;
+2. `localStorage.sitepulse_api_base`;
+3. fallback `https://sitepulseai-api.benetti1967.workers.dev`.
+
+For production, change the value in `index.html` or serve a custom domain for the API Worker and set it there.
+
+## Build and deploy
+
+```powershell
+npm.cmd run build
+npx wrangler deploy --config wrangler.toml
+npx wrangler deploy --config wrangler.jsonc
+```
 
 The Worker entrypoint is:
 

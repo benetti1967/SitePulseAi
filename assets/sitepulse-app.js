@@ -10,7 +10,9 @@
       permissions: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 4 7v6c0 5 3.5 7.5 8 8 4.5-.5 8-3 8-8V7l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg>'
     };
 
-    const API_BASE = 'https://sitepulseai-api.benetti1967.workers.dev';
+    const API_BASE = window.SITEPULSE_CONFIG?.apiBase
+      || localStorage.getItem('sitepulse_api_base')
+      || 'https://sitepulseai-api.benetti1967.workers.dev';
     const LOCAL_DEMO_USER = 'admin@example.com';
     const apiState = {
       source: 'local',
