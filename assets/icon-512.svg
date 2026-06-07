@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="SitePulseAI">
+  <rect width="512" height="512" rx="112" fill="#15665f"/>
+  <path d="M132 330V164h102c67 0 117 45 117 109s-50 109-117 109h-51v-80h48c22 0 38-13 38-32s-16-32-38-32h-16v92h-83Z" fill="#fff"/>
+  <path d="M330 154h48v228h-48z" fill="#f2c14e"/>
+</svg>

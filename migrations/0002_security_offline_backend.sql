@@ -48,11 +48,11 @@ CREATE INDEX IF NOT EXISTS idx_media_assets_inspection ON media_assets(inspectio
 CREATE INDEX IF NOT EXISTS idx_offline_sync_device ON offline_sync_events(device_id, received_at);
 
 UPDATE roles
-SET permissions_json = '{"dashboard":"read","schedule":"write","budget":"read","documents":"approve","media":"read","inspections":"write","offline_sync":"read","tasks":"write","issues":"write"}'
+SET permissions_json = '{"dashboard":"read","schedule":"write","budget":"read","documents":"approve","media":"upload","inspections":"write","offline_sync":"read","tasks":"write","issues":"write"}'
 WHERE id = 'role_pm';
 
 UPDATE roles
-SET permissions_json = '{"dashboard":"read","tasks":"write","issues":"write","schedule":"write","documents":"read","media":"read","inspections":"write","offline_sync":"write"}'
+SET permissions_json = '{"dashboard":"read","tasks":"write","issues":"write","schedule":"write","documents":"read","media":"upload","inspections":"write","offline_sync":"write"}'
 WHERE id = 'role_site_manager';
 
 UPDATE roles

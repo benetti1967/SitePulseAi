@@ -15,10 +15,15 @@ const types = {
 
 createServer((request, response) => {
   const requestUrl = new URL(request.url || "/", `http://${request.headers.host}`);
+  if (requestUrl.pathname === "/app.html") {
+    response.writeHead(302, { location: `/${requestUrl.search}${requestUrl.hash}` });
+    response.end();
+    return;
+  }
   const cleanPath = normalize(decodeURIComponent(requestUrl.pathname))
     .replace(/^[/\\]+/, "")
     .replace(/^(\.\.[/\\])+/, "");
-  const filePath = resolve(join(root, cleanPath === "" ? "app.html" : cleanPath));
+  const filePath = resolve(join(root, cleanPath === "" ? "index.html" : cleanPath));
 
   if (!filePath.startsWith(root) || !existsSync(filePath) || !statSync(filePath).isFile()) {
     response.writeHead(404, { "content-type": "text/plain; charset=utf-8" });
