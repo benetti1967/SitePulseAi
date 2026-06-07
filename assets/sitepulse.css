@@ -26,6 +26,26 @@
 
     button, input, select { font: inherit; }
 
+    :where(button, input, select, textarea, [tabindex]):focus-visible {
+      outline: 3px solid rgba(40, 122, 160, .34);
+      outline-offset: 3px;
+      box-shadow: 0 0 0 1px rgba(40, 122, 160, .22);
+    }
+
+    :where(button, .activity, .panel, .metric, .site-card, .media-row, .document-row-card, .issue-row-card, .folder-chip) {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    @keyframes viewFadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes modalEnter {
+      from { opacity: 0; transform: translateY(10px) scale(.985); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
     .app {
       min-height: 100vh;
       display: grid;
@@ -84,11 +104,21 @@
       padding: 0 10px;
       text-align: left;
       cursor: pointer;
+      transition: background .16s ease, color .16s ease, transform .14s ease;
     }
 
     .nav button.active {
       background: rgba(255,255,255,.10);
       color: white;
+    }
+
+    .nav button:hover {
+      background: rgba(255,255,255,.075);
+      color: white;
+    }
+
+    .nav button:active {
+      transform: scale(.96);
     }
 
     .nav svg, .icon {
@@ -120,6 +150,20 @@
 
     .sidebar-card small { color: #9eb0b5; }
     .sidebar-card strong { display: block; color: white; font-size: 14px; margin: 8px 0 10px; }
+
+    .panel, .metric, .site-card, .activity, .media-card, .media-row,
+    .document-row-card, .doc-summary-card, .issue-row-card, .task-card,
+    .folder-chip, .portfolio-risk-card {
+      transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease, background .16s ease;
+    }
+
+    .panel:hover, .metric:hover, .site-card:hover, .activity:hover,
+    .media-card:hover, .media-row:hover, .document-row-card:hover,
+    .doc-summary-card:hover, .issue-row-card:hover, .task-card:hover,
+    .folder-chip:hover {
+      border-color: #c5d8d5;
+      box-shadow: 0 10px 26px rgba(32, 43, 54, .08);
+    }
 
     .sync {
       height: 8px;
@@ -220,6 +264,7 @@
     .context-select {
       height: 38px;
       min-width: 210px;
+      max-width: 100%;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: white;
@@ -227,6 +272,7 @@
       padding: 0 10px;
       font-size: 13px;
       outline: 0;
+      transition: border-color .16s ease, box-shadow .16s ease, background .16s ease;
     }
 
     .context-select:focus {
@@ -257,7 +303,8 @@
     }
 
     .search {
-      width: 330px;
+      width: min(330px, 100%);
+      min-width: 0;
       height: 38px;
       border: 1px solid var(--line);
       border-radius: 8px;
@@ -267,6 +314,12 @@
       gap: 8px;
       padding: 0 12px;
       color: var(--muted);
+      transition: border-color .16s ease, box-shadow .16s ease, background .16s ease;
+    }
+
+    .search:focus-within {
+      border-color: #8eb9b4;
+      box-shadow: 0 0 0 3px rgba(18, 105, 96, .10);
     }
 
     .search input {
@@ -287,6 +340,24 @@
       justify-content: center;
       gap: 8px;
       cursor: pointer;
+      transition: transform .14s ease, border-color .16s ease, background .16s ease, box-shadow .16s ease, color .16s ease;
+    }
+
+    .icon-btn:hover, .secondary:hover {
+      border-color: #9fc5c1;
+      box-shadow: 0 8px 20px rgba(32, 43, 54, .08);
+    }
+
+    .primary:hover {
+      background: #0f514d;
+      box-shadow: 0 10px 24px rgba(25, 92, 89, .18);
+    }
+
+    .icon-btn:active, .primary:active, .secondary:active,
+    .account-pill:active, .metric:active, .site-card:active,
+    .activity:active, .media-row:active, .document-row-card:active,
+    .issue-row-card:active, .folder-chip:active {
+      transform: scale(.98);
     }
 
     .icon-btn {
@@ -438,6 +509,7 @@
 
     .view.active {
       display: block;
+      animation: viewFadeIn .22s ease both;
     }
 
     .metrics {
@@ -3307,6 +3379,10 @@
       display: flex;
     }
 
+    .modal-backdrop.show .modal {
+      animation: modalEnter .18s ease both;
+    }
+
     .modal {
       width: min(760px, 100%);
       max-height: min(720px, calc(100vh - 48px));
@@ -5108,6 +5184,54 @@
       .media-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
+    @media (max-width: 1080px) {
+      .topbar {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .actions {
+        width: 100%;
+        display: grid;
+        grid-template-columns: minmax(180px, 220px) minmax(160px, 220px) minmax(220px, 1fr) 38px auto;
+        justify-content: stretch;
+      }
+
+      .account-pill,
+      .context-select,
+      .search,
+      .actions .primary {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .actions .primary {
+        white-space: nowrap;
+      }
+    }
+
+    @media (max-width: 940px) {
+      .actions {
+        grid-template-columns: minmax(0, 1fr) minmax(158px, 220px) 38px 46px;
+      }
+
+      .search {
+        grid-column: 1 / -1;
+        order: 2;
+      }
+
+      .actions .primary {
+        width: 46px;
+        min-width: 46px;
+        padding: 0;
+        font-size: 0;
+      }
+
+      .actions .primary .icon {
+        margin: 0;
+      }
+    }
+
     @media (max-width: 760px) {
       .app { grid-template-columns: 1fr; }
       .sidebar {
@@ -5279,4 +5403,13 @@
     #media .upload-actions button {
       width: auto;
       flex: 0 1 auto;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .001ms !important;
+      }
     }

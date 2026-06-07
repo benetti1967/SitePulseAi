@@ -23,16 +23,16 @@
       </div>
       <div class="field">
         <label>Email</label>
-        <input id="loginEmail" value="pm.demo@sitepulse.ai">
+        <input id="loginEmail" value="pm.demo@sitepulse.ai" autocomplete="username" inputmode="email">
       </div>
       <div class="field">
         <label>Password</label>
-        <input id="loginPassword" type="password" value="Demo2026!">
+        <input id="loginPassword" type="password" value="Demo2026!" autocomplete="current-password">
       </div>
       <button class="primary" id="loginSubmit">Accedi</button>
       <div class="login-options">
         <button class="login-option" data-demo-login="pm">
-          <div><strong>Project Manager multi-cantiere</strong><span>Portfolio aggregato, piÃ¹ cantieri abilitati</span></div>
+          <div><strong>Project Manager multi-cantiere</strong><span>Portfolio aggregato, più cantieri abilitati</span></div>
           <span class="tag blue">PM</span>
         </button>
         <button class="login-option" data-demo-login="foreman">
@@ -65,21 +65,21 @@
           <div class="subtitle" id="pageSubtitle">Sintesi operativa e finanziaria</div>
         </div>
         <div class="actions">
-          <button class="account-pill" id="accountPill" type="button" title="Apri profilo">
+          <button class="account-pill" id="accountPill" type="button" title="Apri profilo" aria-label="Apri profilo utente">
             <span class="avatar" id="accountAvatar">PM</span>
             <span id="accountLabel">Demo</span>
           </button>
-          <select class="context-select" id="globalSiteSelect" title="Seleziona vista">
+          <select class="context-select" id="globalSiteSelect" title="Seleziona vista" aria-label="Seleziona vista o cantiere">
             <option value="portfolio">Portfolio</option>
           </select>
           <div class="search">
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
             <input id="globalSearch" placeholder="Cerca issue, documenti, fornitori">
           </div>
-          <button class="icon-btn" title="Notifiche" data-action="Notifiche">
+          <button class="icon-btn" title="Notifiche" aria-label="Apri notifiche" data-action="Notifiche">
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>
           </button>
-          <button class="primary" data-open-report-export="true">
+          <button class="primary" data-open-report-export="true" aria-label="Scarica report">
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3v4a2 2 0 0 0 2 2h4"/><path d="M5 3h9l5 5v13H5z"/><path d="M8 17h8M8 13h8"/></svg>
             Scarica report
           </button>
@@ -119,18 +119,18 @@
           </div>
         </div>
         <div class="chat-window-actions">
-          <button type="button" id="chatMinimize" title="Minimizza">Ã—</button>
+          <button type="button" id="chatMinimize" title="Minimizza" aria-label="Minimizza chat">×</button>
         </div>
       </header>
       <div class="chat-channel-list" id="chatChannelList"></div>
       <div class="chat-feed" id="floatingChatFeed"></div>
       <form class="chat-compose" id="floatingChatForm">
-        <button type="button" title="Allega">+</button>
+        <button type="button" title="Allega" aria-label="Allega file">+</button>
         <input id="floatingChatInput" placeholder="Messaggio, foto, vocale o PDF..." autocomplete="off">
-        <button class="send" type="submit">Go</button>
+        <button class="send" type="submit" aria-label="Invia messaggio">Go</button>
       </form>
     </section>
-    <button class="chat-tray-button" id="chatOpenButton" type="button">
+    <button class="chat-tray-button" id="chatOpenButton" type="button" aria-label="Apri chat cantieri">
       <span>Chat cantieri</span>
       <span class="chat-count" id="chatUnread">3</span>
     </button>
@@ -147,7 +147,7 @@
             <span id="profileRole">Project Manager</span>
           </div>
         </div>
-        <button class="icon-btn" id="profileClose" type="button" title="Chiudi">Ã—</button>
+        <button class="icon-btn" id="profileClose" type="button" title="Chiudi" aria-label="Chiudi profilo">×</button>
       </header>
       <div class="profile-body">
         <section class="profile-section">
@@ -183,14 +183,14 @@
     </aside>
   </div>
   <div class="help-tooltip" id="helpTooltip"></div>
-  <div class="modal-backdrop" id="modalBackdrop">
-    <div class="modal">
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalSubtitle">
       <div class="modal-head">
         <div>
           <h2 id="modalTitle">Dettaglio</h2>
           <div class="subtitle" id="modalSubtitle"></div>
         </div>
-        <button class="icon-btn" id="modalClose" title="Chiudi">
+        <button class="icon-btn" id="modalClose" title="Chiudi" aria-label="Chiudi finestra">
           <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
         </button>
       </div>

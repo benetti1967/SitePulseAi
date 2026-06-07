@@ -38,7 +38,7 @@
     ];
 
     const activities = [
-      {kind:'photo', title:'Mancante isolamento termico nel Blocco B, piano 2', text:'Foto + vocale da Luca Ferri. Issue creata, fornitore assegnato e deadline suggerita automaticamente.', tags:['Issue Â· materiale mancante','Blocco B','Priorita alta'], tagClass:['risk','','warn'], owner:'Marco R.', avatar:'MR', meta:'Scade domani'},
+      {kind:'photo', title:'Mancante isolamento termico nel Blocco B, piano 2', text:'Foto + vocale da Luca Ferri. Issue creata, fornitore assegnato e deadline suggerita automaticamente.', tags:['Issue · materiale mancante','Blocco B','Priorita alta'], tagClass:['risk','','warn'], owner:'Marco R.', avatar:'MR', meta:'Scade domani'},
       {kind:'doc', title:'Nuova variante impianto elettrico caricata dal subappaltatore', text:'PDF classificato come variante contrattuale. Richiede approvazione tecnica e impatto budget.', tags:['Documento','Impianti','Approvazione'], tagClass:['violet','blue','warn'], owner:'Anna S.', avatar:'AS', meta:'In revisione'},
       {kind:'photo', title:'Progress update: facciata nord completata al 72%', text:'12 foto raggruppate automaticamente. Aggiornato milestone e timeline di progetto.', tags:['Progress update','Facciata nord','Timeline'], tagClass:['','', 'blue'], owner:'Luca F.', avatar:'LF', meta:'Oggi, 10:42'},
       {kind:'pano', title:'Sopralluogo 360 completato nel Blocco B, piano 2', text:'Panorama collegato a planimetria, issue isolamento e report di chiusura con link sicuro.', tags:['Foto 360','Sopralluogo','Report'], tagClass:['blue','','violet'], owner:'Anna S.', avatar:'AS', meta:'Firmato da 4/5'}
@@ -154,11 +154,11 @@
     ];
 
     let documentRows = [
-      { type: 'PDF', title: 'Variante impianti', meta: 'Documento Â· Blocco B Â· v3', status: 'In approvazione', owner: 'Anna S.', tagClass: 'warn', group: 'review' },
-      { type: 'DWG', title: 'Tavole architettoniche', meta: 'Tavola Â· Piano 2 Â· v12', status: 'Approvato', owner: 'Marco R.', tagClass: 'blue', group: 'approved' },
-      { type: 'CTR', title: 'Contratto fornitore', meta: 'Contratto Â· TermoCasa Â· riservato', status: 'Riservato', owner: 'Admin', tagClass: 'violet', group: 'sensitive' },
-      { type: 'SAL', title: 'Stato avanzamento lavori', meta: 'SAL Â· Maggio Â· collegato al budget', status: 'In revisione', owner: 'PM', tagClass: '', group: 'review' },
-      { type: '360', title: 'Sopralluogo piano 2', meta: 'Foto 360 Â· report isolamento', status: 'Firmato 4/5', owner: 'Luca F.', tagClass: 'ok', group: 'approved' }
+      { type: 'PDF', title: 'Variante impianti', meta: 'Documento · Blocco B · v3', status: 'In approvazione', owner: 'Anna S.', tagClass: 'warn', group: 'review' },
+      { type: 'DWG', title: 'Tavole architettoniche', meta: 'Tavola · Piano 2 · v12', status: 'Approvato', owner: 'Marco R.', tagClass: 'blue', group: 'approved' },
+      { type: 'CTR', title: 'Contratto fornitore', meta: 'Contratto · TermoCasa · riservato', status: 'Riservato', owner: 'Admin', tagClass: 'violet', group: 'sensitive' },
+      { type: 'SAL', title: 'Stato avanzamento lavori', meta: 'SAL · Maggio · collegato al budget', status: 'In revisione', owner: 'PM', tagClass: '', group: 'review' },
+      { type: '360', title: 'Sopralluogo piano 2', meta: 'Foto 360 · report isolamento', status: 'Firmato 4/5', owner: 'Luca F.', tagClass: 'ok', group: 'approved' }
     ];
 
     const documentFolders = [
@@ -365,7 +365,7 @@
     let sites = [
       {
         name: 'Residenza Porta Nuova',
-        location: 'Milano Â· 4 edifici Â· 126 unita',
+        location: 'Milano · 4 edifici · 126 unita',
         phase: 'Esecuzione impianti',
         phaseClass: 'risk',
         cover: '',
@@ -379,13 +379,13 @@
         docs: '16',
         insights: [
           ['risk', 'Issue isolamento blocca cartongessi Blocco B', 'oggi'],
-          ['warn', 'Variante impianti: impatto stimato +â‚¬6.8K', 'ieri'],
+          ['warn', 'Variante impianti: impatto stimato +€6.8K', 'ieri'],
           ['blue', 'Sopralluogo 360 firmato da 4/5 partecipanti', '2g']
         ]
       },
       {
         name: 'Green Offices Lambrate',
-        location: 'Milano Â· direzionale Â· 18.400 mq',
+        location: 'Milano · direzionale · 18.400 mq',
         phase: 'Strutture e facciate',
         phaseClass: 'warn',
         cover: 'alt',
@@ -405,7 +405,7 @@
       },
       {
         name: 'Hotel Aurora Renovation',
-        location: 'Bergamo Â· ristrutturazione Â· 84 camere',
+        location: 'Bergamo · ristrutturazione · 84 camere',
         phase: 'Finiture interne',
         phaseClass: '',
         cover: 'pano',
@@ -424,7 +424,7 @@
       },
       {
         name: 'Logistica Nord Hub',
-        location: 'Monza Â· industriale Â· 31.000 mq',
+        location: 'Monza · industriale · 31.000 mq',
         phase: 'Avvio cantiere',
         phaseClass: '',
         cover: 'alt',
@@ -502,18 +502,18 @@
         id: 'blocco-b',
         avatar: 'B',
         title: 'Blocco B',
-        subtitle: 'Foto + vocale Â· 10:42',
+        subtitle: 'Foto + vocale · 10:42',
         badge: '18',
         badgeClass: 'blue',
         detailTitle: 'Canale: Blocco B',
-        detailSubtitle: 'Squadra impianti Â· 12 partecipanti Â· conversazione selezionata',
+        detailSubtitle: 'Squadra impianti · 12 partecipanti · conversazione selezionata',
         messages: [
           ['Luca Ferri', 'Foto e vocale: manca isolamento termico nel piano 2. Ho lasciato i dettagli.', 'in'],
           ['SitePulseAi AI', 'Creo issue e assegno a Marco R. con scadenza domani.', 'out'],
           ['Marco R.', 'Ricevuto. Verifico con fornitore entro pranzo.', 'in']
         ],
         context: [
-          ['IS', 'Issue Â· materiale mancante', 'Priorita alta', 'Alta', 'risk'],
+          ['IS', 'Issue · materiale mancante', 'Priorita alta', 'Alta', 'risk'],
           ['MR', 'Assegnato a Marco R.', 'Scadenza domani', 'Task', ''],
           ['EUR', 'Impatto forecast', 'Possibile extra costo EUR 1.200', 'Budget', 'warn']
         ]
@@ -526,7 +526,7 @@
         badge: '3',
         badgeClass: 'warn',
         detailTitle: 'Canale: Sicurezza',
-        detailSubtitle: 'HSE Â· capocantiere Â· fornitori in area',
+        detailSubtitle: 'HSE · capocantiere · fornitori in area',
         messages: [
           ['Anna S.', 'Checklist ponteggi aggiornata, manca foto parapetto lato nord.', 'in'],
           ['SitePulseAi AI', 'Ho preparato task verifica parapetto con priorita media.', 'out'],
@@ -534,7 +534,7 @@
         ],
         context: [
           ['HSE', 'Checklist ponteggi', '1 punto aperto', 'Safety', 'warn'],
-          ['MR', 'Responsabile verifica', 'Marco R. Â· oggi', 'Task', ''],
+          ['MR', 'Responsabile verifica', 'Marco R. · oggi', 'Task', ''],
           ['DOC', 'Verbale sicurezza', 'Bozza aggiornabile', 'Doc', 'blue']
         ]
       },
@@ -546,7 +546,7 @@
         badge: '7',
         badgeClass: '',
         detailTitle: 'Canale: Fornitori',
-        detailSubtitle: 'Consegne Â· DDT Â· disponibilita materiali',
+        detailSubtitle: 'Consegne · DDT · disponibilita materiali',
         messages: [
           ['TermoCasa', 'Il DDT pannelli isolanti e stato caricato. Consegna parziale domani.', 'in'],
           ['SitePulseAi AI', 'Documento collegato alla WBS isolamento e al computo.', 'out'],
@@ -566,7 +566,7 @@
         badge: 'Bozza',
         badgeClass: 'violet',
         detailTitle: 'Canale: Direzione lavori',
-        detailSubtitle: 'PM Â· DL Â· committente Â· verbali e approvazioni',
+        detailSubtitle: 'PM · DL · committente · verbali e approvazioni',
         messages: [
           ['Anna S.', 'Ho rivisto la bozza del verbale. Mancano due annotazioni.', 'in'],
           ['SitePulseAi AI', 'La finestra firme resta aperta fino alle 18:00.', 'out'],
@@ -1719,13 +1719,6 @@
         console.warn('API unavailable, using local data', error);
         showToast('API non disponibile: vista locale attiva');
       }
-      renderDashboard();
-      renderMediaArchive();
-      renderDocuments();
-      renderInspections();
-      renderSchedule();
-      wireScheduleDrag();
-      renderIssues();
       renderFloatingChat();
       setPage(location.hash ? location.hash.slice(1) : 'dashboard');
     }
@@ -1762,7 +1755,7 @@
 
     function renderNav() {
       document.getElementById('nav').innerHTML = pages.map(([id, label,, badge], index) => `
-        <button class="${index === 0 ? 'active' : ''}" data-page="${id}" title="${label}">
+        <button class="${index === 0 ? 'active' : ''}" data-page="${id}" title="${label}" aria-label="Apri ${label}">
           ${icons[id]}
           <span class="label">${label}</span>
           ${badge ? `<span class="badge">${badge}</span>` : ''}
@@ -1844,7 +1837,7 @@
               <div class="panel-head"><div><h2>Priorita aggregate</h2><p>Urgenze operative ordinate per impatto e scadenza</p></div></div>
               <div class="ai-list">
                 <div class="ai-item" data-open-priority="milestone"><strong>3 milestone a rischio nei prossimi 10 giorni</strong><p>Due dipendono da fornitori, una da permesso ancora non approvato.</p><div class="bar"><span style="width:86%"></span></div></div>
-                <div class="ai-item" data-open-priority="budget"><strong>â‚¬286K forecast extra costo nel portfolio</strong><p>La maggior parte e collegata a varianti impianti e ritardi fornitori.</p><div class="bar"><span style="width:74%"></span></div></div>
+                <div class="ai-item" data-open-priority="budget"><strong>€286K forecast extra costo nel portfolio</strong><p>La maggior parte e collegata a varianti impianti e ritardi fornitori.</p><div class="bar"><span style="width:74%"></span></div></div>
                 <div class="ai-item" data-open-priority="media"><strong>37 contenuti nuovi da mobile da classificare</strong><p>Foto, video e PDF caricati nelle ultime 24 ore su 4 cantieri.</p><div class="bar"><span style="width:62%"></span></div></div>
               </div>
             </section>
@@ -1986,7 +1979,7 @@
             <section class="panel">
               <div class="panel-head"><div><h2>Sopralluoghi</h2><p>Report, partecipanti e firme automatiche</p></div></div>
               <div class="inspections-mini">
-                <div class="inspection-mini"><strong>Isolamento Blocco B</strong><span>3 foto 360 Â· 14 foto Â· 2 issue Â· 4/5 firme</span></div>
+                <div class="inspection-mini"><strong>Isolamento Blocco B</strong><span>3 foto 360 · 14 foto · 2 issue · 4/5 firme</span></div>
               </div>
             </section>
             <section class="panel">
@@ -2335,39 +2328,6 @@
       `);
     }
 
-    function renderChat() {
-      document.getElementById('chat').innerHTML = `
-        <div class="chat-layout">
-          <section class="panel">
-            <div class="panel-head"><div><h2>Canali</h2><p>Conversazioni per cantiere, team e fornitore</p></div></div>
-            <div class="list">
-              <div class="row"><div class="avatar">B</div><div><strong>Blocco B</strong><span>Foto + vocale Â· 10:42</span></div>${tag('18','blue')}</div>
-              <div class="row"><div class="avatar">S</div><div><strong>Sicurezza</strong><span>Checklist ponteggi</span></div>${tag('3','warn')}</div>
-              <div class="row"><div class="avatar">F</div><div><strong>Fornitori</strong><span>Consegna materiali</span></div>${tag('7')}</div>
-              <div class="row"><div class="avatar">D</div><div><strong>Direzione lavori</strong><span>Verbale in bozza</span></div>${tag('Bozza','violet')}</div>
-            </div>
-          </section>
-          <section class="panel messages">
-            <div class="panel-head"><div><h2>Blocco B Â· squadra impianti</h2><p>12 partecipanti Â· sincronizzato con mobile</p></div></div>
-            <div class="message-list">
-              <div class="bubble"><strong>Luca Ferri</strong><br>Foto e vocale: manca isolamento termico nel piano 2. Ho lasciato i dettagli.</div>
-              <div class="bubble out">Creo issue e assegno a Marco R. con scadenza domani.</div>
-              <div class="bubble"><strong>Marco R.</strong><br>Ricevuto. Verifico con fornitore entro pranzo.</div>
-            </div>
-            <div class="composer"><button class="icon-btn" data-action="Allegato pronto">+</button><div class="input">Messaggio, foto, PDF o comando vocale...</div><button class="icon-btn" data-action="Vocale registrato">Mic</button></div>
-          </section>
-          <section class="panel">
-            <div class="panel-head"><div><h2>Contesto operativo</h2><p>Classificazione e impatti collegati</p></div></div>
-            <div class="list">
-              <div class="row"><div class="avatar">IS</div><div><strong>Issue Â· materiale mancante</strong><span>Priorita alta</span></div>${tag('Alta','risk')}</div>
-              <div class="row"><div class="avatar">MR</div><div><strong>Assegnato a Marco R.</strong><span>Scadenza domani</span></div>${tag('Task')}</div>
-              <div class="row"><div class="avatar">â‚¬</div><div><strong>Impatto forecast</strong><span>Possibile extra costo â‚¬1.200</span></div>${tag('Budget','warn')}</div>
-            </div>
-          </section>
-        </div>
-      `;
-    }
-
     function renderChatV2() {
       const channels = visibleConversationChannels();
       const active = channels.find(channel => channel.id === activeConversation) || channels[0];
@@ -2395,7 +2355,7 @@
           '<section class="panel messages">' +
             '<div class="panel-head"><div><h2>' + active.detailTitle + '</h2><p>' + active.detailSubtitle + '</p></div>' + tag('Attivo','blue') + '</div>' +
             '<div class="message-list">' + messageRows + '</div>' +
-            '<div class="composer"><button class="icon-btn" data-action="Allegato pronto">+</button><div class="input">Messaggio, foto, PDF o comando vocale...</div><button class="icon-btn" data-action="Vocale registrato">Mic</button></div>' +
+            '<div class="composer"><button class="icon-btn" aria-label="Allega file" data-action="Allegato pronto">+</button><div class="input">Messaggio, foto, PDF o comando vocale...</div><button class="icon-btn" aria-label="Registra vocale" data-action="Vocale registrato">Mic</button></div>' +
           '</section>' +
           '<section class="panel">' +
             '<div class="panel-head"><div><h2>Contesto operativo</h2><p>Classificazione e impatti collegati</p></div></div>' +
@@ -2477,7 +2437,7 @@
     }
 
     function documentContext(doc) {
-      const parts = doc.meta.split(/Ã‚Â·| - /).map(part => part.trim()).filter(Boolean);
+      const parts = doc.meta.split(/·| - /).map(part => part.trim()).filter(Boolean);
       return {
         kind: parts[0] || doc.type,
         area: parts[1] || 'Area non assegnata',
@@ -2542,7 +2502,7 @@
               <div class="tags">${tag(doc.status, doc.tagClass)}${tag(policy[0], policy[1])}</div>
               <div class="document-actions">
                 <button class="secondary" data-open-audit="${escapeAttr(doc.title)}" data-document-meta="${escapeAttr(doc.meta)}" data-document-status="${escapeAttr(doc.status)}" data-document-owner="${escapeAttr(doc.owner)}" data-document-class="${escapeAttr(doc.tagClass)}">Audit</button>
-                <button class="icon-btn" title="Apri documento" data-open-document="${escapeAttr(doc.title)}" data-document-meta="${escapeAttr(doc.meta)}" data-document-status="${escapeAttr(doc.status)}" data-document-owner="${escapeAttr(doc.owner)}" data-document-class="${escapeAttr(doc.tagClass)}">
+                <button class="icon-btn" title="Apri documento" aria-label="Apri documento ${escapeAttr(doc.title)}" data-open-document="${escapeAttr(doc.title)}" data-document-meta="${escapeAttr(doc.meta)}" data-document-status="${escapeAttr(doc.status)}" data-document-owner="${escapeAttr(doc.owner)}" data-document-class="${escapeAttr(doc.tagClass)}">
                   <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
                 </button>
               </div>
@@ -2552,47 +2512,6 @@
       `;
       const first = list.querySelector('[data-open-document]');
       if (first) first.classList.add('active-summary');
-    }
-
-    function renderInspections() {
-      const visibleInspections = apiState.source === 'api'
-        ? apiState.inspections.filter(item => dashboardMode !== 'project' || item.site_name === selectedSite.name)
-        : [];
-      const firstInspection = visibleInspections[0];
-      const inspectionSyncBadge = apiState.source === 'api' ? '' : tag('Sync in corso', 'warn');
-      document.getElementById('inspections').innerHTML = `
-        <div class="doc-toolbar">
-          <div class="doc-tabs">
-            <button class="active">Aperti</button>
-            <button>Da firmare</button>
-            <button>Chiusi</button>
-          </div>
-          <button class="primary" data-open-inspection-create="true">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-            Nuovo sopralluogo
-          </button>
-        </div>
-        <div class="grid equal">
-          <section class="panel">
-            <div class="panel-head"><div><h2>Sopralluogo: ${firstInspection?.title || 'Isolamento Blocco B'}</h2><p>${firstInspection?.ai_summary || 'Report automatico pronto per chiusura'}</p></div><div class="tags">${tag(firstInspection ? statusLabel(firstInspection.status) : '4/5 firme','ok')}${inspectionSyncBadge}</div></div>
-            <div class="list">
-              <div class="activity"><div class="thumb pano"></div><div><h3>3 foto 360 collegate a planimetria</h3><p>Piano 2 Â· punti ispezione A, B e C con link sicuro nel report.</p><div class="tags">${tag('Foto 360','blue')}${tag('Planimetria')}</div></div><div class="owner"><span>Oggi</span></div></div>
-              <div class="activity"><div class="thumb"></div><div><h3>14 foto e 2 vocali inclusi nel verbale</h3><p>Sintesi pronta, issue generate e responsabili assegnati.</p><div class="tags">${tag('Media')}${tag('Sintesi','violet')}</div></div><div class="owner"><span>10:58</span></div></div>
-              <div class="activity"><div class="thumb doc"></div><div><h3>Documento allegato con pin issue</h3><p>Tavola del sopralluogo con 2 pin collegati a issue e rilievi di chiusura.</p><div class="tags">${tag('Allegato','violet')}${tag('Pin issue','risk')}</div></div><div class="owner"><button class="secondary" data-open-inspection-attachment="true">Apri</button></div></div>
-              <div class="activity"><div class="thumb doc"></div><div><h3>Report di chiusura</h3><p>PDF con firme partecipanti, QR per viste 360 e audit trail.</p><div class="tags">${tag('Report','violet')}${tag('Firme','ok')}</div></div><div class="owner"><span>Bozza</span></div></div>
-            </div>
-          </section>
-          <section class="panel">
-            <div class="panel-head"><div><h2>Partecipanti</h2><p>Firma automatica e presenza</p></div></div>
-            <div class="list">
-              <div class="row"><div class="avatar">AS</div><div><strong>Anna S.</strong><span>Direzione lavori</span></div>${tag('Firmato','ok')}</div>
-              <div class="row"><div class="avatar">MR</div><div><strong>Marco R.</strong><span>Capocantiere</span></div>${tag('Firmato','ok')}</div>
-              <div class="row"><div class="avatar">LF</div><div><strong>Luca F.</strong><span>Site manager</span></div>${tag('Firmato','ok')}</div>
-              <div class="row"><div class="avatar">TC</div><div><strong>TermoCasa</strong><span>Fornitore isolamento</span></div>${tag('Da firmare','warn')}</div>
-            </div>
-          </section>
-        </div>
-      `;
     }
 
     function renderInspections() {
@@ -2707,22 +2626,22 @@
 
         <section class="metrics">
           <div class="metric"><label>WBS attive</label><strong>${filteredWbs.length}</strong><span><b class="kpi-status blue">${selectedScheduleSite === 'all' ? 'portfolio' : selectedScheduleSite}</b></span></div>
-          <div class="metric" data-schedule-filter="modified" data-open-label="AttivitÃ  modificate"><label>Avanzamento</label><strong>${avgProgress}%</strong><span><b class="kpi-status">da WBS</b></span></div>
+          <div class="metric" data-schedule-filter="modified" data-open-label="Attività modificate"><label>Avanzamento</label><strong>${avgProgress}%</strong><span><b class="kpi-status">da WBS</b></span></div>
           <div class="metric"><label>Extra costo previsto</label><strong>${formatCurrency(overrun)}</strong><span><b class="kpi-status ${overrun > 0 ? 'risk' : 'ok'}">forecast aggiornato</b></span></div>
         </section>
 
         <section class="panel timeline-panel">
-          <div class="panel-head"><div><h2>Cronoprogramma</h2></div>${tag('Settimanale','blue','Le WBS sono comprimibili, espandibili nelle sottoattivitÃ  e mobili nel tempo o tra WBS.')}</div>
+          <div class="panel-head"><div><h2>Cronoprogramma</h2></div>${tag('Settimanale','blue','Le WBS sono comprimibili, espandibili nelle sottoattività e mobili nel tempo o tra WBS.')}</div>
           <div class="timeline-window">
             <div class="timeline-grid weekly" id="weeklyScheduleGrid">
-              <div class="timeline-cell timeline-head">AttivitÃ  / WBS</div>
+              <div class="timeline-cell timeline-head">Attività / WBS</div>
               ${['Sett. 22','Sett. 23','Sett. 24','Sett. 25','Sett. 26','Sett. 27','Sett. 28','Sett. 29'].map(day => `<div class="timeline-cell timeline-head">${day}</div>`).join('')}
               ${filteredWbs.map((item, index) => `
                 <div class="timeline-cell timeline-task-label" data-timeline-row-wbs="${item.id}">
                   <div class="timeline-label-line">
                     <button class="timeline-collapse" data-toggle-wbs="${item.id}" type="button">${expandedWbsIds.has(item.id) ? '-' : '+'}</button>
                     <div class="timeline-label-main">
-                      <strong>${item.code} Â· ${item.title}</strong>
+                      <strong>${item.code} · ${item.title}</strong>
                       <span class="timeline-meta">${showScheduleSiteBadge ? `<b class="timeline-site-badge">${item.site}</b>` : ''}${roleBadge(roleForPerson(item.owner) || item.owner, true)}<em>${item.status}</em></span>
                     </div>
                   </div>
@@ -2734,7 +2653,7 @@
                   return `<div class="timeline-cell" data-week-slot="${slot}" data-drop-wbs="${item.id}">${showBar ? `<div class="timeline-bar ${item.statusClass} ${isCompletedWbs(item) ? 'locked' : ''}" draggable="true" data-timeline-wbs="${item.id}">${slot === start ? `${item.progress}%` : ''}</div>` : ''}</div>`;
                 }).join('')}
                 ${expandedWbsIds.has(item.id) ? item.subactions.map((sub, subIndex) => `
-                  <div class="timeline-cell timeline-task-label subtask" data-timeline-row-wbs="${item.id}"><strong>${sub.title}</strong><span>${sub.owner} Â· ${sub.due}</span></div>
+                  <div class="timeline-cell timeline-task-label subtask" data-timeline-row-wbs="${item.id}"><strong>${sub.title}</strong><span>${sub.owner} · ${sub.due}</span></div>
                   ${Array.from({ length: 8 }).map((_, slot) => {
                     const start = sub.weekStart ?? Math.min(7, (item.weekStart ?? (index % 4)) + subIndex);
                     const duration = sub.weekSpan ?? 1;
@@ -2750,13 +2669,13 @@
         <div class="schedule-board">
           <div class="schedule-panels">
             <section class="panel">
-              <div class="panel-head"><div><h2>Computo importato</h2></div>${tag('PDF/XLS','violet','Base economica e quantitativa per AI, WBS e budget: da PDF o XLS vengono estratte voci, quantitÃ , importi e categorie.')}</div>
+              <div class="panel-head"><div><h2>Computo importato</h2></div>${tag('PDF/XLS','violet','Base economica e quantitativa per AI, WBS e budget: da PDF o XLS vengono estratte voci, quantità, importi e categorie.')}</div>
               <div class="boq-drop">
                 <div class="boq-file-card">
                   <div class="boq-file-icon">${escapeAttr(boqFileInfo.source)}</div>
                   <div class="boq-file-main">
                     <strong>${escapeAttr(boqFileInfo.name)}</strong>
-                    <span>${scheduleSource === 'api' ? 'Dati caricati dal backend' : 'File dimostrativo locale'} Ã‚Â· ${escapeAttr(boqFileInfo.version)} Ã‚Â· caricato da ${escapeAttr(boqFileInfo.uploadedBy)} Ã‚Â· ${escapeAttr(boqFileInfo.uploadedAt)}</span>
+                    <span>${scheduleSource === 'api' ? 'Dati caricati dal backend' : 'File dimostrativo locale'} · ${escapeAttr(boqFileInfo.version)} · caricato da ${escapeAttr(boqFileInfo.uploadedBy)} · ${escapeAttr(boqFileInfo.uploadedAt)}</span>
                     <div class="tags">${tag(boqFileInfo.status, boqFileInfo.statusClass)}${tag('Versioning attivo','blue')}${tag('Audit import','violet')}</div>
                   </div>
                 </div>
@@ -2783,7 +2702,7 @@
 
         <br>
         <table class="table">
-          <thead><tr><th>Cantiere</th><th>AttivitÃ </th><th>Periodo</th><th>Avanzamento</th><th>Costo previsto</th><th>Forecast</th><th></th></tr></thead>
+          <thead><tr><th>Cantiere</th><th>Attività</th><th>Periodo</th><th>Avanzamento</th><th>Costo previsto</th><th>Forecast</th><th></th></tr></thead>
           <tbody>
             ${visibleScheduleRows.map(r => `<tr data-open-schedule="${r[1]}"><td><strong>${r[0]}</strong></td><td><strong contenteditable="true" class="editable-cell">${r[1]}</strong><small>${r[2]}</small></td><td>${r[3]}</td><td><div class="bar"><span style="width:${r[4]}%"></span></div><small contenteditable="true" class="editable-cell">${r[4]}%</small></td><td>${r[5]}</td><td style="color:var(--${r[7] || 'ink'})">${r[6]}</td><td><button class="secondary" data-action="Voce cronoprogramma modificata">Salva</button></td></tr>`).join('')}
           </tbody>
@@ -2905,7 +2824,7 @@
             const sub = sourceParent?.subactions.find(item => item.id === draggedTimeline.id);
             if (sourceParent && targetParent && sub) {
               if (isCompletedWbs(sourceParent) || isCompletedSubaction(sub)) {
-                openCompletedScheduleModal({ ...sub, code: sourceParent.code, validated: sourceParent.validated, accountingLinked: sourceParent.accountingLinked }, week, 'SottoattivitÃ ');
+                openCompletedScheduleModal({ ...sub, code: sourceParent.code, validated: sourceParent.validated, accountingLinked: sourceParent.accountingLinked }, week, 'Sottoattività');
                 draggedTimeline = null;
                 return;
               }
@@ -2913,7 +2832,7 @@
               sub.weekStart = week;
               targetParent.subactions.push(sub);
               expandedWbsIds.add(targetParent.id);
-              showToast(`SottoattivitÃ  spostata in ${targetParent.code}`);
+              showToast(`Sottoattività spostata in ${targetParent.code}`);
             }
           }
           draggedTimeline = null;
@@ -2940,58 +2859,7 @@
       renderSchedule();
     }
 
-    function renderIssues() {
-      const tasksForView = currentVisibleTasks();
-      const issuesForView = currentVisibleIssues();
-      if (apiState.source === 'api' && (tasksForView.length || issuesForView.length)) {
-        const cards = [
-          ...tasksForView.map(task => ({
-            title: task.title,
-            text: `${task.site_name || 'Organizzazione'} - ${statusLabel(task.status)} - scade ${task.due_at || 'da definire'}`,
-            status: task.status,
-            priority: task.priority || 'medium',
-            lane: task.status === 'blocked' ? 'Bloccato' : task.status === 'in_progress' ? 'In corso' : 'Da fare',
-            tags: [task.priority || 'task', 'Task']
-          })),
-          ...issuesForView.map(issue => ({
-            title: issue.title,
-            text: `${issue.site_name || 'Organizzazione'} - ${statusLabel(issue.status)} - scade ${issue.due_at || 'da definire'}`,
-            status: issue.status,
-            priority: issue.severity || 'medium',
-            lane: issue.status === 'blocked' ? 'Bloccato' : issue.status === 'in_progress' ? 'In corso' : 'Da fare',
-            tags: [issue.severity || 'issue', 'Issue']
-          }))
-        ];
-        const lane = name => cards.filter(card => card.lane === name).map(card => `
-          <article class="task-card"><h3>${card.title}</h3><p>${card.text}</p><div>${tag(card.tags[0], card.priority === 'high' ? 'risk' : 'warn')} ${tag(card.tags[1], 'blue')}</div></article>
-        `).join('') || `<article class="task-card"><h3>Nessun elemento</h3><p>Non ci sono elementi backend in questa colonna.</p><div>${tag('OK','ok')}</div></article>`;
-        document.getElementById('issues').innerHTML = `
-          <div class="kanban">
-            <section class="lane"><h2>Da fare</h2>${lane('Da fare')}</section>
-            <section class="lane"><h2>In corso</h2>${lane('In corso')}</section>
-            <section class="lane"><h2>Bloccato</h2>${lane('Bloccato')}</section>
-          </div>
-        `;
-        return;
-      }
-      document.getElementById('issues').innerHTML = `
-        <div class="kanban">
-          <section class="lane"><h2>Da fare</h2>
-            <article class="task-card"><h3>Verifica isolamento mancante</h3><p>Marco R. Â· scade domani Â· collegata a posa isolamento.</p><div>${tag('Alta','risk')} ${tag('Crono')}</div></article>
-            <article class="task-card"><h3>Firmare report sopralluogo</h3><p>1 firma mancante da fornitore TermoCasa.</p><div>${tag('Firma','warn')}</div></article>
-          </section>
-          <section class="lane"><h2>In corso</h2>
-            <article class="task-card"><h3>Valutare variante impianti</h3><p>Anna S. Â· impatto stimato +â‚¬6.800.</p><div>${tag('Budget','warn')} ${tag('PDF','blue')}</div></article>
-            <article class="task-card"><h3>Allineare milestone facciata nord</h3><p>Progress update da 12 foto mobile.</p><div>${tag('Progress')}</div></article>
-          </section>
-          <section class="lane"><h2>Bloccato</h2>
-            <article class="task-card"><h3>Chiusura cartongessi</h3><p>Dipende da isolamento Blocco B e consegna materiale.</p><div>${tag('Ritardo','risk')}</div></article>
-          </section>
-        </div>
-      `;
-    }
-
-    function issueStatusMeta(status) {
+        function issueStatusMeta(status) {
       const map = {
         open: ['Aperto', 'Da prendere in carico', 'warn', 'Prendi in carico', 'assigned'],
         assigned: ['In carico', 'Responsabile assegnato', 'blue', 'Avvia lavorazione', 'in_progress'],
@@ -3110,7 +2978,7 @@
 
     function issueSortButton(key, label) {
       const active = issueSort.key === key;
-      const mark = active ? (issueSort.dir === 'asc' ? 'â–²' : 'â–¼') : '';
+      const mark = active ? (issueSort.dir === 'asc' ? '^' : 'v') : '';
       return `<button class="${active ? 'active' : ''}" data-issue-sort="${key}">${label}${mark ? `<span class="sort-mark">${mark}</span>` : ''}</button>`;
     }
 
@@ -3409,6 +3277,7 @@
       document.querySelectorAll('.nav button').forEach(b => b.classList.toggle('active', b.dataset.page === id));
       const page = pages.find(p => p[0] === id);
       if (!page) return setPage('dashboard');
+      if (id === 'dashboard') renderDashboard();
       if (id === 'chat') renderChatV2();
       if (id === 'media') renderMediaArchive();
       if (id === 'documents') renderDocuments();
@@ -3427,6 +3296,10 @@
       updateContextLabels();
       updateProfilePanel();
       history.replaceState(null, '', '#' + id);
+      const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+      const behavior = reduceMotion ? 'auto' : 'smooth';
+      document.querySelector('.main')?.scrollTo({ top: 0, left: 0, behavior });
+      window.scrollTo({ top: 0, left: 0, behavior });
     }
 
     function openSite(siteName) {
@@ -3461,7 +3334,7 @@
       const row = trigger.closest('.doc-row') || trigger;
       row.classList.add('active-summary');
       const title = trigger.dataset.openDocument;
-      const meta = `${trigger.dataset.documentMeta} Â· Owner ${trigger.dataset.documentOwner}`;
+      const meta = `${trigger.dataset.documentMeta} · Owner ${trigger.dataset.documentOwner}`;
       const tags = `${tag(trigger.dataset.documentStatus, trigger.dataset.documentClass || '')}${tag('Accesso verificato','ok')}`;
       openModal('Dettaglio documento', meta, `
         <div class="document-detail">
@@ -3657,8 +3530,8 @@
           <div class="field">
             <label>Area</label>
             <select>
-              <option>Blocco B Â· Piano 2</option>
-              <option>Blocco A Â· Piano terra</option>
+              <option>Blocco B · Piano 2</option>
+              <option>Blocco A · Piano terra</option>
               <option>Facciata nord</option>
               <option>+ Nuova area personalizzata</option>
             </select>
@@ -3821,7 +3694,7 @@
     }
 
     function openInspectionAttachmentModal() {
-      openModal('Allegato sopralluogo con pin', 'Tavola allegata al sopralluogo Â· Blocco B Â· Piano 2', `
+      openModal('Allegato sopralluogo con pin', 'Tavola allegata al sopralluogo · Blocco B · Piano 2', `
         <div class="document-detail">
           <div class="detail-preview large">
             <div class="doc-pin one">1</div>
@@ -3830,7 +3703,7 @@
           <div class="pin-list">
             <div class="pin-item">
               <div class="pin-marker">1</div>
-              <div><strong>Issue: isolamento mancante</strong><span>Collegata a Blocco B Â· priorita alta Â· Marco R.</span></div>
+              <div><strong>Issue: isolamento mancante</strong><span>Collegata a Blocco B · priorita alta · Marco R.</span></div>
               <button class="secondary" data-action="Issue aperta">Apri issue</button>
             </div>
             <div class="pin-item">
@@ -3880,21 +3753,21 @@
 
     function openCompletedScheduleModal(item, targetWeek, type = 'WBS') {
       const title = `${type} completata: revisione richiesta`;
-      const subtitle = `${item.code ? `${item.code} Â· ` : ''}${item.title} Â· nuova settimana richiesta ${targetWeek + 22}`;
+      const subtitle = `${item.code ? `${item.code} · ` : ''}${item.title} · nuova settimana richiesta ${targetWeek + 22}`;
       openModal(title, subtitle, `
         <div class="document-detail">
           <div class="locked-note">
-            Questa voce Ã¨ completata${item.validated ? ' e validata' : ''}${item.accountingLinked ? ', con SAL/contabilitÃ  collegata' : ''}. Non puÃ² essere spostata direttamente perchÃ© altererebbe storico, SAL, forecast e audit trail.
+            Questa voce è completata${item.validated ? ' e validata' : ''}${item.accountingLinked ? ', con SAL/contabilità collegata' : ''}. Non può essere spostata direttamente perché altererebbe storico, SAL, forecast e audit trail.
           </div>
           <div class="pin-list">
             <div class="pin-item"><div class="pin-marker">1</div><div><strong>Versione originale bloccata</strong><span>Restano data pianificata, data effettiva, firme, SAL e allegati.</span></div>${tag('Audit','violet')}</div>
-            <div class="pin-item"><div class="pin-marker" style="background: var(--warn)">2</div><div><strong>Nuova revisione cronoprogramma</strong><span>Il sistema crea una variante o una nuova attivitÃ  collegata.</span></div>${tag('Forecast','warn')}</div>
-            <div class="pin-item"><div class="pin-marker" style="background: var(--brand-2)">3</div><div><strong>Motivazione obbligatoria</strong><span>PM e organizzazione mantengono tracciabilitÃ  completa.</span></div>${tag('PM','blue')}</div>
+            <div class="pin-item"><div class="pin-marker" style="background: var(--warn)">2</div><div><strong>Nuova revisione cronoprogramma</strong><span>Il sistema crea una variante o una nuova attività collegata.</span></div>${tag('Forecast','warn')}</div>
+            <div class="pin-item"><div class="pin-marker" style="background: var(--brand-2)">3</div><div><strong>Motivazione obbligatoria</strong><span>PM e organizzazione mantengono tracciabilità completa.</span></div>${tag('PM','blue')}</div>
           </div>
           <div class="detail-actions">
             <button class="primary" data-create-schedule-revision="${item.id || ''}" data-target-week="${targetWeek}">Crea revisione</button>
             <button class="secondary" data-reopen-schedule-item="${item.id || ''}">Riapri con motivazione</button>
-            <button class="secondary" data-duplicate-schedule-item="${item.id || ''}" data-target-week="${targetWeek}">Duplica nuova attivitÃ </button>
+            <button class="secondary" data-duplicate-schedule-item="${item.id || ''}" data-target-week="${targetWeek}">Duplica nuova attività</button>
           </div>
         </div>
       `);
@@ -4031,15 +3904,110 @@
       `);
     }
 
+    let lastFocusedBeforeModal = null;
+    const modalFocusableSelector = [
+      'a[href]',
+      'button:not([disabled])',
+      'textarea:not([disabled])',
+      'input:not([disabled])',
+      'select:not([disabled])',
+      '[tabindex]:not([tabindex="-1"])'
+    ].join(',');
+
+    function modalFocusableElements() {
+      return Array.from(document.querySelectorAll(`#modalBackdrop .modal ${modalFocusableSelector}`))
+        .filter(element => element.offsetParent !== null || element === document.activeElement);
+    }
+
+    function focusModal() {
+      const modalClose = document.getElementById('modalClose');
+      const firstFocusable = modalFocusableElements()[0] || modalClose;
+      firstFocusable?.focus({ preventScroll: true });
+    }
+
+    function trapModalFocus(event) {
+      const backdrop = document.getElementById('modalBackdrop');
+      if (!backdrop?.classList.contains('show')) return;
+      if (event.key === 'Escape') {
+        closeModal();
+        return;
+      }
+      if (event.key !== 'Tab') return;
+      const focusable = modalFocusableElements();
+      if (!focusable.length) {
+        event.preventDefault();
+        return;
+      }
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+
     function openModal(title, subtitle, body) {
+      lastFocusedBeforeModal = document.activeElement;
       document.getElementById('modalTitle').textContent = title;
       document.getElementById('modalSubtitle').textContent = subtitle;
       document.getElementById('modalBody').innerHTML = body;
-      document.getElementById('modalBackdrop').classList.add('show');
+      const backdrop = document.getElementById('modalBackdrop');
+      backdrop.setAttribute('aria-hidden', 'false');
+      backdrop.classList.add('show');
+      requestAnimationFrame(focusModal);
     }
 
     function closeModal() {
-      document.getElementById('modalBackdrop').classList.remove('show');
+      const backdrop = document.getElementById('modalBackdrop');
+      backdrop.classList.remove('show');
+      backdrop.setAttribute('aria-hidden', 'true');
+      if (lastFocusedBeforeModal && typeof lastFocusedBeforeModal.focus === 'function') {
+        lastFocusedBeforeModal.focus({ preventScroll: true });
+      }
+      lastFocusedBeforeModal = null;
+    }
+
+    function actionRouteFor(label) {
+      if (/sopralluogo/i.test(label)) return 'inspections';
+      if (/task|issue|pin/i.test(label)) return 'issues';
+      if (/documento|versioni|condivisione/i.test(label)) return 'documents';
+      if (/wbs|cronoprogramma|voce cronoprogramma/i.test(label)) return 'schedule';
+      if (/profilo team|permessi membro|anagrafica|ruolo/i.test(label)) return 'team';
+      return null;
+    }
+
+    function handleActionCommand(label, trigger) {
+      const route = actionRouteFor(label);
+      if (/collegamento/i.test(label)) {
+        trigger?.closest('.active-summary')?.classList.remove('active-summary');
+      }
+      if (/Data room scaricata/i.test(label)) {
+        const items = reportItems(currentPageId(), 'current');
+        downloadMediaArchive(items, reportScopeOptions()[0]?.label || 'Vista corrente', 'dataroom');
+        closeModal();
+        return;
+      }
+      if (/Issue aperta|Task creato da pin|Nuovo pin issue/i.test(label)) {
+        closeModal();
+        openIssueCreateModal();
+        return;
+      }
+      if (/Documento caricato|Workflow PM documento|Documento archiviato|Richiesta integrazione/i.test(label)) {
+        documentRows = documentRows.map((row, index) => index === 0
+          ? { ...row, status: label.includes('archiviato') ? 'Archiviato' : label.includes('Workflow') ? 'In workflow PM' : row.status }
+          : row);
+        renderDocuments();
+      }
+      if (/Ruolo creato|Ruolo modificato|Utente censito/i.test(label)) {
+        renderPermissions();
+        renderTeam();
+      }
+      closeModal();
+      if (route && currentPageId() !== route) setPage(route);
+      showToast(label);
     }
 
     function updateProfilePanel() {
@@ -4245,7 +4213,7 @@
       localStorage.setItem('sitepulse_demo_user', userKey);
       document.getElementById('loginScreen').classList.remove('show');
       document.getElementById('accountAvatar').textContent = user.initials;
-      document.getElementById('accountLabel').textContent = `${user.name} Â· ${user.role}`;
+      document.getElementById('accountLabel').textContent = `${user.name} · ${user.role}`;
       if (user.mode === 'project') {
         selectedSite = sites.find(site => site.name === user.allowedSites[0]) || sites[0];
         dashboardMode = 'project';
@@ -4531,7 +4499,11 @@
         }
 
         const action = event.target.closest('[data-action]');
-        if (action) showToast(action.dataset.action);
+        if (action) {
+          event.stopPropagation();
+          handleActionCommand(action.dataset.action, action);
+          return;
+        }
 
         const roleEditor = event.target.closest('[data-open-role-editor]');
         if (roleEditor) {
@@ -4787,7 +4759,7 @@
               ...original,
               id: copyId,
               code: `${original.code}.N`,
-              title: `${original.title} - nuova attivitÃ `,
+              title: `${original.title} - nuova attività`,
               progress: 0,
               locked: false,
               validated: false,
@@ -4801,7 +4773,7 @@
             closeModal();
             renderSchedule();
             wireScheduleDrag();
-            showToast('Nuova attivitÃ  collegata creata');
+            showToast('Nuova attività collegata creata');
           }
           return;
         }
@@ -5056,7 +5028,7 @@
                 status: 'Importato',
                 statusClass: 'blue',
                 subactions: [
-                  { id: 'wbs-import-1-a', title: 'Controllo quantitÃ ', owner: 'PM', due: '48h', done: 0 },
+                  { id: 'wbs-import-1-a', title: 'Controllo quantità', owner: 'PM', due: '48h', done: 0 },
                   { id: 'wbs-import-1-b', title: 'Associazione fase WBS', owner: 'AI + PM', due: '48h', done: 0 }
               ]
             });
@@ -5132,6 +5104,7 @@
       document.getElementById('modalBackdrop').addEventListener('click', event => {
         if (event.target.id === 'modalBackdrop') closeModal();
       });
+      document.addEventListener('keydown', trapModalFocus);
       document.getElementById('accountPill').addEventListener('click', openProfilePanel);
       document.getElementById('profileClose').addEventListener('click', closeProfilePanel);
       document.getElementById('profileBackdrop').addEventListener('click', event => {
@@ -5147,22 +5120,15 @@
       document.getElementById('logoutButton').addEventListener('click', logoutDemoUser);
     }
 
+    const initialPage = location.hash ? location.hash.slice(1) : 'dashboard';
     renderNav();
-    renderDashboard();
-    renderChatV2();
-    renderMediaArchive();
-    renderDocuments();
-    renderInspections();
-    renderSchedule();
-    wireScheduleDrag();
-    renderIssues();
-    renderTeam();
-    renderPermissions();
     renderFloatingChat();
     wireEvents();
     enableFloatingChatDrag();
-    const initialPage = location.hash ? location.hash.slice(1) : 'dashboard';
-    openPortfolio();
+    dashboardMode = 'portfolio';
+    selectedScheduleSite = 'all';
+    activeChatSite = 'all';
+    resetActiveConversationForContext();
     setPage(initialPage);
     const savedDemoUser = localStorage.getItem('sitepulse_demo_user');
     if (savedDemoUser && demoUsers[savedDemoUser]) {
