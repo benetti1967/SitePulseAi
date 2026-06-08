@@ -53,6 +53,7 @@
     let scheduleRows = [...fallbackScheduleRows];
     let scheduleSource = 'fallback';
     let activeScheduleView = 'wbs';
+    let mediaSort = { key: 'date', dir: 'desc' };
     let selectedScheduleSite = 'all';
     let expandedWbsIds = new Set(['wbs-1', 'wbs-2', 'wbs-3', 'wbs-4']);
     const boqFileInfo = {
@@ -1758,7 +1759,7 @@
         <button class="${index === 0 ? 'active' : ''}" data-page="${id}" title="${label}" aria-label="Apri ${label}">
           ${icons[id]}
           <span class="label">${label}</span>
-          ${badge ? `<span class="badge">${badge}</span>` : ''}
+          ${badge ? `<span class="badge has-updates">${badge}</span>` : ''}
         </button>
       `).join('');
     }
@@ -1787,19 +1788,76 @@
       const avgProgress = totalSites
         ? Math.round(sites.reduce((sum, site) => sum + percentValue(site.progress), 0) / totalSites)
         : 0;
+      const avgPlanned = totalSites
+        ? Math.round(sites.reduce((sum, site) => sum + Number(site.plannedProgress || percentValue(site.progress)), 0) / totalSites)
+        : avgProgress;
+      const avgForecastDelay = totalSites
+        ? Math.round(sites.reduce((sum, site) => sum + Math.max(0, Number(site.forecastDaysLeft || 0) - Number(site.plannedDaysLeft || 0)), 0) / totalSites)
+        : 0;
       const criticalIssues = apiState.source === 'api'
         ? apiState.issues.filter(issue => issue.severity === 'high' || issue.severity === 'critical').length
         : 9;
       const docCount = apiState.source === 'api' ? apiState.documents.length : 16;
+      const newDocs = apiState.source === 'api'
+        ? apiState.documents.filter(doc => String(doc.status || '').toLowerCase().includes('review') || String(doc.status || '').toLowerCase().includes('new')).length
+        : documentRows.filter(doc => ['In approvazione', 'In revisione', 'Firmato 4/5'].includes(doc.status)).length;
       const budgetTotal = sites.reduce((sum, site) => sum + Number(site.budgetTotal || 0), 0);
+      const avgBudget = totalSites
+        ? Math.round(sites.reduce((sum, site) => sum + percentValue(site.budget), 0) / totalSites)
+        : 0;
+      const budgetDelta = Math.max(0, avgBudget - avgProgress);
       return {
         totalSites,
         avgProgress,
+        avgPlanned,
+        avgForecastDelay,
         criticalIssues,
         docCount,
+        newDocs,
+        avgBudget,
+        budgetDelta,
         budgetLabel: budgetTotal ? formatCurrency(budgetTotal).replace(/\s/g, '') : 'EUR18.7M',
         sourceLabel: apiState.source === 'api' ? 'API Cloudflare' : 'Dati locali'
       };
+    }
+
+    function metricIcon(name) {
+      const metricIcons = {
+        sites: icons.inspections,
+        schedule: icons.schedule,
+        issues: icons.issues,
+        documents: icons.documents,
+        budget: icons.dashboard
+      };
+      return `<span class="metric-icon ${name}">${metricIcons[name] || icons.dashboard}</span>`;
+    }
+
+    function metricCard({ icon, value, label, status, statusClass = '', attrs = '' }) {
+      return `
+        <div class="metric metric-visual" ${attrs}>
+          ${metricIcon(icon)}
+          <strong>${value}</strong>
+          <label>${label}</label>
+          <span><b class="kpi-status ${statusClass}">${status}</b></span>
+        </div>
+      `;
+    }
+
+    function siteScheduleDelta(site) {
+      const delta = percentValue(site.progress) - Number(site.plannedProgress || percentValue(site.progress));
+      const delay = Math.max(0, Number(site.forecastDaysLeft || 0) - Number(site.plannedDaysLeft || 0));
+      if (delta < 0 && delay) return { text: `${delta}% · +${delay}g`, className: 'risk' };
+      if (delta < 0) return { text: `${delta}% vs crono`, className: 'warn' };
+      return { text: `+${delta}% vs crono`, className: 'ok' };
+    }
+
+    function siteBudgetDelta(site) {
+      const budget = percentValue(site.budget);
+      const progress = percentValue(site.progress);
+      const delta = budget - progress;
+      if (delta > 8) return { text: `extra +${delta}%`, className: 'risk' };
+      if (delta > 0) return { text: `extra +${delta}%`, className: 'warn' };
+      return { text: `saving ${Math.abs(delta)}%`, className: 'ok' };
     }
 
     function renderDashboard() {
@@ -1813,10 +1871,11 @@
           <div class="portfolio-summary-risk">
             ${renderRiskForecastCard('portfolio', `${portfolio.totalSites} cantieri visibili`)}
             <div class="portfolio-kpi-row">
-              <div class="metric" data-open-dashboard="portfolio" data-open-label="Cantieri aperti"><strong>${portfolio.totalSites}</strong><label>Cantieri aperti</label><span><b class="kpi-status">${portfolio.sourceLabel}</b></span></div>
-              <div class="metric" data-open-page="schedule" data-open-label="Avanzamento portfolio"><strong>${portfolio.avgProgress}%</strong><label>Avanzamento medio</label><span><b class="kpi-status blue">${scheduleRows.length} righe crono</b></span></div>
-              <div class="metric" data-open-page="issues" data-open-label="Rischi critici"><strong>${portfolio.criticalIssues}</strong><label>Rischi critici</label><span><b class="kpi-status risk">filtrati per ruolo</b></span></div>
-              <div class="metric" data-open-page="documents" data-open-label="Documenti"><strong>${portfolio.docCount}</strong><label>Documenti</label><span><b class="kpi-status warn">${portfolio.budgetLabel} budget</b></span></div>
+              ${metricCard({ icon: 'sites', value: portfolio.totalSites, label: 'Cantieri aperti', status: portfolio.sourceLabel, attrs: 'data-open-dashboard="portfolio" data-open-label="Cantieri aperti"' })}
+              ${metricCard({ icon: 'schedule', value: `${portfolio.avgProgress}%`, label: 'Avanzamento medio', status: portfolio.avgProgress < portfolio.avgPlanned ? `ritardo ${portfolio.avgProgress - portfolio.avgPlanned}% · +${portfolio.avgForecastDelay}g` : `+${portfolio.avgProgress - portfolio.avgPlanned}% vs crono`, statusClass: portfolio.avgProgress < portfolio.avgPlanned ? 'risk' : 'ok', attrs: 'data-open-page="schedule" data-open-label="Avanzamento portfolio"' })}
+              ${metricCard({ icon: 'issues', value: portfolio.criticalIssues, label: 'Rischi critici', status: 'filtrati per ruolo', statusClass: 'risk', attrs: 'data-open-page="issues" data-open-label="Rischi critici"' })}
+              ${metricCard({ icon: 'documents', value: portfolio.newDocs, label: 'Documenti nuovi', status: `${portfolio.docCount} totali`, statusClass: 'blue', attrs: 'data-open-page="documents" data-open-label="Documenti nuovi"' })}
+              ${metricCard({ icon: 'budget', value: portfolio.budgetLabel, label: 'Budget portfolio', status: portfolio.budgetDelta ? `extra +${portfolio.budgetDelta}%` : 'saving 0%', statusClass: portfolio.budgetDelta > 6 ? 'risk' : portfolio.budgetDelta ? 'warn' : 'ok', attrs: 'data-open-page="schedule" data-open-label="Budget portfolio"' })}
             </div>
           </div>
           <div class="portfolio-risk-note">
@@ -1872,10 +1931,16 @@
             </div>
           </div>
           <div class="site-kpis">
-            <div class="site-kpi" data-open-site="${site.name}" data-open-page-after-site="schedule" data-open-label="Avanzamento"><strong>${site.progress}</strong><small>Avanz.</small></div>
-            <div class="site-kpi" data-open-site="${site.name}" data-open-page-after-site="schedule" data-open-label="Budget"><strong>${site.budget}</strong><small class="warn">Budget</small></div>
-            <div class="site-kpi" data-open-site="${site.name}" data-open-page-after-site="issues" data-open-label="Issue"><strong>${site.issues}</strong><small class="risk">Issue</small></div>
-            <div class="site-kpi" data-open-site="${site.name}" data-open-page-after-site="documents" data-open-label="Documenti"><strong>${site.docs}</strong><small class="blue">Doc</small></div>
+            ${(() => {
+              const scheduleDelta = siteScheduleDelta(site);
+              const budgetDelta = siteBudgetDelta(site);
+              return `
+                <div class="site-kpi" data-open-site="${site.name}" data-open-page-after-site="schedule" data-open-label="Avanzamento">${metricIcon('schedule')}<strong>${site.progress}</strong><small class="${scheduleDelta.className}">${scheduleDelta.text}</small></div>
+                <div class="site-kpi" data-open-site="${site.name}" data-open-page-after-site="schedule" data-open-label="Budget">${metricIcon('budget')}<strong>${site.budget}</strong><small class="${budgetDelta.className}">${budgetDelta.text}</small></div>
+                <div class="site-kpi" data-open-site="${site.name}" data-open-page-after-site="issues" data-open-label="Issue">${metricIcon('issues')}<strong>${site.issues}</strong><small class="risk">aperte</small></div>
+                <div class="site-kpi" data-open-site="${site.name}" data-open-page-after-site="documents" data-open-label="Documenti">${metricIcon('documents')}<strong>${site.docs}</strong><small class="blue">nuovi/doc</small></div>
+              `;
+            })()}
           </div>
           <div class="insight-list">
             ${site.insights.map(insight => `
@@ -1931,65 +1996,65 @@
       const projectDocs = apiState.source === 'api'
         ? apiState.documents.filter(doc => doc.site_name === selectedSite.name).length
         : selectedSite.docs;
+      const scheduleDelta = siteScheduleDelta(selectedSite);
+      const budgetDelta = siteBudgetDelta(selectedSite);
       document.getElementById('dashboard').innerHTML = `
         <section class="metrics">
-          <div class="metric" data-open-page="schedule" data-open-label="Cronoprogramma"><label>Avanzamento</label><strong>${selectedSite.progress}</strong><span><b class="kpi-status">${scheduleSource === 'api' ? 'da backend' : '+4% rispetto a venerdi'}</b></span></div>
-          <div class="metric" data-open-page="issues" data-open-label="Issue e Task"><label>Issue aperte</label><strong>${projectIssues}</strong><span><b class="kpi-status risk">filtrate sul cantiere</b></span></div>
-          <div class="metric" data-open-page="schedule" data-open-label="Budget"><label>Budget consumato</label><strong>${selectedSite.budget}</strong><span><b class="kpi-status warn">forecast cantiere</b></span></div>
-          <div class="metric" data-open-page="documents" data-open-label="Documenti"><label>Documenti</label><strong>${projectDocs}</strong><span><b class="kpi-status blue">segregati per ruolo</b></span></div>
+          ${metricCard({ icon: 'schedule', value: selectedSite.progress, label: 'Avanzamento', status: scheduleDelta.text, statusClass: scheduleDelta.className, attrs: 'data-open-page="schedule" data-open-label="Cronoprogramma"' })}
+          ${metricCard({ icon: 'issues', value: projectIssues, label: 'Issue aperte', status: 'filtrate sul cantiere', statusClass: 'risk', attrs: 'data-open-page="issues" data-open-label="Issue e Task"' })}
+          ${metricCard({ icon: 'budget', value: selectedSite.budget, label: 'Budget consumato', status: budgetDelta.text, statusClass: budgetDelta.className, attrs: 'data-open-page="schedule" data-open-label="Budget"' })}
+          ${metricCard({ icon: 'documents', value: projectDocs, label: 'Documenti nuovi', status: 'versioni e workflow', statusClass: 'blue', attrs: 'data-open-page="documents" data-open-label="Documenti"' })}
         </section>
         ${renderProjectHealth()}
         ${renderRiskForecastCard('site', selectedSite.name)}
-        <div class="grid">
-          <section class="panel">
+        <div class="dashboard-flow-grid">
+          <section class="panel dashboard-feed-panel">
             <div class="panel-head">
               <div><h2>Feed operativo strutturato</h2><p>Contenuti arrivati da chat, foto, vocali e PDF mobile</p></div>
               <div class="segmented"><button class="active" data-filter="all">Tutto</button><button data-filter="issue">Issue</button><button data-filter="recent">Recenti</button></div>
             </div>
             <div class="list" id="activityList"></div>
           </section>
-          <aside class="right-col">
-            <section class="panel">
-              <div class="panel-head"><div><h2>Mappa rischi cantiere</h2><p>Zone operative, pin critici e impatti locali</p></div></div>
-              <div class="map-wrap">
-                <div class="site-map">
-                  <div class="block a">A</div><div class="block b">B</div><div class="block c">C</div><div class="block d">D</div>
-                  <div class="pin one"></div><div class="pin two"></div><div class="pin three"></div>
+          <section class="panel dashboard-map-panel">
+            <div class="panel-head"><div><h2>Mappa rischi cantiere</h2><p>Zone operative, pin critici e impatti locali</p></div></div>
+            <div class="map-wrap">
+              <div class="site-map">
+                <div class="block a">A</div><div class="block b">B</div><div class="block c">C</div><div class="block d">D</div>
+                <div class="pin one"></div><div class="pin two"></div><div class="pin three"></div>
+              </div>
+              <div class="map-risk-summary">
+                <div class="row"><div class="pin-marker">1</div><div><strong>Blocco B</strong><span>Isolamento incompleto, impatto cartongessi</span></div>${tag('Alta','risk')}</div>
+                <div class="row"><div class="pin-marker" style="background: var(--warn)">2</div><div><strong>Piano 2</strong><span>Variante impianti da approvare</span></div>${tag('Budget','warn')}</div>
+                <div class="row"><div class="pin-marker" style="background: var(--brand-2)">3</div><div><strong>Area nord</strong><span>Foto 360 disponibile nella scheda sopralluogo</span></div>${tag('360','blue')}</div>
+              </div>
+              <div class="shape-gallery">
+                <div class="gallery-head"><strong>Zone mappa</strong><span>Coperture collegate ai blocchi</span></div>
+                <div class="shape-row">
+                  <div class="shape-thumb"></div>
+                  <div><strong>Blocco B</strong><span>Foto isolamento termico</span></div>
+                  <button class="mini-action" data-gallery-target="shape" data-gallery-name="Blocco B">Cambia</button>
                 </div>
-                <div class="map-risk-summary">
-                  <div class="row"><div class="pin-marker">1</div><div><strong>Blocco B</strong><span>Isolamento incompleto, impatto cartongessi</span></div>${tag('Alta','risk')}</div>
-                  <div class="row"><div class="pin-marker" style="background: var(--warn)">2</div><div><strong>Piano 2</strong><span>Variante impianti da approvare</span></div>${tag('Budget','warn')}</div>
-                  <div class="row"><div class="pin-marker" style="background: var(--brand-2)">3</div><div><strong>Area nord</strong><span>Foto 360 disponibile nella scheda sopralluogo</span></div>${tag('360','blue')}</div>
-                </div>
-                <div class="shape-gallery">
-                  <div class="gallery-head"><strong>Zone mappa</strong><span>Coperture collegate ai blocchi</span></div>
-                  <div class="shape-row">
-                    <div class="shape-thumb"></div>
-                    <div><strong>Blocco B</strong><span>Foto isolamento termico</span></div>
-                    <button class="mini-action" data-gallery-target="shape" data-gallery-name="Blocco B">Cambia</button>
-                  </div>
-                  <div class="shape-row">
-                    <div class="shape-thumb"></div>
-                    <div><strong>Piano 2</strong><span>Foto 360 sopralluogo</span></div>
-                    <button class="mini-action" data-gallery-target="shape" data-gallery-name="Piano 2">Cambia</button>
-                  </div>
+                <div class="shape-row">
+                  <div class="shape-thumb"></div>
+                  <div><strong>Piano 2</strong><span>Foto 360 sopralluogo</span></div>
+                  <button class="mini-action" data-gallery-target="shape" data-gallery-name="Piano 2">Cambia</button>
                 </div>
               </div>
-            </section>
-            <section class="panel">
-              <div class="panel-head"><div><h2>Sopralluoghi</h2><p>Report, partecipanti e firme automatiche</p></div></div>
-              <div class="inspections-mini">
-                <div class="inspection-mini"><strong>Isolamento Blocco B</strong><span>3 foto 360 · 14 foto · 2 issue · 4/5 firme</span></div>
-              </div>
-            </section>
-            <section class="panel">
-              <div class="panel-head"><div><h2>Priorita operative</h2><p>Azioni suggerite da segnali ricorrenti</p></div></div>
-              <div class="ai-list">
-                <div class="ai-item"><strong>Rischio ritardo impianti nel Blocco B</strong><p>Tre segnalazioni simili in 9 giorni, stesso fornitore e stessa zona.</p><div class="bar"><span style="width:86%"></span></div></div>
-                <div class="ai-item"><strong>Genera verbale riunione settimanale</strong><p>Pronte 14 decisioni, 8 task e 3 punti aperti dalle conversazioni.</p><div class="bar"><span style="width:74%"></span></div></div>
-              </div>
-            </section>
-          </aside>
+            </div>
+          </section>
+          <section class="panel dashboard-inspections-panel">
+            <div class="panel-head"><div><h2>Sopralluoghi</h2><p>Report, partecipanti e firme automatiche</p></div></div>
+            <div class="inspections-mini">
+              <div class="inspection-mini"><strong>Isolamento Blocco B</strong><span>3 foto 360 · 14 foto · 2 issue · 4/5 firme</span></div>
+            </div>
+          </section>
+          <section class="panel dashboard-priority-panel">
+            <div class="panel-head"><div><h2>Priorita operative</h2><p>Azioni suggerite da segnali ricorrenti</p></div></div>
+            <div class="ai-list">
+              <div class="ai-item"><strong>Rischio ritardo impianti nel Blocco B</strong><p>Tre segnalazioni simili in 9 giorni, stesso fornitore e stessa zona.</p><div class="bar"><span style="width:86%"></span></div></div>
+              <div class="ai-item"><strong>Genera verbale riunione settimanale</strong><p>Pronte 14 decisioni, 8 task e 3 punti aperti dalle conversazioni.</p><div class="bar"><span style="width:74%"></span></div></div>
+            </div>
+          </section>
         </div>
       `;
       renderActivities(activities);
@@ -2030,6 +2095,42 @@
       if (label === 'Ieri') return 1;
       const match = String(label).match(/(\d+)/);
       return match ? 40 - Number(match[1]) : 99;
+    }
+
+    function mediaItemDateRank(item) {
+      const raw = String(item.date || '').toLowerCase();
+      const timeMatch = raw.match(/(\d{1,2}):(\d{2})/);
+      const timeScore = timeMatch ? Number(timeMatch[1]) * 60 + Number(timeMatch[2]) : 0;
+      if (raw.includes('oggi')) return 3000 + timeScore;
+      if (raw.includes('ieri')) return 2000 + timeScore;
+      const dayMatch = raw.match(/(\d+)/);
+      return dayMatch ? Number(dayMatch[1]) : 0;
+    }
+
+    function sortedMediaItems(items) {
+      const typeOrder = { photo: 1, video: 2, audio: 3, doc: 4 };
+      const direction = mediaSort.dir === 'asc' ? 1 : -1;
+      return [...items].sort((a, b) => {
+        if (mediaSort.key === 'type') {
+          const typeDiff = (typeOrder[a.kind] || 9) - (typeOrder[b.kind] || 9);
+          if (typeDiff) return typeDiff * direction;
+        }
+        if (mediaSort.key === 'name') {
+          return String(a.title).localeCompare(String(b.title), 'it') * direction;
+        }
+        const dateDiff = mediaItemDateRank(a) - mediaItemDateRank(b);
+        if (dateDiff) return dateDiff * direction;
+        return String(a.title).localeCompare(String(b.title), 'it');
+      });
+    }
+
+    function updateMediaSortControls() {
+      document.querySelectorAll('[data-media-sort]').forEach(button => {
+        const key = button.dataset.mediaSort;
+        const labels = { date: 'Data', type: 'Tipo', name: 'Nome' };
+        button.classList.toggle('active', mediaSort.key === key);
+        button.textContent = `${labels[key] || key}${mediaSort.key === key ? (mediaSort.dir === 'asc' ? ' ↑' : ' ↓') : ''}`;
+      });
     }
 
     function mediaTypeIcon(kind) {
@@ -2097,6 +2198,17 @@
               <button class="${filter === type ? 'active' : ''}" data-media-filter="${type}">${type === 'all' ? 'Tutti' : type.toUpperCase()}</button>
             `).join('')}
           </div>
+          <div class="media-sort-row" aria-label="Ordina media">
+            ${[
+              ['date', 'Data'],
+              ['type', 'Tipo'],
+              ['name', 'Nome']
+            ].map(([key, label]) => `
+              <button class="${mediaSort.key === key ? 'active' : ''}" data-media-sort="${key}">
+                ${label}${mediaSort.key === key ? (mediaSort.dir === 'asc' ? ' ↑' : ' ↓') : ''}
+              </button>
+            `).join('')}
+          </div>
           <div class="media-view-toggle">
             <button class="active" data-media-view="table">${mediaTypeIcon('doc')} Tabella</button>
             <button data-media-view="cards">${mediaTypeIcon('photo')} Card</button>
@@ -2113,11 +2225,11 @@
       const grid = document.getElementById('mediaGrid');
       if (!grid) return;
       const term = search.trim().toLowerCase();
-      const items = visibleMediaItems().filter(item => {
+      const items = sortedMediaItems(visibleMediaItems().filter(item => {
         const matchesFilter = filter === 'all' || item.kind === filter;
         const text = `${item.title} ${item.site} ${item.uploadedBy} ${item.suggestion} ${item.target} ${item.tags.join(' ')}`.toLowerCase();
         return matchesFilter && (!term || text.includes(term));
-      });
+      }));
       if (view === 'cards') {
         grid.className = 'media-grid';
         grid.innerHTML = items.map(item => `
@@ -2156,7 +2268,7 @@
       const labels = Object.keys(grouped).sort((a, b) => mediaDateRank(a) - mediaDateRank(b));
       const isProjectMediaView = dashboardMode === 'project';
       grid.innerHTML = labels.map(label => {
-        const group = grouped[label].sort((a, b) => String(a.title).localeCompare(String(b.title)));
+        const group = grouped[label];
         const pendingCount = group.filter(item => ['Da confermare', 'Da revisionare', 'Non classificato', 'Senza sopralluogo'].includes(item.status)).length;
         return `
           <section class="media-date-group">
@@ -3724,27 +3836,81 @@
       const isPortfolio = scope === 'portfolio';
       const title = isPortfolio ? 'Rischio portfolio' : `Rischio cantiere - ${selectedSite.name}`;
       const subtitle = isPortfolio
-        ? 'Tre driver principali calcolati sui cantieri visibili'
-        : 'Tre driver principali del cantiere selezionato';
+        ? 'Cantieri, documenti e impatti che compongono il forecast'
+        : 'Driver, documenti e impatti del cantiere selezionato';
       const drivers = isPortfolio
         ? [
-            ['risk', 'Tempi', '3 milestone a rischio nei prossimi 10 giorni', '42%'],
-            ['warn', 'Budget', 'EUR 286K extra costo previsto sul portfolio', '34%'],
-            ['blue', 'Approvazioni', '16 documenti/RFI ancora in revisione', '24%']
+            {
+              className: 'risk',
+              title: 'Tempi',
+              score: '42%',
+              summary: '3 milestone a rischio nei prossimi 10 giorni',
+              sites: ['Residenza Porta Nuova: isolamento Blocco B +7g forecast', 'Green Offices Lambrate: facciata sud +3g', 'Hotel Aurora Renovation: permesso antincendio +3g'],
+              documents: ['RFI-042 Impermeabilizzazione scarico rampa', 'Verbale sopralluogo isolamento Blocco B', 'Cronoprogramma_v3_importato.xlsx']
+            },
+            {
+              className: 'warn',
+              title: 'Budget',
+              score: '34%',
+              summary: 'EUR 286K extra costo previsto sul portfolio',
+              sites: ['Residenza Porta Nuova: variante impianti +EUR 92K', 'Green Offices Lambrate: ritardo facciata +EUR 118K', 'Hotel Aurora Renovation: finiture lobby +EUR 76K'],
+              documents: ['Variante impianti v3', 'SAL Maggio - avanzamento lavori', 'Computo_Portfolio_Maggio_2026.xlsx']
+            },
+            {
+              className: 'blue',
+              title: 'Approvazioni',
+              score: '24%',
+              summary: '16 documenti/RFI ancora in revisione',
+              sites: ['Residenza Porta Nuova: 5 documenti in workflow', 'Hotel Aurora Renovation: 4 approvazioni DL/Committente', 'Logistica Nord Hub: 7 tavole iniziali da validare'],
+              documents: ['Permesso antincendio in revisione', 'Tavole architettoniche v12', 'Contratto fornitore TermoCasa']
+            }
           ]
         : [
-            ['risk', 'Fornitori', 'Isolamento Blocco B e consegne collegate', '45%'],
-            ['warn', 'Cronoprogramma', 'Dipendenze bloccate su impianti e cartongessi', '33%'],
-            ['blue', 'Qualita documentale', '5 contratti/varianti in revisione', '22%']
+            {
+              className: 'risk',
+              title: 'Fornitori',
+              score: '45%',
+              summary: 'Isolamento Blocco B e consegne collegate',
+              sites: [`${selectedSite.name}: TermoCasa / consegne parziali`],
+              documents: ['DDT pannelli isolanti', 'Verbale sopralluogo isolamento Blocco B', 'Foto isolamento Blocco B']
+            },
+            {
+              className: 'warn',
+              title: 'Cronoprogramma',
+              score: '33%',
+              summary: 'Dipendenze bloccate su impianti e cartongessi',
+              sites: [`${selectedSite.name}: WBS 1.2 e WBS 1.3 in interferenza`],
+              documents: ['Cronoprogramma_v3_importato.xlsx', 'Variante impianti v3', 'SAL Maggio']
+            },
+            {
+              className: 'blue',
+              title: 'Qualita documentale',
+              score: '22%',
+              summary: '5 contratti/varianti in revisione',
+              sites: [`${selectedSite.name}: catena PM/DL/Committente aperta`],
+              documents: ['Contratto fornitore', 'Tavole architettoniche v12', 'RFI-042']
+            }
           ];
 
       openModal(title, subtitle, `
         <div class="risk-driver-list">
           ${drivers.map(driver => `
             <div class="risk-driver">
-              <i class="${driver[0]}"></i>
-              <div><strong>${driver[1]}</strong><span>${driver[2]}</span></div>
-              <b>${driver[3]}</b>
+              <i class="${driver.className}"></i>
+              <div class="risk-driver-main">
+                <div class="risk-driver-title"><strong>${driver.title}</strong><b>${driver.score}</b></div>
+                <span>${driver.summary}</span>
+                <div class="risk-driver-columns">
+                  <div>
+                    <em>Cantieri / impatti</em>
+                    ${driver.sites.map(site => `<small>${site}</small>`).join('')}
+                  </div>
+                  <div>
+                    <em>Documenti collegati</em>
+                    ${driver.documents.map(document => `<small>${document}</small>`).join('')}
+                  </div>
+                </div>
+              </div>
             </div>
           `).join('')}
         </div>
@@ -4875,6 +5041,20 @@
           const search = document.getElementById('mediaSearchInput')?.value || '';
           const view = document.querySelector('[data-media-view].active')?.dataset.mediaView || 'table';
           renderMediaItems(mediaFilter.dataset.mediaFilter, search, view);
+          return;
+        }
+
+        const mediaSortTrigger = event.target.closest('[data-media-sort]');
+        if (mediaSortTrigger) {
+          const key = mediaSortTrigger.dataset.mediaSort;
+          mediaSort = mediaSort.key === key
+            ? { key, dir: mediaSort.dir === 'asc' ? 'desc' : 'asc' }
+            : { key, dir: key === 'date' ? 'desc' : 'asc' };
+          const filter = document.querySelector('[data-media-filter].active')?.dataset.mediaFilter || 'all';
+          const search = document.getElementById('mediaSearchInput')?.value || '';
+          const view = document.querySelector('[data-media-view].active')?.dataset.mediaView || 'table';
+          updateMediaSortControls();
+          renderMediaItems(filter, search, view);
           return;
         }
 

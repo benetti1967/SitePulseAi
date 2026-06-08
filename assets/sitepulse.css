@@ -104,21 +104,50 @@
       padding: 0 10px;
       text-align: left;
       cursor: pointer;
+      position: relative;
       transition: background .16s ease, color .16s ease, transform .14s ease;
     }
 
     .nav button.active {
-      background: rgba(255,255,255,.10);
-      color: white;
+      background: rgba(26, 188, 176, .12);
+      color: #67f0df;
+      box-shadow: inset 0 0 0 1px rgba(103, 240, 223, .08);
+    }
+
+    .nav button.active::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 9px;
+      bottom: 9px;
+      width: 3px;
+      border-radius: 999px;
+      background: #38e4d0;
     }
 
     .nav button:hover {
       background: rgba(255,255,255,.075);
-      color: white;
+      color: #f5fbfa;
     }
 
     .nav button:active {
       transform: scale(.96);
+    }
+
+    .nav button .label {
+      font-weight: 650;
+    }
+
+    .nav button:not(.active) .label {
+      color: #8ea3aa;
+    }
+
+    .nav button:not(.active):hover .label {
+      color: #d8e6e4;
+    }
+
+    .nav button.active svg {
+      color: #67f0df;
     }
 
     .nav svg, .icon {
@@ -138,6 +167,17 @@
       display: inline-grid;
       place-items: center;
       font-size: 11px;
+      font-weight: 800;
+    }
+
+    .nav .badge.has-updates {
+      background: rgba(225, 108, 67, .72);
+      color: #fff5ed;
+    }
+
+    .nav button.active .badge.has-updates {
+      background: rgba(26, 188, 176, .28);
+      color: #67f0df;
     }
 
     .sidebar-card {
@@ -763,10 +803,10 @@
 
     .portfolio-kpi-row {
       display: grid;
-      grid-template-columns: repeat(4, minmax(150px, 1fr));
+      grid-template-columns: repeat(5, minmax(132px, 1fr));
       gap: 10px;
       align-items: stretch;
-      min-width: 720px;
+      min-width: 800px;
       height: 100%;
     }
 
@@ -790,6 +830,50 @@
       align-self: center;
       justify-self: center;
       white-space: nowrap;
+    }
+
+    .metric-visual {
+      position: relative;
+      padding-left: 44px;
+    }
+
+    .metric-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      transform: translateY(-50%);
+      display: grid;
+      place-items: center;
+      background: #eaf4f3;
+      color: var(--brand);
+    }
+
+    .metric-icon svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .metric-icon.schedule {
+      background: #eef7fb;
+      color: var(--brand-2);
+    }
+
+    .metric-icon.issues {
+      background: #fff0ee;
+      color: #a33a2f;
+    }
+
+    .metric-icon.documents {
+      background: #f0eafa;
+      color: #61419b;
+    }
+
+    .metric-icon.budget {
+      background: #fff8e8;
+      color: #8b5f00;
     }
 
     .portfolio-kpi-row .metric label {
@@ -846,6 +930,11 @@
       color: #805306;
     }
 
+    .kpi-status.ok {
+      background: #e9f8ef;
+      color: #0f6b3d;
+    }
+
     .ai-item[data-open-priority] {
       cursor: pointer;
     }
@@ -897,9 +986,9 @@
 
     .risk-driver {
       display: grid;
-      grid-template-columns: 10px minmax(0, 1fr) auto;
-      gap: 10px;
-      align-items: center;
+      grid-template-columns: 10px minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
       border: 1px solid var(--line);
       border-radius: 8px;
       padding: 12px;
@@ -921,10 +1010,23 @@
       background: var(--brand-2);
     }
 
+    .risk-driver-main {
+      min-width: 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    .risk-driver-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
     .risk-driver strong {
       display: block;
       font-size: 13px;
-      margin-bottom: 3px;
+      margin: 0;
     }
 
     .risk-driver span {
@@ -935,6 +1037,44 @@
     .risk-driver b {
       color: var(--ink);
       font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .risk-driver-columns {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .risk-driver-columns div {
+      border: 1px solid #e4ecee;
+      border-radius: 8px;
+      background: white;
+      padding: 8px 10px;
+      min-width: 0;
+    }
+
+    .risk-driver-columns em {
+      display: block;
+      color: var(--brand);
+      font-style: normal;
+      font-size: 11px;
+      font-weight: 900;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+
+    .risk-driver-columns small {
+      display: block;
+      color: #4f6570;
+      font-size: 12px;
+      line-height: 1.35;
+      padding: 4px 0;
+      border-top: 1px solid #edf2f3;
+    }
+
+    .risk-driver-columns small:first-of-type {
+      border-top: 0;
     }
 
     .grid {
@@ -942,6 +1082,36 @@
       grid-template-columns: minmax(0, 1.45fr) minmax(340px, .9fr);
       gap: 16px;
       align-items: start;
+    }
+
+    .dashboard-flow-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-auto-flow: dense;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .dashboard-feed-panel {
+      grid-column: span 7;
+    }
+
+    .dashboard-map-panel {
+      grid-column: span 5;
+    }
+
+    .dashboard-inspections-panel,
+    .dashboard-priority-panel {
+      grid-column: span 6;
+    }
+
+    .dashboard-flow-grid .panel {
+      min-width: 0;
+    }
+
+    .dashboard-flow-grid .panel-head {
+      min-height: 50px;
+      padding: 12px 14px;
     }
 
     .grid.equal {
@@ -1118,13 +1288,28 @@
       background: #f8fafb;
       padding: 8px 9px;
       display: grid;
-      grid-template-columns: minmax(0, 1fr);
+      grid-template-columns: 26px minmax(0, 1fr);
       grid-template-rows: auto auto;
       align-content: center;
       justify-items: center;
       justify-content: center;
       gap: 6px;
       text-align: center;
+    }
+
+    .site-kpi .metric-icon {
+      position: static;
+      grid-column: 1;
+      grid-row: 1 / span 2;
+      width: 24px;
+      height: 24px;
+      transform: none;
+      align-self: center;
+    }
+
+    .site-kpi .metric-icon svg {
+      width: 14px;
+      height: 14px;
     }
 
     .site-kpi small {
@@ -1159,10 +1344,22 @@
       color: #805306;
     }
 
+    .site-kpi small.ok {
+      background: #e9f8ef;
+      color: #0f6b3d;
+    }
+
     .site-kpi strong {
+      grid-column: 2;
+      grid-row: 1;
       font-size: 17px;
       line-height: 1;
       min-width: max-content;
+    }
+
+    .site-kpi small {
+      grid-column: 2;
+      grid-row: 2;
     }
 
     .project-health {
@@ -2107,10 +2304,36 @@
 
     .media-command-bar {
       display: grid;
-      grid-template-columns: 112px minmax(320px, 1fr) auto auto;
+      grid-template-columns: 112px minmax(280px, 1fr) auto auto auto;
       gap: 10px;
       align-items: center;
       margin-bottom: 8px;
+    }
+
+    .media-sort-row {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      justify-content: flex-end;
+      white-space: nowrap;
+    }
+
+    .media-sort-row button {
+      height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: white;
+      color: #41535b;
+      padding: 0 12px;
+      font-weight: 750;
+      cursor: pointer;
+    }
+
+    .media-sort-row button.active {
+      background: #eef8f6;
+      border-color: #9fd0ca;
+      color: var(--brand);
+      box-shadow: inset 0 0 0 1px rgba(15, 102, 97, .06);
     }
 
     .media-upload-badge {
@@ -2959,7 +3182,7 @@
 
     .portfolio-kpi-row {
       gap: 8px;
-      min-width: 680px;
+      min-width: 820px;
     }
 
     .portfolio-kpi-row .metric {
@@ -2975,8 +3198,8 @@
     .portfolio-kpi-row .metric strong {
       grid-column: 1;
       grid-row: 1 / span 2;
-      min-width: 46px;
-      font-size: 24px;
+      min-width: 58px;
+      font-size: 22px;
     }
 
     .portfolio-kpi-row .metric label {
@@ -5176,6 +5399,11 @@
       .nav button { grid-template-columns: 1fr; justify-items: center; width: 46px; padding: 0; }
       .grid, .grid.equal, .chat-layout { grid-template-columns: 1fr; }
       .portfolio-grid { grid-template-columns: 1fr; }
+      .dashboard-flow-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .dashboard-feed-panel,
+      .dashboard-map-panel,
+      .dashboard-inspections-panel,
+      .dashboard-priority-panel { grid-column: span 1; }
       .doc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .media-intake { grid-template-columns: 1fr; }
       .upload-drop {
@@ -5211,6 +5439,13 @@
     }
 
     @media (max-width: 940px) {
+      .dashboard-flow-grid { grid-template-columns: minmax(0, 1fr); }
+      .dashboard-feed-panel,
+      .dashboard-map-panel,
+      .dashboard-inspections-panel,
+      .dashboard-priority-panel { grid-column: 1; }
+      .risk-driver-columns { grid-template-columns: minmax(0, 1fr); }
+
       .actions {
         grid-template-columns: minmax(0, 1fr) minmax(158px, 220px) 38px 46px;
       }
