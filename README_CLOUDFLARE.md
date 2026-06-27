@@ -58,6 +58,8 @@ npx wrangler d1 execute sitepulseai-db --file=schema.sql
 npx wrangler d1 execute sitepulseai-db --file=migrations/0002_security_offline_backend.sql
 npx wrangler d1 execute sitepulseai-db --file=migrations/0003_finish_security_offline_backend.sql
 npx wrangler d1 execute sitepulseai-db --file=migrations/0003_operational_write_permissions.sql
+npx wrangler d1 execute sitepulseai-db --file=migrations/0004_mobile_upload_and_sync_permissions.sql
+npx wrangler d1 execute sitepulseai-db --file=migrations/0005_cloudflare_access_users.sql
 npx wrangler d1 execute sitepulseai-db --file=seed.sql
 ```
 
@@ -70,6 +72,8 @@ Create a Worker named `sitepulseai-api` and bind:
 - R2 binding name: `DOCUMENTS`
 - R2 bucket: `sitepulseai-documents`
 - Variable: `ALLOWED_ORIGIN=https://sitepulseai.pages.dev`
+- Variable: `REQUIRE_ACCESS_AUTH=true`
+- Variable: `MAX_MEDIA_UPLOAD_BYTES=50000000`
 - Variable: `AI_PROVIDER=openai`
 - Variable: `OPENAI_MODEL=gpt-4.1-mini`
 - Secret: `OPENAI_API_KEY`
@@ -126,6 +130,7 @@ POST /api/inspections
 PUT /api/inspections/:inspectionId
 GET /api/media
 POST /api/media
+POST /api/media/upload
 GET /api/documents
 GET /api/documents/:documentId/versions
 POST /api/documents
@@ -135,6 +140,12 @@ POST /api/ai/analyze
 ```
 
 Document and media upload endpoints accept either metadata-only payloads or an optional `content_base64` field. When `content_base64` is present, the Worker writes the object to the `DOCUMENTS` R2 bucket and records the D1 metadata/version/audit rows.
+
+`POST /api/media/upload` is the preferred mobile endpoint. It accepts
+`multipart/form-data` with `file`, `site_id`, `area`, `wbs`, `note`,
+`captured_at`, `device_id` and `client_event_id`. The binary is streamed to R2,
+the metadata is written to D1 and the same client event is recorded for audit.
+The pair `device_id` + `client_event_id` makes retries idempotent.
 
 ## Offline/PWA runtime
 
@@ -166,3 +177,15 @@ The Worker enforces authorization server-side on every private endpoint:
 - no raw stack traces in API responses.
 
 For production, protect the Worker with Cloudflare Access and disable demo auth by leaving `ALLOW_DEMO_AUTH` unset.
+
+The Worker rejects unauthenticated private requests by default. For a strictly
+local `wrangler dev` session only, use:
+
+```toml
+ALLOWED_ORIGIN = "http://127.0.0.1:3000"
+REQUIRE_ACCESS_AUTH = "false"
+ALLOW_DEMO_AUTH = "true"
+LOCAL_DEMO_USER_EMAIL = "pm.demo@sitepulseai.com"
+```
+
+Do not deploy those development values to production.

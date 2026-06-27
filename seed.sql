@@ -4,7 +4,7 @@ VALUES ('org_urbanbuild', 'UrbanBuild Group', 'urbanbuild');
 INSERT OR IGNORE INTO roles (id, organization_id, name, permissions_json)
 VALUES
   ('role_admin', 'org_urbanbuild', 'Administrator', '{"all":true}'),
-  ('role_pm', 'org_urbanbuild', 'Project Manager', '{"dashboard":"read","schedule":"write","budget":"read","documents":"approve","media":"upload","inspections":"write","offline_sync":"read","tasks":"write","issues":"write"}'),
+  ('role_pm', 'org_urbanbuild', 'Project Manager', '{"dashboard":"read","schedule":"write","budget":"read","documents":"approve","media":"upload","inspections":"write","offline_sync":"write","tasks":"write","issues":"write"}'),
   ('role_site_manager', 'org_urbanbuild', 'Site Manager', '{"dashboard":"read","tasks":"write","issues":"write","schedule":"write","documents":"read","media":"upload","inspections":"write","offline_sync":"write"}'),
   ('role_supplier', 'org_urbanbuild', 'Supplier', '{"documents":"upload","media":"upload","tasks":"read","inspections":"comment","offline_sync":"write"}'),
   ('role_consultant', 'org_urbanbuild', 'Consultant', '{"dashboard":"read","documents":"read","media":"read","inspections":"write","issues":"comment","offline_sync":"write"}'),
@@ -18,7 +18,8 @@ VALUES
   ('user_marco', 'org_urbanbuild', 'marco@example.com', 'Marco Riva'),
   ('user_sara', 'org_urbanbuild', 'sara@example.com', 'Sara Monti'),
   ('user_termo', 'org_urbanbuild', 'termocasa@example.com', 'TermoCasa Supplier'),
-  ('user_dev', 'org_urbanbuild', 'developer@example.com', 'Real Estate Developer');
+  ('user_dev', 'org_urbanbuild', 'developer@example.com', 'Real Estate Developer'),
+  ('user_pm_demo', 'org_urbanbuild', 'pm.demo@sitepulseai.com', 'Paola Manager');
 
 INSERT OR IGNORE INTO sites (id, organization_id, name, location, phase, budget_total, status)
 VALUES
@@ -37,7 +38,8 @@ VALUES
   ('usr_marco_porta', 'user_marco', 'site_porta_nuova', 'role_site_manager', 'site'),
   ('usr_sara_lambrate', 'user_sara', 'site_lambrate', 'role_consultant', 'site'),
   ('usr_termo_porta', 'user_termo', 'site_porta_nuova', 'role_supplier', 'site'),
-  ('usr_dev_org', 'user_dev', NULL, 'role_developer', 'organization');
+  ('usr_dev_org', 'user_dev', NULL, 'role_developer', 'organization'),
+  ('usr_pm_demo_org', 'user_pm_demo', NULL, 'role_pm', 'organization');
 
 INSERT OR IGNORE INTO schedule_items (
   id, organization_id, site_id, wbs_code, title, description,

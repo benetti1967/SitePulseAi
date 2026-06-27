@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SitePulseAi Mobile</title>
+    <meta http-equiv="refresh" content="1; url=/mobile/index.html" />
+    <style>
+      body {
+        display: grid;
+        min-height: 100vh;
+        margin: 0;
+        place-items: center;
+        background: #eaf1f0;
+        color: #142228;
+        font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      main {
+        width: min(92vw, 420px);
+        padding: 28px;
+        border: 1px solid #d3e0df;
+        border-radius: 20px;
+        background: #fff;
+        box-shadow: 0 18px 50px rgba(15, 35, 40, 0.16);
+      }
+
+      a {
+        color: #0f625d;
+        font-weight: 800;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>SitePulseAi Mobile</h1>
+      <p>Sto isolando l'app mobile dalla web app e apro la nuova versione.</p>
+      <p><a href="/mobile/index.html">Apri app mobile</a></p>
+    </main>
+    <script>
+      async function cleanupAndRedirect() {
+        if ("serviceWorker" in navigator) {
+          const registrations = await navigator.serviceWorker.getRegistrations();
+          await Promise.all(
+            registrations
+              .filter((registration) => registration.active && registration.active.scriptURL.endsWith("/mobile-sw.js"))
+              .map((registration) => registration.unregister())
+          );
+        }
+        window.location.replace("/mobile/index.html");
+      }
+
+      cleanupAndRedirect().catch(() => {
+        window.location.replace("/mobile/index.html");
+      });
+    </script>
+  </body>
+</html>

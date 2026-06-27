@@ -4,8 +4,10 @@ compatibility_date = "2026-05-30"
 
 [vars]
 ALLOWED_ORIGIN = "https://sitepulseai.pages.dev"
+REQUIRE_ACCESS_AUTH = "true"
 AI_PROVIDER = "openai"
 OPENAI_MODEL = "gpt-4.1-mini"
+MAX_MEDIA_UPLOAD_BYTES = "50000000"
 # Development only. Do not enable in production.
 # ALLOW_DEMO_AUTH = "true"
 # LOCAL_DEMO_USER_EMAIL = "admin@example.com"

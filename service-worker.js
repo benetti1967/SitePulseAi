@@ -1,4 +1,4 @@
-const CACHE_VERSION = "sitepulseai-v1";
+﻿const CACHE_VERSION = "sitepulseai-v2";
 const APP_SHELL = [
   "/",
   "/index.html",
@@ -55,7 +55,12 @@ self.addEventListener("fetch", (event) => {
   const sameOrigin = url.origin === self.location.origin;
 
   if (sameOrigin && APP_SHELL.includes(url.pathname)) {
-    event.respondWith(cacheFirst(request));
+    event.respondWith(networkFirst(request));
+    return;
+  }
+
+  if (sameOrigin && url.pathname.startsWith("/mobile/")) {
+    event.respondWith(networkFirst(request));
     return;
   }
 
@@ -81,3 +86,4 @@ self.addEventListener("sync", (event) => {
     );
   }
 });
+

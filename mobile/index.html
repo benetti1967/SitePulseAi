@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0f625d" />
+    <title>SitePulseAi Mobile</title>
+    <link rel="manifest" href="./mobile-manifest.json?v=7" />
+    <link rel="stylesheet" href="./mobile.css?v=7" />
+  </head>
+  <body>
+    <script>
+      window.SITEPULSE_MOBILE_CONFIG = {
+        apiBase: "https://sitepulseai-api.benetti1967.workers.dev",
+        demoAuth: ["127.0.0.1", "localhost"].includes(window.location.hostname)
+      };
+    </script>
+    <main class="phone-shell" data-view="chat">
+      <section class="login-screen" id="loginScreen" aria-label="Accesso mobile">
+        <div class="login-card">
+          <div class="login-mark">S</div>
+          <p class="eyebrow">SitePulseAi Field</p>
+          <h1>Accesso cantiere</h1>
+          <p>Entra come utente mobile e lavora anche offline. La sincronizzazione avviene appena torna rete.</p>
+          <form id="loginForm">
+            <label>
+              Email
+              <input id="loginEmail" type="email" autocomplete="username" value="pm.demo@sitepulseai.com" />
+            </label>
+            <label>
+              Profilo demo locale
+              <select id="loginRole">
+                <option value="Project Manager">Project Manager</option>
+                <option value="Capocantiere">Capocantiere</option>
+                <option value="Fornitore">Fornitore</option>
+                <option value="Direzione lavori">Direzione lavori</option>
+              </select>
+            </label>
+            <p class="login-status" id="loginStatus" role="status" aria-live="polite"></p>
+            <button class="primary wide" type="submit">Accedi</button>
+          </form>
+        </div>
+      </section>
+
+      <header class="app-header">
+        <button class="avatar-button" id="profileButton" type="button" aria-label="Profilo utente">PM</button>
+        <div>
+          <p class="eyebrow">SitePulseAi Field</p>
+          <h1>Residenza Porta Nuova</h1>
+        </div>
+        <button class="icon-button" id="syncNow" type="button" aria-label="Sincronizza dati">
+          <span class="sync-dot" aria-hidden="true"></span>
+        </button>
+      </header>
+
+      <section class="context-strip" aria-label="Contesto attivo">
+        <label>
+          <span>Cantiere</span>
+          <select id="siteSelect">
+          </select>
+        </label>
+        <div class="offline-pill" id="connectionState">Online</div>
+      </section>
+
+      <nav class="bottom-tabs top-tabs" aria-label="Moduli mobile">
+        <button class="tab active" type="button" data-tab="chat">Chat</button>
+        <button class="tab" type="button" data-tab="capture">Upload</button>
+        <button class="tab" type="button" data-tab="queue">Offline</button>
+        <button class="tab" type="button" data-tab="tasks">Task</button>
+      </nav>
+
+      <section class="view active" id="chatView" aria-label="Chat di cantiere">
+        <div class="day-divider">Oggi</div>
+        <div class="messages" id="messages"></div>
+        <form class="composer" id="messageForm">
+          <button class="attach-button" type="button" id="openCapture" aria-label="Allega media">+</button>
+          <input id="messageInput" autocomplete="off" placeholder="Scrivi messaggio, richiesta o nota..." />
+          <button class="send-button" type="submit">Invia</button>
+        </form>
+      </section>
+
+      <section class="view" id="captureView" aria-label="Upload da campo">
+        <div class="capture-card">
+          <div class="capture-preview">
+            <span class="preview-icon">+</span>
+            <strong id="fileName">Nessun file selezionato</strong>
+            <small>Foto, video, audio, PDF o XLS</small>
+            <img id="imagePreview" alt="" hidden />
+          </div>
+          <input id="fileInput" type="file" accept="image/*,video/*,audio/*,.pdf,.xls,.xlsx,.doc,.docx" capture="environment" hidden />
+          <button class="primary wide" id="pickFile" type="button">Scatta o carica file</button>
+        </div>
+
+        <form class="field-form" id="uploadForm">
+          <label>
+            Area
+            <select id="areaInput">
+              <option>Facciata nord</option>
+              <option>Blocco B - piano 2</option>
+              <option>Locale tecnico</option>
+              <option>Area logistica ingresso</option>
+            </select>
+          </label>
+          <label>
+            WBS
+            <select id="wbsInput">
+              <option>1.2 Isolamento Blocco B</option>
+              <option>1.3 Impianto elettrico piano 2</option>
+              <option>2.1 Chiusura cartongessi</option>
+              <option>Setup cantiere</option>
+            </select>
+          </label>
+          <label>
+            Nota
+            <textarea id="noteInput" rows="3" placeholder="Descrivi cosa stai caricando..."></textarea>
+          </label>
+          <div class="ai-panel">
+            <span>AI</span>
+            <p id="aiSuggestion">Dopo l'upload propongo collegamento, task o issue.</p>
+          </div>
+          <button class="primary wide" type="submit">Salva offline</button>
+        </form>
+      </section>
+
+      <section class="view" id="queueView" aria-label="Coda offline">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Offline first</p>
+            <h2>Coda da sincronizzare</h2>
+          </div>
+          <span class="count-badge" id="queueCount">0</span>
+        </div>
+        <button class="primary wide sync-wide" id="syncAllButton" type="button">Sincronizza tutto</button>
+        <div class="queue-list" id="queueList"></div>
+      </section>
+
+      <section class="view" id="tasksView" aria-label="Task e issue">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">AI + PM</p>
+            <h2>Azioni aperte</h2>
+          </div>
+        </div>
+        <div class="task-list" id="taskList"></div>
+      </section>
+
+      <aside class="profile-drawer" id="profileDrawer" aria-hidden="true">
+        <header>
+          <div class="avatar-button" id="drawerAvatar">PM</div>
+          <div>
+            <strong id="drawerName">Paola Manager</strong>
+            <span id="drawerRole">Project Manager</span>
+          </div>
+          <button class="icon-button light" id="closeProfile" type="button" aria-label="Chiudi profilo">x</button>
+        </header>
+        <dl>
+          <div>
+            <dt>Email</dt>
+            <dd id="drawerEmail">pm.demo@sitepulseai.com</dd>
+          </div>
+          <div>
+            <dt>Cantiere attivo</dt>
+            <dd id="drawerSite">Residenza Porta Nuova</dd>
+          </div>
+          <div>
+            <dt>Permessi</dt>
+            <dd>Chat, media, sopralluoghi, task assegnati</dd>
+          </div>
+          <div>
+            <dt>Sync locale</dt>
+            <dd id="drawerSync">0 elementi in coda</dd>
+          </div>
+        </dl>
+        <button class="secondary wide" id="logoutButton" type="button">Esci</button>
+      </aside>
+    </main>
+    <script src="./mobile.js?v=7" type="module"></script>
+  </body>
+</html>

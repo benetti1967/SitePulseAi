@@ -1300,11 +1300,8 @@
 
     function formatCurrency(value) {
       const amount = Number(value || 0);
-      return new Intl.NumberFormat('it-IT', {
-        style: 'currency',
-        currency: 'EUR',
-        maximumFractionDigits: 0
-      }).format(amount);
+      const formatted = Math.round(amount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      return `${formatted} €`;
     }
 
     function formatPeriod(start, end) {
@@ -2739,7 +2736,9 @@
         <section class="metrics">
           <div class="metric"><label>WBS attive</label><strong>${filteredWbs.length}</strong><span><b class="kpi-status blue">${selectedScheduleSite === 'all' ? 'portfolio' : selectedScheduleSite}</b></span></div>
           <div class="metric" data-schedule-filter="modified" data-open-label="Attività modificate"><label>Avanzamento</label><strong>${avgProgress}%</strong><span><b class="kpi-status">da WBS</b></span></div>
-          <div class="metric"><label>Extra costo previsto</label><strong>${formatCurrency(overrun)}</strong><span><b class="kpi-status ${overrun > 0 ? 'risk' : 'ok'}">forecast aggiornato</b></span></div>
+          <div class="metric"><label>Budget computo</label><strong>${formatCurrency(totalBudget)}</strong><span><b class="kpi-status blue">${filteredWbs.length} WBS</b></span></div>
+          <div class="metric"><label>Forecast</label><strong>${formatCurrency(totalForecast)}</strong><span><b class="kpi-status ${overrun > 0 ? 'warn' : 'ok'}">${overrun > 0 ? 'extra costo previsto' : 'in linea'}</b></span></div>
+          <div class="metric"><label>Scostamento</label><strong>${formatCurrency(overrun)}</strong><span><b class="kpi-status ${overrun > 0 ? 'risk' : 'ok'}">${overrun > 0 ? 'da approvare' : 'ok'}</b></span></div>
         </section>
 
         <section class="panel timeline-panel">
@@ -2799,14 +2798,6 @@
                 </div>
                 <div class="tags">${tag('OCR')}${tag('Excel','blue')}${tag('Mapping WBS','ok')}${tag('Validazione PM','warn')}</div>
                 <small>${escapeAttr(boqFileInfo.audit)}. Il report cronoprogramma include computo, WBS, sottoazioni, budget, forecast e scostamenti collegati.</small>
-              </div>
-            </section>
-            <section class="panel">
-              <div class="panel-head"><div><h2>Budget e forecast</h2></div>${tag('Forecast','warn','Costi da computo confrontati con previsione aggiornata e scostamenti da approvare.')}</div>
-              <div class="budget-grid">
-                <div class="budget-card"><label>Budget computo</label><strong>${formatCurrency(totalBudget)}</strong><span>${filteredWbs.length} WBS</span></div>
-                <div class="budget-card"><label>Forecast</label><strong>${formatCurrency(totalForecast)}</strong><span>${overrun > 0 ? 'extra costo previsto' : 'in linea'}</span></div>
-                <div class="budget-card"><label>Scostamento</label><strong>${formatCurrency(overrun)}</strong><span>${overrun > 0 ? 'da approvare' : 'ok'}</span></div>
               </div>
             </section>
           </div>

@@ -14,10 +14,19 @@ function json(data, status = 200, extraHeaders = {}) {
   });
 }
 
-function corsHeaders(origin, allowedOrigin) {
-  const allowOrigin = allowedOrigin || origin || "*";
+function allowedOrigins(env) {
+  return String(env.ALLOWED_ORIGIN || "")
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+}
+
+function corsHeaders(origin, env) {
+  const origins = allowedOrigins(env);
+  const allowOrigin = origin && origins.includes(origin) ? origin : null;
   return {
-    "access-control-allow-origin": allowOrigin,
+    ...(allowOrigin ? { "access-control-allow-origin": allowOrigin } : {}),
+    "access-control-allow-credentials": "true",
     "access-control-allow-methods": "GET,POST,PUT,OPTIONS",
     "access-control-allow-headers": [
       "content-type",
@@ -26,11 +35,12 @@ function corsHeaders(origin, allowedOrigin) {
       "x-sitepulse-demo-user",
       "x-request-id",
     ].join(","),
+    vary: "Origin",
   };
 }
 
 function securityHeaders(request, env) {
-  return corsHeaders(request.headers.get("origin"), env.ALLOWED_ORIGIN);
+  return corsHeaders(request.headers.get("origin"), env);
 }
 
 function requestId(request) {
@@ -53,8 +63,11 @@ function getIdentityEmail(request, env) {
     return { email: demoEmail.toLowerCase(), mode: "demo_header" };
   }
 
-  // Local development fallback. Production should be protected by Cloudflare Access.
-  return { email: (env.LOCAL_DEMO_USER_EMAIL || "admin@example.com").toLowerCase(), mode: "local_demo" };
+  if (env.REQUIRE_ACCESS_AUTH === "false") {
+    return { email: (env.LOCAL_DEMO_USER_EMAIL || "admin@example.com").toLowerCase(), mode: "local_demo" };
+  }
+
+  throw fail("Cloudflare Access authentication required", 401, "authentication_required");
 }
 
 function parsePermissions(value) {
@@ -190,6 +203,13 @@ async function jsonBody(request) {
 function cleanText(value, fallback = "", max = 500) {
   const text = value === undefined || value === null ? fallback : String(value);
   return text.trim().slice(0, max);
+}
+
+function safeStorageSegment(value, fallback = "file") {
+  return cleanText(value, fallback, 180)
+    .replace(/[\\/:*?"<>|]+/g, "-")
+    .replace(/\s+/g, " ")
+    .trim() || fallback;
 }
 
 function clampPercent(value) {
@@ -864,6 +884,154 @@ async function createMediaAsset(env, context, request, id) {
   return { data: { id: mediaId, status: "created", stored_in_r2: stored.stored } };
 }
 
+async function uploadMediaAsset(env, context, request, id) {
+  requirePermission(context, "media", "upload");
+  if (!env.DOCUMENTS) throw fail("Missing R2 binding DOCUMENTS", 500, "missing_storage_binding");
+
+  const form = await request.formData().catch(() => {
+    throw fail("Invalid multipart form body", 400, "invalid_multipart");
+  });
+  const file = form.get("file");
+  if (!file || typeof file.stream !== "function") {
+    throw fail("file is required", 422, "validation_error");
+  }
+
+  const siteId = cleanText(form.get("site_id"), "", 120);
+  await assertOrgSite(env, context, siteId, true);
+
+  const maxBytes = Number(env.MAX_MEDIA_UPLOAD_BYTES || 50_000_000);
+  if (Number(file.size || 0) > maxBytes) {
+    throw fail("File payload exceeds media upload limit", 413, "file_too_large");
+  }
+
+  const deviceId = cleanText(form.get("device_id"), "", 120) || null;
+  const clientEventId = cleanText(form.get("client_event_id"), "", 120) || null;
+  if (deviceId && clientEventId) {
+    const existingEvent = await env.DB.prepare(`
+      SELECT payload_json
+      FROM offline_sync_events
+      WHERE organization_id = ? AND device_id = ? AND client_event_id = ?
+      LIMIT 1
+    `).bind(context.organization_id, deviceId, clientEventId).first();
+    if (existingEvent) {
+      const existingPayload = parsePermissions(existingEvent.payload_json);
+      return {
+        data: {
+          id: existingPayload.media_id || null,
+          status: "already_synced",
+          stored_in_r2: true,
+          storage_key: existingPayload.storage_key || null,
+          file_name: existingPayload.file_name || safeStorageSegment(file.name, "media-file"),
+        },
+      };
+    }
+  }
+
+  const mediaId = crypto.randomUUID();
+  const fileName = safeStorageSegment(file.name, "media-file");
+  const capturedAt = cleanText(form.get("captured_at"), new Date().toISOString(), 80);
+  const date = new Date(capturedAt);
+  const year = Number.isNaN(date.getTime()) ? "unknown" : String(date.getUTCFullYear());
+  const month = Number.isNaN(date.getTime()) ? "unknown" : String(date.getUTCMonth() + 1).padStart(2, "0");
+  const storageKey = `media/${context.organization_id}/${siteId}/${year}/${month}/${mediaId}/${fileName}`;
+  await env.DOCUMENTS.put(storageKey, file.stream(), {
+    httpMetadata: { contentType: file.type || "application/octet-stream" },
+    customMetadata: {
+      uploaded_via: "sitepulseai-mobile",
+      original_file_name: fileName,
+      organization_id: context.organization_id,
+      site_id: siteId,
+      actor_user_id: context.user.id,
+      client_event_id: clientEventId || "",
+    },
+  });
+
+  const statements = [
+    env.DB.prepare(`
+      INSERT INTO media_assets (
+        id, organization_id, site_id, message_id, storage_key, file_name, mime_type,
+        file_size_bytes, ai_summary, inspection_id, sync_status, device_id, captured_at, captured_by_user_id
+      )
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'synced', ?, ?, ?)
+    `).bind(
+      mediaId,
+      context.organization_id,
+      siteId,
+      cleanText(form.get("message_id"), "", 120) || null,
+      storageKey,
+      fileName,
+      file.type || "application/octet-stream",
+      Number(file.size || 0),
+      cleanText(form.get("ai_summary"), "", 2000) || null,
+      cleanText(form.get("inspection_id"), "", 120) || null,
+      deviceId,
+      capturedAt,
+      context.user.id,
+    ),
+  ];
+
+  if (deviceId && clientEventId) {
+    statements.push(
+      env.DB.prepare(`
+        INSERT OR IGNORE INTO offline_sync_events (
+          id, organization_id, site_id, user_id, device_id, client_event_id,
+          event_type, payload_json, sync_status, conflict_status, captured_at
+        )
+        VALUES (?, ?, ?, ?, ?, ?, 'media_upload', ?, 'processed', 'none', ?)
+      `).bind(
+        crypto.randomUUID(),
+        context.organization_id,
+        siteId,
+        context.user.id,
+        deviceId,
+        clientEventId,
+        JSON.stringify({
+          media_id: mediaId,
+          file_name: fileName,
+          storage_key: storageKey,
+          area: cleanText(form.get("area"), "", 240) || null,
+          wbs: cleanText(form.get("wbs"), "", 240) || null,
+          note: cleanText(form.get("note"), "", 1000) || null,
+        }),
+        capturedAt,
+      ),
+    );
+  }
+
+  try {
+    await env.DB.batch(statements);
+  } catch (error) {
+    await env.DOCUMENTS.delete(storageKey).catch(() => {});
+    throw error;
+  }
+
+  await audit(env, context, request, {
+    action: "media.upload",
+    resource_type: "media",
+    resource_id: mediaId,
+    site_id: siteId,
+    request_id: id,
+    metadata: {
+      storage_key: storageKey,
+      file_name: fileName,
+      file_size_bytes: Number(file.size || 0),
+      device_id: deviceId,
+      client_event_id: clientEventId,
+    },
+  });
+
+  return {
+    data: {
+      id: mediaId,
+      status: "created",
+      stored_in_r2: true,
+      storage_key: storageKey,
+      file_name: fileName,
+      file_size_bytes: Number(file.size || 0),
+    },
+  };
+}
+
 async function createOfflineSyncEvents(env, context, request) {
   requirePermission(context, "offline_sync", "write");
   const payload = await request.json();
@@ -1141,6 +1309,10 @@ async function route(request, env, context, id) {
   const inspectionMatch = url.pathname.match(/^\/api\/inspections\/([^/]+)$/);
   if (inspectionMatch && request.method === "PUT") {
     return await updateInspection(env, context, request, inspectionMatch[1], id);
+  }
+
+  if (url.pathname === "/api/media/upload" && request.method === "POST") {
+    return await uploadMediaAsset(env, context, request, id);
   }
 
   if (url.pathname === "/api/media") {

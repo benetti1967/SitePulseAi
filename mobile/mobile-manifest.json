@@ -1,0 +1,18 @@
+{
+  "name": "SitePulseAi Field",
+  "short_name": "SitePulseAi",
+  "description": "App mobile offline-first per raccolta evidenze e chat di cantiere.",
+  "start_url": "/mobile/index.html?v=7",
+  "display": "standalone",
+  "background_color": "#eaf1f0",
+  "theme_color": "#0f625d",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/mobile/mobile-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
